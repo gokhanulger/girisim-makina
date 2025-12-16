@@ -311,24 +311,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // =============================================
-    // Language Switcher
+    // Language Switcher - handled by translations.js
     // =============================================
-    const languageLinks = document.querySelectorAll('.languages a');
-
-    languageLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            const lang = this.textContent.trim();
-
-            if (lang !== 'TR') {
-                // Show notification for non-Turkish languages
-                showNotification('Çok yakında ' + (lang === 'EN' ? 'İngilizce' : 'Arapça') + ' içerik eklenecektir.');
-            } else {
-                languageLinks.forEach(l => l.classList.remove('active'));
-                this.classList.add('active');
-            }
-        });
-    });
+    // Language switching is now managed by js/translations.js
 
     // =============================================
     // Notification System

@@ -26,11 +26,14 @@
                     <a href="mailto:info@girisimmak.com"><i class="fas fa-envelope"></i> info@girisimmak.com</a>
                 </div>
                 <div class="language-social">
-                    <div class="languages">
-                        <a href="#" class="active">TR</a>
-                        <a href="#">EN</a>
-                        <a href="#">AR</a>
-                        <a href="#">RU</a>
+                    <div class="languages" id="languageSelector">
+                        <a href="#" data-lang="tr" class="active">TR</a>
+                        <a href="#" data-lang="en">EN</a>
+                        <a href="#" data-lang="ru">RU</a>
+                        <a href="#" data-lang="ar">AR</a>
+                        <a href="#" data-lang="fr">FR</a>
+                        <a href="#" data-lang="de">DE</a>
+                        <a href="#" data-lang="es">ES</a>
                     </div>
                     <div class="social-links">
                         <a href="https://www.youtube.com/@girisimpackagingmachinery" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
@@ -57,21 +60,21 @@
                     <li class="dropdown">
                         <a href="#production">Üretim Hatları <i class="fas fa-chevron-down"></i></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#production">Wafer Üretim Hatları</a></li>
-                            <li><a href="#production">Cereal Bar Hatları</a></li>
-                            <li><a href="#production">Protein Bar Hatları</a></li>
-                            <li><a href="#production">Çikolata Kaplama Sistemleri</a></li>
-                            <li><a href="#production">Bisküvi Kremalama Makineleri</a></li>
+                            <li><a href="products/wafer.html">Wafer Üretim Hatları</a></li>
+                            <li><a href="products/cereal-bar.html">Cereal Bar Hatları</a></li>
+                            <li><a href="products/protein-bar.html">Protein Bar Hatları</a></li>
+                            <li><a href="products/chocolate-coating.html">Çikolata Kaplama Sistemleri</a></li>
+                            <li><a href="products/biscuit-sandwiching.html">Bisküvi Kremalama Makineleri</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
                         <a href="#packaging">Paketleme <i class="fas fa-chevron-down"></i></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#packaging">Flow Pack Makineleri</a></li>
-                            <li><a href="#packaging">Overwrapping Makineleri</a></li>
-                            <li><a href="#packaging">Thermoform Makineleri</a></li>
-                            <li><a href="#packaging">Dikey Dolum Makineleri (VFFS)</a></li>
-                            <li><a href="#packaging">Helva Dilimleme & Paketleme</a></li>
+                            <li><a href="products/flow-pack.html">Flow Pack Makineleri</a></li>
+                            <li><a href="products/overwrapping.html">Overwrapping Makineleri</a></li>
+                            <li><a href="products/thermoform.html">Thermoform Makineleri</a></li>
+                            <li><a href="products/vffs.html">Dikey Dolum Makineleri (VFFS)</a></li>
+                            <li><a href="products/halvah.html">Helva Dilimleme & Paketleme</a></li>
                         </ul>
                     </li>
                     <li><a href="#sectors">Sektörler</a></li>
@@ -497,32 +500,59 @@
                 <p>YouTube kanalımızda 100+ makine videosu</p>
             </div>
             <div class="videos-grid">
-                <div class="video-card" onclick="openVideo('girisim_flow_pack')">
+                <div class="video-card" onclick="openVideo('tF6KbrRx9gI')">
                     <div class="video-thumbnail">
-                        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600" alt="Flow Pack Makinesi">
+                        <img src="https://img.youtube.com/vi/tF6KbrRx9gI/maxresdefault.jpg" alt="Flow Pack Paketleme Makinesi">
                         <div class="play-button">
                             <i class="fas fa-play"></i>
                         </div>
                     </div>
                     <h4>Flow Pack Paketleme</h4>
                 </div>
-                <div class="video-card" onclick="openVideo('girisim_wafer')">
+                <div class="video-card" onclick="openVideo('igEIPiJt3UI')">
                     <div class="video-thumbnail">
-                        <img src="https://images.unsplash.com/photo-1606312619070-d48b4c652a52?w=600" alt="Wafer Üretim Hattı">
+                        <img src="https://img.youtube.com/vi/igEIPiJt3UI/maxresdefault.jpg" alt="Wafer Üretim Hattı">
                         <div class="play-button">
                             <i class="fas fa-play"></i>
                         </div>
                     </div>
                     <h4>Wafer Üretim Hattı</h4>
                 </div>
-                <div class="video-card" onclick="openVideo('girisim_enrobing')">
+                <div class="video-card" onclick="openVideo('x2IZbYuavgY')">
                     <div class="video-thumbnail">
-                        <img src="https://images.unsplash.com/photo-1481391319762-47dff72954d9?w=600" alt="Çikolata Kaplama">
+                        <img src="https://img.youtube.com/vi/x2IZbYuavgY/maxresdefault.jpg" alt="Çikolata Enrobing">
                         <div class="play-button">
                             <i class="fas fa-play"></i>
                         </div>
                     </div>
                     <h4>Çikolata Enrobing</h4>
+                </div>
+                <div class="video-card" onclick="openVideo('RdnibYpZZG4')">
+                    <div class="video-thumbnail">
+                        <img src="https://img.youtube.com/vi/RdnibYpZZG4/maxresdefault.jpg" alt="Pirinç Keki Paketleme">
+                        <div class="play-button">
+                            <i class="fas fa-play"></i>
+                        </div>
+                    </div>
+                    <h4>Pirinç Keki Paketleme</h4>
+                </div>
+                <div class="video-card" onclick="openVideo('GlzQlLBKF-U')">
+                    <div class="video-thumbnail">
+                        <img src="https://img.youtube.com/vi/GlzQlLBKF-U/maxresdefault.jpg" alt="VFFS Dikey Dolum">
+                        <div class="play-button">
+                            <i class="fas fa-play"></i>
+                        </div>
+                    </div>
+                    <h4>VFFS Dikey Dolum</h4>
+                </div>
+                <div class="video-card" onclick="openVideo('gfMiy8vIisY')">
+                    <div class="video-thumbnail">
+                        <img src="https://img.youtube.com/vi/gfMiy8vIisY/maxresdefault.jpg" alt="Bisküvi Üretim Hattı">
+                        <div class="play-button">
+                            <i class="fas fa-play"></i>
+                        </div>
+                    </div>
+                    <h4>Bisküvi Üretim Hattı</h4>
                 </div>
             </div>
             <div class="text-center mt-50">
@@ -741,12 +771,17 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     <script src="js/firebase-config.js"></script>
     <script src="js/site-loader.js"></script>
+    <script src="js/translations.js"></script>
 
     <script src="js/main.js"></script>
     <script>
-        // Video Modal - YouTube kanalına yönlendir
-        function openVideo(videoType) {
-            window.open('https://www.youtube.com/@girisimpackagingmachinery', '_blank');
+        // Video Modal - YouTube embed
+        function openVideo(videoId) {
+            const modal = document.getElementById('videoModal');
+            const iframe = document.getElementById('videoFrame');
+            iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
         }
 
         function closeVideo() {

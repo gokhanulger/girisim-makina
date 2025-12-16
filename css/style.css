@@ -2214,3 +2214,172 @@ h4 { font-size: 1.25rem; }
     color: var(--primary-color);
     transform: rotate(90deg);
 }
+
+/* =============================================
+   RTL SUPPORT (Arabic)
+   ============================================= */
+html[dir="rtl"] body,
+body.rtl {
+    direction: rtl;
+    text-align: right;
+}
+
+body.rtl .container {
+    direction: rtl;
+}
+
+body.rtl .nav-menu {
+    flex-direction: row-reverse;
+}
+
+body.rtl .navbar {
+    flex-direction: row-reverse;
+}
+
+body.rtl .top-bar-content {
+    flex-direction: row-reverse;
+}
+
+body.rtl .contact-info {
+    flex-direction: row-reverse;
+}
+
+body.rtl .language-social {
+    flex-direction: row-reverse;
+}
+
+body.rtl .btn {
+    flex-direction: row-reverse;
+}
+
+body.rtl .hero-content {
+    text-align: right;
+}
+
+body.rtl .about-grid {
+    direction: rtl;
+}
+
+body.rtl .about-features {
+    flex-direction: row-reverse;
+}
+
+body.rtl .feature {
+    flex-direction: row-reverse;
+}
+
+body.rtl .machine-features li {
+    flex-direction: row-reverse;
+}
+
+body.rtl .machine-features li i {
+    margin-left: 10px;
+    margin-right: 0;
+}
+
+body.rtl .why-item {
+    flex-direction: row-reverse;
+}
+
+body.rtl .why-text {
+    text-align: right;
+}
+
+body.rtl .testimonial-author {
+    flex-direction: row-reverse;
+}
+
+body.rtl .author-info {
+    text-align: right;
+}
+
+body.rtl .contact-card {
+    text-align: right;
+}
+
+body.rtl .contact-icon {
+    margin-left: 20px;
+    margin-right: 0;
+}
+
+body.rtl .footer-grid {
+    direction: rtl;
+}
+
+body.rtl .footer-about {
+    text-align: right;
+}
+
+body.rtl .footer-links {
+    text-align: right;
+}
+
+body.rtl .footer-contact {
+    text-align: right;
+}
+
+body.rtl .footer-social {
+    justify-content: flex-start;
+}
+
+body.rtl .dropdown-menu {
+    right: 0;
+    left: auto;
+    text-align: right;
+}
+
+body.rtl .hero-stats {
+    flex-direction: row-reverse;
+}
+
+body.rtl .hero-buttons {
+    flex-direction: row-reverse;
+}
+
+body.rtl .experience-badge {
+    left: auto;
+    right: -30px;
+}
+
+body.rtl .checkbox-group label {
+    flex-direction: row-reverse;
+}
+
+body.rtl .form-row {
+    flex-direction: row-reverse;
+}
+
+/* Language Selector Enhancements */
+.languages {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.languages a {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.languages a:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.languages a.active {
+    background: var(--primary-color);
+    color: var(--white);
+}
+
+@media (max-width: 768px) {
+    .languages {
+        gap: 4px;
+    }
+    
+    .languages a {
+        padding: 3px 6px;
+        font-size: 10px;
+    }
+}
