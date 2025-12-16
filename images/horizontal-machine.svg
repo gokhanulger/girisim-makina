@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300">
+  <defs>
+    <linearGradient id="machineGrad4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#c41e3a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#dc3545;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="400" height="300" fill="#2a2a2a"/>
+  <rect x="50" y="100" width="300" height="100" rx="10" fill="url(#machineGrad4)"/>
+  <rect x="70" y="120" width="60" height="60" fill="#fff" opacity="0.3"/>
+  <rect x="150" y="120" width="100" height="60" fill="#333"/>
+  <rect x="270" y="120" width="60" height="60" fill="#fff" opacity="0.3"/>
+  <circle cx="200" cy="150" r="20" fill="#4CAF50"/>
+  <polygon points="200,140 190,160 210,160" fill="#fff"/>
+  <text x="200" y="280" text-anchor="middle" fill="#fff" font-family="Arial" font-size="14">Yatay Paketleme</text>
+</svg>
