@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Girişim Makina Blog - Gıda işleme ve paketleme makineleri hakkında bilgiler">
+    <title>Blog | Girişim Makina</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        .page-hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            padding: 120px 0 80px;
+            color: white;
+            text-align: center;
+        }
+        .page-hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        .page-hero p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .blog-section {
+            padding: 80px 0;
+        }
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+        .blog-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+        .blog-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+        .blog-card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+        .blog-card .card-content {
+            padding: 30px;
+        }
+        .blog-card .card-meta {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            font-size: 0.85rem;
+            color: #888;
+        }
+        .blog-card .card-meta span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .blog-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--dark);
+            line-height: 1.4;
+        }
+        .blog-card p {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+        .blog-card .read-more {
+            color: var(--primary);
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+        .blog-card .read-more:hover {
+            gap: 12px;
+        }
+        .blog-categories {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 50px;
+        }
+        .blog-categories button {
+            padding: 10px 25px;
+            border: 2px solid #e0e0e0;
+            background: white;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        .blog-categories button:hover,
+        .blog-categories button.active {
+            border-color: var(--primary);
+            background: var(--primary);
+            color: white;
+        }
+        .coming-soon {
+            text-align: center;
+            padding: 60px 20px;
+            background: #f8f9fa;
+            border-radius: 20px;
+        }
+        .coming-soon i {
+            font-size: 4rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        .coming-soon h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        .coming-soon p {
+            color: #666;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="container">
+            <div class="top-bar-content">
+                <div class="contact-info">
+                    <a href="https://wa.me/905468792927" target="_blank"><i class="fab fa-whatsapp"></i> +90 546 879 29 27</a>
+                    <a href="mailto:info@girisimmak.com"><i class="fas fa-envelope"></i> info@girisimmak.com</a>
+                </div>
+                <div class="language-social">
+                    <div class="languages" id="languageSelector">
+                        <a href="#" data-lang="tr" class="active">TR</a>
+                        <a href="#" data-lang="en">EN</a>
+                        <a href="#" data-lang="ru">RU</a>
+                        <a href="#" data-lang="ar">AR</a>
+                        <a href="#" data-lang="fr">FR</a>
+                        <a href="#" data-lang="pt">PT</a>
+                        <a href="#" data-lang="es">ES</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">
+                    <span class="logo-text">GİRİŞİM</span>
+                    <span class="logo-sub">MAKİNA TÜRKİYE</span>
+                </a>
+                <ul class="nav-menu">
+                    <li class="dropdown">
+                        <a href="index.html#about">Kurumsal <i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="index.html#about">Hakkımızda</a></li>
+                            <li><a href="hr.html">İnsan Kaynakları</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="index.html#production">Makinalarımız <i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="products/cereal-bar.html">Tahıl Bar Üretim Hatları</a></li>
+                            <li><a href="products/chocolate-coating.html">Çikolata Kaplama Makinaları</a></li>
+                            <li><a href="products/biscuit-sandwiching.html">Bisküvi Kremalama Makinaları</a></li>
+                            <li class="dropdown-divider"></li>
+                            <li><a href="products/flow-pack.html">Yatay Flowpack Paketleme</a></li>
+                            <li><a href="products/vffs.html">Dikey Paketleme Makinaları</a></li>
+                            <li><a href="products/overwrapping.html">Zarf Tipi Paketleme</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#packaging-choice">Paketleme Tercihiniz <i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="packaging-by-type.html">Paket Tipine Göre</a></li>
+                            <li><a href="packaging-by-product.html">Ürününüze Göre</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="index.html#videos">Videolar</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="index.html#contact">İletişim</a></li>
+                </ul>
+                <a href="https://wa.me/905468792927" target="_blank" class="btn btn-primary"><i class="fab fa-whatsapp"></i> TEKLİF AL</a>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Page Hero -->
+    <section class="page-hero">
+        <div class="container">
+            <h1><i class="fas fa-newspaper"></i> Blog</h1>
+            <p>Gıda işleme ve paketleme sektöründen haberler, ipuçları ve yenilikler</p>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section class="blog-section">
+        <div class="container">
+            <div class="blog-categories">
+                <button class="active">Tümü</button>
+                <button>Üretim Hatları</button>
+                <button>Paketleme</button>
+                <button>Sektör Haberleri</button>
+                <button>Fuarlar</button>
+            </div>
+
+            <div class="blog-grid">
+                <!-- Blog Card 1 -->
+                <div class="blog-card">
+                    <img src="https://images.unsplash.com/photo-1565793298595-6a879b1d9492?w=600" alt="Gulfood Manufacturing 2024">
+                    <div class="card-content">
+                        <div class="card-meta">
+                            <span><i class="fas fa-calendar"></i> 15 Kasım 2024</span>
+                            <span><i class="fas fa-tag"></i> Fuarlar</span>
+                        </div>
+                        <h3>Gulfood Manufacturing 2024'te Girişim Makina</h3>
+                        <p>Dubai'de düzenlenen Gulfood Manufacturing fuarında en son teknoloji paketleme çözümlerimizi sergiledik. Wafer üretim hatları ve flow pack makinelerimiz yoğun ilgi gördü.</p>
+                        <a href="#" class="read-more">Devamını Oku <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <!-- Blog Card 2 -->
+                <div class="blog-card">
+                    <img src="https://images.unsplash.com/photo-1606312619070-d48b4c652a52?w=600" alt="Cereal Bar Trendleri">
+                    <div class="card-content">
+                        <div class="card-meta">
+                            <span><i class="fas fa-calendar"></i> 8 Kasım 2024</span>
+                            <span><i class="fas fa-tag"></i> Üretim Hatları</span>
+                        </div>
+                        <h3>2024'te Cereal Bar Üretim Trendleri</h3>
+                        <p>Sağlıklı atıştırmalık pazarı büyümeye devam ediyor. Protein bar, granola bar ve enerji barı üretim hatlarında yeni teknolojiler ve pazar eğilimleri.</p>
+                        <a href="#" class="read-more">Devamını Oku <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <!-- Blog Card 3 -->
+                <div class="blog-card">
+                    <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600" alt="Flow Pack vs Overwrap">
+                    <div class="card-content">
+                        <div class="card-meta">
+                            <span><i class="fas fa-calendar"></i> 1 Kasım 2024</span>
+                            <span><i class="fas fa-tag"></i> Paketleme</span>
+                        </div>
+                        <h3>Flow Pack vs Overwrapping: Hangisi Sizin İçin Doğru?</h3>
+                        <p>Ürününüz için en uygun paketleme yöntemini seçmek önemlidir. İki popüler paketleme tekniğinin karşılaştırmalı analizi ve kullanım alanları.</p>
+                        <a href="#" class="read-more">Devamını Oku <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <!-- Blog Card 4 -->
+                <div class="blog-card">
+                    <img src="https://images.unsplash.com/photo-1481391319762-47dff72954d9?w=600" alt="Çikolata Kaplama">
+                    <div class="card-content">
+                        <div class="card-meta">
+                            <span><i class="fas fa-calendar"></i> 25 Ekim 2024</span>
+                            <span><i class="fas fa-tag"></i> Üretim Hatları</span>
+                        </div>
+                        <h3>Çikolata Kaplama Sürecinde Dikkat Edilmesi Gerekenler</h3>
+                        <p>Mükemmel çikolata kaplamanın sırları. Sıcaklık kontrolü, temperleme ve soğutma tüneli ayarları hakkında uzman tavsiyeleri.</p>
+                        <a href="#" class="read-more">Devamını Oku <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <!-- Blog Card 5 -->
+                <div class="blog-card">
+                    <img src="https://images.unsplash.com/photo-1567789884554-0b844b597180?w=600" alt="VFFS Makineleri">
+                    <div class="card-content">
+                        <div class="card-meta">
+                            <span><i class="fas fa-calendar"></i> 18 Ekim 2024</span>
+                            <span><i class="fas fa-tag"></i> Paketleme</span>
+                        </div>
+                        <h3>VFFS Dikey Dolum Makinelerinin Avantajları</h3>
+                        <p>Granül, toz ve parçalı ürünler için VFFS makinelerinin neden tercih edildiğini ve farklı paket tipi seçeneklerini inceliyoruz.</p>
+                        <a href="#" class="read-more">Devamını Oku <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <!-- Blog Card 6 -->
+                <div class="blog-card">
+                    <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600" alt="Fabrika Otomasyonu">
+                    <div class="card-content">
+                        <div class="card-meta">
+                            <span><i class="fas fa-calendar"></i> 10 Ekim 2024</span>
+                            <span><i class="fas fa-tag"></i> Sektör Haberleri</span>
+                        </div>
+                        <h3>Gıda Sektöründe Endüstri 4.0 ve Otomasyon</h3>
+                        <p>Akıllı fabrikalar, IoT entegrasyonu ve otomatik üretim hatlarının gıda sektörüne etkileri. Geleceğin üretim tesisleri nasıl olacak?</p>
+                        <a href="#" class="read-more">Devamını Oku <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Blog Güncellemelerinden Haberdar Olun</h2>
+                <p>Yeni yazılarımızdan ve sektör haberlerinden ilk siz haberdar olun</p>
+                <div class="cta-buttons">
+                    <a href="https://wa.me/905468792927?text=Blog%20güncellemelerinden%20haberdar%20olmak%20istiyorum" target="_blank" class="btn btn-white btn-lg"><i class="fab fa-whatsapp"></i> Abone Ol</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <a href="index.html" class="footer-logo">
+                        <span class="logo-text">GİRİŞİM</span>
+                        <span class="logo-sub">MAKİNA TÜRKİYE</span>
+                    </a>
+                    <p>1995'ten beri gıda işleme ve paketleme makineleri üretiyoruz.</p>
+                </div>
+                <div class="footer-contact">
+                    <h4>İletişim</h4>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> Güneşli, Bağcılar / İstanbul</li>
+                        <li><i class="fab fa-whatsapp"></i> <a href="https://wa.me/905468792927">+90 546 879 29 27</a></li>
+                        <li><i class="fas fa-envelope"></i> <a href="mailto:info@girisimmak.com">info@girisimmak.com</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <p>&copy; 2024 Girişim Makina Türkiye. Tüm hakları saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Button -->
+    <a href="https://wa.me/905468792927" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

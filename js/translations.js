@@ -930,189 +930,189 @@ const translations = {
         }
     },
 
-    // German - Deutsch
-    de: {
-        lang: "Deutsch",
-        flag: "🇩🇪",
+    // Portuguese - Português
+    pt: {
+        lang: "Português",
+        flag: "🇧🇷",
         dir: "ltr",
         nav: {
-            about: "Über uns",
-            production: "Produktionslinien",
-            packaging: "Verpackung",
-            sectors: "Branchen",
-            videos: "Videos",
-            contact: "Kontakt",
-            getQuote: "ANGEBOT"
+            about: "Sobre nós",
+            production: "Linhas de produção",
+            packaging: "Embalagem",
+            sectors: "Setores",
+            videos: "Vídeos",
+            contact: "Contato",
+            getQuote: "ORÇAMENTO"
         },
         dropdown: {
-            wafer: "Waffel-Produktionslinien",
-            cereal: "Müsliriegel-Linien",
-            protein: "Proteinriegel-Linien",
-            chocolate: "Schokoladen-Überzugssysteme",
-            biscuit: "Keks-Sandwich-Maschinen",
-            flowpack: "Flow Pack Maschinen",
-            overwrap: "Overwrapping Maschinen",
-            thermoform: "Thermoform Maschinen",
-            vffs: "Vertikale Füllmaschinen (VFFS)",
-            halvah: "Halva Schneiden & Verpacken"
+            wafer: "Linhas de produção de wafer",
+            cereal: "Linhas de barras de cereais",
+            protein: "Linhas de barras de proteína",
+            chocolate: "Sistemas de cobertura de chocolate",
+            biscuit: "Máquinas de sanduíche de biscoito",
+            flowpack: "Máquinas Flow Pack",
+            overwrap: "Máquinas Overwrapping",
+            thermoform: "Máquinas de termoformagem",
+            vffs: "Máquinas de envase vertical (VFFS)",
+            halvah: "Corte e embalagem de halva"
         },
         hero: {
-            title1: "WAFFEL & MÜSLIRIEGEL",
-            title2: "PRODUKTIONSLINIEN",
-            title3: "& VERPACKUNG",
-            description: "Hersteller von Lebensmittelverarbeitungs- und Verpackungsmaschinen seit 1985. Als führender türkischer Hersteller exportieren wir in 57 Länder weltweit.",
-            stat1: "Exportländer",
-            stat2: "m² Produktionsfläche",
-            stat3: "Jahre Erfahrung",
-            cta1: "ANGEBOT ANFORDERN",
-            cta2: "VIDEOS ANSEHEN"
+            title1: "WAFER E BARRAS DE CEREAIS",
+            title2: "LINHAS DE PRODUÇÃO",
+            title3: "E EMBALAGEM",
+            description: "Fabricante de máquinas de processamento e embalagem de alimentos desde 1995. Como líder na Turquia, exportamos para 57 países em todo o mundo.",
+            stat1: "Países de exportação",
+            stat2: "m² de área de produção",
+            stat3: "Anos de experiência",
+            cta1: "SOLICITAR ORÇAMENTO",
+            cta2: "ASSISTIR VÍDEOS"
         },
         about: {
-            tag: "Über uns",
-            title1: "Globaler Wachstumspartner",
-            title2: "für Lebensmittelproduzenten",
-            p1: "Girisim Makina ist seit 1985 der führende türkische Hersteller in der Lebensmittelverarbeitung und -verpackung. Mit 3 Produktionsstätten und 12.000 m² überdachter Fläche fertigen wir Waffel-Produktionslinien, Müsliriegel-Maschinen, Schokoladen-Überzugssysteme und Verpackungsmaschinen.",
-            p2: "Wir exportieren in mehr als 57 Länder in Europa, Naher Osten, Afrika und Asien und bieten Weltklasse-Qualität und Kundenzufriedenheit. Wir vertreten die Türkei auf internationalen Messen wie Gulfood Manufacturing.",
-            feature1: "3 Produktionsstätten",
-            feature2: "Export in 57+ Länder",
-            feature3: "24/7 technischer Support",
-            catalog: "Kataloge herunterladen"
+            tag: "Sobre nós",
+            title1: "Parceiro global de crescimento",
+            title2: "para produtores de alimentos",
+            p1: "A Girisim Makina é líder na Turquia em processamento e embalagem de alimentos desde 1995. Com 3 fábricas e 12.000 m² de área coberta, fabricamos linhas de produção de wafer, máquinas de barras de cereais, sistemas de cobertura de chocolate e máquinas de embalagem.",
+            p2: "Exportamos para mais de 57 países na Europa, Oriente Médio, África e Ásia, oferecendo qualidade de classe mundial e satisfação do cliente. Representamos a Turquia em feiras internacionais como Gulfood Manufacturing.",
+            feature1: "3 Fábricas",
+            feature2: "Exportação para 57+ países",
+            feature3: "Suporte técnico 24/7",
+            catalog: "Baixar catálogos"
         },
         production: {
-            tag: "Produktionslinien",
-            title1: "Lebensmittelverarbeitungs-",
-            title2: "maschinen",
-            subtitle: "Komplette schlüsselfertige Produktionslinien und Einzelmaschinen-Lösungen",
-            getQuote: "Angebot anfordern",
-            watchVideos: "Alle Videos ansehen",
+            tag: "Linhas de produção",
+            title1: "Máquinas de processamento",
+            title2: "de alimentos",
+            subtitle: "Linhas de produção turnkey completas e soluções de máquinas individuais",
+            getQuote: "Solicitar orçamento",
+            watchVideos: "Assistir todos os vídeos",
             machines: {
                 wafer: {
-                    title: "Waffel-Produktionslinien",
-                    desc: "Komplette Waffel-Produktionslinien - von der Teigzubereitung bis zur Verpackung",
-                    f1: "Automatische Teigzubereitung",
-                    f2: "Hochleistungsöfen",
-                    f3: "Creme- und Schneidsysteme"
+                    title: "Linhas de produção de wafer",
+                    desc: "Linhas completas de produção de wafer - da preparação da massa à embalagem",
+                    f1: "Preparação automática de massa",
+                    f2: "Fornos de alta capacidade",
+                    f3: "Sistemas de creme e corte"
                 },
                 cereal: {
-                    title: "Müsli- & Proteinriegel-Linien",
-                    desc: "Produktionslinien für Granola, Müsli, Protein- und Energieriegel",
-                    f1: "Misch- und Kochsysteme",
-                    f2: "Formungseinheiten",
-                    f3: "Kühltunnel"
+                    title: "Linhas de barras de cereais e proteína",
+                    desc: "Linhas de produção de granola, muesli, barras de proteína e energia",
+                    f1: "Sistemas de mistura e cozimento",
+                    f2: "Unidades de moldagem",
+                    f3: "Túneis de resfriamento"
                 },
                 chocolate: {
-                    title: "Schokoladen-Überzugssysteme",
-                    desc: "Enrobing-Maschinen und Schokoladen-Kühltunnel",
-                    f1: "Voll-/Teilüberzug",
-                    f2: "Präzise Temperaturkontrolle",
-                    f3: "Dekorationseinheiten"
+                    title: "Sistemas de cobertura de chocolate",
+                    desc: "Máquinas de enrobing e túneis de resfriamento de chocolate",
+                    f1: "Cobertura total/parcial",
+                    f2: "Controle preciso de temperatura",
+                    f3: "Unidades de decoração"
                 },
                 biscuit: {
-                    title: "Keks-Sandwich-Maschinen",
-                    desc: "Creme-Sandwichsysteme für die Sandwichkeks-Produktion",
-                    f1: "Verschiedene Formen & Größen",
-                    f2: "Präzise Cremedosierung",
-                    f3: "Hohe Geschwindigkeitskapazität"
+                    title: "Máquinas de sanduíche de biscoito",
+                    desc: "Sistemas de sanduíche com creme para produção de biscoitos sanduíche",
+                    f1: "Várias formas e tamanhos",
+                    f2: "Dosagem precisa de creme",
+                    f3: "Alta capacidade de velocidade"
                 }
             }
         },
         packaging: {
-            tag: "Verpackungslösungen",
-            title1: "Verpackungs-",
-            title2: "maschinen",
-            subtitle: "Maßgeschneiderte Verpackungslösungen für jedes Produkt und jede Branche",
+            tag: "Soluções de embalagem",
+            title1: "Máquinas de",
+            title2: "embalagem",
+            subtitle: "Soluções de embalagem personalizadas para cada produto e setor",
             types: {
                 flowpack: {
                     title: "Flow Pack",
-                    desc: "Horizontale Form-Fill-Seal-Verpackung. Für Kekse, Waffeln, Schokolade, Seife, Brot und mehr. Vakuum- und MAP-Optionen verfügbar."
+                    desc: "Embalagem horizontal form-fill-seal. Para biscoitos, wafers, chocolate, sabonete, pão e mais. Opções de vácuo e MAP disponíveis."
                 },
                 overwrap: {
                     title: "Overwrapping",
-                    desc: "Umschlag-Verpackung. Ideale Lösung für Reiswaffeln, Waffeln, Kekse, Chips und Seife."
+                    desc: "Embalagem tipo envelope. Solução ideal para bolos de arroz, wafers, biscoitos, chips e sabonete."
                 },
                 thermoform: {
-                    title: "Thermoform",
-                    desc: "Form-Fill-Seal-Verpackung. Vakuumverpackung für Schokolade, Süßwaren, Käse und Fleischprodukte."
+                    title: "Termoformagem",
+                    desc: "Embalagem form-fill-seal. Embalagem a vácuo para chocolate, doces, queijo e produtos de carne."
                 },
                 vffs: {
-                    title: "VFFS Vertikalfüllung",
-                    desc: "Vertikale Form-Fill-Seal. Wiege- und Füllsysteme für Granulate, Pulver, Nüsse und Snacks."
+                    title: "VFFS Envase Vertical",
+                    desc: "Form-fill-seal vertical. Sistemas de pesagem e envase para granulados, pós, nozes e snacks."
                 }
             }
         },
         sectors: {
-            tag: "Unsere Expertise",
-            title1: "Produkte die",
-            title2: "wir verpacken",
-            subtitle: "Spezialisierte Lösungen für jede Branche mit 40 Jahren Erfahrung",
-            items: ["Keks", "Waffel", "Schokolade", "Kuchen & Gebäck", "Müsliriegel", "Proteinriegel", "Halva", "Chips & Snacks", "Seife", "Reiswaffeln", "Kaffee", "Tiernahrung"]
+            tag: "Nossa expertise",
+            title1: "Produtos que",
+            title2: "embalamos",
+            subtitle: "Soluções especializadas para cada setor com 30 anos de experiência",
+            items: ["Biscoito", "Wafer", "Chocolate", "Bolo e confeitaria", "Barra de cereais", "Barra de proteína", "Halva", "Chips e snacks", "Sabonete", "Bolo de arroz", "Café", "Ração animal"]
         },
         whyUs: {
-            tag: "Warum wir?",
-            title1: "Warum",
+            tag: "Por que nós?",
+            title1: "Por que",
             title2: "Girisim Makina?",
             items: [
-                { title: "3 Produktionsstätten", desc: "Größter türkischer Lebensmittelmaschinenhersteller mit 3 modernen Produktionsstätten auf insgesamt 12.000 m²." },
-                { title: "Export in 57+ Länder", desc: "Wir bedienen Kunden in mehr als 57 Ländern in Europa, Naher Osten, Afrika und Asien." },
-                { title: "Schlüsselfertige Projekte", desc: "Komplettlösungen von der Produktion bis zur Verpackung, vom Fabrikdesign bis zur Installation." },
-                { title: "After-Sales-Support", desc: "24/7 technischer Support, Ersatzteilversorgung und Bedienerschulung." },
-                { title: "40 Jahre Erfahrung", desc: "Zuverlässiger Partner der Branche seit 1985. Teilnehmer an Gulfood Manufacturing." }
+                { title: "3 Fábricas", desc: "Maior fabricante turco de máquinas de alimentos com 3 fábricas modernas totalizando 12.000 m²." },
+                { title: "Exportação para 57+ países", desc: "Atendemos clientes em mais de 57 países na Europa, Oriente Médio, África e Ásia." },
+                { title: "Projetos turnkey", desc: "Soluções completas desde a produção até a embalagem, do projeto da fábrica à instalação." },
+                { title: "Suporte pós-venda", desc: "Suporte técnico 24/7, fornecimento de peças de reposição e treinamento de operadores." },
+                { title: "30 anos de experiência", desc: "Parceiro confiável do setor desde 1995. Participante da Gulfood Manufacturing." }
             ]
         },
         testimonials: {
-            tag: "Referenzen",
-            title1: "Was unsere",
-            title2: "Kunden sagen"
+            tag: "Referências",
+            title1: "O que nossos",
+            title2: "clientes dizem"
         },
         videos: {
-            tag: "Videogalerie",
-            title1: "Sehen Sie unsere",
-            title2: "Maschinen",
-            subtitle: "100+ Maschinenvideos auf unserem YouTube-Kanal",
-            cta: "Unser YouTube-Kanal",
-            items: ["Flow Pack Verpackung", "Waffel-Produktionslinie", "Schokoladen-Enrobing", "Reiswaffel-Verpackung", "VFFS Vertikalfüllung", "Keks-Produktionslinie"]
+            tag: "Galeria de vídeos",
+            title1: "Assista nossas",
+            title2: "máquinas",
+            subtitle: "100+ vídeos de máquinas em nosso canal do YouTube",
+            cta: "Nosso canal do YouTube",
+            items: ["Embalagem Flow Pack", "Linha de produção de wafer", "Enrobing de chocolate", "Embalagem de bolo de arroz", "Envase vertical VFFS", "Linha de produção de biscoitos"]
         },
         cta: {
-            title: "Holen Sie sich ein kostenloses Angebot für Ihr Projekt",
-            subtitle: "Unser Expertenteam ist bereit, Ihnen die passende Produktions- und Verpackungslösung anzubieten",
-            whatsapp: "Kontakt über WhatsApp",
-            email: "E-Mail senden"
+            title: "Obtenha um orçamento gratuito para seu projeto",
+            subtitle: "Nossa equipe de especialistas está pronta para oferecer a solução de produção e embalagem ideal para você",
+            whatsapp: "Contato via WhatsApp",
+            email: "Enviar e-mail"
         },
         contact: {
-            tag: "Kontakt",
-            title1: "Kontaktieren",
-            title2: "Sie uns",
-            address: "Adresse",
+            tag: "Contato",
+            title1: "Entre em",
+            title2: "contato",
+            address: "Endereço",
             whatsapp: "WhatsApp",
-            emailTitle: "E-Mail",
-            hours: "Öffnungszeiten",
-            support247: "24/7 Support",
-            weekdays: "Montag - Freitag: 08:30 - 18:00",
-            saturday: "Samstag: 09:00 - 14:00",
-            formTitle: "Angebotsformular",
-            formName: "Ihr Name *",
-            formCompany: "Firmenname",
-            formEmail: "Ihre E-Mail *",
-            formPhone: "Telefon / WhatsApp *",
-            formProduct: "Interessiertes Produkt *",
-            formMessage: "Ihre Nachricht - Kapazität, Produkttyp usw. *",
-            formKvkk: "Ich habe die Datenschutzrichtlinie gelesen und akzeptiere sie.",
-            formSubmit: "Angebot anfordern",
-            products: ["Waffel-Produktionslinie", "Müsli-/Proteinriegel-Linie", "Schokoladen-Überzugssystem", "Flow Pack Maschine", "Overwrapping Maschine", "Thermoform-Verpackung", "Vertikalfüllung (VFFS)", "Keks-Sandwich", "Halva Schneiden & Verpacken", "Andere"]
+            emailTitle: "E-mail",
+            hours: "Horário de funcionamento",
+            support247: "Suporte 24/7",
+            weekdays: "Segunda - Sexta: 08:30 - 18:00",
+            saturday: "Sábado: 09:00 - 14:00",
+            formTitle: "Formulário de orçamento",
+            formName: "Seu nome *",
+            formCompany: "Nome da empresa",
+            formEmail: "Seu e-mail *",
+            formPhone: "Telefone / WhatsApp *",
+            formProduct: "Produto de interesse *",
+            formMessage: "Sua mensagem - capacidade, tipo de produto etc. *",
+            formKvkk: "Li e aceito a Política de Privacidade.",
+            formSubmit: "Solicitar orçamento",
+            products: ["Linha de produção de wafer", "Linha de barras de cereais/proteína", "Sistema de cobertura de chocolate", "Máquina Flow Pack", "Máquina Overwrapping", "Embalagem termoformagem", "Envase vertical (VFFS)", "Sanduíche de biscoito", "Corte e embalagem de halva", "Outro"]
         },
         footer: {
-            desc: "Hersteller von Lebensmittelverarbeitungs- und Verpackungsmaschinen seit 1985. Export in 57+ Länder, 12.000 m² Produktion. Führender türkischer Hersteller von Waffel-, Müsliriegel-Produktionslinien und Verpackungsmaschinen.",
-            production: "Produktionslinien",
-            packagingTitle: "Verpackung",
-            corporate: "Unternehmen",
-            aboutUs: "Über uns",
-            catalogs: "Kataloge",
-            videosTitle: "Videos",
-            contactTitle: "Kontakt",
-            copyright: "Girisim Makina Turkey. Alle Rechte vorbehalten.",
-            privacy: "Datenschutz",
-            kvkk: "DSGVO",
-            cookies: "Cookie-Richtlinie"
+            desc: "Fabricante de máquinas de processamento e embalagem de alimentos desde 1995. Exportação para 57+ países, 12.000 m² de produção. Líder turco em linhas de produção de wafer, barras de cereais e máquinas de embalagem.",
+            production: "Linhas de produção",
+            packagingTitle: "Embalagem",
+            corporate: "Institucional",
+            aboutUs: "Sobre nós",
+            catalogs: "Catálogos",
+            videosTitle: "Vídeos",
+            contactTitle: "Contato",
+            copyright: "Girisim Makina Turkey. Todos os direitos reservados.",
+            privacy: "Privacidade",
+            kvkk: "LGPD",
+            cookies: "Política de Cookies"
         }
     },
 

@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Girişim Makina İnsan Kaynakları - Kariyer fırsatları ve iş başvurusu">
+    <title>İnsan Kaynakları | Girişim Makina</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        .hr-hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            padding: 120px 0 80px;
+            color: white;
+            text-align: center;
+        }
+        .hr-hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        .hr-hero p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .hr-content {
+            padding: 80px 0;
+        }
+        .hr-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: start;
+        }
+        .hr-info h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+        }
+        .hr-info p {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+        .hr-benefits {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .benefit-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+        .benefit-item i {
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+        .benefit-item span {
+            font-weight: 500;
+            color: var(--dark);
+        }
+        .hr-form-wrapper {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        .hr-form-wrapper h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+        }
+        .hr-form .form-group {
+            margin-bottom: 20px;
+        }
+        .hr-form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+        .hr-form input,
+        .hr-form select,
+        .hr-form textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        .hr-form input:focus,
+        .hr-form select:focus,
+        .hr-form textarea:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+        .hr-form .file-upload {
+            border: 2px dashed #e0e0e0;
+            padding: 30px;
+            text-align: center;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .hr-form .file-upload:hover {
+            border-color: var(--primary);
+            background: #f8f9fa;
+        }
+        .hr-form .file-upload i {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        .hr-form .file-upload p {
+            color: #666;
+            margin: 0;
+        }
+        .hr-form .file-upload input {
+            display: none;
+        }
+        @media (max-width: 992px) {
+            .hr-grid {
+                grid-template-columns: 1fr;
+            }
+            .hr-benefits {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="container">
+            <div class="top-bar-content">
+                <div class="contact-info">
+                    <a href="https://wa.me/905468792927" target="_blank"><i class="fab fa-whatsapp"></i> +90 546 879 29 27</a>
+                    <a href="mailto:info@girisimmak.com"><i class="fas fa-envelope"></i> info@girisimmak.com</a>
+                </div>
+                <div class="language-social">
+                    <div class="languages" id="languageSelector">
+                        <a href="#" data-lang="tr" class="active">TR</a>
+                        <a href="#" data-lang="en">EN</a>
+                        <a href="#" data-lang="ru">RU</a>
+                        <a href="#" data-lang="ar">AR</a>
+                        <a href="#" data-lang="fr">FR</a>
+                        <a href="#" data-lang="pt">PT</a>
+                        <a href="#" data-lang="es">ES</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">
+                    <span class="logo-text">GİRİŞİM</span>
+                    <span class="logo-sub">MAKİNA TÜRKİYE</span>
+                </a>
+                <ul class="nav-menu">
+                    <li class="dropdown">
+                        <a href="index.html#about">Kurumsal <i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="index.html#about">Hakkımızda</a></li>
+                            <li><a href="index.html#mission">Misyonumuz & Vizyonumuz</a></li>
+                            <li><a href="index.html#values">Değerlerimiz</a></li>
+                            <li><a href="index.html#why-us">Neden Girişim Makina?</a></li>
+                            <li><a href="index.html#rd">AR-GE</a></li>
+                            <li><a href="index.html#service">Satış Sonrası Servis</a></li>
+                            <li><a href="hr.html">İnsan Kaynakları</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="index.html#production">Makinalarımız <i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="products/cereal-bar.html">Tahıl Bar Üretim Hatları</a></li>
+                            <li><a href="products/chocolate-coating.html">Çikolata Kaplama Makinaları</a></li>
+                            <li><a href="products/biscuit-sandwiching.html">Bisküvi Kremalama Makinaları</a></li>
+                            <li class="dropdown-divider"></li>
+                            <li><a href="products/flow-pack.html">Yatay Flowpack Paketleme</a></li>
+                            <li><a href="products/vffs.html">Dikey Paketleme Makinaları</a></li>
+                            <li><a href="products/overwrapping.html">Zarf Tipi Paketleme</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#packaging-choice">Paketleme Tercihiniz <i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="packaging-by-type.html">Paket Tipine Göre</a></li>
+                            <li><a href="packaging-by-product.html">Ürününüze Göre</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="index.html#videos">Videolar</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="index.html#contact">İletişim</a></li>
+                </ul>
+                <a href="https://wa.me/905468792927" target="_blank" class="btn btn-primary"><i class="fab fa-whatsapp"></i> TEKLİF AL</a>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- HR Hero -->
+    <section class="hr-hero">
+        <div class="container">
+            <h1><i class="fas fa-users"></i> İnsan Kaynakları</h1>
+            <p>Girişim Makina ailesine katılın. Gıda makineleri sektöründe kariyer fırsatlarını keşfedin.</p>
+        </div>
+    </section>
+
+    <!-- HR Content -->
+    <section class="hr-content">
+        <div class="container">
+            <div class="hr-grid">
+                <div class="hr-info">
+                    <h2>Neden Girişim Makina?</h2>
+                    <p>1995'ten beri gıda işleme ve paketleme makineleri sektöründe Türkiye'nin lider üreticisiyiz. 57'den fazla ülkeye ihracat yapan, 12.000 m² üretim tesisinde çalışan dinamik bir ekibiz.</p>
+                    <p>Sürekli büyüyen ekibimizle, kariyer gelişiminize önem veren, yenilikçi ve dinamik bir çalışma ortamı sunuyoruz.</p>
+
+                    <div class="hr-benefits">
+                        <div class="benefit-item">
+                            <i class="fas fa-graduation-cap"></i>
+                            <span>Sürekli Eğitim</span>
+                        </div>
+                        <div class="benefit-item">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Kariyer Gelişimi</span>
+                        </div>
+                        <div class="benefit-item">
+                            <i class="fas fa-globe"></i>
+                            <span>Uluslararası İş Ortamı</span>
+                        </div>
+                        <div class="benefit-item">
+                            <i class="fas fa-users"></i>
+                            <span>Dinamik Ekip</span>
+                        </div>
+                        <div class="benefit-item">
+                            <i class="fas fa-heart"></i>
+                            <span>Sosyal Haklar</span>
+                        </div>
+                        <div class="benefit-item">
+                            <i class="fas fa-trophy"></i>
+                            <span>Başarı Primleri</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hr-form-wrapper">
+                    <h3><i class="fas fa-file-alt"></i> İş Başvuru Formu</h3>
+                    <form class="hr-form" id="hrForm">
+                        <div class="form-group">
+                            <label>Ad Soyad *</label>
+                            <input type="text" name="fullname" required placeholder="Adınız ve soyadınız">
+                        </div>
+                        <div class="form-group">
+                            <label>E-posta *</label>
+                            <input type="email" name="email" required placeholder="ornek@email.com">
+                        </div>
+                        <div class="form-group">
+                            <label>Telefon *</label>
+                            <input type="tel" name="phone" required placeholder="+90 5XX XXX XX XX">
+                        </div>
+                        <div class="form-group">
+                            <label>Başvurmak İstediğiniz Pozisyon *</label>
+                            <select name="position" required>
+                                <option value="">Pozisyon Seçiniz</option>
+                                <option value="makine-muhendisi">Makine Mühendisi</option>
+                                <option value="elektrik-muhendisi">Elektrik/Elektronik Mühendisi</option>
+                                <option value="otomasyon-muhendisi">Otomasyon Mühendisi</option>
+                                <option value="ihracat-uzmani">İhracat Uzmanı</option>
+                                <option value="satis-temsilcisi">Satış Temsilcisi</option>
+                                <option value="teknik-servis">Teknik Servis Personeli</option>
+                                <option value="uretim-operatoru">Üretim Operatörü</option>
+                                <option value="kaynak-operatoru">Kaynak Operatörü</option>
+                                <option value="cnc-operatoru">CNC Operatörü</option>
+                                <option value="diger">Diğer</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Deneyim Süresi</label>
+                            <select name="experience">
+                                <option value="">Seçiniz</option>
+                                <option value="0-1">0-1 Yıl</option>
+                                <option value="1-3">1-3 Yıl</option>
+                                <option value="3-5">3-5 Yıl</option>
+                                <option value="5-10">5-10 Yıl</option>
+                                <option value="10+">10+ Yıl</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>CV Yükle (PDF, DOC, DOCX)</label>
+                            <div class="file-upload" onclick="document.getElementById('cvFile').click()">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p id="fileLabel">CV dosyanızı sürükleyin veya tıklayın</p>
+                                <input type="file" id="cvFile" name="cv" accept=".pdf,.doc,.docx">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Ek Notlar</label>
+                            <textarea name="notes" rows="4" placeholder="Kendiniz hakkında kısaca bilgi verebilirsiniz..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-lg btn-block">
+                            <i class="fas fa-paper-plane"></i> Başvuruyu Gönder
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <a href="index.html" class="footer-logo">
+                        <span class="logo-text">GİRİŞİM</span>
+                        <span class="logo-sub">MAKİNA TÜRKİYE</span>
+                    </a>
+                    <p>1995'ten beri gıda işleme ve paketleme makineleri üretiyoruz.</p>
+                    <div class="footer-social">
+                        <a href="https://www.youtube.com/@girisimpackagingmachinery" target="_blank"><i class="fab fa-youtube"></i></a>
+                        <a href="https://www.linkedin.com/company/girisim-food-processing-and-packaging-machinery-turkey" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://www.instagram.com/girisim.machinery.turkey" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://wa.me/905468792927" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="footer-contact">
+                    <h4>İletişim</h4>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> Güneşli, Bağcılar / İstanbul</li>
+                        <li><i class="fab fa-whatsapp"></i> <a href="https://wa.me/905468792927">+90 546 879 29 27</a></li>
+                        <li><i class="fas fa-envelope"></i> <a href="mailto:info@girisimmak.com">info@girisimmak.com</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <p>&copy; 2024 Girişim Makina Türkiye. Tüm hakları saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Button -->
+    <a href="https://wa.me/905468792927" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script src="js/main.js"></script>
+    <script>
+        // File upload label
+        document.getElementById('cvFile').addEventListener('change', function(e) {
+            const fileName = e.target.files[0]?.name || 'CV dosyanızı sürükleyin veya tıklayın';
+            document.getElementById('fileLabel').textContent = fileName;
+        });
+
+        // Form submission
+        document.getElementById('hrForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            const name = formData.get('fullname');
+            const position = formData.get('position');
+            const phone = formData.get('phone');
+            const email = formData.get('email');
+
+            const message = `İş Başvurusu%0A%0AAd Soyad: ${name}%0APozisyon: ${position}%0ATelefon: ${phone}%0AE-posta: ${email}`;
+            window.open(`https://wa.me/905468792927?text=${message}`, '_blank');
+        });
+    </script>
+</body>
+</html>

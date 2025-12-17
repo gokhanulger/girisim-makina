@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Paket tipine göre paketleme makineleri - Yastık, Körüklü, Zarf, Quadro, Doypack paketler">
+    <title>Paket Tipine Göre | Girişim Makina</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        .page-hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            padding: 120px 0 80px;
+            color: white;
+            text-align: center;
+        }
+        .page-hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        .page-hero p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .package-types {
+            padding: 80px 0;
+        }
+        .package-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        .package-type-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .package-type-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+        .package-type-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .package-type-card .card-content {
+            padding: 25px;
+        }
+        .package-type-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+        .package-type-card p {
+            color: #666;
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+        }
+        .package-type-card .machines-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .package-type-card .machines-list span {
+            background: #f0f4ff;
+            color: var(--primary);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        .package-type-card .btn {
+            margin-top: 15px;
+            width: 100%;
+        }
+        .section-intro {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 50px;
+        }
+        .section-intro h2 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        .section-intro p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="container">
+            <div class="top-bar-content">
+                <div class="contact-info">
+                    <a href="https://wa.me/905468792927" target="_blank"><i class="fab fa-whatsapp"></i> +90 546 879 29 27</a>
+                    <a href="mailto:info@girisimmak.com"><i class="fas fa-envelope"></i> info@girisimmak.com</a>
+                </div>
+                <div class="language-social">
+                    <div class="languages" id="languageSelector">
+                        <a href="#" data-lang="tr" class="active">TR</a>
+                        <a href="#" data-lang="en">EN</a>
+                        <a href="#" data-lang="ru">RU</a>
+                        <a href="#" data-lang="ar">AR</a>
+                        <a href="#" data-lang="fr">FR</a>
+                        <a href="#" data-lang="pt">PT</a>
+                        <a href="#" data-lang="es">ES</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">
+                    <span class="logo-text">GİRİŞİM</span>
+                    <span class="logo-sub">MAKİNA TÜRKİYE</span>
+                </a>
+                <ul class="nav-menu">
+                    <li class="dropdown">
+                        <a href="index.html#about">Kurumsal <i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="index.html#about">Hakkımızda</a></li>
+                            <li><a href="hr.html">İnsan Kaynakları</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="index.html#production">Makinalarımız <i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="products/cereal-bar.html">Tahıl Bar Üretim Hatları</a></li>
+                            <li><a href="products/chocolate-coating.html">Çikolata Kaplama Makinaları</a></li>
+                            <li><a href="products/biscuit-sandwiching.html">Bisküvi Kremalama Makinaları</a></li>
+                            <li class="dropdown-divider"></li>
+                            <li><a href="products/flow-pack.html">Yatay Flowpack Paketleme</a></li>
+                            <li><a href="products/vffs.html">Dikey Paketleme Makinaları</a></li>
+                            <li><a href="products/overwrapping.html">Zarf Tipi Paketleme</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#packaging-choice">Paketleme Tercihiniz <i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="packaging-by-type.html">Paket Tipine Göre</a></li>
+                            <li><a href="packaging-by-product.html">Ürününüze Göre</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="index.html#videos">Videolar</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="index.html#contact">İletişim</a></li>
+                </ul>
+                <a href="https://wa.me/905468792927" target="_blank" class="btn btn-primary"><i class="fab fa-whatsapp"></i> TEKLİF AL</a>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Page Hero -->
+    <section class="page-hero">
+        <div class="container">
+            <h1><i class="fas fa-box"></i> Paket Tipine Göre</h1>
+            <p>İhtiyacınıza uygun paket tipini seçin, size en uygun makineyi önerelim</p>
+        </div>
+    </section>
+
+    <!-- Package Types -->
+    <section class="package-types">
+        <div class="container">
+            <div class="section-intro">
+                <h2>Paket Tipinizi Seçin</h2>
+                <p>Her paket tipi için özelleştirilmiş paketleme çözümlerimizi inceleyin</p>
+            </div>
+
+            <div class="package-grid">
+                <!-- Yastık Paket (Yatay) -->
+                <div class="package-type-card" onclick="location.href='products/flow-pack.html'">
+                    <img src="https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=600" alt="Yastık Paket">
+                    <div class="card-content">
+                        <h3>Yastık Paket (Yatay)</h3>
+                        <p>Pillow Bag - En yaygın kullanılan paket tipi. Bisküvi, çikolata, sabun ve daha fazlası için ideal.</p>
+                        <div class="machines-list">
+                            <span>Flow Pack</span>
+                            <span>HFFS</span>
+                        </div>
+                        <a href="products/flow-pack.html" class="btn btn-primary">Makineleri Gör</a>
+                    </div>
+                </div>
+
+                <!-- Körüklü Paket (Yatay) -->
+                <div class="package-type-card" onclick="location.href='products/flow-pack.html'">
+                    <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600" alt="Körüklü Paket">
+                    <div class="card-content">
+                        <h3>Körüklü Paket (Yatay)</h3>
+                        <p>Gusseted Bag - Yan körüklü paketler. Daha fazla hacim ve profesyonel görünüm.</p>
+                        <div class="machines-list">
+                            <span>Flow Pack</span>
+                            <span>Gusseted</span>
+                        </div>
+                        <a href="products/flow-pack.html" class="btn btn-primary">Makineleri Gör</a>
+                    </div>
+                </div>
+
+                <!-- Zarf Tipi Paket -->
+                <div class="package-type-card" onclick="location.href='products/overwrapping.html'">
+                    <img src="https://images.unsplash.com/photo-1606312619070-d48b4c652a52?w=600" alt="Zarf Tipi Paket">
+                    <div class="card-content">
+                        <h3>Zarf Tipi Paket (X-Fold)</h3>
+                        <p>Overwrapping - Premium görünüm için zarf tipi paketleme. Wafer, bisküvi, çikolata için.</p>
+                        <div class="machines-list">
+                            <span>Overwrap</span>
+                            <span>X-Fold</span>
+                        </div>
+                        <a href="products/overwrapping.html" class="btn btn-primary">Makineleri Gör</a>
+                    </div>
+                </div>
+
+                <!-- Yastık Paket (Dikey) -->
+                <div class="package-type-card" onclick="location.href='products/vffs.html'">
+                    <img src="https://images.unsplash.com/photo-1604719312566-8912e9227c6a?w=600" alt="Dikey Yastık Paket">
+                    <div class="card-content">
+                        <h3>Yastık Paket (Dikey)</h3>
+                        <p>Vertical Pillow Bag - Granül, toz ve parçalı ürünler için dikey dolum paketleme.</p>
+                        <div class="machines-list">
+                            <span>VFFS</span>
+                            <span>Dikey Dolum</span>
+                        </div>
+                        <a href="products/vffs.html" class="btn btn-primary">Makineleri Gör</a>
+                    </div>
+                </div>
+
+                <!-- Körüklü Paket (Dikey) -->
+                <div class="package-type-card" onclick="location.href='products/vffs.html'">
+                    <img src="https://images.unsplash.com/photo-1567789884554-0b844b597180?w=600" alt="Dikey Körüklü Paket">
+                    <div class="card-content">
+                        <h3>Körüklü Paket (Dikey)</h3>
+                        <p>Vertical Gusseted - Yan körüklü dikey paketler. Kahve, kuruyemiş için ideal.</p>
+                        <div class="machines-list">
+                            <span>VFFS</span>
+                            <span>Gusseted</span>
+                        </div>
+                        <a href="products/vffs.html" class="btn btn-primary">Makineleri Gör</a>
+                    </div>
+                </div>
+
+                <!-- Quadro/Block Bottom -->
+                <div class="package-type-card" onclick="location.href='products/vffs.html'">
+                    <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=600" alt="Quadro Paket">
+                    <div class="card-content">
+                        <h3>Quadro / Block Bottom</h3>
+                        <p>Düz tabanlı paketler. Premium görünüm, raflarda dik durur. Kahve, kuruyemiş için.</p>
+                        <div class="machines-list">
+                            <span>VFFS</span>
+                            <span>Block Bottom</span>
+                        </div>
+                        <a href="products/vffs.html" class="btn btn-primary">Makineleri Gör</a>
+                    </div>
+                </div>
+
+                <!-- Doypack/Stand-up Pouch -->
+                <div class="package-type-card" onclick="location.href='products/vffs.html'">
+                    <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=600" alt="Doypack">
+                    <div class="card-content">
+                        <h3>Doypack / Stand-up Pouch</h3>
+                        <p>Ayakta duran poşetler. Modern görünüm, fermuarlı seçenek. Snack, kuruyemiş için.</p>
+                        <div class="machines-list">
+                            <span>Doypack</span>
+                            <span>Stand-up</span>
+                        </div>
+                        <a href="products/vffs.html" class="btn btn-primary">Makineleri Gör</a>
+                    </div>
+                </div>
+
+                <!-- Stick Pack -->
+                <div class="package-type-card" onclick="location.href='products/vffs.html'">
+                    <img src="https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=600" alt="Stick Pack">
+                    <div class="card-content">
+                        <h3>Stick Pack</h3>
+                        <p>Uzun, dar stick paketler. Şeker, kahve, çay, ilaç için tek kullanımlık porsiyonlar.</p>
+                        <div class="machines-list">
+                            <span>Stick Pack</span>
+                            <span>Multi-lane</span>
+                        </div>
+                        <a href="products/vffs.html" class="btn btn-primary">Makineleri Gör</a>
+                    </div>
+                </div>
+
+                <!-- Sachet -->
+                <div class="package-type-card" onclick="location.href='products/vffs.html'">
+                    <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600" alt="Sachet">
+                    <div class="card-content">
+                        <h3>Sachet / Poşet</h3>
+                        <p>Küçük tek kullanımlık poşetler. Ketçap, mayonez, şampuan, sos paketleri için.</p>
+                        <div class="machines-list">
+                            <span>Sachet</span>
+                            <span>Liquid Fill</span>
+                        </div>
+                        <a href="products/vffs.html" class="btn btn-primary">Makineleri Gör</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Hangi Paket Tipi Size Uygun?</h2>
+                <p>Uzmanlarımız ürününüz için en uygun paket tipini belirlemenize yardımcı olsun</p>
+                <div class="cta-buttons">
+                    <a href="https://wa.me/905468792927" target="_blank" class="btn btn-white btn-lg"><i class="fab fa-whatsapp"></i> WhatsApp ile Danışın</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <a href="index.html" class="footer-logo">
+                        <span class="logo-text">GİRİŞİM</span>
+                        <span class="logo-sub">MAKİNA TÜRKİYE</span>
+                    </a>
+                    <p>1995'ten beri gıda işleme ve paketleme makineleri üretiyoruz.</p>
+                </div>
+                <div class="footer-contact">
+                    <h4>İletişim</h4>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> Güneşli, Bağcılar / İstanbul</li>
+                        <li><i class="fab fa-whatsapp"></i> <a href="https://wa.me/905468792927">+90 546 879 29 27</a></li>
+                        <li><i class="fas fa-envelope"></i> <a href="mailto:info@girisimmak.com">info@girisimmak.com</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <p>&copy; 2024 Girişim Makina Türkiye. Tüm hakları saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Button -->
+    <a href="https://wa.me/905468792927" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
