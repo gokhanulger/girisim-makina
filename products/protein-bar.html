@@ -146,6 +146,32 @@
 
     <a href="https://wa.me/905468792927" class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
 
+    <!-- Floating Language Selector -->
+    <div class="language-float" id="languageFloat">
+        <button class="language-float-btn" onclick="toggleLanguageDropdown()">
+            <i class="fas fa-globe"></i>
+            <span id="currentLangLabel">TR</span>
+        </button>
+        <div class="language-float-dropdown" id="languageDropdown">
+            <a href="#" data-lang="tr">🇹🇷 TR</a>
+            <a href="#" data-lang="en">🇬🇧 EN</a>
+            <a href="#" data-lang="ru">🇷🇺 RU</a>
+            <a href="#" data-lang="ar">🇸🇦 AR</a>
+            <a href="#" data-lang="fr">🇫🇷 FR</a>
+            <a href="#" data-lang="pt">🇧🇷 PT</a>
+            <a href="#" data-lang="es">🇪🇸 ES</a>
+        </div>
+    </div>
+
+    <!-- Floating Social Icons -->
+    <div class="social-float" id="socialFloat">
+        <a href="https://www.youtube.com/@girisimpackagingmachinery" target="_blank" class="social-float-icon youtube" title="YouTube"><i class="fab fa-youtube"></i></a>
+        <a href="https://www.linkedin.com/company/girisim-food-processing-and-packaging-machinery-turkey" target="_blank" class="social-float-icon linkedin" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+        <a href="https://www.instagram.com/girisim.machinery.turkey" target="_blank" class="social-float-icon instagram" title="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.facebook.com/PackagingMachineryTurkey" target="_blank" class="social-float-icon facebook" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://www.tiktok.com/@girisim.makina.turkiye" target="_blank" class="social-float-icon tiktok" title="TikTok"><i class="fab fa-tiktok"></i></a>
+    </div>
+
     <div id="videoModal" class="video-modal" onclick="closeVideo()">
         <div class="video-modal-content" onclick="event.stopPropagation()">
             <span class="close-video" onclick="closeVideo()">&times;</span>
@@ -167,6 +193,50 @@
             document.body.style.overflow = '';
         }
         document.addEventListener('keydown', e => e.key === 'Escape' && closeVideo());
+
+        // Floating Language Selector
+        function toggleLanguageDropdown() {
+            document.getElementById('languageDropdown').classList.toggle('show');
+        }
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.language-float')) {
+                document.getElementById('languageDropdown').classList.remove('show');
+            }
+        });
+        window.addEventListener('scroll', function() {
+            const languageFloat = document.getElementById('languageFloat');
+            const socialFloat = document.getElementById('socialFloat');
+            if (window.scrollY > 300) {
+                languageFloat.classList.add('visible');
+                if (socialFloat) socialFloat.classList.add('visible');
+            } else {
+                languageFloat.classList.remove('visible');
+                if (socialFloat) socialFloat.classList.remove('visible');
+                document.getElementById('languageDropdown').classList.remove('show');
+            }
+        });
+        document.querySelectorAll('.language-float-dropdown a').forEach(function(link) {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const lang = this.getAttribute('data-lang');
+                document.querySelectorAll('#languageSelector a').forEach(function(a) {
+                    a.classList.remove('active');
+                    if (a.getAttribute('data-lang') === lang) a.classList.add('active');
+                });
+                document.querySelectorAll('.language-float-dropdown a').forEach(function(a) { a.classList.remove('active'); });
+                this.classList.add('active');
+                document.getElementById('currentLangLabel').textContent = lang.toUpperCase();
+                document.getElementById('languageDropdown').classList.remove('show');
+                if (typeof setProductLanguage === 'function') setProductLanguage(lang);
+            });
+        });
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentLang = localStorage.getItem('girisim_lang') || 'tr';
+            document.getElementById('currentLangLabel').textContent = currentLang.toUpperCase();
+            document.querySelectorAll('.language-float-dropdown a').forEach(function(a) {
+                if (a.getAttribute('data-lang') === currentLang) a.classList.add('active');
+            });
+        });
     </script>
 </body>
 </html>

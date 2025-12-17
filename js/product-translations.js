@@ -630,130 +630,130 @@ const productTranslations = {
             videos: ["Emballage type briquet"]
         }
     },
-    de: {
+    pt: {
         common: {
-            tag_production: "Produktionslinien",
-            tag_packaging: "Verpackungsmaschinen",
-            getQuote: "Angebot anfordern",
+            tag_production: "Linhas de Produção",
+            tag_packaging: "Máquinas de Embalagem",
+            getQuote: "Solicitar Orçamento",
             whatsapp: "WhatsApp",
-            email: "E-Mail",
-            videos: "Videos",
-            countries: "Länder",
-            support: "Support",
-            perMin: "Pakete/min",
-            perHour: "kg/Stunde",
-            cycleMin: "Zyklen/min",
-            pcsMin: "Stück/min"
+            email: "E-mail",
+            videos: "Vídeos",
+            countries: "Países",
+            support: "Suporte",
+            perMin: "pacotes/min",
+            perHour: "kg/hora",
+            cycleMin: "ciclos/min",
+            pcsMin: "peças/min"
         },
         wafer: {
-            title: "Waffel-",
-            titleHighlight: "Produktionslinien",
-            heroDesc: "Komplette Waffel-Produktionslinien. Schlüsselfertige Lösungen von der Teigzubereitung bis zum Schneiden, vom Cremen bis zum Verpacken.",
-            overviewTitle: "Waffel-Produktions-",
-            overviewHighlight: "Lösungen",
-            overviewP1: "Bei Girisim Makina fertigen wir Waffel-Produktionslinien von Weltklasse. Wir bieten komplette Lösungen mit automatischer Teigzubereitung, Hochleistungsöfen, Cremesystemen und Schneideinheiten.",
-            overviewP2: "Unsere Öfen sind mit 39-51-63-75 Plattenoptionen für verschiedene Kapazitäten erhältlich. Maßgeschneiderte Linien für die Produktion von Flach-Waffeln, gefüllten Waffeln, Waffelsticks und Waffeltüten.",
-            ctaTitle: "Angebot für Waffel-Produktionslinie anfordern",
-            videos: ["Waffel-Ofen", "Waffel-Cremen", "Waffel-Schneiden"]
+            title: "Linhas de Produção de",
+            titleHighlight: "Wafer",
+            heroDesc: "Linhas completas de produção de wafer. Soluções chave na mão desde a preparação da massa até ao corte, do recheio até à embalagem.",
+            overviewTitle: "Soluções de Produção de",
+            overviewHighlight: "Wafer",
+            overviewP1: "Na Girisim Makina, fabricamos linhas de produção de wafer de classe mundial. Oferecemos soluções completas com preparação automática de massa, fornos de alta capacidade, sistemas de recheio e unidades de corte.",
+            overviewP2: "Os nossos fornos estão disponíveis com opções de 39-51-63-75 placas para diferentes capacidades. Linhas personalizadas para produção de wafer plano, wafer recheado, palitos de wafer e cones de wafer.",
+            ctaTitle: "Solicitar Orçamento para Linha de Wafer",
+            videos: ["Forno de Wafer", "Recheio de Wafer", "Corte de Wafer"]
         },
         "cereal-bar": {
-            title: "Müsliriegel-",
-            titleHighlight: "Produktionslinien",
-            heroDesc: "Müsliriegel- und Granola-Riegel-Produktionslinien. Komplette Lösungen mit Misch-, Press-, Schneide- und Verpackungssystemen.",
-            overviewTitle: "Müsliriegel-",
-            overviewHighlight: "Produktionslösungen",
-            overviewP1: "Der Markt für Müsliriegel und Granola-Riegel wächst schnell. Bei Girisim Makina bieten wir komplette Riegelproduktionslinien, die Hafer, Puffreis, Cornflakes und andere Getreide verarbeiten können.",
-            overviewP2: "Maßgeschneiderte Systeme für Riegel mit Honig, Zuckersirup oder Schokolade als Bindemittel. Misch-, Form-, Kühl- und Schneideinheiten.",
-            ctaTitle: "Angebot für Müsliriegel-Linie anfordern",
-            videos: ["Müsliriegel-Produktion", "Granola-Riegel-Linie"]
+            title: "Linhas de Produção de",
+            titleHighlight: "Barras de Cereais",
+            heroDesc: "Linhas de produção de barras de cereais e granola. Soluções completas com sistemas de mistura, prensagem, corte e embalagem.",
+            overviewTitle: "Soluções de Produção de",
+            overviewHighlight: "Barras de Cereais",
+            overviewP1: "O mercado de barras de cereais e granola está em rápido crescimento. Na Girisim Makina, oferecemos linhas completas de produção de barras que podem processar aveia, arroz tufado, flocos de milho e outros cereais.",
+            overviewP2: "Sistemas personalizados para barras com mel, xarope de açúcar ou chocolate como aglutinante. Unidades de mistura, moldagem, resfriamento e corte.",
+            ctaTitle: "Solicitar Orçamento para Linha de Barras de Cereais",
+            videos: ["Produção de Barras de Cereais", "Linha de Barras de Granola"]
         },
         "protein-bar": {
-            title: "Proteinriegel-",
-            titleHighlight: "Produktionslinien",
-            heroDesc: "Komplette Linien für die Produktion von Proteinriegeln, Energieriegeln, Nougat-Riegeln und Karamell-Riegeln. Inklusive Mischen, Formen, Überziehen und Verpacken.",
-            overviewTitle: "Proteinriegel-",
-            overviewHighlight: "Produktionslösungen",
-            overviewP1: "Der Markt für Proteinriegel wächst schnell. Bei Girisim Makina bieten wir komplette Riegelproduktionslinien, die Nougat, Karamell, Nusspaste und andere Füllungen verarbeiten können.",
-            overviewP2: "Extrusions- oder Slab-Forming-Systeme, Schokoladenüberzug, Kühltunnel und integrierte Flow-Pack-Verpackungslösungen.",
-            ctaTitle: "Angebot für Proteinriegel-Linie anfordern",
-            videos: ["Nougat-Riegel-Linie", "Kokos-Riegel-Linie"]
+            title: "Linhas de Produção de",
+            titleHighlight: "Barras de Proteína",
+            heroDesc: "Linhas completas para produção de barras de proteína, barras energéticas, barras de nougat e barras de caramelo. Inclui mistura, moldagem, cobertura e embalagem.",
+            overviewTitle: "Soluções de Produção de",
+            overviewHighlight: "Barras de Proteína",
+            overviewP1: "O mercado de barras de proteína está em rápido crescimento. Na Girisim Makina, oferecemos linhas completas de produção de barras que podem processar nougat, caramelo, pasta de nozes e outros recheios.",
+            overviewP2: "Sistemas de extrusão ou moldagem de placa, cobertura de chocolate, túneis de resfriamento e soluções integradas de embalagem flow pack.",
+            ctaTitle: "Solicitar Orçamento para Linha de Barras de Proteína",
+            videos: ["Linha de Barras de Nougat", "Linha de Barras de Coco"]
         },
         "chocolate-coating": {
-            title: "Schokoladen-",
-            titleHighlight: "Überzugssysteme",
-            heroDesc: "Schokoladen-Überziehmaschinen und Kühltunnel. Professionelle Überzugslösungen für Kekse, Waffeln, Riegel und Süßwaren.",
-            overviewTitle: "Schokoladen-",
-            overviewHighlight: "Überzugslösungen",
-            overviewP1: "Unsere Schokoladen-Überziehmaschinen überziehen Ihre Produkte mit Voll- oder Halb-Schokoladenüberzug. Bietet präzise Temperaturkontrolle und gleichmäßige Überzugsdicke.",
-            overviewP2: "Wir bieten integrierte Systeme mit Kühltunneln. Dekorationseinheiten, Drizzle-Systeme und Bodenüberzugsoptionen verfügbar.",
-            ctaTitle: "Angebot für Schokoladen-Überzugssystem anfordern",
-            videos: ["Überzugssystem", "Kühltunnel", "Überzugsbeispiele"]
+            title: "Sistemas de Cobertura de",
+            titleHighlight: "Chocolate",
+            heroDesc: "Máquinas de cobertura de chocolate e túneis de resfriamento. Soluções profissionais de cobertura para biscoitos, wafers, barras e confeitaria.",
+            overviewTitle: "Soluções de Cobertura de",
+            overviewHighlight: "Chocolate",
+            overviewP1: "As nossas máquinas de cobertura de chocolate cobrem os seus produtos com cobertura total ou parcial. Oferece controle preciso de temperatura e espessura uniforme da cobertura.",
+            overviewP2: "Oferecemos sistemas integrados com túneis de resfriamento. Unidades de decoração, sistemas de drizzle e opções de cobertura de fundo disponíveis.",
+            ctaTitle: "Solicitar Orçamento para Sistema de Cobertura de Chocolate",
+            videos: ["Sistema de Cobertura", "Túnel de Resfriamento", "Exemplos de Cobertura"]
         },
         "biscuit-sandwiching": {
-            title: "Keks-Sandwich-",
-            titleHighlight: "Maschinen",
-            heroDesc: "Creme-Auftrag- und Keks-Sandwich-Maschinen für die Sandwich-Keks-Produktion. Hohe Geschwindigkeit, präzise Creme-Dosierung und einfache Reinigung.",
-            overviewTitle: "Sandwich-Keks-",
-            overviewHighlight: "Produktionslösungen",
-            overviewP1: "Keks-Sandwich-Maschinen erstellen Sandwich-Kekse durch Auftragen von Creme auf runde oder quadratische Kekse. Geeignet für verschiedene Cremetypen (Schokolade, Vanille, Haselnuss).",
-            overviewP2: "Präzise Servomotor-Dosierung, automatische Keksausrichtung und Sandwich-System. On-Edge- oder Flach-Zuführungsoptionen.",
-            ctaTitle: "Angebot für Keks-Sandwich-Maschine anfordern",
-            videos: ["Keks-Produktionslinie"]
+            title: "Máquinas de Sanduíche de",
+            titleHighlight: "Biscoitos",
+            heroDesc: "Máquinas de aplicação de creme e sanduíche de biscoitos para produção de biscoitos sanduíche. Alta velocidade, dosagem precisa de creme e fácil limpeza.",
+            overviewTitle: "Soluções de Produção de",
+            overviewHighlight: "Biscoitos Sanduíche",
+            overviewP1: "As máquinas de sanduíche de biscoitos criam biscoitos sanduíche aplicando creme em biscoitos redondos ou quadrados. Adequado para vários tipos de creme (chocolate, baunilha, avelã).",
+            overviewP2: "Dosagem precisa por servomotor, alinhamento automático de biscoitos e sistema de sanduíche. Opções de alimentação na borda ou plana.",
+            ctaTitle: "Solicitar Orçamento para Máquina de Sanduíche de Biscoitos",
+            videos: ["Linha de Produção de Biscoitos"]
         },
         "flow-pack": {
-            title: "Flow-Pack-",
-            titleHighlight: "Maschinen",
-            heroDesc: "Horizontale Flow-Pack (HFFS) Verpackungsmaschinen. Hochgeschwindigkeitsverpackung für Kekse, Waffeln, Schokolade, Seife, Brot und mehr.",
-            overviewTitle: "Flow-Pack-",
-            overviewHighlight: "Verpackungslösungen",
-            overviewP1: "Unsere Flow-Pack-Maschinen arbeiten nach dem horizontalen Form-Füll-Siegel-Prinzip. Bieten Einzel-, Mehrfach- oder Schalenverpackungsoptionen. Präzise Servomotor-Schneide- und Siegelsysteme.",
-            overviewP2: "Vakuum- und MAP (Modifizierte Atmosphärenverpackung) Optionen verfügbar. Können integriert mit automatischen Zuführsystemen und Zählern arbeiten.",
-            ctaTitle: "Angebot für Flow-Pack-Maschine anfordern",
-            videos: ["Waffel-Verpackung", "Seifen-Verpackung", "Brot-Verpackung", "Feuchttücher", "Riegel-Verpackung"]
+            title: "Máquinas",
+            titleHighlight: "Flow Pack",
+            heroDesc: "Máquinas de embalagem Flow Pack horizontal (HFFS). Embalagem de alta velocidade para biscoitos, wafers, chocolate, sabão, pão e muito mais.",
+            overviewTitle: "Soluções de Embalagem",
+            overviewHighlight: "Flow Pack",
+            overviewP1: "As nossas máquinas flow pack operam com o princípio horizontal de formar-encher-selar. Oferecem opções de embalagem simples, múltipla ou em bandeja. Sistemas precisos de corte e selagem por servomotor.",
+            overviewP2: "Opções de vácuo e MAP (Embalagem em Atmosfera Modificada) disponíveis. Podem trabalhar integradas com sistemas de alimentação automática e contadores.",
+            ctaTitle: "Solicitar Orçamento para Máquina Flow Pack",
+            videos: ["Embalagem de Wafer", "Embalagem de Sabão", "Embalagem de Pão", "Toalhetes Húmidos", "Embalagem de Barras"]
         },
         overwrapping: {
-            title: "Overwrapping-",
-            titleHighlight: "Maschinen",
-            heroDesc: "Umschlag-Verpackungsmaschinen. Professionelle Verpackung für Reiswaffeln, Kekse, Seife, Kartons und Produkte mit flacher Oberfläche.",
-            overviewTitle: "Umschlag-",
-            overviewHighlight: "Verpackung",
-            overviewP1: "Overwrapping-Maschinen verpacken Produkte im Umschlagstil und bieten straffe und elegante Verpackung. Ideal besonders für Reiswaffeln, Kekspackungen, Seife und Kartonprodukte.",
-            overviewP2: "Sowohl Flow-Pack als auch X-Fold-Overwrap-Kombinationen können angeboten werden. Kompatibel mit verschiedenen Folientypen: OPP, BOPP, Zellophan.",
-            ctaTitle: "Angebot für Overwrapping-Maschine anfordern",
-            videos: ["Reiswaffel-Verpackung", "Automatische Verpackung", "Automatische Zuführung"]
+            title: "Máquinas de",
+            titleHighlight: "Overwrapping",
+            heroDesc: "Máquinas de embalagem tipo envelope. Embalagem profissional para bolachas de arroz, biscoitos, sabão, caixas e produtos com superfície plana.",
+            overviewTitle: "Embalagem Tipo",
+            overviewHighlight: "Envelope",
+            overviewP1: "As máquinas de overwrapping embalam produtos no estilo envelope, proporcionando embalagem apertada e elegante. Ideal especialmente para bolachas de arroz, pacotes de biscoitos, sabão e produtos em caixa.",
+            overviewP2: "Combinações de flow pack e overwrap X-fold podem ser oferecidas. Compatível com vários tipos de filme: OPP, BOPP, celofane.",
+            ctaTitle: "Solicitar Orçamento para Máquina de Overwrapping",
+            videos: ["Embalagem de Bolachas de Arroz", "Embalagem Automática", "Alimentação Automática"]
         },
         thermoform: {
-            title: "Thermoform-",
-            titleHighlight: "Verpackung",
-            heroDesc: "Thermoform-Verpackungsmaschinen. Vakuum- und MAP-Verpackung für Käse, Fleisch, Gemüse, Obst und Fertiggerichte.",
-            overviewTitle: "Thermoform-",
-            overviewHighlight: "Verpackungslösungen",
-            overviewP1: "Thermoform-Maschinen verpacken, indem das Produkt auf eine wärmegeformte Unterfolie gelegt und mit Oberfolie versiegelt wird. Verlängert die Haltbarkeit mit Vakuum oder Gas (MAP).",
-            overviewP2: "Ideal für Käse, Fleisch, Gemüse, Obst, Fertiggerichte und medizinische Produkte. Verschiedene Formgrößen und Mehrfachkammeroptionen.",
-            ctaTitle: "Angebot für Thermoform-Maschine anfordern",
-            videos: ["Käse-Verpackung"]
+            title: "Embalagem",
+            titleHighlight: "Termoformada",
+            heroDesc: "Máquinas de embalagem termoformada. Embalagem a vácuo e MAP para queijo, carne, vegetais, frutas e refeições prontas.",
+            overviewTitle: "Soluções de Embalagem",
+            overviewHighlight: "Termoformada",
+            overviewP1: "As máquinas termoformadas embalam colocando o produto num filme inferior termoformado e selando com filme superior. Prolonga a validade com vácuo ou gás (MAP).",
+            overviewP2: "Ideal para queijo, carne, vegetais, frutas, refeições prontas e produtos médicos. Vários tamanhos de molde e opções multicâmara.",
+            ctaTitle: "Solicitar Orçamento para Máquina Termoformada",
+            videos: ["Embalagem de Queijo"]
         },
         vffs: {
-            title: "VFFS Vertikale",
-            titleHighlight: "Abfüllmaschinen",
-            heroDesc: "Vertikale Form-Füll-Siegel (VFFS) Verpackungsmaschinen. Wiege- und Abfüllsysteme für Granulate, Pulver, Nüsse, Zucker, Kaffee und Snackprodukte.",
-            overviewTitle: "VFFS Vertikale",
-            overviewHighlight: "Abfülllösungen",
-            overviewP1: "Unsere VFFS-Maschinen arbeiten nach dem vertikalen Form-Füll-Siegel-Prinzip. Mehrkopf-Wiegesysteme bieten präzise Gewichtskontrolle.",
-            overviewP2: "Verschiedene Abfüllsysteme für Granulate, Pulver, Flüssigkeiten und klebrige Produkte. Stick-Pack, Kissenbeutel, Seitenfaltenbeutel und Doypack-Optionen.",
-            ctaTitle: "Angebot für VFFS-Maschine anfordern",
-            videos: ["Nuss-Abfüllung", "Hülsenfrucht-Verpackung", "Mehrkopf-Wiegung"]
+            title: "VFFS Máquinas de",
+            titleHighlight: "Enchimento Vertical",
+            heroDesc: "Máquinas de embalagem vertical Form-Fill-Seal (VFFS). Sistemas de pesagem e enchimento para granulados, pós, nozes, açúcar, café e produtos snack.",
+            overviewTitle: "Soluções de Enchimento",
+            overviewHighlight: "Vertical VFFS",
+            overviewP1: "As nossas máquinas VFFS operam com o princípio vertical de formar-encher-selar. Os sistemas de pesagem multicabeça fornecem controle preciso de peso.",
+            overviewP2: "Vários sistemas de enchimento para granulados, pós, líquidos e produtos pegajosos. Opções de stick pack, saquetas almofada, saquetas com fole lateral e doypack.",
+            ctaTitle: "Solicitar Orçamento para Máquina VFFS",
+            videos: ["Enchimento de Nozes", "Embalagem de Leguminosas", "Pesagem Multicabeça"]
         },
         halvah: {
-            title: "Halwa-",
-            titleHighlight: "Verpackung",
-            heroDesc: "Halwa-Schneide- und Verpackungsmaschinen. Schneide-, Wiege- und Verpackungslösungen für Tahini-Halwa, Mehl-Halwa, Pismaniye und ähnliche Produkte.",
-            overviewTitle: "Halwa-",
-            overviewHighlight: "Verarbeitungslösungen",
-            overviewP1: "Halwa-Verpackungsmaschinen sind für das Schneiden von Block-Halwa oder direkte Verpackung konzipiert. Ultraschall-Schneiden, Draht-Schneiden und Klingen-Schneideoptionen.",
-            overviewP2: "Können mit Flow-Pack- oder Thermoform-Verpackung integriert werden. Präzise Wiegesysteme für verschiedene Gewichte.",
-            ctaTitle: "Angebot für Halwa-Verpackungsmaschine anfordern",
-            videos: ["Brikett-Typ Verpackung"]
+            title: "Embalagem de",
+            titleHighlight: "Halva",
+            heroDesc: "Máquinas de corte e embalagem de halva. Soluções de corte, pesagem e embalagem para halva de tahini, halva de farinha, pismaniye e produtos similares.",
+            overviewTitle: "Soluções de Processamento de",
+            overviewHighlight: "Halva",
+            overviewP1: "As máquinas de embalagem de halva são projetadas para cortar halva em bloco ou embalar diretamente. Opções de corte ultrassônico, corte por fio e corte por lâmina.",
+            overviewP2: "Podem ser integradas com embalagem flow pack ou termoformada. Sistemas de pesagem precisos para vários pesos.",
+            ctaTitle: "Solicitar Orçamento para Máquina de Embalagem de Halva",
+            videos: ["Embalagem Tipo Briquete"]
         }
     },
     es: {
@@ -1000,25 +1000,116 @@ function applyProductTranslations() {
 function applyNavTranslations() {
     // This uses the main site translations for nav items
     const navTranslations = {
-        tr: { about: "Hakkımızda", production: "Üretim Hatları", packaging: "Paketleme", contact: "İletişim", getQuote: "TEKLİF AL" },
-        en: { about: "About Us", production: "Production Lines", packaging: "Packaging", contact: "Contact", getQuote: "GET QUOTE" },
-        ru: { about: "О нас", production: "Производственные линии", packaging: "Упаковка", contact: "Контакты", getQuote: "ЗАПРОСИТЬ" },
-        ar: { about: "من نحن", production: "خطوط الإنتاج", packaging: "التعبئة والتغليف", contact: "اتصل بنا", getQuote: "طلب عرض" },
-        fr: { about: "À propos", production: "Lignes de production", packaging: "Emballage", contact: "Contact", getQuote: "DEVIS" },
-        de: { about: "Über uns", production: "Produktionslinien", packaging: "Verpackung", contact: "Kontakt", getQuote: "ANGEBOT" },
-        es: { about: "Nosotros", production: "Líneas de producción", packaging: "Envasado", contact: "Contacto", getQuote: "COTIZACIÓN" }
+        tr: {
+            about: "Kurumsal", production: "Makinalarımız", packaging: "Paketleme Tercihiniz",
+            videos: "Videolar", blog: "Blog", contact: "İletişim", getQuote: "TEKLİF AL",
+            corporate: { aboutUs: "Hakkımızda", whyUs: "Neden Girişim Makina?", certificates: "Sertifikalarımız", hr: "İnsan Kaynakları" },
+            machines: { cerealBar: "Tahıl Bar Üretim Hatları", chocolateCoating: "Çikolata Kaplama Makinaları", biscuitSandwich: "Bisküvi Kremalama Makinaları", flowpack: "Yatay Flowpack Paketleme", vffs: "Dikey Paketleme Makinaları", overwrap: "Zarf Tipi Paketleme" },
+            packagingChoice: { byType: "Paket Tipine Göre", byProduct: "Ürününüze Göre" }
+        },
+        en: {
+            about: "Corporate", production: "Our Machines", packaging: "Packaging Choice",
+            videos: "Videos", blog: "Blog", contact: "Contact", getQuote: "GET QUOTE",
+            corporate: { aboutUs: "About Us", whyUs: "Why Girişim Makina?", certificates: "Our Certificates", hr: "Human Resources" },
+            machines: { cerealBar: "Cereal Bar Production Lines", chocolateCoating: "Chocolate Coating Machines", biscuitSandwich: "Biscuit Sandwiching Machines", flowpack: "Horizontal Flowpack Packaging", vffs: "Vertical Packaging Machines", overwrap: "Overwrapping Packaging" },
+            packagingChoice: { byType: "By Package Type", byProduct: "By Your Product" }
+        },
+        ru: {
+            about: "Компания", production: "Наши машины", packaging: "Выбор упаковки",
+            videos: "Видео", blog: "Блог", contact: "Контакты", getQuote: "ЗАПРОСИТЬ",
+            corporate: { aboutUs: "О нас", whyUs: "Почему Girişim Makina?", certificates: "Наши сертификаты", hr: "Кадры" },
+            machines: { cerealBar: "Линии производства зерновых батончиков", chocolateCoating: "Машины для шоколадного покрытия", biscuitSandwich: "Машины для сэндвич-печенья", flowpack: "Горизонтальная упаковка Flowpack", vffs: "Вертикальные упаковочные машины", overwrap: "Обертывание" },
+            packagingChoice: { byType: "По типу упаковки", byProduct: "По вашему продукту" }
+        },
+        ar: {
+            about: "الشركة", production: "آلاتنا", packaging: "اختيار التغليف",
+            videos: "فيديوهات", blog: "المدونة", contact: "اتصل بنا", getQuote: "طلب عرض",
+            corporate: { aboutUs: "من نحن", whyUs: "لماذا Girişim Makina؟", certificates: "شهاداتنا", hr: "الموارد البشرية" },
+            machines: { cerealBar: "خطوط إنتاج ألواح الحبوب", chocolateCoating: "آلات تغليف الشوكولاتة", biscuitSandwich: "آلات حشو البسكويت", flowpack: "تغليف فلوباك أفقي", vffs: "آلات التغليف العمودية", overwrap: "تغليف المغلفات" },
+            packagingChoice: { byType: "حسب نوع العبوة", byProduct: "حسب منتجك" }
+        },
+        fr: {
+            about: "Entreprise", production: "Nos Machines", packaging: "Choix d'emballage",
+            videos: "Vidéos", blog: "Blog", contact: "Contact", getQuote: "DEVIS",
+            corporate: { aboutUs: "À propos", whyUs: "Pourquoi Girişim Makina?", certificates: "Nos certificats", hr: "Ressources Humaines" },
+            machines: { cerealBar: "Lignes de production de barres céréalières", chocolateCoating: "Machines d'enrobage chocolat", biscuitSandwich: "Machines à sandwichs biscuits", flowpack: "Emballage Flowpack horizontal", vffs: "Machines d'emballage verticales", overwrap: "Suremballage" },
+            packagingChoice: { byType: "Par type d'emballage", byProduct: "Par votre produit" }
+        },
+        pt: {
+            about: "Institucional", production: "Nossas Máquinas", packaging: "Escolha de Embalagem",
+            videos: "Vídeos", blog: "Blog", contact: "Contato", getQuote: "ORÇAMENTO",
+            corporate: { aboutUs: "Sobre Nós", whyUs: "Por que Girişim Makina?", certificates: "Nossos Certificados", hr: "Recursos Humanos" },
+            machines: { cerealBar: "Linhas de Produção de Barras de Cereais", chocolateCoating: "Máquinas de Cobertura de Chocolate", biscuitSandwich: "Máquinas de Sanduíche de Biscoitos", flowpack: "Embalagem Flowpack Horizontal", vffs: "Máquinas de Embalagem Verticais", overwrap: "Embalagem Overwrapping" },
+            packagingChoice: { byType: "Por Tipo de Embalagem", byProduct: "Por Seu Produto" }
+        },
+        es: {
+            about: "Empresa", production: "Nuestras Máquinas", packaging: "Elección de Empaque",
+            videos: "Videos", blog: "Blog", contact: "Contacto", getQuote: "COTIZACIÓN",
+            corporate: { aboutUs: "Nosotros", whyUs: "¿Por qué Girişim Makina?", certificates: "Nuestros Certificados", hr: "Recursos Humanos" },
+            machines: { cerealBar: "Líneas de Producción de Barras de Cereales", chocolateCoating: "Máquinas de Recubrimiento de Chocolate", biscuitSandwich: "Máquinas de Sándwich de Galletas", flowpack: "Empaque Flowpack Horizontal", vffs: "Máquinas de Empaque Verticales", overwrap: "Empaque Overwrapping" },
+            packagingChoice: { byType: "Por Tipo de Empaque", byProduct: "Por Su Producto" }
+        }
     };
 
     const nav = navTranslations[productCurrentLang];
     if (!nav) return;
 
-    const navLinks = document.querySelectorAll('.nav-menu a');
-    navLinks.forEach(link => {
-        const href = link.getAttribute('href');
-        if (href && href.includes('#about')) link.textContent = nav.about;
-        else if (href && href.includes('#production')) link.textContent = nav.production;
-        else if (href && href.includes('#packaging')) link.textContent = nav.packaging;
-        else if (href && href.includes('#contact')) link.textContent = nav.contact;
+    // Navigation - Get all dropdowns
+    const dropdowns = document.querySelectorAll('.nav-menu > li.dropdown');
+
+    // First dropdown - Kurumsal/Corporate
+    if (dropdowns[0]) {
+        const mainLink = dropdowns[0].querySelector(':scope > a');
+        if (mainLink) mainLink.innerHTML = nav.about + ' <i class="fas fa-chevron-down"></i>';
+
+        if (nav.corporate) {
+            const items = dropdowns[0].querySelectorAll('.dropdown-menu > li:not(.dropdown-divider) > a');
+            if (items[0]) items[0].textContent = nav.corporate.aboutUs;
+            if (items[1]) items[1].textContent = nav.corporate.whyUs;
+            if (items[2]) items[2].textContent = nav.corporate.certificates;
+            if (items[3]) items[3].textContent = nav.corporate.hr;
+        }
+    }
+
+    // Second dropdown - Makinalarımız/Our Machines
+    if (dropdowns[1]) {
+        const mainLink = dropdowns[1].querySelector(':scope > a');
+        if (mainLink) mainLink.innerHTML = nav.production + ' <i class="fas fa-chevron-down"></i>';
+
+        if (nav.machines) {
+            const items = dropdowns[1].querySelectorAll('.dropdown-menu > li:not(.dropdown-divider) > a');
+            if (items[0]) items[0].textContent = nav.machines.cerealBar;
+            if (items[1]) items[1].textContent = nav.machines.chocolateCoating;
+            if (items[2]) items[2].textContent = nav.machines.biscuitSandwich;
+            if (items[3]) items[3].textContent = nav.machines.flowpack;
+            if (items[4]) items[4].textContent = nav.machines.vffs;
+            if (items[5]) items[5].textContent = nav.machines.overwrap;
+        }
+    }
+
+    // Third dropdown - Paketleme Tercihiniz/Packaging Choice
+    if (dropdowns[2]) {
+        const mainLink = dropdowns[2].querySelector(':scope > a');
+        if (mainLink) mainLink.innerHTML = nav.packaging + ' <i class="fas fa-chevron-down"></i>';
+
+        if (nav.packagingChoice) {
+            const items = dropdowns[2].querySelectorAll('.dropdown-menu > li > a');
+            if (items[0]) items[0].textContent = nav.packagingChoice.byType;
+            if (items[1]) items[1].textContent = nav.packagingChoice.byProduct;
+        }
+    }
+
+    // Non-dropdown nav items (Videos, Blog, Contact)
+    const navItems = document.querySelectorAll('.nav-menu > li:not(.dropdown) > a');
+    navItems.forEach(link => {
+        const href = link.getAttribute('href') || '';
+        if (href.includes('#videos') || href.includes('index.html#videos')) {
+            link.textContent = nav.videos;
+        } else if (href.includes('blog')) {
+            link.textContent = nav.blog;
+        } else if (href.includes('#contact') || href.includes('index.html#contact')) {
+            link.textContent = nav.contact;
+        }
     });
 
     const headerBtn = document.querySelector('.header .btn-primary');
@@ -1086,7 +1177,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <a href="#" data-lang="ru" class="${productCurrentLang === 'ru' ? 'active' : ''}">RU</a>
             <a href="#" data-lang="ar" class="${productCurrentLang === 'ar' ? 'active' : ''}">AR</a>
             <a href="#" data-lang="fr" class="${productCurrentLang === 'fr' ? 'active' : ''}">FR</a>
-            <a href="#" data-lang="de" class="${productCurrentLang === 'de' ? 'active' : ''}">DE</a>
+            <a href="#" data-lang="pt" class="${productCurrentLang === 'pt' ? 'active' : ''}">PT</a>
             <a href="#" data-lang="es" class="${productCurrentLang === 'es' ? 'active' : ''}">ES</a>
         `;
         topBarContent.appendChild(langSelector);

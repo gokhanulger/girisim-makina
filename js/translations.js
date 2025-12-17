@@ -15,6 +15,24 @@ const translations = {
             blog: "Blog",
             getQuote: "TEKLİF AL"
         },
+        corporate: {
+            aboutUs: "Hakkımızda",
+            whyUs: "Neden Girişim Makina?",
+            certificates: "Sertifikalarımız",
+            hr: "İnsan Kaynakları"
+        },
+        machines: {
+            cerealBar: "Tahıl Bar Üretim Hatları",
+            chocolateCoating: "Çikolata Kaplama Makinaları",
+            biscuitSandwich: "Bisküvi Kremalama Makinaları",
+            flowpack: "Yatay Flowpack Paketleme",
+            vffs: "Dikey Paketleme Makinaları",
+            overwrap: "Zarf Tipi Paketleme"
+        },
+        packagingChoice: {
+            byType: "Paket Tipine Göre",
+            byProduct: "Ürününüze Göre"
+        },
         dropdown: {
             wafer: "Wafer Üretim Hatları",
             cereal: "Cereal Bar Hatları",
@@ -203,13 +221,32 @@ const translations = {
         flag: "🇬🇧",
         dir: "ltr",
         nav: {
-            about: "About Us",
-            production: "Production Lines",
-            packaging: "Packaging",
+            about: "Corporate",
+            production: "Our Machines",
+            packaging: "Packaging Choice",
             sectors: "Sectors",
             videos: "Videos",
             contact: "Contact",
+            blog: "Blog",
             getQuote: "GET QUOTE"
+        },
+        corporate: {
+            aboutUs: "About Us",
+            whyUs: "Why Girişim Makina?",
+            certificates: "Our Certificates",
+            hr: "Human Resources"
+        },
+        machines: {
+            cerealBar: "Cereal Bar Production Lines",
+            chocolateCoating: "Chocolate Coating Machines",
+            biscuitSandwich: "Biscuit Sandwiching Machines",
+            flowpack: "Horizontal Flowpack Packaging",
+            vffs: "Vertical Packaging Machines",
+            overwrap: "Overwrapping Packaging"
+        },
+        packagingChoice: {
+            byType: "By Package Type",
+            byProduct: "By Your Product"
         },
         dropdown: {
             wafer: "Wafer Production Lines",
@@ -405,7 +442,26 @@ const translations = {
             sectors: "Секторы",
             videos: "Видео",
             contact: "Контакты",
+            blog: "Blog",
             getQuote: "ПОЛУЧИТЬ ЦЕНУ"
+        },
+        corporate: {
+            aboutUs: "О нас",
+            whyUs: "Почему Girişim Makina?",
+            certificates: "Наши сертификаты",
+            hr: "Кадры"
+        },
+        machines: {
+            cerealBar: "Линии производства зерновых батончиков",
+            chocolateCoating: "Машины для покрытия шоколадом",
+            biscuitSandwich: "Машины для сэндвич-печенья",
+            flowpack: "Горизонтальная упаковка Flowpack",
+            vffs: "Вертикальные упаковочные машины",
+            overwrap: "Упаковка конвертного типа"
+        },
+        packagingChoice: {
+            byType: "По типу упаковки",
+            byProduct: "По вашему продукту"
         },
         dropdown: {
             wafer: "Линии производства вафель",
@@ -601,7 +657,26 @@ const translations = {
             sectors: "القطاعات",
             videos: "الفيديوهات",
             contact: "اتصل بنا",
+            blog: "Blog",
             getQuote: "طلب عرض سعر"
+        },
+        corporate: {
+            aboutUs: "معلومات عنا",
+            whyUs: "لماذا Girişim Makina؟",
+            certificates: "شهاداتنا",
+            hr: "الموارد البشرية"
+        },
+        machines: {
+            cerealBar: "خطوط إنتاج ألواح الحبوب",
+            chocolateCoating: "آلات تغليف الشوكولاتة",
+            biscuitSandwich: "آلات صنع البسكويت المحشو",
+            flowpack: "تغليف أفقي Flowpack",
+            vffs: "آلات التغليف العمودية",
+            overwrap: "تغليف ظرفي"
+        },
+        packagingChoice: {
+            byType: "حسب نوع التغليف",
+            byProduct: "حسب منتجك"
         },
         dropdown: {
             wafer: "خطوط إنتاج الويفر",
@@ -797,7 +872,26 @@ const translations = {
             sectors: "Secteurs",
             videos: "Vidéos",
             contact: "Contact",
+            blog: "Blog",
             getQuote: "DEVIS"
+        },
+        corporate: {
+            aboutUs: "À propos",
+            whyUs: "Pourquoi Girişim Makina?",
+            certificates: "Nos certificats",
+            hr: "Ressources humaines"
+        },
+        machines: {
+            cerealBar: "Lignes de production de barres de céréales",
+            chocolateCoating: "Machines d'enrobage chocolat",
+            biscuitSandwich: "Machines à sandwich biscuit",
+            flowpack: "Emballage horizontal Flowpack",
+            vffs: "Machines d'emballage vertical",
+            overwrap: "Emballage type envelope"
+        },
+        packagingChoice: {
+            byType: "Par type d'emballage",
+            byProduct: "Par votre produit"
         },
         dropdown: {
             wafer: "Lignes de production de gaufrettes",
@@ -993,7 +1087,26 @@ const translations = {
             sectors: "Setores",
             videos: "Vídeos",
             contact: "Contato",
+            blog: "Blog",
             getQuote: "ORÇAMENTO"
+        },
+        corporate: {
+            aboutUs: "Sobre nós",
+            whyUs: "Por que Girişim Makina?",
+            certificates: "Nossos certificados",
+            hr: "Recursos Humanos"
+        },
+        machines: {
+            cerealBar: "Linhas de produção de barras de cereais",
+            chocolateCoating: "Máquinas de cobertura de chocolate",
+            biscuitSandwich: "Máquinas de sanduíche de biscoito",
+            flowpack: "Embalagem horizontal Flowpack",
+            vffs: "Máquinas de embalagem vertical",
+            overwrap: "Embalagem tipo envelope"
+        },
+        packagingChoice: {
+            byType: "Por tipo de embalagem",
+            byProduct: "Por seu produto"
         },
         dropdown: {
             wafer: "Linhas de produção de wafer",
@@ -1189,7 +1302,26 @@ const translations = {
             sectors: "Sectores",
             videos: "Videos",
             contact: "Contacto",
+            blog: "Blog",
             getQuote: "COTIZACIÓN"
+        },
+        corporate: {
+            aboutUs: "Nosotros",
+            whyUs: "¿Por qué Girişim Makina?",
+            certificates: "Nuestros certificados",
+            hr: "Recursos Humanos"
+        },
+        machines: {
+            cerealBar: "Líneas de producción de barras de cereales",
+            chocolateCoating: "Máquinas de recubrimiento de chocolate",
+            biscuitSandwich: "Máquinas de sándwich de galletas",
+            flowpack: "Embalaje horizontal Flowpack",
+            vffs: "Máquinas de embalaje vertical",
+            overwrap: "Embalaje tipo sobre"
+        },
+        packagingChoice: {
+            byType: "Por tipo de embalaje",
+            byProduct: "Por su producto"
         },
         dropdown: {
             wafer: "Líneas de producción de wafer",
@@ -1423,62 +1555,91 @@ function setLanguage(lang) {
 
 // Update language selector UI
 function updateLanguageSelector() {
+    // Update top bar language selector
     document.querySelectorAll('.lang-selector a, .languages a').forEach(el => {
         el.classList.remove('active');
         if (el.getAttribute('data-lang') === currentLang) {
             el.classList.add('active');
         }
     });
+
+    // Update floating language selector
+    document.querySelectorAll('.language-float-dropdown a').forEach(el => {
+        el.classList.remove('active');
+        if (el.getAttribute('data-lang') === currentLang) {
+            el.classList.add('active');
+        }
+    });
+
+    // Update current language label
+    const langLabel = document.getElementById('currentLangLabel');
+    if (langLabel) {
+        langLabel.textContent = currentLang.toUpperCase();
+    }
 }
 
 // Apply translations to the page
 function applyTranslations() {
     const lang = translations[currentLang];
+    if (!lang) return;
 
-    // Navigation
-    const navLinks = document.querySelectorAll('.nav-menu > li > a');
-    navLinks.forEach(link => {
-        const href = link.getAttribute('href');
-        if (href === '#about') link.textContent = lang.nav.about;
-        else if (href === '#production') {
-            link.innerHTML = lang.nav.production + ' <i class="fas fa-chevron-down"></i>';
-        }
-        else if (href === '#packaging') {
-            link.innerHTML = lang.nav.packaging + ' <i class="fas fa-chevron-down"></i>';
-        }
-        else if (href === '#sectors') link.textContent = lang.nav.sectors;
-        else if (href === '#videos') link.textContent = lang.nav.videos;
-        else if (href === '#contact') link.textContent = lang.nav.contact;
-    });
-
-    // Dropdown menus - Get all dropdowns
+    // Navigation - Get all dropdowns
     const dropdowns = document.querySelectorAll('.nav-menu > li.dropdown');
 
-    // Production dropdown (first dropdown)
+    // First dropdown - Kurumsal/Corporate
     if (dropdowns[0]) {
-        const productionDropdown = dropdowns[0].querySelector('.dropdown-menu');
-        if (productionDropdown) {
-            const items = productionDropdown.querySelectorAll('li a');
-            if (items[0]) items[0].textContent = lang.dropdown.wafer;
-            if (items[1]) items[1].textContent = lang.dropdown.cereal;
-            if (items[2]) items[2].textContent = lang.dropdown.protein;
-            if (items[3]) items[3].textContent = lang.dropdown.chocolate;
-            if (items[4]) items[4].textContent = lang.dropdown.biscuit;
+        const mainLink = dropdowns[0].querySelector(':scope > a');
+        if (mainLink) mainLink.innerHTML = lang.nav.about + ' <i class="fas fa-chevron-down"></i>';
+
+        if (lang.corporate) {
+            const items = dropdowns[0].querySelectorAll('.dropdown-menu > li:not(.dropdown-divider) > a');
+            if (items[0]) items[0].textContent = lang.corporate.aboutUs;
+            if (items[1]) items[1].textContent = lang.corporate.whyUs;
+            if (items[2]) items[2].textContent = lang.corporate.certificates;
+            if (items[3]) items[3].textContent = lang.corporate.hr;
         }
     }
 
-    // Packaging dropdown (second dropdown)
+    // Second dropdown - Makinalarımız/Our Machines
     if (dropdowns[1]) {
-        const packagingDropdown = dropdowns[1].querySelector('.dropdown-menu');
-        if (packagingDropdown) {
-            const items = packagingDropdown.querySelectorAll('li a');
-            if (items[0]) items[0].textContent = lang.dropdown.flowpack;
-            if (items[1]) items[1].textContent = lang.dropdown.overwrap;
-            if (items[2]) items[2].textContent = lang.dropdown.thermoform;
-            if (items[3]) items[3].textContent = lang.dropdown.vffs;
-            if (items[4]) items[4].textContent = lang.dropdown.halvah;
+        const mainLink = dropdowns[1].querySelector(':scope > a');
+        if (mainLink) mainLink.innerHTML = lang.nav.production + ' <i class="fas fa-chevron-down"></i>';
+
+        if (lang.machines) {
+            const items = dropdowns[1].querySelectorAll('.dropdown-menu > li:not(.dropdown-divider) > a');
+            if (items[0]) items[0].textContent = lang.machines.cerealBar;
+            if (items[1]) items[1].textContent = lang.machines.chocolateCoating;
+            if (items[2]) items[2].textContent = lang.machines.biscuitSandwich;
+            if (items[3]) items[3].textContent = lang.machines.flowpack;
+            if (items[4]) items[4].textContent = lang.machines.vffs;
+            if (items[5]) items[5].textContent = lang.machines.overwrap;
         }
     }
+
+    // Third dropdown - Paketleme Tercihiniz/Packaging Choice
+    if (dropdowns[2]) {
+        const mainLink = dropdowns[2].querySelector(':scope > a');
+        if (mainLink) mainLink.innerHTML = lang.nav.packaging + ' <i class="fas fa-chevron-down"></i>';
+
+        if (lang.packagingChoice) {
+            const items = dropdowns[2].querySelectorAll('.dropdown-menu > li > a');
+            if (items[0]) items[0].textContent = lang.packagingChoice.byType;
+            if (items[1]) items[1].textContent = lang.packagingChoice.byProduct;
+        }
+    }
+
+    // Non-dropdown nav items (Videos, Blog, Contact)
+    const navItems = document.querySelectorAll('.nav-menu > li:not(.dropdown) > a');
+    navItems.forEach(link => {
+        const href = link.getAttribute('href') || '';
+        if (href.includes('#videos') || href.includes('index.html#videos')) {
+            link.textContent = lang.nav.videos;
+        } else if (href.includes('blog')) {
+            link.textContent = lang.nav.blog || 'Blog';
+        } else if (href.includes('#contact') || href.includes('index.html#contact')) {
+            link.textContent = lang.nav.contact;
+        }
+    });
 
     // Header button
     const headerBtn = document.querySelector('.header .btn-primary');
