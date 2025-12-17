@@ -111,6 +111,16 @@ const translations = {
                 }
             }
         },
+        certificates: {
+            tag: "Sertifikalarımız",
+            title: "CE",
+            highlight: "Sertifikaları",
+            subtitle: "Makinelerimiz Avrupa CE standartlarına uygun olarak üretilmektedir",
+            horizontal: "Yatay paketleme makineleri CE sertifikası",
+            thermoform: "Termoform paketleme makineleri CE sertifikası",
+            vertical: "Dikey dolum makineleri CE sertifikası",
+            download: "İndir"
+        },
         sectors: {
             tag: "Uzmanlık Alanlarımız",
             title1: "Paketlediğimiz",
@@ -296,6 +306,16 @@ const translations = {
                     desc: "Vertical form-fill-seal. Weighing and filling systems for granules, powder, nuts and snack products."
                 }
             }
+        },
+        certificates: {
+            tag: "Our Certificates",
+            title: "CE",
+            highlight: "Certificates",
+            subtitle: "Our machines are manufactured in accordance with European CE standards",
+            horizontal: "CE certificate for horizontal packaging machines",
+            thermoform: "CE certificate for thermoform packaging machines",
+            vertical: "CE certificate for vertical filling machines",
+            download: "Download"
         },
         sectors: {
             tag: "Our Expertise",
@@ -483,6 +503,16 @@ const translations = {
                 }
             }
         },
+        certificates: {
+            tag: "Наши сертификаты",
+            title: "CE",
+            highlight: "Сертификаты",
+            subtitle: "Наши машины производятся в соответствии с европейскими стандартами CE",
+            horizontal: "Сертификат CE для горизонтальных упаковочных машин",
+            thermoform: "Сертификат CE для термоформовочных упаковочных машин",
+            vertical: "Сертификат CE для вертикальных фасовочных машин",
+            download: "Скачать"
+        },
         sectors: {
             tag: "Наша экспертиза",
             title1: "Продукты,",
@@ -668,6 +698,16 @@ const translations = {
                     desc: "form-fill-seal عمودي. أنظمة وزن وتعبئة للحبيبات والمساحيق والمكسرات ومنتجات السناك."
                 }
             }
+        },
+        certificates: {
+            tag: "شهاداتنا",
+            title: "CE",
+            highlight: "شهادات",
+            subtitle: "يتم تصنيع آلاتنا وفقًا لمعايير CE الأوروبية",
+            horizontal: "شهادة CE لآلات التغليف الأفقية",
+            thermoform: "شهادة CE لآلات التغليف الحراري",
+            vertical: "شهادة CE لآلات التعبئة العمودية",
+            download: "تحميل"
         },
         sectors: {
             tag: "خبرتنا",
@@ -855,6 +895,16 @@ const translations = {
                 }
             }
         },
+        certificates: {
+            tag: "Nos certificats",
+            title: "CE",
+            highlight: "Certificats",
+            subtitle: "Nos machines sont fabriquées conformément aux normes CE européennes",
+            horizontal: "Certificat CE pour machines d'emballage horizontales",
+            thermoform: "Certificat CE pour machines d'emballage thermoformées",
+            vertical: "Certificat CE pour machines de remplissage verticales",
+            download: "Télécharger"
+        },
         sectors: {
             tag: "Notre expertise",
             title1: "Produits que",
@@ -1041,6 +1091,16 @@ const translations = {
                 }
             }
         },
+        certificates: {
+            tag: "Nossos certificados",
+            title: "CE",
+            highlight: "Certificados",
+            subtitle: "Nossas máquinas são fabricadas de acordo com os padrões CE europeus",
+            horizontal: "Certificado CE para máquinas de embalagem horizontais",
+            thermoform: "Certificado CE para máquinas de embalagem termoformadas",
+            vertical: "Certificado CE para máquinas de envase verticais",
+            download: "Baixar"
+        },
         sectors: {
             tag: "Nossa expertise",
             title1: "Produtos que",
@@ -1226,6 +1286,16 @@ const translations = {
                     desc: "Form-fill-seal vertical. Sistemas de pesaje y llenado para gránulos, polvos, nueces y snacks."
                 }
             }
+        },
+        certificates: {
+            tag: "Nuestros certificados",
+            title: "CE",
+            highlight: "Certificados",
+            subtitle: "Nuestras máquinas se fabrican de acuerdo con los estándares CE europeos",
+            horizontal: "Certificado CE para máquinas de embalaje horizontales",
+            thermoform: "Certificado CE para máquinas de embalaje termoformadas",
+            vertical: "Certificado CE para máquinas de llenado verticales",
+            download: "Descargar"
         },
         sectors: {
             tag: "Nuestra experiencia",
