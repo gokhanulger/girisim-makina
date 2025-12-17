@@ -2581,11 +2581,13 @@ h4 { font-size: 1.25rem; }
 /* Exit Intent Popup & Catalog Modal */
 #exitPopup .video-modal-content,
 #catalogModal .video-modal-content {
-    aspect-ratio: unset;
+    aspect-ratio: unset !important;
+    height: auto !important;
     max-height: 90vh;
     padding: 40px;
     background: var(--dark);
-    overflow-y: auto;
+    overflow: visible !important;
+    overflow-y: auto !important;
 }
 
 #exitPopup .video-modal-content {
