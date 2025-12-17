@@ -2578,25 +2578,35 @@ h4 { font-size: 1.25rem; }
     transform: rotate(90deg);
 }
 
-/* Exit Intent Popup */
-#exitPopup .video-modal-content {
+/* Exit Intent Popup & Catalog Modal */
+#exitPopup .video-modal-content,
+#catalogModal .video-modal-content {
     aspect-ratio: unset;
-    max-width: 450px;
     max-height: 90vh;
     padding: 40px;
-    text-align: center;
     background: var(--dark);
     overflow-y: auto;
 }
 
-#exitPopup .close-video {
+#exitPopup .video-modal-content {
+    max-width: 450px;
+    text-align: center;
+}
+
+#catalogModal .video-modal-content {
+    max-width: 500px;
+}
+
+#exitPopup .close-video,
+#catalogModal .close-video {
     top: 10px;
     right: 15px;
     font-size: 30px;
     color: #888;
 }
 
-#exitPopup .close-video:hover {
+#exitPopup .close-video:hover,
+#catalogModal .close-video:hover {
     color: var(--white);
 }
 
