@@ -551,6 +551,22 @@
                 <h2>Makinelerimizi <span class="highlight">İzleyin</span></h2>
                 <p>YouTube kanalımızda 100+ makine videosu</p>
             </div>
+
+            <!-- Featured Video - Founder Interview -->
+            <div class="featured-video" onclick="openVideo('03u4_rZC1nA')">
+                <div class="featured-video-thumbnail">
+                    <img src="https://img.youtube.com/vi/03u4_rZC1nA/maxresdefault.jpg" alt="Girişim Makina Fuar Röportajı">
+                    <div class="play-button-lg">
+                        <i class="fas fa-play"></i>
+                    </div>
+                    <div class="featured-video-overlay">
+                        <span class="featured-badge"><i class="fas fa-star"></i> Öne Çıkan</span>
+                        <h3>Girişim Makina - Fuar Röportajı</h3>
+                        <p>Kurucumuz ile özel röportaj</p>
+                    </div>
+                </div>
+            </div>
+
             <div class="videos-grid">
                 <div class="video-card" onclick="openVideo('tF6KbrRx9gI')">
                     <div class="video-thumbnail">
@@ -824,6 +840,25 @@
         </div>
     </div>
 
+    <!-- Floating Social Icons -->
+    <div class="social-float" id="socialFloat">
+        <a href="https://www.youtube.com/@girisimpackagingmachinery" target="_blank" class="social-float-icon youtube" title="YouTube">
+            <i class="fab fa-youtube"></i>
+        </a>
+        <a href="https://www.linkedin.com/company/girisim-food-processing-and-packaging-machinery-turkey" target="_blank" class="social-float-icon linkedin" title="LinkedIn">
+            <i class="fab fa-linkedin-in"></i>
+        </a>
+        <a href="https://www.instagram.com/girisim.machinery.turkey" target="_blank" class="social-float-icon instagram" title="Instagram">
+            <i class="fab fa-instagram"></i>
+        </a>
+        <a href="https://www.facebook.com/PackagingMachineryTurkey" target="_blank" class="social-float-icon facebook" title="Facebook">
+            <i class="fab fa-facebook-f"></i>
+        </a>
+        <a href="https://www.tiktok.com/@girisim.makina.turkiye" target="_blank" class="social-float-icon tiktok" title="TikTok">
+            <i class="fab fa-tiktok"></i>
+        </a>
+    </div>
+
     <!-- Back to Top Button -->
     <a href="#" class="back-to-top" id="backToTop">
         <i class="fas fa-chevron-up"></i>
@@ -1011,13 +1046,16 @@
             }
         });
 
-        // Show/hide floating language selector on scroll
+        // Show/hide floating elements on scroll
         window.addEventListener('scroll', function() {
             const languageFloat = document.getElementById('languageFloat');
+            const socialFloat = document.getElementById('socialFloat');
             if (window.scrollY > 300) {
                 languageFloat.classList.add('visible');
+                if (socialFloat) socialFloat.classList.add('visible');
             } else {
                 languageFloat.classList.remove('visible');
+                if (socialFloat) socialFloat.classList.remove('visible');
                 document.getElementById('languageDropdown').classList.remove('show');
             }
         });
