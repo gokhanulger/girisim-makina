@@ -914,13 +914,13 @@
         <div class="video-modal-content" onclick="event.stopPropagation()" style="max-width: 450px; padding: 40px; text-align: center;">
             <span class="close-video" onclick="closeExitPopup()">&times;</span>
             <i class="fas fa-gift" style="font-size: 3rem; color: var(--primary); margin-bottom: 20px;"></i>
-            <h3 style="color: var(--dark); margin-bottom: 15px;">Bekleyin! Gitmeyin</h3>
-            <p style="color: #666; margin-bottom: 25px;">Kataloglarımızı göndermemizi ister misiniz? Size özel tekliflerimizden haberdar olun.</p>
+            <h3 style="color: var(--dark); margin-bottom: 15px;" data-translate="exitPopupTitle">Bekleyin! Gitmeyin</h3>
+            <p style="color: #666; margin-bottom: 25px;" data-translate="exitPopupText">Kataloglarımızı göndermemizi ister misiniz? Size özel tekliflerimizden haberdar olun.</p>
             <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
-                <button onclick="openCatalogModal(); closeExitPopup();" class="btn btn-primary">
+                <button onclick="openCatalogModal(); closeExitPopup();" class="btn btn-primary" data-translate="exitPopupYes">
                     <i class="fas fa-file-pdf"></i> Evet, Katalog Gönder
                 </button>
-                <button onclick="closeExitPopup()" class="btn btn-outline">
+                <button onclick="closeExitPopup()" class="btn btn-outline" data-translate="exitPopupNo">
                     Hayır, Teşekkürler
                 </button>
             </div>

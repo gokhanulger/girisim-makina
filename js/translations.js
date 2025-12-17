@@ -212,6 +212,12 @@ const translations = {
             privacy: "Gizlilik Politikası",
             kvkk: "KVKK",
             cookies: "Çerez Politikası"
+        },
+        exitPopup: {
+            title: "Bekleyin! Gitmeyin",
+            text: "Kataloglarımızı göndermemizi ister misiniz? Size özel tekliflerimizden haberdar olun.",
+            yes: "Evet, Katalog Gönder",
+            no: "Hayır, Teşekkürler"
         }
     },
 
@@ -427,6 +433,12 @@ const translations = {
             privacy: "Privacy Policy",
             kvkk: "GDPR",
             cookies: "Cookie Policy"
+        },
+        exitPopup: {
+            title: "Wait! Don't Go",
+            text: "Would you like us to send our catalogs? Stay informed about our special offers.",
+            yes: "Yes, Send Catalog",
+            no: "No, Thanks"
         }
     },
 
@@ -642,6 +654,12 @@ const translations = {
             privacy: "Политика конфиденциальности",
             kvkk: "GDPR",
             cookies: "Политика cookies"
+        },
+        exitPopup: {
+            title: "Подождите! Не уходите",
+            text: "Хотите, чтобы мы отправили вам наши каталоги? Узнавайте о наших специальных предложениях.",
+            yes: "Да, отправьте каталог",
+            no: "Нет, спасибо"
         }
     },
 
@@ -857,6 +875,12 @@ const translations = {
             privacy: "سياسة الخصوصية",
             kvkk: "GDPR",
             cookies: "سياسة ملفات تعريف الارتباط"
+        },
+        exitPopup: {
+            title: "انتظر! لا تذهب",
+            text: "هل تريد أن نرسل لك كتالوجاتنا؟ ابق على اطلاع بعروضنا الخاصة.",
+            yes: "نعم، أرسل الكتالوج",
+            no: "لا، شكراً"
         }
     },
 
@@ -1072,6 +1096,12 @@ const translations = {
             privacy: "Politique de confidentialité",
             kvkk: "RGPD",
             cookies: "Politique de cookies"
+        },
+        exitPopup: {
+            title: "Attendez ! Ne partez pas",
+            text: "Souhaitez-vous recevoir nos catalogues ? Restez informé de nos offres spéciales.",
+            yes: "Oui, envoyez le catalogue",
+            no: "Non, merci"
         }
     },
 
@@ -1287,6 +1317,12 @@ const translations = {
             privacy: "Privacidade",
             kvkk: "LGPD",
             cookies: "Política de Cookies"
+        },
+        exitPopup: {
+            title: "Espere! Não vá embora",
+            text: "Gostaria que enviássemos nossos catálogos? Fique por dentro das nossas ofertas especiais.",
+            yes: "Sim, envie o catálogo",
+            no: "Não, obrigado"
         }
     },
 
@@ -1502,6 +1538,12 @@ const translations = {
             privacy: "Política de privacidad",
             kvkk: "RGPD",
             cookies: "Política de cookies"
+        },
+        exitPopup: {
+            title: "¡Espera! No te vayas",
+            text: "¿Te gustaría que te enviemos nuestros catálogos? Mantente informado sobre nuestras ofertas especiales.",
+            yes: "Sí, envíame el catálogo",
+            no: "No, gracias"
         }
     }
 };
@@ -1900,6 +1942,21 @@ function applyTranslations() {
             }
         }
     });
+
+    // Exit Popup
+    if (lang.exitPopup) {
+        const exitTitle = document.querySelector('[data-translate="exitPopupTitle"]');
+        if (exitTitle) exitTitle.textContent = lang.exitPopup.title;
+
+        const exitText = document.querySelector('[data-translate="exitPopupText"]');
+        if (exitText) exitText.textContent = lang.exitPopup.text;
+
+        const exitYes = document.querySelector('[data-translate="exitPopupYes"]');
+        if (exitYes) exitYes.innerHTML = '<i class="fas fa-file-pdf"></i> ' + lang.exitPopup.yes;
+
+        const exitNo = document.querySelector('[data-translate="exitPopupNo"]');
+        if (exitNo) exitNo.textContent = lang.exitPopup.no;
+    }
 }
 
 // Initialize on page load
