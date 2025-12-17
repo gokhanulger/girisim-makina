@@ -88,6 +88,13 @@
                     <li data-section="footer">
                         <a href="#"><i class="fas fa-stream"></i> Footer</a>
                     </li>
+                    <li class="nav-divider"></li>
+                    <li data-section="translations">
+                        <a href="#"><i class="fas fa-language"></i> Çeviriler</a>
+                    </li>
+                    <li data-section="settings">
+                        <a href="#"><i class="fas fa-cog"></i> Ayarlar</a>
+                    </li>
                 </ul>
             </nav>
             <div class="sidebar-footer">
@@ -567,6 +574,208 @@
                         <div class="form-group">
                             <label>Copyright Metni</label>
                             <input type="text" id="footer-copyright" data-path="footer.copyright">
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Translations Section -->
+                <section id="section-translations" class="admin-section">
+                    <div class="section-card">
+                        <h2><i class="fas fa-language"></i> Çeviri Yönetimi</h2>
+                        <p class="section-desc">Site içeriğini farklı dillere çevirin ve yayınlayın. ChatGPT ile otomatik çeviri yapabilirsiniz.</p>
+
+                        <div class="translation-controls">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Hedef Dil</label>
+                                    <select id="targetLanguage" onchange="loadTranslationContent()">
+                                        <option value="en">🇬🇧 İngilizce (English)</option>
+                                        <option value="ru">🇷🇺 Rusça (Русский)</option>
+                                        <option value="ar">🇸🇦 Arapça (العربية)</option>
+                                        <option value="fr">🇫🇷 Fransızca (Français)</option>
+                                        <option value="de">🇩🇪 Almanca (Deutsch)</option>
+                                        <option value="es">🇪🇸 İspanyolca (Español)</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Sayfa/Bölüm</label>
+                                    <select id="translationSection" onchange="loadTranslationContent()">
+                                        <option value="nav">Navigasyon Menüsü</option>
+                                        <option value="hero">Hero Bölümü</option>
+                                        <option value="about">Hakkımızda</option>
+                                        <option value="production">Üretim Hatları</option>
+                                        <option value="packaging">Paketleme</option>
+                                        <option value="sectors">Sektörler</option>
+                                        <option value="whyUs">Neden Biz</option>
+                                        <option value="videos">Videolar</option>
+                                        <option value="cta">CTA Bölümü</option>
+                                        <option value="contact">İletişim</option>
+                                        <option value="footer">Footer</option>
+                                        <option value="products">Ürün Sayfaları</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="translation-actions">
+                                <button class="btn btn-primary" onclick="autoTranslateSection()">
+                                    <i class="fas fa-robot"></i> ChatGPT ile Çevir
+                                </button>
+                                <button class="btn btn-success" onclick="saveTranslation()">
+                                    <i class="fas fa-save"></i> Çeviriyi Kaydet
+                                </button>
+                                <button class="btn btn-info" onclick="publishTranslations()">
+                                    <i class="fas fa-cloud-upload-alt"></i> Tümünü Yayınla
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="translation-status" id="translationStatus">
+                            <h4>Çeviri Durumu</h4>
+                            <div class="status-grid">
+                                <div class="status-item" data-lang="en">
+                                    <span class="flag">🇬🇧</span>
+                                    <span class="lang-name">İngilizce</span>
+                                    <span class="status-badge pending" id="status-en">Bekliyor</span>
+                                </div>
+                                <div class="status-item" data-lang="ru">
+                                    <span class="flag">🇷🇺</span>
+                                    <span class="lang-name">Rusça</span>
+                                    <span class="status-badge pending" id="status-ru">Bekliyor</span>
+                                </div>
+                                <div class="status-item" data-lang="ar">
+                                    <span class="flag">🇸🇦</span>
+                                    <span class="lang-name">Arapça</span>
+                                    <span class="status-badge pending" id="status-ar">Bekliyor</span>
+                                </div>
+                                <div class="status-item" data-lang="fr">
+                                    <span class="flag">🇫🇷</span>
+                                    <span class="lang-name">Fransızca</span>
+                                    <span class="status-badge pending" id="status-fr">Bekliyor</span>
+                                </div>
+                                <div class="status-item" data-lang="de">
+                                    <span class="flag">🇩🇪</span>
+                                    <span class="lang-name">Almanca</span>
+                                    <span class="status-badge pending" id="status-de">Bekliyor</span>
+                                </div>
+                                <div class="status-item" data-lang="es">
+                                    <span class="flag">🇪🇸</span>
+                                    <span class="lang-name">İspanyolca</span>
+                                    <span class="status-badge pending" id="status-es">Bekliyor</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="translation-editor">
+                            <h4>İçerik Düzenleyici</h4>
+                            <div class="editor-columns">
+                                <div class="editor-column">
+                                    <label>🇹🇷 Türkçe (Kaynak)</label>
+                                    <div id="sourceContent" class="content-preview"></div>
+                                </div>
+                                <div class="editor-column">
+                                    <label id="targetLangLabel">🇬🇧 İngilizce (Hedef)</label>
+                                    <div id="targetContent" class="content-editor"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Settings Section -->
+                <section id="section-settings" class="admin-section">
+                    <div class="section-card">
+                        <h2><i class="fas fa-cog"></i> Ayarlar</h2>
+
+                        <div class="settings-group">
+                            <h3><i class="fas fa-robot"></i> ChatGPT API Ayarları</h3>
+                            <p class="settings-desc">Otomatik çeviri için OpenAI API anahtarınızı girin. Anahtar sadece tarayıcınızda saklanır.</p>
+
+                            <div class="form-group">
+                                <label>OpenAI API Anahtarı</label>
+                                <div class="api-key-input">
+                                    <input type="password" id="openaiApiKey" placeholder="sk-..." onchange="saveApiKey()">
+                                    <button type="button" onclick="toggleApiKeyVisibility()">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                                <small>API anahtarınız: <a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com/api-keys</a></small>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Model Seçimi</label>
+                                <select id="openaiModel" onchange="saveApiSettings()">
+                                    <option value="gpt-4o-mini">GPT-4o Mini (Hızlı & Ekonomik)</option>
+                                    <option value="gpt-4o">GPT-4o (Yüksek Kalite)</option>
+                                    <option value="gpt-4-turbo">GPT-4 Turbo</option>
+                                </select>
+                            </div>
+
+                            <div class="api-test">
+                                <button class="btn btn-outline" onclick="testApiConnection()">
+                                    <i class="fas fa-plug"></i> Bağlantıyı Test Et
+                                </button>
+                                <span id="apiTestResult"></span>
+                            </div>
+                        </div>
+
+                        <div class="settings-group">
+                            <h3><i class="fas fa-globe"></i> Dil Ayarları</h3>
+
+                            <div class="form-group">
+                                <label>Varsayılan Site Dili</label>
+                                <select id="defaultLanguage" onchange="saveLanguageSettings()">
+                                    <option value="tr">🇹🇷 Türkçe</option>
+                                    <option value="en">🇬🇧 İngilizce</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Aktif Diller</label>
+                                <div class="checkbox-group">
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" checked disabled> 🇹🇷 Türkçe (Ana dil)
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" id="lang-en-active" checked onchange="saveLanguageSettings()"> 🇬🇧 İngilizce
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" id="lang-ru-active" checked onchange="saveLanguageSettings()"> 🇷🇺 Rusça
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" id="lang-ar-active" checked onchange="saveLanguageSettings()"> 🇸🇦 Arapça
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" id="lang-fr-active" checked onchange="saveLanguageSettings()"> 🇫🇷 Fransızca
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" id="lang-de-active" checked onchange="saveLanguageSettings()"> 🇩🇪 Almanca
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" id="lang-es-active" checked onchange="saveLanguageSettings()"> 🇪🇸 İspanyolca
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="settings-group">
+                            <h3><i class="fas fa-database"></i> Veri Yönetimi</h3>
+
+                            <div class="data-actions">
+                                <button class="btn btn-outline" onclick="exportTranslations()">
+                                    <i class="fas fa-download"></i> Çevirileri Dışa Aktar
+                                </button>
+                                <button class="btn btn-outline" onclick="importTranslations()">
+                                    <i class="fas fa-upload"></i> Çevirileri İçe Aktar
+                                </button>
+                                <input type="file" id="importFile" accept=".json" style="display:none" onchange="handleImportFile(event)">
+                            </div>
+
+                            <div class="danger-zone">
+                                <h4><i class="fas fa-exclamation-triangle"></i> Tehlikeli Bölge</h4>
+                                <button class="btn btn-danger" onclick="resetAllTranslations()">
+                                    <i class="fas fa-trash"></i> Tüm Çevirileri Sıfırla
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </section>
