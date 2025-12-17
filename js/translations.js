@@ -6,12 +6,13 @@ const translations = {
         flag: "🇹🇷",
         dir: "ltr",
         nav: {
-            about: "Hakkımızda",
-            production: "Üretim Hatları",
-            packaging: "Paketleme",
+            about: "Kurumsal",
+            production: "Makinalarımız",
+            packaging: "Paketleme Tercihiniz",
             sectors: "Sektörler",
             videos: "Videolar",
             contact: "İletişim",
+            blog: "Blog",
             getQuote: "TEKLİF AL"
         },
         dropdown: {
@@ -30,7 +31,7 @@ const translations = {
             title1: "WAFER & CEREAL BAR",
             title2: "ÜRETİM HATLARI",
             title3: "& PAKETLEME",
-            description: "1985'ten beri gıda işleme ve paketleme makineleri üretiyoruz. Türkiye'nin lider üreticisi olarak 57 ülkeye ihracat yapıyoruz.",
+            description: "1995'ten beri gıda işleme ve paketleme makineleri üretiyoruz. Türkiye'nin lider üreticisi olarak 57 ülkeye ihracat yapıyoruz.",
             stat1: "Ülkeye İhracat",
             stat2: "m² Üretim Alanı",
             stat3: "Yıllık Tecrübe",
@@ -41,7 +42,7 @@ const translations = {
             tag: "Hakkımızda",
             title1: "Gıda Üreticilerinin",
             title2: "Global Büyüme Ortağı",
-            p1: "Girişim Makina olarak, 1985 yılından bu yana gıda işleme ve paketleme sektöründe Türkiye'nin lider üreticisiyiz. 3 farklı üretim tesisimiz ve toplam 12.000 m² kapalı alanımızla wafer üretim hatları, cereal bar makineleri, çikolata kaplama sistemleri ve paketleme makineleri üretiyoruz.",
+            p1: "Girişim Makina olarak, 1995 yılından bu yana gıda işleme ve paketleme sektöründe Türkiye'nin lider üreticisiyiz. 3 farklı üretim tesisimiz ve toplam 12.000 m² kapalı alanımızla wafer üretim hatları, cereal bar makineleri, çikolata kaplama sistemleri ve paketleme makineleri üretiyoruz.",
             p2: "Avrupa, Ortadoğu, Afrika ve Asya'da 57'den fazla ülkeye ihracat yaparak, dünya standartlarında kalite ve müşteri memnuniyeti sunuyoruz. Gulfood Manufacturing gibi uluslararası fuarlarda Türkiye'yi temsil ediyoruz.",
             feature1: "3 Üretim Tesisi",
             feature2: "57+ Ülke İhracat",
@@ -114,7 +115,7 @@ const translations = {
             tag: "Uzmanlık Alanlarımız",
             title1: "Paketlediğimiz",
             title2: "Ürünler",
-            subtitle: "40 yıllık tecrübeyle her sektöre özel çözümler",
+            subtitle: "30 yıllık tecrübeyle her sektöre özel çözümler",
             items: ["Bisküvi", "Wafer", "Çikolata", "Kek & Pasta", "Cereal Bar", "Protein Bar", "Helva", "Cips & Snack", "Sabun", "Pirinç Keki", "Kahve", "Pet Food"]
         },
         whyUs: {
@@ -126,7 +127,7 @@ const translations = {
                 { title: "57+ Ülkeye İhracat", desc: "Avrupa, Ortadoğu, Afrika ve Asya'da 57'den fazla ülkede müşterilerimize hizmet veriyoruz." },
                 { title: "Anahtar Teslim Projeler", desc: "Üretimden paketlemeye, fabrika tasarımından kuruluma kadar komple çözümler sunuyoruz." },
                 { title: "Satış Sonrası Destek", desc: "7/24 teknik destek, yedek parça temini ve operatör eğitimi hizmetleri." },
-                { title: "40 Yıllık Tecrübe", desc: "1985'ten beri sektörün güvenilir çözüm ortağı. Gulfood Manufacturing katılımcısı." }
+                { title: "30 Yıllık Tecrübe", desc: "1995'ten beri sektörün güvenilir çözüm ortağı. Gulfood Manufacturing katılımcısı." }
             ]
         },
         testimonials: {
@@ -300,7 +301,7 @@ const translations = {
             tag: "Our Expertise",
             title1: "Products",
             title2: "We Package",
-            subtitle: "Specialized solutions for every sector with 40 years of experience",
+            subtitle: "Specialized solutions for every sector with 30 years of experience",
             items: ["Biscuit", "Wafer", "Chocolate", "Cake & Pastry", "Cereal Bar", "Protein Bar", "Halvah", "Chips & Snack", "Soap", "Rice Cake", "Coffee", "Pet Food"]
         },
         whyUs: {
@@ -312,7 +313,7 @@ const translations = {
                 { title: "Export to 57+ Countries", desc: "We serve our customers in more than 57 countries across Europe, Middle East, Africa and Asia." },
                 { title: "Turnkey Projects", desc: "Complete solutions from production to packaging, from factory design to installation." },
                 { title: "After-Sales Support", desc: "24/7 technical support, spare parts supply and operator training services." },
-                { title: "40 Years of Experience", desc: "Reliable solution partner of the sector since 1985. Gulfood Manufacturing participant." }
+                { title: "30 Years of Experience", desc: "Reliable solution partner of the sector since 1995. Gulfood Manufacturing participant." }
             ]
         },
         testimonials: {
@@ -486,7 +487,7 @@ const translations = {
             tag: "Наша экспертиза",
             title1: "Продукты,",
             title2: "которые мы упаковываем",
-            subtitle: "Специализированные решения для каждой отрасли с 40-летним опытом",
+            subtitle: "Специализированные решения для каждой отрасли с 30-летним опытом",
             items: ["Печенье", "Вафли", "Шоколад", "Торты и выпечка", "Зерновые батончики", "Протеиновые батончики", "Халва", "Чипсы и снэки", "Мыло", "Рисовые хлебцы", "Кофе", "Корм для животных"]
         },
         whyUs: {
@@ -498,7 +499,7 @@ const translations = {
                 { title: "Экспорт в 57+ стран", desc: "Мы обслуживаем клиентов в более чем 57 странах Европы, Ближнего Востока, Африки и Азии." },
                 { title: "Проекты под ключ", desc: "Комплексные решения от производства до упаковки, от проектирования завода до монтажа." },
                 { title: "Послепродажная поддержка", desc: "Техническая поддержка 24/7, поставка запасных частей и обучение операторов." },
-                { title: "40 лет опыта", desc: "Надежный партнер отрасли с 1985 года. Участник Gulfood Manufacturing." }
+                { title: "30 лет опыта", desc: "Надежный партнер отрасли с 1995 года. Участник Gulfood Manufacturing." }
             ]
         },
         testimonials: {
@@ -672,7 +673,7 @@ const translations = {
             tag: "خبرتنا",
             title1: "المنتجات",
             title2: "التي نغلفها",
-            subtitle: "حلول متخصصة لكل قطاع مع 40 عامًا من الخبرة",
+            subtitle: "حلول متخصصة لكل قطاع مع 30 عامًا من الخبرة",
             items: ["بسكويت", "ويفر", "شوكولاتة", "كيك ومعجنات", "ألواح الحبوب", "ألواح البروتين", "حلاوة", "رقائق وسناك", "صابون", "كعك الأرز", "قهوة", "طعام الحيوانات"]
         },
         whyUs: {
@@ -684,7 +685,7 @@ const translations = {
                 { title: "تصدير لـ 57+ دولة", desc: "نخدم عملاءنا في أكثر من 57 دولة في أوروبا والشرق الأوسط وأفريقيا وآسيا." },
                 { title: "مشاريع تسليم مفتاح", desc: "حلول كاملة من الإنتاج إلى التغليف، من تصميم المصنع إلى التركيب." },
                 { title: "دعم ما بعد البيع", desc: "دعم فني 24/7، توريد قطع الغيار وتدريب المشغلين." },
-                { title: "40 عامًا من الخبرة", desc: "شريك موثوق في القطاع منذ 1985. مشارك في جلفود للتصنيع." }
+                { title: "30 عامًا من الخبرة", desc: "شريك موثوق في القطاع منذ 1995. مشارك في جلفود للتصنيع." }
             ]
         },
         testimonials: {
@@ -858,7 +859,7 @@ const translations = {
             tag: "Notre expertise",
             title1: "Produits que",
             title2: "nous emballons",
-            subtitle: "Solutions spécialisées pour chaque secteur avec 40 ans d'expérience",
+            subtitle: "Solutions spécialisées pour chaque secteur avec 30 ans d'expérience",
             items: ["Biscuit", "Gaufrette", "Chocolat", "Gâteaux & pâtisseries", "Barres de céréales", "Barres protéinées", "Halva", "Chips & snacks", "Savon", "Galettes de riz", "Café", "Alimentation animale"]
         },
         whyUs: {
@@ -870,7 +871,7 @@ const translations = {
                 { title: "Export vers 57+ pays", desc: "Nous servons nos clients dans plus de 57 pays en Europe, Moyen-Orient, Afrique et Asie." },
                 { title: "Projets clé en main", desc: "Solutions complètes de la production à l'emballage, de la conception d'usine à l'installation." },
                 { title: "Service après-vente", desc: "Support technique 24/7, fourniture de pièces détachées et formation des opérateurs." },
-                { title: "40 ans d'expérience", desc: "Partenaire fiable du secteur depuis 1985. Participant à Gulfood Manufacturing." }
+                { title: "30 ans d'expérience", desc: "Partenaire fiable du secteur depuis 1995. Participant à Gulfood Manufacturing." }
             ]
         },
         testimonials: {
@@ -915,7 +916,7 @@ const translations = {
             products: ["Ligne de production gaufrettes", "Ligne barres céréales/protéines", "Système d'enrobage chocolat", "Machine Flow Pack", "Machine Overwrapping", "Emballage thermoformage", "Remplissage vertical (VFFS)", "Sandwich biscuit", "Découpe et emballage halva", "Autre"]
         },
         footer: {
-            desc: "Fabricant de machines de transformation et d'emballage alimentaire depuis 1985. Export vers 57+ pays, 12 000 m² de production. Leader turc des lignes de production de gaufrettes, barres de céréales et machines d'emballage.",
+            desc: "Fabricant de machines de transformation et d'emballage alimentaire depuis 1995. Export vers 57+ pays, 12 000 m² de production. Leader turc des lignes de production de gaufrettes, barres de céréales et machines d'emballage.",
             production: "Lignes de production",
             packagingTitle: "Emballage",
             corporate: "Entreprise",
@@ -1230,7 +1231,7 @@ const translations = {
             tag: "Nuestra experiencia",
             title1: "Productos que",
             title2: "embalamos",
-            subtitle: "Soluciones especializadas para cada sector con 40 años de experiencia",
+            subtitle: "Soluciones especializadas para cada sector con 30 años de experiencia",
             items: ["Galleta", "Wafer", "Chocolate", "Pasteles", "Barras de cereales", "Barras de proteínas", "Halva", "Chips y snacks", "Jabón", "Tortas de arroz", "Café", "Alimento para mascotas"]
         },
         whyUs: {
@@ -1242,7 +1243,7 @@ const translations = {
                 { title: "Exportación a 57+ países", desc: "Servimos a clientes en más de 57 países en Europa, Medio Oriente, África y Asia." },
                 { title: "Proyectos llave en mano", desc: "Soluciones completas desde la producción hasta el embalaje, desde el diseño de fábrica hasta la instalación." },
                 { title: "Soporte postventa", desc: "Soporte técnico 24/7, suministro de repuestos y capacitación de operadores." },
-                { title: "40 años de experiencia", desc: "Socio confiable del sector desde 1985. Participante en Gulfood Manufacturing." }
+                { title: "30 años de experiencia", desc: "Socio confiable del sector desde 1995. Participante en Gulfood Manufacturing." }
             ]
         },
         testimonials: {
@@ -1287,7 +1288,7 @@ const translations = {
             products: ["Línea de producción de wafer", "Línea de barras de cereales/proteínas", "Sistema de recubrimiento de chocolate", "Máquina Flow Pack", "Máquina Overwrapping", "Embalaje termoformado", "Llenado vertical (VFFS)", "Sándwich de galletas", "Corte y embalaje de halva", "Otro"]
         },
         footer: {
-            desc: "Fabricante de máquinas de procesamiento y embalaje de alimentos desde 1985. Exportación a 57+ países, 12.000 m² de producción. Fabricante líder turco de líneas de producción de wafer, barras de cereales y máquinas de embalaje.",
+            desc: "Fabricante de máquinas de procesamiento y embalaje de alimentos desde 1995. Exportación a 57+ países, 12.000 m² de producción. Fabricante líder turco de líneas de producción de wafer, barras de cereales y máquinas de embalaje.",
             production: "Líneas de producción",
             packagingTitle: "Embalaje",
             corporate: "Empresa",
