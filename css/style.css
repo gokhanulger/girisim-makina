@@ -2578,6 +2578,51 @@ h4 { font-size: 1.25rem; }
     transform: rotate(90deg);
 }
 
+/* Exit Intent Popup */
+#exitPopup .video-modal-content {
+    aspect-ratio: unset;
+    max-width: 450px;
+    max-height: 90vh;
+    padding: 40px;
+    text-align: center;
+    background: var(--dark);
+    overflow-y: auto;
+}
+
+#exitPopup .close-video {
+    top: 10px;
+    right: 15px;
+    font-size: 30px;
+    color: #888;
+}
+
+#exitPopup .close-video:hover {
+    color: var(--white);
+}
+
+#exitPopup h3 {
+    color: var(--white) !important;
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+#exitPopup p {
+    color: #aaa !important;
+    margin-bottom: 25px;
+    line-height: 1.6;
+}
+
+#exitPopup .btn-outline {
+    background: transparent;
+    border: 1px solid #555;
+    color: #888;
+}
+
+#exitPopup .btn-outline:hover {
+    border-color: var(--white);
+    color: var(--white);
+}
+
 /* =============================================
    RTL SUPPORT (Arabic)
    ============================================= */
