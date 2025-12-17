@@ -173,8 +173,26 @@ h4 { font-size: 1.25rem; }
     font-size: 15px;
 }
 
+.btn-sm {
+    padding: 10px 20px;
+    font-size: 12px;
+    letter-spacing: 1px;
+}
+
 .btn-block {
     width: 100%;
+}
+
+/* Package card button fix for dark backgrounds */
+.package-card .btn-outline {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+    margin-top: 15px;
+}
+
+.package-card .btn-outline:hover {
+    background-color: var(--primary-color);
+    color: white;
 }
 
 /* Section Styles */
