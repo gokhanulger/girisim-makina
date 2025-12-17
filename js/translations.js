@@ -1380,26 +1380,33 @@ function applyTranslations() {
         else if (href === '#contact') link.textContent = lang.nav.contact;
     });
 
-    // Dropdown menus - Production
-    const productionDropdown = document.querySelector('.nav-menu li.dropdown:first-of-type .dropdown-menu');
-    if (productionDropdown) {
-        const items = productionDropdown.querySelectorAll('li a');
-        if (items[0]) items[0].textContent = lang.dropdown.wafer;
-        if (items[1]) items[1].textContent = lang.dropdown.cereal;
-        if (items[2]) items[2].textContent = lang.dropdown.protein;
-        if (items[3]) items[3].textContent = lang.dropdown.chocolate;
-        if (items[4]) items[4].textContent = lang.dropdown.biscuit;
+    // Dropdown menus - Get all dropdowns
+    const dropdowns = document.querySelectorAll('.nav-menu > li.dropdown');
+
+    // Production dropdown (first dropdown)
+    if (dropdowns[0]) {
+        const productionDropdown = dropdowns[0].querySelector('.dropdown-menu');
+        if (productionDropdown) {
+            const items = productionDropdown.querySelectorAll('li a');
+            if (items[0]) items[0].textContent = lang.dropdown.wafer;
+            if (items[1]) items[1].textContent = lang.dropdown.cereal;
+            if (items[2]) items[2].textContent = lang.dropdown.protein;
+            if (items[3]) items[3].textContent = lang.dropdown.chocolate;
+            if (items[4]) items[4].textContent = lang.dropdown.biscuit;
+        }
     }
 
-    // Dropdown menus - Packaging
-    const packagingDropdown = document.querySelector('.nav-menu li.dropdown:nth-of-type(2) .dropdown-menu');
-    if (packagingDropdown) {
-        const items = packagingDropdown.querySelectorAll('li a');
-        if (items[0]) items[0].textContent = lang.dropdown.flowpack;
-        if (items[1]) items[1].textContent = lang.dropdown.overwrap;
-        if (items[2]) items[2].textContent = lang.dropdown.thermoform;
-        if (items[3]) items[3].textContent = lang.dropdown.vffs;
-        if (items[4]) items[4].textContent = lang.dropdown.halvah;
+    // Packaging dropdown (second dropdown)
+    if (dropdowns[1]) {
+        const packagingDropdown = dropdowns[1].querySelector('.dropdown-menu');
+        if (packagingDropdown) {
+            const items = packagingDropdown.querySelectorAll('li a');
+            if (items[0]) items[0].textContent = lang.dropdown.flowpack;
+            if (items[1]) items[1].textContent = lang.dropdown.overwrap;
+            if (items[2]) items[2].textContent = lang.dropdown.thermoform;
+            if (items[3]) items[3].textContent = lang.dropdown.vffs;
+            if (items[4]) items[4].textContent = lang.dropdown.halvah;
+        }
     }
 
     // Header button
