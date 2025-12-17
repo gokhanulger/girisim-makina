@@ -807,6 +807,23 @@
         <i class="fab fa-whatsapp"></i>
     </a>
 
+    <!-- Floating Language Selector -->
+    <div class="language-float" id="languageFloat">
+        <button class="language-float-btn" onclick="toggleLanguageDropdown()">
+            <i class="fas fa-globe"></i>
+            <span id="currentLangLabel">TR</span>
+        </button>
+        <div class="language-float-dropdown" id="languageDropdown">
+            <a href="#" data-lang="tr">🇹🇷 TR</a>
+            <a href="#" data-lang="en">🇬🇧 EN</a>
+            <a href="#" data-lang="ru">🇷🇺 RU</a>
+            <a href="#" data-lang="ar">🇸🇦 AR</a>
+            <a href="#" data-lang="fr">🇫🇷 FR</a>
+            <a href="#" data-lang="pt">🇧🇷 PT</a>
+            <a href="#" data-lang="es">🇪🇸 ES</a>
+        </div>
+    </div>
+
     <!-- Back to Top Button -->
     <a href="#" class="back-to-top" id="backToTop">
         <i class="fas fa-chevron-up"></i>
@@ -979,6 +996,74 @@
                 closeCatalogModal();
                 closeExitPopup();
             }
+        });
+
+        // Floating Language Selector
+        function toggleLanguageDropdown() {
+            const dropdown = document.getElementById('languageDropdown');
+            dropdown.classList.toggle('show');
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.language-float')) {
+                document.getElementById('languageDropdown').classList.remove('show');
+            }
+        });
+
+        // Show/hide floating language selector on scroll
+        window.addEventListener('scroll', function() {
+            const languageFloat = document.getElementById('languageFloat');
+            if (window.scrollY > 300) {
+                languageFloat.classList.add('visible');
+            } else {
+                languageFloat.classList.remove('visible');
+                document.getElementById('languageDropdown').classList.remove('show');
+            }
+        });
+
+        // Handle floating language selector clicks
+        document.querySelectorAll('.language-float-dropdown a').forEach(function(link) {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const lang = this.getAttribute('data-lang');
+
+                // Update top language selector too
+                document.querySelectorAll('#languageSelector a').forEach(function(a) {
+                    a.classList.remove('active');
+                    if (a.getAttribute('data-lang') === lang) {
+                        a.classList.add('active');
+                    }
+                });
+
+                // Update floating dropdown active state
+                document.querySelectorAll('.language-float-dropdown a').forEach(function(a) {
+                    a.classList.remove('active');
+                });
+                this.classList.add('active');
+
+                // Update current lang label
+                document.getElementById('currentLangLabel').textContent = lang.toUpperCase();
+
+                // Close dropdown
+                document.getElementById('languageDropdown').classList.remove('show');
+
+                // Change language using translations.js
+                if (typeof changeLanguage === 'function') {
+                    changeLanguage(lang);
+                }
+            });
+        });
+
+        // Initialize floating language selector based on current language
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentLang = localStorage.getItem('girisim_lang') || 'tr';
+            document.getElementById('currentLangLabel').textContent = currentLang.toUpperCase();
+            document.querySelectorAll('.language-float-dropdown a').forEach(function(a) {
+                if (a.getAttribute('data-lang') === currentLang) {
+                    a.classList.add('active');
+                }
+            });
         });
     </script>
 </body>
