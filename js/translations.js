@@ -1605,6 +1605,14 @@ function updateLanguageSelector() {
         }
     });
 
+    // Update mobile language selector
+    document.querySelectorAll('.lang-mobile-dropdown a').forEach(el => {
+        el.classList.remove('active');
+        if (el.getAttribute('data-lang') === currentLang) {
+            el.classList.add('active');
+        }
+    });
+
     // Update floating language selector
     document.querySelectorAll('.language-float-dropdown a').forEach(el => {
         el.classList.remove('active');
@@ -1617,6 +1625,20 @@ function updateLanguageSelector() {
     const langLabel = document.getElementById('currentLangLabel');
     if (langLabel) {
         langLabel.textContent = currentLang.toUpperCase();
+    }
+
+    // Update mobile language label
+    const langLabelMobile = document.getElementById('currentLangMobile');
+    if (langLabelMobile) {
+        langLabelMobile.textContent = currentLang.toUpperCase();
+    }
+}
+
+// Toggle mobile language dropdown
+function toggleMobileLang() {
+    const dropdown = document.getElementById('langMobileDropdown');
+    if (dropdown) {
+        dropdown.classList.toggle('show');
     }
 }
 
@@ -1970,7 +1992,23 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             const lang = el.getAttribute('data-lang');
             setLanguage(lang);
+
+            // Close mobile dropdown if open
+            const mobileDropdown = document.getElementById('langMobileDropdown');
+            if (mobileDropdown) {
+                mobileDropdown.classList.remove('show');
+            }
         });
+    });
+
+    // Close mobile language dropdown when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.languages-mobile')) {
+            const mobileDropdown = document.getElementById('langMobileDropdown');
+            if (mobileDropdown) {
+                mobileDropdown.classList.remove('show');
+            }
+        }
     });
 });
 

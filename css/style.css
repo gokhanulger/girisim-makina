@@ -306,6 +306,76 @@ h4 { font-size: 1.25rem; }
     border-color: var(--primary-color);
 }
 
+/* Mobile Language Selector */
+.languages-mobile {
+    display: none;
+    position: relative;
+}
+
+.lang-mobile-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.lang-mobile-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.lang-mobile-btn .fa-chevron-down {
+    font-size: 10px;
+    transition: transform 0.3s ease;
+}
+
+.lang-mobile-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 8px;
+    background: var(--dark-color);
+    border-radius: 12px;
+    padding: 8px;
+    min-width: 80px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.lang-mobile-dropdown.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.lang-mobile-dropdown a {
+    display: block;
+    padding: 8px 12px;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 12px;
+    font-weight: 600;
+    text-align: center;
+    border-radius: 8px;
+    transition: var(--transition);
+}
+
+.lang-mobile-dropdown a:hover,
+.lang-mobile-dropdown a.active {
+    background: var(--primary-color);
+    color: white;
+}
+
 .social-links {
     display: flex;
     gap: 8px;
@@ -2807,11 +2877,10 @@ body.rtl .form-row {
 
 @media (max-width: 768px) {
     .languages {
-        gap: 4px;
+        display: none;
     }
-    
-    .languages a {
-        padding: 3px 6px;
-        font-size: 10px;
+
+    .languages-mobile {
+        display: block;
     }
 }
