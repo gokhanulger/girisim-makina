@@ -89,6 +89,25 @@
                         <a href="#"><i class="fas fa-stream"></i> Footer</a>
                     </li>
                     <li class="nav-divider"></li>
+                    <li data-section="blog">
+                        <a href="#"><i class="fas fa-blog"></i> Blog Yönetimi</a>
+                    </li>
+                    <li data-section="products">
+                        <a href="#"><i class="fas fa-boxes"></i> Ürün Sayfaları</a>
+                    </li>
+                    <li data-section="hr">
+                        <a href="#"><i class="fas fa-users"></i> İK Sayfası</a>
+                    </li>
+                    <li data-section="certificates">
+                        <a href="#"><i class="fas fa-certificate"></i> Sertifikalar</a>
+                    </li>
+                    <li data-section="catalog">
+                        <a href="#"><i class="fas fa-book"></i> Katalog</a>
+                    </li>
+                    <li data-section="seo">
+                        <a href="#"><i class="fas fa-search"></i> SEO Ayarları</a>
+                    </li>
+                    <li class="nav-divider"></li>
                     <li data-section="translations">
                         <a href="#"><i class="fas fa-language"></i> Çeviriler</a>
                     </li>
@@ -574,6 +593,192 @@
                         <div class="form-group">
                             <label>Copyright Metni</label>
                             <input type="text" id="footer-copyright" data-path="footer.copyright">
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Blog Section -->
+                <section id="section-blog" class="admin-section">
+                    <div class="section-card">
+                        <h2><i class="fas fa-blog"></i> Blog Yönetimi</h2>
+                        <p class="section-desc">Blog yazılarını ekleyin, düzenleyin ve yayınlayın.</p>
+
+                        <div class="blog-actions">
+                            <button class="btn btn-primary" onclick="addBlogPost()">
+                                <i class="fas fa-plus"></i> Yeni Yazı Ekle
+                            </button>
+                        </div>
+
+                        <h3>Mevcut Yazılar</h3>
+                        <div class="items-editor" id="blog-posts-editor">
+                            <!-- Blog posts will be rendered here -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Products Section -->
+                <section id="section-products" class="admin-section">
+                    <div class="section-card">
+                        <h2><i class="fas fa-boxes"></i> Ürün Sayfaları Yönetimi</h2>
+                        <p class="section-desc">Ürün sayfalarını yönetin. Her ürün için ayrı sayfa içeriği düzenlenebilir.</p>
+
+                        <div class="products-list">
+                            <div class="product-item" onclick="editProduct('wafer')">
+                                <i class="fas fa-cookie"></i>
+                                <span>Wafer Üretim Hatları</span>
+                                <a href="products/wafer.html" target="_blank" class="btn btn-sm btn-outline"><i class="fas fa-external-link-alt"></i></a>
+                            </div>
+                            <div class="product-item" onclick="editProduct('cereal-bar')">
+                                <i class="fas fa-bars"></i>
+                                <span>Cereal Bar Hatları</span>
+                                <a href="products/cereal-bar.html" target="_blank" class="btn btn-sm btn-outline"><i class="fas fa-external-link-alt"></i></a>
+                            </div>
+                            <div class="product-item" onclick="editProduct('protein-bar')">
+                                <i class="fas fa-dumbbell"></i>
+                                <span>Protein Bar Hatları</span>
+                                <a href="products/protein-bar.html" target="_blank" class="btn btn-sm btn-outline"><i class="fas fa-external-link-alt"></i></a>
+                            </div>
+                            <div class="product-item" onclick="editProduct('chocolate-coating')">
+                                <i class="fas fa-candy-cane"></i>
+                                <span>Çikolata Kaplama</span>
+                                <a href="products/chocolate-coating.html" target="_blank" class="btn btn-sm btn-outline"><i class="fas fa-external-link-alt"></i></a>
+                            </div>
+                            <div class="product-item" onclick="editProduct('biscuit-sandwiching')">
+                                <i class="fas fa-cookie-bite"></i>
+                                <span>Bisküvi Kremalama</span>
+                                <a href="products/biscuit-sandwiching.html" target="_blank" class="btn btn-sm btn-outline"><i class="fas fa-external-link-alt"></i></a>
+                            </div>
+                            <div class="product-item" onclick="editProduct('flow-pack')">
+                                <i class="fas fa-box"></i>
+                                <span>Flow Pack Paketleme</span>
+                                <a href="products/flow-pack.html" target="_blank" class="btn btn-sm btn-outline"><i class="fas fa-external-link-alt"></i></a>
+                            </div>
+                            <div class="product-item" onclick="editProduct('vffs')">
+                                <i class="fas fa-box-open"></i>
+                                <span>VFFS Dikey Dolum</span>
+                                <a href="products/vffs.html" target="_blank" class="btn btn-sm btn-outline"><i class="fas fa-external-link-alt"></i></a>
+                            </div>
+                            <div class="product-item" onclick="editProduct('overwrapping')">
+                                <i class="fas fa-gift"></i>
+                                <span>Overwrapping</span>
+                                <a href="products/overwrapping.html" target="_blank" class="btn btn-sm btn-outline"><i class="fas fa-external-link-alt"></i></a>
+                            </div>
+                            <div class="product-item" onclick="editProduct('thermoform')">
+                                <i class="fas fa-shapes"></i>
+                                <span>Thermoform Paketleme</span>
+                                <a href="products/thermoform.html" target="_blank" class="btn btn-sm btn-outline"><i class="fas fa-external-link-alt"></i></a>
+                            </div>
+                            <div class="product-item" onclick="editProduct('halvah')">
+                                <i class="fas fa-cheese"></i>
+                                <span>Helva Paketleme</span>
+                                <a href="products/halvah.html" target="_blank" class="btn btn-sm btn-outline"><i class="fas fa-external-link-alt"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- HR Section -->
+                <section id="section-hr" class="admin-section">
+                    <div class="section-card">
+                        <h2><i class="fas fa-users"></i> İnsan Kaynakları Sayfası</h2>
+                        <p class="section-desc">İK sayfası içeriğini ve açık pozisyonları yönetin.</p>
+
+                        <div class="form-group">
+                            <label>Sayfa Başlığı</label>
+                            <input type="text" id="hr-title" data-path="hr.title" value="Kariyer Fırsatları">
+                        </div>
+                        <div class="form-group">
+                            <label>Açıklama</label>
+                            <textarea id="hr-description" data-path="hr.description" rows="3">Girişim Makina ailesine katılın ve kariyerinizi bizimle şekillendirin.</textarea>
+                        </div>
+
+                        <h3>Açık Pozisyonlar</h3>
+                        <div class="items-editor" id="hr-positions-editor">
+                            <!-- HR positions will be rendered here -->
+                        </div>
+                        <button class="btn btn-primary btn-sm" onclick="addHRPosition()">
+                            <i class="fas fa-plus"></i> Yeni Pozisyon Ekle
+                        </button>
+
+                        <div class="hr-link">
+                            <a href="hr.html" target="_blank" class="btn btn-outline">
+                                <i class="fas fa-external-link-alt"></i> İK Sayfasını Gör
+                            </a>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Certificates Section -->
+                <section id="section-certificates" class="admin-section">
+                    <div class="section-card">
+                        <h2><i class="fas fa-certificate"></i> Sertifikalar Yönetimi</h2>
+                        <p class="section-desc">Şirket sertifikalarını ve belgelerini yönetin.</p>
+
+                        <h3>Sertifikalar</h3>
+                        <div class="items-editor" id="certificates-editor">
+                            <!-- Certificates will be rendered here -->
+                        </div>
+                        <button class="btn btn-primary btn-sm" onclick="addCertificate()">
+                            <i class="fas fa-plus"></i> Yeni Sertifika Ekle
+                        </button>
+                    </div>
+                </section>
+
+                <!-- Catalog Section -->
+                <section id="section-catalog" class="admin-section">
+                    <div class="section-card">
+                        <h2><i class="fas fa-book"></i> Katalog Yönetimi</h2>
+                        <p class="section-desc">PDF katalogları ve broşürleri yönetin.</p>
+
+                        <div class="form-group">
+                            <label>Ana Katalog PDF URL</label>
+                            <input type="url" id="catalog-main" data-path="catalog.mainPdf" placeholder="https://...">
+                        </div>
+
+                        <h3>Ürün Katalogları</h3>
+                        <div class="items-editor" id="catalogs-editor">
+                            <!-- Catalogs will be rendered here -->
+                        </div>
+                        <button class="btn btn-primary btn-sm" onclick="addCatalog()">
+                            <i class="fas fa-plus"></i> Yeni Katalog Ekle
+                        </button>
+                    </div>
+                </section>
+
+                <!-- SEO Section -->
+                <section id="section-seo" class="admin-section">
+                    <div class="section-card">
+                        <h2><i class="fas fa-search"></i> SEO Ayarları</h2>
+                        <p class="section-desc">Arama motoru optimizasyonu ayarlarını yönetin.</p>
+
+                        <h3>Ana Sayfa SEO</h3>
+                        <div class="form-group">
+                            <label>Sayfa Başlığı (Title)</label>
+                            <input type="text" id="seo-title" data-path="seo.title" value="Girişim Makina | Gıda İşleme ve Paketleme Makineleri">
+                        </div>
+                        <div class="form-group">
+                            <label>Meta Açıklama (Description)</label>
+                            <textarea id="seo-description" data-path="seo.description" rows="3">Girişim Makina - 1985'ten beri gıda işleme ve paketleme makineleri üretimi. Wafer, çikolata kaplama, flow pack ve dikey dolum makineleri.</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Anahtar Kelimeler (Keywords)</label>
+                            <textarea id="seo-keywords" data-path="seo.keywords" rows="2">paketleme makinesi, gıda makineleri, wafer üretim hattı, flow pack, Türkiye</textarea>
+                        </div>
+
+                        <h3>Open Graph (Sosyal Medya)</h3>
+                        <div class="form-group">
+                            <label>OG Image URL</label>
+                            <input type="url" id="seo-ogImage" data-path="seo.ogImage" placeholder="https://...">
+                        </div>
+
+                        <h3>Diğer Ayarlar</h3>
+                        <div class="form-group">
+                            <label>Google Analytics ID</label>
+                            <input type="text" id="seo-gaId" data-path="seo.googleAnalyticsId" placeholder="G-XXXXXXXXXX">
+                        </div>
+                        <div class="form-group">
+                            <label>Google Search Console Doğrulama</label>
+                            <input type="text" id="seo-gscVerification" data-path="seo.gscVerification" placeholder="verification-code">
                         </div>
                     </div>
                 </section>

@@ -1191,3 +1191,76 @@ body {
         width: 100%;
     }
 }
+
+/* ===== NEW ADMIN MODULES ===== */
+
+/* Products List */
+.products-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.product-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 15px;
+    background: var(--gray-100);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 2px solid transparent;
+}
+
+.product-item:hover {
+    background: var(--primary-light);
+    border-color: var(--primary);
+}
+
+.product-item i {
+    font-size: 1.5rem;
+    color: var(--primary);
+    width: 40px;
+    text-align: center;
+}
+
+.product-item span {
+    flex: 1;
+    font-weight: 500;
+}
+
+.product-item .btn {
+    opacity: 0.7;
+}
+
+.product-item:hover .btn {
+    opacity: 1;
+}
+
+/* Blog Actions */
+.blog-actions {
+    margin-bottom: 20px;
+}
+
+/* HR Link */
+.hr-link {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid var(--gray-200);
+}
+
+/* Section Description */
+.section-desc {
+    color: var(--gray-600);
+    margin-bottom: 20px;
+    font-size: 0.95rem;
+}
+
+/* Responsive for new modules */
+@media (max-width: 768px) {
+    .products-list {
+        grid-template-columns: 1fr;
+    }
+}
