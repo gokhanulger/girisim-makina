@@ -950,6 +950,22 @@
 
     <script src="js/main.js"></script>
     <script>
+        // Mobile Language Dropdown - Simple handler for Chrome
+        (function() {
+            var btn = document.getElementById('langMobileBtn');
+            var dropdown = document.getElementById('langMobileDropdown');
+            if (btn && dropdown) {
+                btn.ontouchstart = function(e) {
+                    e.preventDefault();
+                    dropdown.classList.toggle('show');
+                };
+                btn.onclick = function(e) {
+                    e.preventDefault();
+                    dropdown.classList.toggle('show');
+                };
+            }
+        })();
+
         // Video Modal - YouTube embed
         function openVideo(videoId) {
             const modal = document.getElementById('videoModal');
