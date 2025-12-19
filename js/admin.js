@@ -219,7 +219,7 @@ function updateImagePreview(input) {
     let preview = document.getElementById(previewId);
 
     if (!preview) {
-        preview = input.parentElement.querySelector('.image-preview');
+        preview = input.parentElement.parentElement.querySelector('.image-preview');
     }
 
     if (preview && input.value) {
@@ -227,6 +227,93 @@ function updateImagePreview(input) {
     } else if (preview) {
         preview.innerHTML = '';
     }
+}
+
+// Image Upload Handler
+function handleImageUpload(fileInput, targetInputId) {
+    const file = fileInput.files[0];
+    if (!file) return;
+
+    // Check file size (max 2MB for localStorage compatibility)
+    const maxSize = 2 * 1024 * 1024; // 2MB
+    if (file.size > maxSize) {
+        showToast('Dosya boyutu çok büyük! Maksimum 2MB olmalı.', 'error');
+        fileInput.value = '';
+        return;
+    }
+
+    // Check file type
+    if (!file.type.startsWith('image/')) {
+        showToast('Sadece görsel dosyaları yüklenebilir!', 'error');
+        fileInput.value = '';
+        return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = function(e) {
+        const base64Data = e.target.result;
+        const targetInput = document.getElementById(targetInputId);
+
+        if (targetInput) {
+            targetInput.value = base64Data;
+
+            // Trigger change event to update siteContent
+            const event = new Event('input', { bubbles: true });
+            targetInput.dispatchEvent(event);
+
+            // Update preview
+            updateImagePreview(targetInput);
+
+            // Save to uploaded images storage
+            saveUploadedImage(targetInputId, base64Data, file.name);
+
+            showToast('Görsel başarıyla yüklendi!', 'success');
+        }
+    };
+
+    reader.onerror = function() {
+        showToast('Görsel yüklenirken hata oluştu!', 'error');
+    };
+
+    reader.readAsDataURL(file);
+}
+
+// Save uploaded images to localStorage
+function saveUploadedImage(inputId, base64Data, fileName) {
+    let uploadedImages = JSON.parse(localStorage.getItem('girisim_uploaded_images') || '{}');
+    uploadedImages[inputId] = {
+        data: base64Data,
+        fileName: fileName,
+        uploadedAt: new Date().toISOString()
+    };
+
+    try {
+        localStorage.setItem('girisim_uploaded_images', JSON.stringify(uploadedImages));
+    } catch (e) {
+        if (e.name === 'QuotaExceededError') {
+            showToast('Depolama alanı dolu! Bazı eski görselleri silin.', 'error');
+        }
+    }
+}
+
+// Get uploaded images list
+function getUploadedImages() {
+    return JSON.parse(localStorage.getItem('girisim_uploaded_images') || '{}');
+}
+
+// Clear uploaded image
+function clearUploadedImage(inputId) {
+    let uploadedImages = getUploadedImages();
+    delete uploadedImages[inputId];
+    localStorage.setItem('girisim_uploaded_images', JSON.stringify(uploadedImages));
+
+    const targetInput = document.getElementById(inputId);
+    if (targetInput) {
+        targetInput.value = '';
+        updateImagePreview(targetInput);
+    }
+    showToast('Görsel silindi', 'info');
 }
 
 // Hero Stats

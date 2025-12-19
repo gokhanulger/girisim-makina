@@ -348,6 +348,41 @@ body {
     display: block;
 }
 
+/* Image Upload Group */
+.image-upload-group {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.image-upload-group input[type="url"] {
+    flex: 1;
+}
+
+.upload-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 16px;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    transition: var(--transition);
+    white-space: nowrap;
+}
+
+.upload-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(229, 57, 53, 0.4);
+}
+
+.upload-btn i {
+    font-size: 14px;
+}
+
 /* Buttons */
 .btn {
     display: inline-flex;
