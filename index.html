@@ -950,19 +950,26 @@
 
     <script src="js/main.js"></script>
     <script>
-        // Mobile Language Dropdown - Simple handler for Chrome
+        // Mobile Language Dropdown
         (function() {
             var btn = document.getElementById('langMobileBtn');
             var dropdown = document.getElementById('langMobileDropdown');
+            var touched = false;
+
             if (btn && dropdown) {
-                btn.ontouchstart = function(e) {
+                btn.addEventListener('touchstart', function(e) {
+                    touched = true;
                     e.preventDefault();
                     dropdown.classList.toggle('show');
-                };
-                btn.onclick = function(e) {
-                    e.preventDefault();
-                    dropdown.classList.toggle('show');
-                };
+                }, {passive: false});
+
+                btn.addEventListener('click', function(e) {
+                    if (!touched) {
+                        e.preventDefault();
+                        dropdown.classList.toggle('show');
+                    }
+                    touched = false;
+                });
             }
         })();
 
