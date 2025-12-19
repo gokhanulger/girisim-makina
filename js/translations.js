@@ -1597,24 +1597,8 @@ function setLanguage(lang) {
 
 // Update language selector UI
 function updateLanguageSelector() {
-    // Update top bar language selector
-    document.querySelectorAll('.lang-selector a, .languages a').forEach(el => {
-        el.classList.remove('active');
-        if (el.getAttribute('data-lang') === currentLang) {
-            el.classList.add('active');
-        }
-    });
-
-    // Update mobile language selector
-    document.querySelectorAll('.lang-mobile-dropdown a').forEach(el => {
-        el.classList.remove('active');
-        if (el.getAttribute('data-lang') === currentLang) {
-            el.classList.add('active');
-        }
-    });
-
-    // Update floating language selector
-    document.querySelectorAll('.language-float-dropdown a').forEach(el => {
+    // Update all language selectors
+    document.querySelectorAll('.lang-selector a, .languages a, .lang-mobile-dropdown a, .language-float-dropdown a, .mobile-lang-options a').forEach(el => {
         el.classList.remove('active');
         if (el.getAttribute('data-lang') === currentLang) {
             el.classList.add('active');
