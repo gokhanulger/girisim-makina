@@ -334,6 +334,9 @@ h4 { font-size: 1.25rem; }
     font-weight: 600;
     cursor: pointer;
     transition: var(--transition);
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
 }
 
 .lang-mobile-btn:hover {

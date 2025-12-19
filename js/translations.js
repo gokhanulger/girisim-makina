@@ -1990,6 +1990,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('[data-lang]').forEach(el => {
         el.addEventListener('click', (e) => {
             e.preventDefault();
+            e.stopPropagation();
             const lang = el.getAttribute('data-lang');
             setLanguage(lang);
 
@@ -2001,8 +2002,32 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Close mobile language dropdown when clicking outside
+    // Mobile language button - add touch support
+    const mobileLangBtn = document.querySelector('.lang-mobile-btn');
+    if (mobileLangBtn) {
+        mobileLangBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            toggleMobileLang();
+        });
+        mobileLangBtn.addEventListener('touchend', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            toggleMobileLang();
+        });
+    }
+
+    // Close mobile language dropdown when clicking/touching outside
     document.addEventListener('click', (e) => {
+        if (!e.target.closest('.languages-mobile')) {
+            const mobileDropdown = document.getElementById('langMobileDropdown');
+            if (mobileDropdown) {
+                mobileDropdown.classList.remove('show');
+            }
+        }
+    });
+
+    document.addEventListener('touchend', (e) => {
         if (!e.target.closest('.languages-mobile')) {
             const mobileDropdown = document.getElementById('langMobileDropdown');
             if (mobileDropdown) {
