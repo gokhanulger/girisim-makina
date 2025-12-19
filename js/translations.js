@@ -2005,15 +2005,29 @@ document.addEventListener('DOMContentLoaded', () => {
     // Mobile language button - add touch support
     const mobileLangBtn = document.querySelector('.lang-mobile-btn');
     if (mobileLangBtn) {
-        mobileLangBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            toggleMobileLang();
-        });
+        let touchMoved = false;
+
+        mobileLangBtn.addEventListener('touchstart', () => {
+            touchMoved = false;
+        }, { passive: true });
+
+        mobileLangBtn.addEventListener('touchmove', () => {
+            touchMoved = true;
+        }, { passive: true });
+
         mobileLangBtn.addEventListener('touchend', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            toggleMobileLang();
+            if (!touchMoved) {
+                e.preventDefault();
+                toggleMobileLang();
+            }
+        });
+
+        // Fallback for non-touch devices
+        mobileLangBtn.addEventListener('click', (e) => {
+            if (!('ontouchstart' in window)) {
+                e.preventDefault();
+                toggleMobileLang();
+            }
         });
     }
 
