@@ -319,6 +319,14 @@ h4 { font-size: 1.25rem; }
         width: 100%;
         justify-content: flex-end;
     }
+
+    .social-links {
+        order: 1;
+    }
+
+    .languages-mobile {
+        order: 2;
+    }
 }
 
 .lang-mobile-btn {
