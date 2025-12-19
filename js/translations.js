@@ -2002,6 +2002,19 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // Mobile language button click handler
+    const langMobileBtn = document.getElementById('langMobileBtn');
+    if (langMobileBtn) {
+        langMobileBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            const dropdown = document.getElementById('langMobileDropdown');
+            if (dropdown) {
+                dropdown.classList.toggle('show');
+            }
+        });
+    }
+
     // Close dropdown when clicking outside
     document.addEventListener('click', (e) => {
         if (!e.target.closest('.languages-mobile')) {
@@ -2012,14 +2025,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
-
-// Global function for mobile language toggle
-window.toggleMobileLangDropdown = function() {
-    const dropdown = document.getElementById('langMobileDropdown');
-    if (dropdown) {
-        dropdown.classList.toggle('show');
-    }
-};
 
 // Export for use in other scripts
 window.girisimTranslations = {
