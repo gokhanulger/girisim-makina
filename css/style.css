@@ -429,6 +429,12 @@ h4 { font-size: 1.25rem; }
     line-height: 1;
 }
 
+.logo-img {
+    height: 50px;
+    width: auto;
+    object-fit: contain;
+}
+
 .logo-text {
     font-size: 32px;
     font-weight: 800;
@@ -1920,6 +1926,13 @@ h4 { font-size: 1.25rem; }
     flex-direction: column;
     line-height: 1;
     margin-bottom: 25px;
+}
+
+.footer-logo-img {
+    height: 45px;
+    width: auto;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
 }
 
 .footer-logo .logo-text {
