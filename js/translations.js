@@ -2002,36 +2002,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Mobile language button - add touch support
-    const mobileLangBtn = document.querySelector('.lang-mobile-btn');
-    if (mobileLangBtn) {
-        let touchMoved = false;
-
-        mobileLangBtn.addEventListener('touchstart', () => {
-            touchMoved = false;
-        }, { passive: true });
-
-        mobileLangBtn.addEventListener('touchmove', () => {
-            touchMoved = true;
-        }, { passive: true });
-
-        mobileLangBtn.addEventListener('touchend', (e) => {
-            if (!touchMoved) {
-                e.preventDefault();
-                toggleMobileLang();
-            }
-        });
-
-        // Fallback for non-touch devices
-        mobileLangBtn.addEventListener('click', (e) => {
-            if (!('ontouchstart' in window)) {
-                e.preventDefault();
-                toggleMobileLang();
-            }
-        });
-    }
-
-    // Close mobile language dropdown when clicking/touching outside
+    // Close dropdown when clicking outside
     document.addEventListener('click', (e) => {
         if (!e.target.closest('.languages-mobile')) {
             const mobileDropdown = document.getElementById('langMobileDropdown');
@@ -2040,16 +2011,15 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     });
-
-    document.addEventListener('touchend', (e) => {
-        if (!e.target.closest('.languages-mobile')) {
-            const mobileDropdown = document.getElementById('langMobileDropdown');
-            if (mobileDropdown) {
-                mobileDropdown.classList.remove('show');
-            }
-        }
-    });
 });
+
+// Global function for mobile language toggle
+window.toggleMobileLangDropdown = function() {
+    const dropdown = document.getElementById('langMobileDropdown');
+    if (dropdown) {
+        dropdown.classList.toggle('show');
+    }
+};
 
 // Export for use in other scripts
 window.girisimTranslations = {
