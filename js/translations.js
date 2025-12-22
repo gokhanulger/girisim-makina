@@ -2035,8 +2035,10 @@ function applyTranslations() {
     }
 
     // Fuarlar Section
+    console.log('Fuarlar translation:', lang.fuarlar);
     if (lang.fuarlar) {
         const fuarTag = document.querySelector('[data-translate="fuarlar.tag"]');
+        console.log('fuarTag element:', fuarTag);
         if (fuarTag) fuarTag.textContent = lang.fuarlar.tag;
 
         const fuarTitle1 = document.querySelector('[data-translate="fuarlar.title1"]');
