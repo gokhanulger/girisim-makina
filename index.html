@@ -570,6 +570,69 @@
         </div>
     </section>
 
+    <!-- Fuarlar Section -->
+    <section id="fuarlar" class="fuarlar-section">
+        <div class="container">
+            <div class="section-header text-center">
+                <span class="section-tag">Fuarlar</span>
+                <h2>Fuar <span class="highlight">Katılımlarımız</span></h2>
+                <p>Uluslararası fuarlarda Türkiye'yi temsil ediyoruz</p>
+            </div>
+            <div class="fuar-slider-container">
+                <button class="fuar-slider-btn fuar-prev" onclick="slideFuarlar(-1)">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <div class="fuar-slider" id="fuarSlider">
+                    <div class="fuar-video-card" onclick="openVideo('NYe_58LMnNM')">
+                        <div class="fuar-video-thumbnail">
+                            <img src="https://img.youtube.com/vi/NYe_58LMnNM/maxresdefault.jpg" alt="Fuar Video 1">
+                            <div class="play-button">
+                                <i class="fas fa-play"></i>
+                            </div>
+                        </div>
+                        <h4>CNR FOTEG 2022</h4>
+                    </div>
+                    <div class="fuar-video-card" onclick="openVideo('_pMe5CT0ptQ')">
+                        <div class="fuar-video-thumbnail">
+                            <img src="https://img.youtube.com/vi/_pMe5CT0ptQ/maxresdefault.jpg" alt="Fuar Video 2">
+                            <div class="play-button">
+                                <i class="fas fa-play"></i>
+                            </div>
+                        </div>
+                        <h4>Gulfood Manufacturing 2024</h4>
+                    </div>
+                    <div class="fuar-video-card" onclick="openVideo('BVQdeQya0Cw')">
+                        <div class="fuar-video-thumbnail">
+                            <img src="https://img.youtube.com/vi/BVQdeQya0Cw/maxresdefault.jpg" alt="Fuar Video 3">
+                            <div class="play-button">
+                                <i class="fas fa-play"></i>
+                            </div>
+                        </div>
+                        <h4>Interpack 2023</h4>
+                    </div>
+                    <div class="fuar-video-card" onclick="openVideo('rBRjOWLoHvE')">
+                        <div class="fuar-video-thumbnail">
+                            <img src="https://img.youtube.com/vi/rBRjOWLoHvE/maxresdefault.jpg" alt="Fuar Video 4">
+                            <div class="play-button">
+                                <i class="fas fa-play"></i>
+                            </div>
+                        </div>
+                        <h4>PackExpo 2024</h4>
+                    </div>
+                </div>
+                <button class="fuar-slider-btn fuar-next" onclick="slideFuarlar(1)">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+            <div class="fuar-slider-dots" id="fuarDots">
+                <span class="fuar-dot active" onclick="goToFuarSlide(0)"></span>
+                <span class="fuar-dot" onclick="goToFuarSlide(1)"></span>
+                <span class="fuar-dot" onclick="goToFuarSlide(2)"></span>
+                <span class="fuar-dot" onclick="goToFuarSlide(3)"></span>
+            </div>
+        </div>
+    </section>
+
     <!-- Videos Section -->
     <section id="videos" class="videos-section">
         <div class="container">
@@ -1152,6 +1215,80 @@
                 }
             });
         });
+
+        // Fuarlar Slider Functions
+        let fuarCurrentSlide = 0;
+        const fuarSlider = document.getElementById('fuarSlider');
+        const fuarDots = document.querySelectorAll('.fuar-dot');
+        const fuarCards = document.querySelectorAll('.fuar-video-card');
+        const fuarTotalSlides = fuarCards.length;
+
+        function slideFuarlar(direction) {
+            fuarCurrentSlide += direction;
+            if (fuarCurrentSlide < 0) fuarCurrentSlide = fuarTotalSlides - 1;
+            if (fuarCurrentSlide >= fuarTotalSlides) fuarCurrentSlide = 0;
+            updateFuarSlider();
+        }
+
+        function goToFuarSlide(index) {
+            fuarCurrentSlide = index;
+            updateFuarSlider();
+        }
+
+        function updateFuarSlider() {
+            if (fuarSlider && fuarCards.length > 0) {
+                const cardWidth = fuarCards[0].offsetWidth + 30; // card width + gap
+                fuarSlider.scrollTo({
+                    left: fuarCurrentSlide * cardWidth,
+                    behavior: 'smooth'
+                });
+
+                // Update dots
+                fuarDots.forEach((dot, index) => {
+                    dot.classList.toggle('active', index === fuarCurrentSlide);
+                });
+            }
+        }
+
+        // Auto-update dots on scroll
+        if (fuarSlider) {
+            fuarSlider.addEventListener('scroll', function() {
+                const cardWidth = fuarCards[0].offsetWidth + 30;
+                const scrollPosition = fuarSlider.scrollLeft;
+                const newSlide = Math.round(scrollPosition / cardWidth);
+                if (newSlide !== fuarCurrentSlide && newSlide >= 0 && newSlide < fuarTotalSlides) {
+                    fuarCurrentSlide = newSlide;
+                    fuarDots.forEach((dot, index) => {
+                        dot.classList.toggle('active', index === fuarCurrentSlide);
+                    });
+                }
+            });
+        }
+
+        // Touch/swipe support for mobile
+        let fuarTouchStartX = 0;
+        let fuarTouchEndX = 0;
+
+        if (fuarSlider) {
+            fuarSlider.addEventListener('touchstart', function(e) {
+                fuarTouchStartX = e.changedTouches[0].screenX;
+            }, { passive: true });
+
+            fuarSlider.addEventListener('touchend', function(e) {
+                fuarTouchEndX = e.changedTouches[0].screenX;
+                handleFuarSwipe();
+            }, { passive: true });
+        }
+
+        function handleFuarSwipe() {
+            const swipeThreshold = 50;
+            if (fuarTouchEndX < fuarTouchStartX - swipeThreshold) {
+                slideFuarlar(1);
+            }
+            if (fuarTouchEndX > fuarTouchStartX + swipeThreshold) {
+                slideFuarlar(-1);
+            }
+        }
     </script>
 </body>
 </html>
