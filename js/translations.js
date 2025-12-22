@@ -2033,6 +2033,33 @@ function applyTranslations() {
         const exitNo = document.querySelector('[data-translate="exitPopupNo"]');
         if (exitNo) exitNo.textContent = lang.exitPopup.no;
     }
+
+    // Fuarlar Section
+    if (lang.fuarlar) {
+        const fuarTag = document.querySelector('[data-translate="fuarlar.tag"]');
+        if (fuarTag) fuarTag.textContent = lang.fuarlar.tag;
+
+        const fuarTitle1 = document.querySelector('[data-translate="fuarlar.title1"]');
+        if (fuarTitle1) fuarTitle1.textContent = lang.fuarlar.title1;
+
+        const fuarTitle2 = document.querySelector('[data-translate="fuarlar.title2"]');
+        if (fuarTitle2) fuarTitle2.textContent = lang.fuarlar.title2;
+
+        const fuarSubtitle = document.querySelector('[data-translate="fuarlar.subtitle"]');
+        if (fuarSubtitle) fuarSubtitle.textContent = lang.fuarlar.subtitle;
+
+        const fuarVideo1 = document.querySelector('[data-translate="fuarlar.video1"]');
+        if (fuarVideo1) fuarVideo1.textContent = lang.fuarlar.video1;
+
+        const fuarVideo2 = document.querySelector('[data-translate="fuarlar.video2"]');
+        if (fuarVideo2) fuarVideo2.textContent = lang.fuarlar.video2;
+
+        const fuarVideo3 = document.querySelector('[data-translate="fuarlar.video3"]');
+        if (fuarVideo3) fuarVideo3.textContent = lang.fuarlar.video3;
+
+        const fuarVideo4 = document.querySelector('[data-translate="fuarlar.video4"]');
+        if (fuarVideo4) fuarVideo4.textContent = lang.fuarlar.video4;
+    }
 }
 
 // Initialize on page load
