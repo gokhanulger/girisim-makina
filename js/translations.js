@@ -48,7 +48,7 @@ const translations = {
         hero: {
             title1: "WAFER & CEREAL BAR",
             title2: "ÜRETİM HATLARI",
-            title3: "& PAKETLEME",
+            title3: "& PAKETLEME MAKİNALARI",
             description: "1995'ten beri gıda işleme ve paketleme makineleri üretiyoruz. Türkiye'nin lider üreticisi olarak 57 ülkeye ihracat yapıyoruz.",
             stat1: "Ülkeye İhracat",
             stat2: "m² Üretim Alanı",
@@ -279,7 +279,7 @@ const translations = {
         hero: {
             title1: "WAFER & CEREAL BAR",
             title2: "PRODUCTION LINES",
-            title3: "& PACKAGING",
+            title3: "& PACKAGING MACHINES",
             description: "Manufacturing food processing and packaging machines since 1985. As Turkey's leading manufacturer, we export to 57 countries worldwide.",
             stat1: "Countries Export",
             stat2: "m² Production Area",
@@ -510,7 +510,7 @@ const translations = {
         hero: {
             title1: "ВАФЛИ И ЗЕРНОВЫЕ БАТОНЧИКИ",
             title2: "ПРОИЗВОДСТВЕННЫЕ ЛИНИИ",
-            title3: "И УПАКОВКА",
+            title3: "И УПАКОВОЧНЫЕ МАШИНЫ",
             description: "Производим оборудование для переработки и упаковки пищевых продуктов с 1985 года. Как ведущий производитель Турции, экспортируем в 57 стран мира.",
             stat1: "Стран экспорта",
             stat2: "м² производства",
@@ -741,7 +741,7 @@ const translations = {
         hero: {
             title1: "الويفر وألواح الحبوب",
             title2: "خطوط الإنتاج",
-            title3: "والتغليف",
+            title3: "وآلات التغليف",
             description: "نصنع آلات معالجة وتغليف الأغذية منذ عام 1985. كشركة رائدة في تركيا، نصدر إلى 57 دولة حول العالم.",
             stat1: "دولة تصدير",
             stat2: "م² مساحة الإنتاج",
@@ -972,7 +972,7 @@ const translations = {
         hero: {
             title1: "GAUFRETTES & BARRES DE CÉRÉALES",
             title2: "LIGNES DE PRODUCTION",
-            title3: "& EMBALLAGE",
+            title3: "& MACHINES D'EMBALLAGE",
             description: "Fabricant de machines de transformation et d'emballage alimentaire depuis 1985. Leader en Turquie, nous exportons vers 57 pays dans le monde.",
             stat1: "Pays d'exportation",
             stat2: "m² de production",
@@ -1203,7 +1203,7 @@ const translations = {
         hero: {
             title1: "WAFER E BARRAS DE CEREAIS",
             title2: "LINHAS DE PRODUÇÃO",
-            title3: "E EMBALAGEM",
+            title3: "E MÁQUINAS DE EMBALAGEM",
             description: "Fabricante de máquinas de processamento e embalagem de alimentos desde 1995. Como líder na Turquia, exportamos para 57 países em todo o mundo.",
             stat1: "Países de exportação",
             stat2: "m² de área de produção",
@@ -1434,7 +1434,7 @@ const translations = {
         hero: {
             title1: "WAFER Y BARRAS DE CEREALES",
             title2: "LÍNEAS DE PRODUCCIÓN",
-            title3: "Y EMBALAJE",
+            title3: "Y MÁQUINAS DE EMBALAJE",
             description: "Fabricante de máquinas de procesamiento y embalaje de alimentos desde 1985. Como líder en Turquía, exportamos a 57 países en todo el mundo.",
             stat1: "Países de exportación",
             stat2: "m² área de producción",
