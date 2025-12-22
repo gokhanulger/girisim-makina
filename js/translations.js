@@ -163,6 +163,16 @@ const translations = {
             title1: "Müşterilerimiz",
             title2: "Ne Diyor?"
         },
+        fuarlar: {
+            tag: "Fuarlar",
+            title1: "Fuar",
+            title2: "Katılımlarımız",
+            subtitle: "Uluslararası fuarlarda Türkiye'yi temsil ediyoruz",
+            video1: "CNR FOTEG 2022",
+            video2: "Gulfood Manufacturing 2024",
+            video3: "Interpack 2023",
+            video4: "PackExpo 2024"
+        },
         videos: {
             tag: "Video Galeri",
             title1: "Makinelerimizi",
@@ -383,6 +393,16 @@ const translations = {
             tag: "References",
             title1: "What Our",
             title2: "Customers Say"
+        },
+        fuarlar: {
+            tag: "Trade Fairs",
+            title1: "Our Trade Fair",
+            title2: "Participations",
+            subtitle: "We represent Turkey at international trade fairs",
+            video1: "CNR FOTEG 2022",
+            video2: "Gulfood Manufacturing 2024",
+            video3: "Interpack 2023",
+            video4: "PackExpo 2024"
         },
         videos: {
             tag: "Video Gallery",
@@ -605,6 +625,16 @@ const translations = {
             title1: "Что говорят",
             title2: "наши клиенты"
         },
+        fuarlar: {
+            tag: "Выставки",
+            title1: "Наше участие",
+            title2: "в выставках",
+            subtitle: "Мы представляем Турцию на международных выставках",
+            video1: "CNR FOTEG 2022",
+            video2: "Gulfood Manufacturing 2024",
+            video3: "Interpack 2023",
+            video4: "PackExpo 2024"
+        },
         videos: {
             tag: "Видеогалерея",
             title1: "Смотрите наши",
@@ -825,6 +855,16 @@ const translations = {
             tag: "المراجع",
             title1: "ماذا يقول",
             title2: "عملاؤنا"
+        },
+        fuarlar: {
+            tag: "المعارض",
+            title1: "مشاركاتنا",
+            title2: "في المعارض",
+            subtitle: "نمثل تركيا في المعارض الدولية",
+            video1: "CNR FOTEG 2022",
+            video2: "Gulfood Manufacturing 2024",
+            video3: "Interpack 2023",
+            video4: "PackExpo 2024"
         },
         videos: {
             tag: "معرض الفيديو",
@@ -1047,6 +1087,16 @@ const translations = {
             title1: "Ce que disent",
             title2: "nos clients"
         },
+        fuarlar: {
+            tag: "Salons",
+            title1: "Nos participations",
+            title2: "aux salons",
+            subtitle: "Nous représentons la Turquie dans les salons internationaux",
+            video1: "CNR FOTEG 2022",
+            video2: "Gulfood Manufacturing 2024",
+            video3: "Interpack 2023",
+            video4: "PackExpo 2024"
+        },
         videos: {
             tag: "Galerie vidéo",
             title1: "Regardez nos",
@@ -1268,6 +1318,16 @@ const translations = {
             title1: "O que nossos",
             title2: "clientes dizem"
         },
+        fuarlar: {
+            tag: "Feiras",
+            title1: "Nossas participações",
+            title2: "em feiras",
+            subtitle: "Representamos a Turquia em feiras internacionais",
+            video1: "CNR FOTEG 2022",
+            video2: "Gulfood Manufacturing 2024",
+            video3: "Interpack 2023",
+            video4: "PackExpo 2024"
+        },
         videos: {
             tag: "Galeria de vídeos",
             title1: "Assista nossas",
@@ -1488,6 +1548,16 @@ const translations = {
             tag: "Referencias",
             title1: "Lo que dicen",
             title2: "nuestros clientes"
+        },
+        fuarlar: {
+            tag: "Ferias",
+            title1: "Nuestras participaciones",
+            title2: "en ferias",
+            subtitle: "Representamos a Turquía en ferias internacionales",
+            video1: "CNR FOTEG 2022",
+            video2: "Gulfood Manufacturing 2024",
+            video3: "Interpack 2023",
+            video4: "PackExpo 2024"
         },
         videos: {
             tag: "Galería de videos",
