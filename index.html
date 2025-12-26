@@ -1006,9 +1006,9 @@
             <span class="close-video" onclick="closeTeklifModal()">&times;</span>
             <div style="text-align: center; margin-bottom: 20px;">
                 <i class="fas fa-file-invoice" style="font-size: 2.5rem; color: var(--primary);"></i>
-                <h3 style="margin-top: 10px; color: var(--dark);">Ücretsiz Teklif Alın</h3>
+                <h3 style="margin-top: 10px; color: var(--dark);" data-translate="quoteFormTitle">Ücretsiz Teklif Alın</h3>
             </div>
-            <form id="teklifForm" action="https://api.web3forms.com/submit" method="POST">
+            <form id="teklifForm" action="https://api.web3forms.com/submit" method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="access_key" value="a590c8e5-6cb3-452f-9bf6-f17d591d86f8">
                 <input type="hidden" name="subject" value="Yeni Teklif Talebi - Girişim Makina">
                 <input type="hidden" name="from_name" value="Girişim Makina Web Sitesi">
@@ -1016,47 +1016,54 @@
                 <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
 
                 <div style="margin-bottom: 15px;">
-                    <input type="text" name="company" placeholder="Firma Adı *" required style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 1rem;">
+                    <input type="text" name="company" data-translate-placeholder="quoteCompany" placeholder="Firma Adı *" required style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 1rem;">
                 </div>
                 <div style="margin-bottom: 15px;">
-                    <input type="text" name="name" placeholder="Ad Soyad *" required style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 1rem;">
+                    <input type="text" name="name" data-translate-placeholder="quoteName" placeholder="Ad Soyad *" required style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 1rem;">
                 </div>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
-                    <input type="email" name="email" id="customerEmail" placeholder="E-posta *" required style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 1rem;">
-                    <input type="tel" name="phone" placeholder="Telefon *" required style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 1rem;">
+                    <input type="email" name="email" id="customerEmail" data-translate-placeholder="quoteEmail" placeholder="E-posta *" required style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 1rem;">
+                    <input type="tel" name="phone" data-translate-placeholder="quotePhone" placeholder="Telefon *" required style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 1rem;">
                 </div>
-                                <div style="margin-bottom: 15px;">
+                <div style="margin-bottom: 15px;">
                     <select name="product" id="teklifProduct" required style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 1rem;">
-                        <option value="">İlgilendiğiniz Ürün *</option>
-                        <option value="Wafer Üretim Hattı">Wafer Üretim Hattı</option>
-                        <option value="Cereal Bar / Protein Bar Hattı">Cereal Bar / Protein Bar Hattı</option>
-                        <option value="Çikolata Kaplama Sistemi">Çikolata Kaplama Sistemi</option>
-                        <option value="Bisküvi Kremalama Makinesi">Bisküvi Kremalama Makinesi</option>
-                        <option value="Flow Pack Makinesi">Flow Pack Makinesi</option>
-                        <option value="Overwrapping Makinesi">Overwrapping Makinesi</option>
-                        <option value="Thermoform Paketleme">Thermoform Paketleme</option>
-                        <option value="VFFS Dikey Dolum">VFFS Dikey Dolum</option>
-                        <option value="Helva Dilimleme & Paketleme">Helva Dilimleme & Paketleme</option>
-                        <option value="Diğer">Diğer</option>
+                        <option value="" data-translate="quoteProductSelect">İlgilendiğiniz Ürün *</option>
+                        <option value="Wafer Production Line">Wafer Üretim Hattı</option>
+                        <option value="Cereal Bar / Protein Bar Line">Cereal Bar / Protein Bar Hattı</option>
+                        <option value="Chocolate Coating System">Çikolata Kaplama Sistemi</option>
+                        <option value="Biscuit Sandwiching Machine">Bisküvi Kremalama Makinesi</option>
+                        <option value="Flow Pack Machine">Flow Pack Makinesi</option>
+                        <option value="Overwrapping Machine">Overwrapping Makinesi</option>
+                        <option value="Thermoform Packaging">Thermoform Paketleme</option>
+                        <option value="VFFS Machine">VFFS Dikey Dolum</option>
+                        <option value="Halvah Slicing & Packaging">Helva Dilimleme & Paketleme</option>
+                        <option value="Other">Diğer</option>
                     </select>
                 </div>
                 <div style="margin-bottom: 15px;">
-                    <textarea name="message" rows="2" placeholder="Mesajınız (opsiyonel)" style="width: 100%; padding: 10px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 0.9rem; resize: none;"></textarea>
+                    <textarea name="message" rows="2" data-translate-placeholder="quoteMessage" placeholder="Mesajınız (opsiyonel)" style="width: 100%; padding: 10px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 0.9rem; resize: none;"></textarea>
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label style="display: flex; align-items: center; gap: 10px; padding: 12px; border: 2px dashed #e0e0e0; border-radius: 8px; cursor: pointer; transition: all 0.3s;">
+                        <i class="fas fa-cloud-upload-alt" style="font-size: 1.2rem; color: #888;"></i>
+                        <span id="fileLabel" data-translate="quoteFileUpload" style="color: #888; font-size: 0.9rem;">Görsel/Dosya Ekle (opsiyonel)</span>
+                        <input type="file" name="attachment" accept="image/*,.pdf,.doc,.docx" style="display: none;" onchange="updateFileLabel(this)">
+                    </label>
                 </div>
                 <div style="margin-bottom: 20px;">
                     <label style="display: flex; align-items: flex-start; gap: 10px; cursor: pointer;">
                         <input type="checkbox" required style="margin-top: 4px;">
-                        <span style="font-size: 0.85rem; color: #666;">KVKK Aydınlatma Metni'ni okudum ve kabul ediyorum.</span>
+                        <span style="font-size: 0.85rem; color: #666;" data-translate="quotePrivacy">KVKK Aydınlatma Metni'ni okudum ve kabul ediyorum.</span>
                     </label>
                 </div>
-                <button type="submit" class="btn btn-primary btn-lg btn-block" id="teklifSubmitBtn">
+                <button type="submit" class="btn btn-primary btn-lg btn-block" id="teklifSubmitBtn" data-translate="quoteSubmit">
                     <i class="fas fa-paper-plane"></i> Teklif Talebi Gönder
                 </button>
             </form>
             <div id="teklifSuccess" style="display: none; text-align: center; padding: 30px;">
                 <i class="fas fa-check-circle" style="font-size: 4rem; color: #28a745; margin-bottom: 20px;"></i>
-                <h3 style="color: var(--dark); margin-bottom: 10px;">Talebiniz Alındı!</h3>
-                <p style="color: #666;">En kısa sürede size dönüş yapacağız.</p>
+                <h3 style="color: var(--dark); margin-bottom: 10px;" data-translate="quoteSuccessTitle">Talebiniz Alındı!</h3>
+                <p style="color: #666;" data-translate="quoteSuccessText">En kısa sürede size dönüş yapacağız.</p>
             </div>
         </div>
     </div>
@@ -1159,6 +1166,20 @@
         function closeCatalogModal() {
             document.getElementById('catalogModal').style.display = 'none';
             document.body.style.overflow = '';
+        }
+
+        // File label update
+        function updateFileLabel(input) {
+            const label = document.getElementById('fileLabel');
+            if (input.files && input.files[0]) {
+                const fileName = input.files[0].name;
+                const fileSize = (input.files[0].size / 1024 / 1024).toFixed(2);
+                label.textContent = fileName + ' (' + fileSize + ' MB)';
+                label.style.color = '#333';
+            } else {
+                label.textContent = 'Görsel/Dosya Ekle (opsiyonel)';
+                label.style.color = '#888';
+            }
         }
 
         // Teklif Modal Functions

@@ -228,6 +228,20 @@ const translations = {
             text: "Kataloglarımızı göndermemizi ister misiniz? Size özel tekliflerimizden haberdar olun.",
             yes: "Evet, Katalog Gönder",
             no: "Hayır, Teşekkürler"
+        },
+        quoteForm: {
+            title: "Ücretsiz Teklif Alın",
+            company: "Firma Adı *",
+            name: "Ad Soyad *",
+            email: "E-posta *",
+            phone: "Telefon *",
+            productSelect: "İlgilendiğiniz Ürün *",
+            message: "Mesajınız (opsiyonel)",
+            fileUpload: "Görsel/Dosya Ekle (opsiyonel)",
+            privacy: "KVKK Aydınlatma Metni'ni okudum ve kabul ediyorum.",
+            submit: "Teklif Talebi Gönder",
+            successTitle: "Talebiniz Alındı!",
+            successText: "En kısa sürede size dönüş yapacağız."
         }
     },
 
@@ -459,6 +473,20 @@ const translations = {
             text: "Would you like us to send our catalogs? Stay informed about our special offers.",
             yes: "Yes, Send Catalog",
             no: "No, Thanks"
+        },
+        quoteForm: {
+            title: "Get a Free Quote",
+            company: "Company Name *",
+            name: "Full Name *",
+            email: "Email *",
+            phone: "Phone *",
+            productSelect: "Product of Interest *",
+            message: "Your Message (optional)",
+            fileUpload: "Add Image/File (optional)",
+            privacy: "I have read and accept the Privacy Policy.",
+            submit: "Send Quote Request",
+            successTitle: "Request Received!",
+            successText: "We will get back to you as soon as possible."
         }
     },
 
@@ -690,6 +718,20 @@ const translations = {
             text: "Хотите, чтобы мы отправили вам наши каталоги? Узнавайте о наших специальных предложениях.",
             yes: "Да, отправьте каталог",
             no: "Нет, спасибо"
+        },
+        quoteForm: {
+            title: "Получить бесплатное предложение",
+            company: "Название компании *",
+            name: "ФИО *",
+            email: "Эл. почта *",
+            phone: "Телефон *",
+            productSelect: "Интересующий продукт *",
+            message: "Ваше сообщение (необязательно)",
+            fileUpload: "Добавить изображение/файл (необязательно)",
+            privacy: "Я прочитал и принимаю Политику конфиденциальности.",
+            submit: "Отправить запрос",
+            successTitle: "Запрос получен!",
+            successText: "Мы свяжемся с вами в ближайшее время."
         }
     },
 
@@ -921,6 +963,20 @@ const translations = {
             text: "هل تريد أن نرسل لك كتالوجاتنا؟ ابق على اطلاع بعروضنا الخاصة.",
             yes: "نعم، أرسل الكتالوج",
             no: "لا، شكراً"
+        },
+        quoteForm: {
+            title: "احصل على عرض أسعار مجاني",
+            company: "اسم الشركة *",
+            name: "الاسم الكامل *",
+            email: "البريد الإلكتروني *",
+            phone: "الهاتف *",
+            productSelect: "المنتج المطلوب *",
+            message: "رسالتك (اختياري)",
+            fileUpload: "إضافة صورة/ملف (اختياري)",
+            privacy: "لقد قرأت وأوافق على سياسة الخصوصية.",
+            submit: "إرسال طلب عرض الأسعار",
+            successTitle: "تم استلام طلبك!",
+            successText: "سنتواصل معك في أقرب وقت ممكن."
         }
     },
 
@@ -1152,6 +1208,20 @@ const translations = {
             text: "Souhaitez-vous recevoir nos catalogues ? Restez informé de nos offres spéciales.",
             yes: "Oui, envoyez le catalogue",
             no: "Non, merci"
+        },
+        quoteForm: {
+            title: "Demander un devis gratuit",
+            company: "Nom de l'entreprise *",
+            name: "Nom complet *",
+            email: "E-mail *",
+            phone: "Téléphone *",
+            productSelect: "Produit souhaité *",
+            message: "Votre message (optionnel)",
+            fileUpload: "Ajouter image/fichier (optionnel)",
+            privacy: "J'ai lu et j'accepte la Politique de confidentialité.",
+            submit: "Envoyer la demande",
+            successTitle: "Demande reçue !",
+            successText: "Nous vous contacterons dans les plus brefs délais."
         }
     },
 
@@ -1383,6 +1453,20 @@ const translations = {
             text: "Gostaria que enviássemos nossos catálogos? Fique por dentro das nossas ofertas especiais.",
             yes: "Sim, envie o catálogo",
             no: "Não, obrigado"
+        },
+        quoteForm: {
+            title: "Solicitar orçamento grátis",
+            company: "Nome da empresa *",
+            name: "Nome completo *",
+            email: "E-mail *",
+            phone: "Telefone *",
+            productSelect: "Produto de interesse *",
+            message: "Sua mensagem (opcional)",
+            fileUpload: "Adicionar imagem/arquivo (opcional)",
+            privacy: "Li e aceito a Política de Privacidade.",
+            submit: "Enviar solicitação",
+            successTitle: "Solicitação recebida!",
+            successText: "Entraremos em contato o mais breve possível."
         }
     },
 
@@ -1614,6 +1698,20 @@ const translations = {
             text: "¿Te gustaría que te enviemos nuestros catálogos? Mantente informado sobre nuestras ofertas especiales.",
             yes: "Sí, envíame el catálogo",
             no: "No, gracias"
+        },
+        quoteForm: {
+            title: "Solicitar presupuesto gratis",
+            company: "Nombre de la empresa *",
+            name: "Nombre completo *",
+            email: "Correo electrónico *",
+            phone: "Teléfono *",
+            productSelect: "Producto de interés *",
+            message: "Su mensaje (opcional)",
+            fileUpload: "Agregar imagen/archivo (opcional)",
+            privacy: "He leído y acepto la Política de Privacidad.",
+            submit: "Enviar solicitud",
+            successTitle: "¡Solicitud recibida!",
+            successText: "Nos pondremos en contacto con usted lo antes posible."
         }
     }
 };
@@ -2032,6 +2130,45 @@ function applyTranslations() {
 
         const exitNo = document.querySelector('[data-translate="exitPopupNo"]');
         if (exitNo) exitNo.textContent = lang.exitPopup.no;
+    }
+
+    // Quote Form
+    if (lang.quoteForm) {
+        const quoteTitle = document.querySelector('[data-translate="quoteFormTitle"]');
+        if (quoteTitle) quoteTitle.textContent = lang.quoteForm.title;
+
+        const quoteCompany = document.querySelector('[data-translate-placeholder="quoteCompany"]');
+        if (quoteCompany) quoteCompany.placeholder = lang.quoteForm.company;
+
+        const quoteName = document.querySelector('[data-translate-placeholder="quoteName"]');
+        if (quoteName) quoteName.placeholder = lang.quoteForm.name;
+
+        const quoteEmail = document.querySelector('[data-translate-placeholder="quoteEmail"]');
+        if (quoteEmail) quoteEmail.placeholder = lang.quoteForm.email;
+
+        const quotePhone = document.querySelector('[data-translate-placeholder="quotePhone"]');
+        if (quotePhone) quotePhone.placeholder = lang.quoteForm.phone;
+
+        const quoteProductSelect = document.querySelector('[data-translate="quoteProductSelect"]');
+        if (quoteProductSelect) quoteProductSelect.textContent = lang.quoteForm.productSelect;
+
+        const quoteMessage = document.querySelector('[data-translate-placeholder="quoteMessage"]');
+        if (quoteMessage) quoteMessage.placeholder = lang.quoteForm.message;
+
+        const quoteFileUpload = document.querySelector('[data-translate="quoteFileUpload"]');
+        if (quoteFileUpload && !quoteFileUpload.dataset.hasFile) quoteFileUpload.textContent = lang.quoteForm.fileUpload;
+
+        const quotePrivacy = document.querySelector('[data-translate="quotePrivacy"]');
+        if (quotePrivacy) quotePrivacy.textContent = lang.quoteForm.privacy;
+
+        const quoteSubmit = document.querySelector('[data-translate="quoteSubmit"]');
+        if (quoteSubmit) quoteSubmit.innerHTML = '<i class="fas fa-paper-plane"></i> ' + lang.quoteForm.submit;
+
+        const quoteSuccessTitle = document.querySelector('[data-translate="quoteSuccessTitle"]');
+        if (quoteSuccessTitle) quoteSuccessTitle.textContent = lang.quoteForm.successTitle;
+
+        const quoteSuccessText = document.querySelector('[data-translate="quoteSuccessText"]');
+        if (quoteSuccessText) quoteSuccessText.textContent = lang.quoteForm.successText;
     }
 
     // Fuarlar Section
