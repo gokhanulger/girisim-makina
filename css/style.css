@@ -2891,6 +2891,39 @@ h4 { font-size: 1.25rem; }
     color: var(--white);
 }
 
+/* Teklif Modal */
+#teklifModal .video-modal-content {
+    aspect-ratio: unset !important;
+    height: auto !important;
+    max-height: 90vh;
+    padding: 40px;
+    background: var(--white);
+    overflow-y: auto !important;
+    border-radius: 20px;
+}
+
+#teklifModal .close-video {
+    top: 15px;
+    right: 20px;
+    font-size: 28px;
+    color: #666;
+}
+
+#teklifModal .close-video:hover {
+    color: var(--primary-color);
+}
+
+@media (max-width: 600px) {
+    #teklifModal .video-modal-content {
+        padding: 25px 20px;
+        max-width: 95%;
+    }
+
+    #teklifModal .video-modal-content div[style*="grid-template-columns"] {
+        grid-template-columns: 1fr !important;
+    }
+}
+
 /* =============================================
    RTL SUPPORT (Arabic)
    ============================================= */
