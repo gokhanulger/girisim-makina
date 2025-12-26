@@ -1004,10 +1004,9 @@
     <div id="teklifModal" class="video-modal" onclick="closeTeklifModal()">
         <div class="video-modal-content" onclick="event.stopPropagation()" style="max-width: 550px; padding: 40px;">
             <span class="close-video" onclick="closeTeklifModal()">&times;</span>
-            <div style="text-align: center; margin-bottom: 25px;">
-                <i class="fas fa-file-invoice" style="font-size: 3rem; color: var(--primary);"></i>
-                <h3 style="margin-top: 15px; color: var(--dark);">Ücretsiz Teklif Alın</h3>
-                <p style="color: #666;">Formu doldurun, size özel teklifinizi email olarak gönderelim</p>
+            <div style="text-align: center; margin-bottom: 20px;">
+                <i class="fas fa-file-invoice" style="font-size: 2.5rem; color: var(--primary);"></i>
+                <h3 style="margin-top: 10px; color: var(--dark);">Ücretsiz Teklif Alın</h3>
             </div>
             <form id="teklifForm" action="https://api.web3forms.com/submit" method="POST">
                 <input type="hidden" name="access_key" value="a590c8e5-6cb3-452f-9bf6-f17d591d86f8">
@@ -1026,10 +1025,7 @@
                     <input type="email" name="email" id="customerEmail" placeholder="E-posta *" required style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 1rem;">
                     <input type="tel" name="phone" placeholder="Telefon *" required style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 1rem;">
                 </div>
-                <div style="margin-bottom: 15px;">
-                    <input type="text" name="country" placeholder="Ülke" style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 1rem;">
-                </div>
-                <div style="margin-bottom: 15px;">
+                                <div style="margin-bottom: 15px;">
                     <select name="product" id="teklifProduct" required style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 1rem;">
                         <option value="">İlgilendiğiniz Ürün *</option>
                         <option value="Wafer Üretim Hattı">Wafer Üretim Hattı</option>
@@ -1045,7 +1041,7 @@
                     </select>
                 </div>
                 <div style="margin-bottom: 15px;">
-                    <textarea name="message" rows="3" placeholder="Mesajınız - Kapasite, ürün detayları vb." style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 1rem; resize: vertical;"></textarea>
+                    <textarea name="message" rows="2" placeholder="Mesajınız (opsiyonel)" style="width: 100%; padding: 10px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 0.9rem; resize: none;"></textarea>
                 </div>
                 <div style="margin-bottom: 20px;">
                     <label style="display: flex; align-items: flex-start; gap: 10px; cursor: pointer;">
