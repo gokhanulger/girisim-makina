@@ -116,7 +116,8 @@
                         </div>
                     </li>
                 </ul>
-                <a href="https://wa.me/905468792927" target="_blank" class="btn btn-primary"><i class="fab fa-whatsapp"></i> TEKLİF AL</a>
+                <a href="#" onclick="openTeklifModal(); return false;" class="btn btn-primary"><i class="fas fa-file-invoice"></i> TEKLİF AL</a>
+                <a href="#" onclick="if(typeof Tawk_API !== 'undefined') Tawk_API.maximize(); return false;" class="btn btn-outline" style="margin-left: 8px;"><i class="fas fa-comments"></i> CANLI DESTEK</a>
                 <div class="hamburger">
                     <span></span>
                     <span></span>
@@ -151,7 +152,7 @@
                             </div>
                         </div>
                         <div class="hero-buttons">
-                            <a href="https://wa.me/905468792927" target="_blank" class="btn btn-primary btn-lg"><i class="fab fa-whatsapp"></i> HEMEN TEKLİF AL</a>
+                            <a href="#" onclick="openTeklifModal(); return false;" class="btn btn-primary btn-lg"><i class="fas fa-file-invoice"></i> HEMEN TEKLİF AL</a>
                             <a href="https://www.youtube.com/@girisimpackagingmachinery" target="_blank" class="btn btn-outline btn-lg"><i class="fab fa-youtube"></i> VİDEOLARI İZLE</a>
                         </div>
                     </div>
@@ -212,7 +213,7 @@
                     <div class="machine-image">
                         <img src="https://img.youtube.com/vi/igEIPiJt3UI/maxresdefault.jpg" alt="Wafer Üretim Hattı">
                         <div class="machine-overlay">
-                            <a href="https://wa.me/905468792927?text=Wafer%20üretim%20hattı%20hakkında%20bilgi%20almak%20istiyorum" target="_blank" class="btn btn-white">Teklif Al</a>
+                            <a href="#" onclick="openTeklifModal('Wafer Üretim Hattı'); return false;" class="btn btn-white">Teklif Al</a>
                         </div>
                     </div>
                     <div class="machine-info">
@@ -229,7 +230,7 @@
                     <div class="machine-image">
                         <img src="https://img.youtube.com/vi/x2IZbYuavgY/maxresdefault.jpg" alt="Cereal Bar Üretim Hattı">
                         <div class="machine-overlay">
-                            <a href="https://wa.me/905468792927?text=Cereal%20bar%20üretim%20hattı%20hakkında%20bilgi%20almak%20istiyorum" target="_blank" class="btn btn-white">Teklif Al</a>
+                            <a href="#" onclick="openTeklifModal('Cereal Bar / Protein Bar Hattı'); return false;" class="btn btn-white">Teklif Al</a>
                         </div>
                     </div>
                     <div class="machine-info">
@@ -246,7 +247,7 @@
                     <div class="machine-image">
                         <img src="https://img.youtube.com/vi/PadWvj8-jcc/maxresdefault.jpg" alt="Çikolata Kaplama Sistemi">
                         <div class="machine-overlay">
-                            <a href="https://wa.me/905468792927?text=Çikolata%20kaplama%20sistemi%20hakkında%20bilgi%20almak%20istiyorum" target="_blank" class="btn btn-white">Teklif Al</a>
+                            <a href="#" onclick="openTeklifModal('Çikolata Kaplama Sistemi'); return false;" class="btn btn-white">Teklif Al</a>
                         </div>
                     </div>
                     <div class="machine-info">
@@ -263,7 +264,7 @@
                     <div class="machine-image">
                         <img src="https://img.youtube.com/vi/gfMiy8vIisY/maxresdefault.jpg" alt="Bisküvi Kremalama Makinesi">
                         <div class="machine-overlay">
-                            <a href="https://wa.me/905468792927?text=Bisküvi%20kremalama%20makinesi%20hakkında%20bilgi%20almak%20istiyorum" target="_blank" class="btn btn-white">Teklif Al</a>
+                            <a href="#" onclick="openTeklifModal('Bisküvi Kremalama Makinesi'); return false;" class="btn btn-white">Teklif Al</a>
                         </div>
                     </div>
                     <div class="machine-info">
@@ -1000,6 +1001,71 @@
         </div>
     </div>
 
+    <!-- Teklif Formu Modal -->
+    <div id="teklifModal" class="video-modal" onclick="closeTeklifModal()">
+        <div class="video-modal-content" onclick="event.stopPropagation()" style="max-width: 550px; padding: 40px;">
+            <span class="close-video" onclick="closeTeklifModal()">&times;</span>
+            <div style="text-align: center; margin-bottom: 25px;">
+                <i class="fas fa-file-invoice" style="font-size: 3rem; color: var(--primary);"></i>
+                <h3 style="margin-top: 15px; color: var(--dark);">Ücretsiz Teklif Alın</h3>
+                <p style="color: #666;">Formu doldurun, size özel teklifinizi email olarak gönderelim</p>
+            </div>
+            <form id="teklifForm" action="https://api.web3forms.com/submit" method="POST">
+                <input type="hidden" name="access_key" value="a590c8e5-6cb3-452f-9bf6-f17d591d86f8">
+                <input type="hidden" name="subject" value="Yeni Teklif Talebi - Girişim Makina">
+                <input type="hidden" name="from_name" value="Girişim Makina Web Sitesi">
+                <input type="hidden" name="replyto" id="replyToEmail">
+                <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+
+                <div style="margin-bottom: 15px;">
+                    <input type="text" name="company" placeholder="Firma Adı *" required style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 1rem;">
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <input type="text" name="name" placeholder="Ad Soyad *" required style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 1rem;">
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                    <input type="email" name="email" id="customerEmail" placeholder="E-posta *" required style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 1rem;">
+                    <input type="tel" name="phone" placeholder="Telefon *" required style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 1rem;">
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <input type="text" name="country" placeholder="Ülke" style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 1rem;">
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <select name="product" id="teklifProduct" required style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 1rem;">
+                        <option value="">İlgilendiğiniz Ürün *</option>
+                        <option value="Wafer Üretim Hattı">Wafer Üretim Hattı</option>
+                        <option value="Cereal Bar / Protein Bar Hattı">Cereal Bar / Protein Bar Hattı</option>
+                        <option value="Çikolata Kaplama Sistemi">Çikolata Kaplama Sistemi</option>
+                        <option value="Bisküvi Kremalama Makinesi">Bisküvi Kremalama Makinesi</option>
+                        <option value="Flow Pack Makinesi">Flow Pack Makinesi</option>
+                        <option value="Overwrapping Makinesi">Overwrapping Makinesi</option>
+                        <option value="Thermoform Paketleme">Thermoform Paketleme</option>
+                        <option value="VFFS Dikey Dolum">VFFS Dikey Dolum</option>
+                        <option value="Helva Dilimleme & Paketleme">Helva Dilimleme & Paketleme</option>
+                        <option value="Diğer">Diğer</option>
+                    </select>
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <textarea name="message" rows="3" placeholder="Mesajınız - Kapasite, ürün detayları vb." style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 1rem; resize: vertical;"></textarea>
+                </div>
+                <div style="margin-bottom: 20px;">
+                    <label style="display: flex; align-items: flex-start; gap: 10px; cursor: pointer;">
+                        <input type="checkbox" required style="margin-top: 4px;">
+                        <span style="font-size: 0.85rem; color: #666;">KVKK Aydınlatma Metni'ni okudum ve kabul ediyorum.</span>
+                    </label>
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg btn-block" id="teklifSubmitBtn">
+                    <i class="fas fa-paper-plane"></i> Teklif Talebi Gönder
+                </button>
+            </form>
+            <div id="teklifSuccess" style="display: none; text-align: center; padding: 30px;">
+                <i class="fas fa-check-circle" style="font-size: 4rem; color: #28a745; margin-bottom: 20px;"></i>
+                <h3 style="color: var(--dark); margin-bottom: 10px;">Talebiniz Alındı!</h3>
+                <p style="color: #666;">En kısa sürede size dönüş yapacağız.</p>
+            </div>
+        </div>
+    </div>
+
     <!-- Exit Intent Popup -->
     <div id="exitPopup" class="video-modal" onclick="closeExitPopup()">
         <div class="video-modal-content" onclick="event.stopPropagation()" style="max-width: 450px; padding: 40px; text-align: center;">
@@ -1100,6 +1166,65 @@
             document.body.style.overflow = '';
         }
 
+        // Teklif Modal Functions
+        function openTeklifModal(product) {
+            document.getElementById('teklifModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            // Reset form and show form, hide success message
+            document.getElementById('teklifForm').style.display = 'block';
+            document.getElementById('teklifSuccess').style.display = 'none';
+            document.getElementById('teklifForm').reset();
+            // Pre-select product if provided
+            if (product) {
+                document.getElementById('teklifProduct').value = product;
+            }
+        }
+
+        function closeTeklifModal() {
+            document.getElementById('teklifModal').style.display = 'none';
+            document.body.style.overflow = '';
+        }
+
+        // Teklif Form submission with Web3Forms
+        document.getElementById('teklifForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const submitBtn = document.getElementById('teklifSubmitBtn');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Gönderiliyor...';
+            submitBtn.disabled = true;
+
+            // Set reply-to email
+            document.getElementById('replyToEmail').value = document.getElementById('customerEmail').value;
+
+            const formData = new FormData(this);
+
+            try {
+                const response = await fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    document.getElementById('teklifForm').style.display = 'none';
+                    document.getElementById('teklifSuccess').style.display = 'block';
+                    // Auto close after 3 seconds
+                    setTimeout(() => {
+                        closeTeklifModal();
+                    }, 3000);
+                } else {
+                    alert('Bir hata oluştu. Lütfen tekrar deneyin.');
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                }
+            } catch (error) {
+                alert('Bağlantı hatası. Lütfen internet bağlantınızı kontrol edin.');
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            }
+        });
+
         // Catalog Form submission
         document.getElementById('catalogForm').addEventListener('submit', function(e) {
             e.preventDefault();
@@ -1143,6 +1268,7 @@
             if (e.key === 'Escape') {
                 closeVideo();
                 closeCatalogModal();
+                closeTeklifModal();
                 closeExitPopup();
             }
         });
