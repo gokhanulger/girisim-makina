@@ -46,7 +46,16 @@ function initAuth() {
         // Demo mode - Firebase not configured
         DEMO_MODE = true;
         console.log('Firebase not configured - Running in DEMO MODE');
-        showLoginScreen();
+
+        // Check if already logged in (demo mode session)
+        const demoSession = localStorage.getItem('girisim_demo_session');
+        if (demoSession) {
+            currentUser = JSON.parse(demoSession);
+            showAdminPanel();
+            loadContent();
+        } else {
+            showLoginScreen();
+        }
     }
 
     loginForm.addEventListener('submit', handleLogin);
@@ -64,6 +73,8 @@ async function handleLogin(e) {
     if (DEMO_MODE) {
         if (email === DEMO_EMAIL && password === DEMO_PASSWORD) {
             currentUser = { email: DEMO_EMAIL };
+            // Save demo session to localStorage
+            localStorage.setItem('girisim_demo_session', JSON.stringify(currentUser));
             showAdminPanel();
             await loadContent();
             showToast('Demo modunda giriş yapıldı', 'warning');
@@ -85,6 +96,8 @@ async function handleLogin(e) {
 async function handleLogout() {
     if (DEMO_MODE) {
         currentUser = null;
+        // Remove demo session from localStorage
+        localStorage.removeItem('girisim_demo_session');
         showLoginScreen();
         return;
     }
@@ -807,7 +820,16 @@ function navigateToSection(section) {
         videos: 'Videolar',
         cta: 'CTA Bölümü',
         contact: 'İletişim',
-        footer: 'Footer'
+        footer: 'Footer',
+        blog: 'Blog Yönetimi',
+        products: 'Ürün Sayfaları',
+        hr: 'İK Sayfası',
+        certificates: 'Sertifikalar',
+        catalog: 'Katalog',
+        seo: 'SEO Ayarları',
+        analytics: 'Analitik & İzleme',
+        translations: 'Çeviriler',
+        settings: 'Ayarlar'
     };
     pageTitle.textContent = titles[section] || section;
 
@@ -1468,5 +1490,301 @@ document.addEventListener('DOMContentLoaded', () => {
         if (section === 'translations' || section === 'settings') {
             initTranslations();
         }
+        if (section === 'analytics') {
+            initAnalytics();
+        }
     };
 });
+
+// =============================================
+// Analytics & Tracking Management
+// =============================================
+
+// Initialize analytics section
+function initAnalytics() {
+    loadAnalyticsSettings();
+    updateActiveIntegrations();
+}
+
+// Load analytics settings from localStorage/Firebase
+function loadAnalyticsSettings() {
+    const saved = localStorage.getItem('girisim_analytics_settings');
+    if (saved) {
+        const settings = JSON.parse(saved);
+
+        // Populate form fields
+        if (settings.googleAnalytics) {
+            document.getElementById('analytics-ga4').value = settings.googleAnalytics;
+        }
+        if (settings.googleTagManager) {
+            document.getElementById('analytics-gtm').value = settings.googleTagManager;
+        }
+        if (settings.facebookPixel) {
+            document.getElementById('analytics-fbPixel').value = settings.facebookPixel;
+        }
+        if (settings.googleSearchConsole) {
+            document.getElementById('analytics-gsc').value = settings.googleSearchConsole;
+        }
+        if (settings.yandexWebmaster) {
+            document.getElementById('analytics-yandexWM').value = settings.yandexWebmaster;
+        }
+        if (settings.yandexMetrica) {
+            document.getElementById('analytics-yandexMetrica').value = settings.yandexMetrica;
+        }
+        if (settings.youtubeChannel) {
+            document.getElementById('analytics-ytChannel').value = settings.youtubeChannel;
+        }
+        if (settings.customHeadCode) {
+            document.getElementById('analytics-customHead').value = settings.customHeadCode;
+        }
+        if (settings.customBodyCode) {
+            document.getElementById('analytics-customBody').value = settings.customBodyCode;
+        }
+    }
+}
+
+// Save analytics settings
+function saveAnalyticsSettings() {
+    const settings = {
+        googleAnalytics: document.getElementById('analytics-ga4')?.value?.trim() || '',
+        googleTagManager: document.getElementById('analytics-gtm')?.value?.trim() || '',
+        facebookPixel: document.getElementById('analytics-fbPixel')?.value?.trim() || '',
+        googleSearchConsole: document.getElementById('analytics-gsc')?.value?.trim() || '',
+        yandexWebmaster: document.getElementById('analytics-yandexWM')?.value?.trim() || '',
+        yandexMetrica: document.getElementById('analytics-yandexMetrica')?.value?.trim() || '',
+        youtubeChannel: document.getElementById('analytics-ytChannel')?.value?.trim() || '',
+        customHeadCode: document.getElementById('analytics-customHead')?.value || '',
+        customBodyCode: document.getElementById('analytics-customBody')?.value || ''
+    };
+
+    // Save to localStorage
+    localStorage.setItem('girisim_analytics_settings', JSON.stringify(settings));
+
+    // Also save to siteContent if available
+    if (siteContent) {
+        siteContent.analytics = settings;
+    }
+
+    updateActiveIntegrations();
+    showToast('Analitik ayarları kaydedildi!', 'success');
+}
+
+// Update active integrations display
+function updateActiveIntegrations() {
+    const container = document.getElementById('activeIntegrations');
+    if (!container) return;
+
+    const saved = localStorage.getItem('girisim_analytics_settings');
+    const settings = saved ? JSON.parse(saved) : {};
+
+    let badges = '';
+
+    if (settings.googleAnalytics) {
+        badges += '<span class="integration-badge active"><i class="fab fa-google"></i> GA4</span>';
+    }
+    if (settings.googleTagManager) {
+        badges += '<span class="integration-badge active"><i class="fab fa-google"></i> GTM</span>';
+    }
+    if (settings.facebookPixel) {
+        badges += '<span class="integration-badge active"><i class="fab fa-facebook"></i> Pixel</span>';
+    }
+    if (settings.googleSearchConsole) {
+        badges += '<span class="integration-badge active"><i class="fab fa-google"></i> GSC</span>';
+    }
+    if (settings.yandexWebmaster) {
+        badges += '<span class="integration-badge active"><i class="fab fa-yandex"></i> Yandex WM</span>';
+    }
+    if (settings.yandexMetrica) {
+        badges += '<span class="integration-badge active"><i class="fab fa-yandex"></i> Metrica</span>';
+    }
+    if (settings.youtubeChannel) {
+        badges += '<span class="integration-badge active"><i class="fab fa-youtube"></i> YouTube</span>';
+    }
+
+    if (!badges) {
+        badges = '<span class="integration-badge inactive">Henüz entegrasyon yok</span>';
+    }
+
+    container.innerHTML = badges;
+}
+
+// Generate tracking code for preview
+function generateTrackingCode() {
+    const saved = localStorage.getItem('girisim_analytics_settings');
+    const settings = saved ? JSON.parse(saved) : {};
+
+    let headCode = '';
+    let bodyCode = '';
+
+    // Google Search Console verification
+    if (settings.googleSearchConsole) {
+        headCode += `<!-- Google Search Console -->\n<meta name="google-site-verification" content="${settings.googleSearchConsole}">\n\n`;
+    }
+
+    // Yandex Webmaster verification
+    if (settings.yandexWebmaster) {
+        headCode += `<!-- Yandex Webmaster -->\n<meta name="yandex-verification" content="${settings.yandexWebmaster}">\n\n`;
+    }
+
+    // Google Analytics 4
+    if (settings.googleAnalytics) {
+        headCode += `<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=${settings.googleAnalytics}"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', '${settings.googleAnalytics}');
+</script>\n\n`;
+    }
+
+    // Google Tag Manager (Head)
+    if (settings.googleTagManager) {
+        headCode += `<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','${settings.googleTagManager}');</script>
+<!-- End Google Tag Manager -->\n\n`;
+
+        bodyCode += `<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=${settings.googleTagManager}"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->\n\n`;
+    }
+
+    // Facebook Pixel
+    if (settings.facebookPixel) {
+        headCode += `<!-- Facebook Pixel -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '${settings.facebookPixel}');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=${settings.facebookPixel}&ev=PageView&noscript=1"/></noscript>
+<!-- End Facebook Pixel -->\n\n`;
+    }
+
+    // Yandex Metrica
+    if (settings.yandexMetrica) {
+        headCode += `<!-- Yandex.Metrica -->
+<script type="text/javascript">
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();
+   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+   ym(${settings.yandexMetrica}, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true,
+        webvisor:true
+   });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/${settings.yandexMetrica}" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrica -->\n\n`;
+    }
+
+    // Custom head code
+    if (settings.customHeadCode) {
+        headCode += `<!-- Custom Head Code -->\n${settings.customHeadCode}\n\n`;
+    }
+
+    // Custom body code
+    if (settings.customBodyCode) {
+        bodyCode += `<!-- Custom Body Code -->\n${settings.customBodyCode}\n\n`;
+    }
+
+    // Display the code
+    const preview = document.getElementById('trackingCodePreview');
+    const codeElement = document.getElementById('generatedTrackingCode');
+
+    let fullCode = '';
+    if (headCode) {
+        fullCode += '<!-- ===== HEAD İÇİNE EKLE ===== -->\n' + headCode;
+    }
+    if (bodyCode) {
+        fullCode += '\n<!-- ===== BODY SONUNA EKLE ===== -->\n' + bodyCode;
+    }
+
+    if (!fullCode) {
+        fullCode = '// Henüz izleme kodu eklenmedi. Yukarıdaki alanları doldurun.';
+    }
+
+    codeElement.textContent = fullCode;
+    preview.style.display = 'block';
+}
+
+// Copy tracking code to clipboard
+function copyTrackingCode() {
+    const codeElement = document.getElementById('generatedTrackingCode');
+    navigator.clipboard.writeText(codeElement.textContent).then(() => {
+        showToast('Kod panoya kopyalandı!', 'success');
+    }).catch(() => {
+        showToast('Kopyalama başarısız!', 'error');
+    });
+}
+
+// Test analytics integration
+function testAnalyticsIntegration() {
+    const saved = localStorage.getItem('girisim_analytics_settings');
+    const settings = saved ? JSON.parse(saved) : {};
+
+    let results = [];
+
+    // Check each integration
+    if (settings.googleAnalytics) {
+        if (settings.googleAnalytics.startsWith('G-')) {
+            results.push('✅ Google Analytics 4 ID formatı doğru');
+        } else {
+            results.push('❌ Google Analytics 4 ID "G-" ile başlamalı');
+        }
+    }
+
+    if (settings.googleTagManager) {
+        if (settings.googleTagManager.startsWith('GTM-')) {
+            results.push('✅ Google Tag Manager ID formatı doğru');
+        } else {
+            results.push('❌ GTM ID "GTM-" ile başlamalı');
+        }
+    }
+
+    if (settings.facebookPixel) {
+        if (/^\d{15,16}$/.test(settings.facebookPixel)) {
+            results.push('✅ Facebook Pixel ID formatı doğru');
+        } else {
+            results.push('❌ Facebook Pixel ID 15-16 haneli sayı olmalı');
+        }
+    }
+
+    if (settings.yandexMetrica) {
+        if (/^\d+$/.test(settings.yandexMetrica)) {
+            results.push('✅ Yandex Metrica ID formatı doğru');
+        } else {
+            results.push('❌ Yandex Metrica ID sayı olmalı');
+        }
+    }
+
+    if (settings.googleSearchConsole) {
+        results.push('✅ Google Search Console doğrulama kodu mevcut');
+    }
+
+    if (settings.yandexWebmaster) {
+        results.push('✅ Yandex Webmaster doğrulama kodu mevcut');
+    }
+
+    if (results.length === 0) {
+        results.push('ℹ️ Henüz analitik entegrasyonu eklenmedi');
+    }
+
+    alert('Entegrasyon Test Sonuçları:\n\n' + results.join('\n'));
+}

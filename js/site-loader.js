@@ -1,4 +1,162 @@
 // Site Content Loader - Loads dynamic content from Firebase or localStorage
+
+// Load Analytics & Tracking Codes - Must run ASAP
+(function loadAnalyticsTracking() {
+    const saved = localStorage.getItem('girisim_analytics_settings');
+    if (!saved) return;
+
+    const settings = JSON.parse(saved);
+
+    // Create a container for head scripts
+    const headScripts = [];
+
+    // Google Search Console verification
+    if (settings.googleSearchConsole) {
+        const meta = document.createElement('meta');
+        meta.name = 'google-site-verification';
+        meta.content = settings.googleSearchConsole;
+        document.head.appendChild(meta);
+    }
+
+    // Yandex Webmaster verification
+    if (settings.yandexWebmaster) {
+        const meta = document.createElement('meta');
+        meta.name = 'yandex-verification';
+        meta.content = settings.yandexWebmaster;
+        document.head.appendChild(meta);
+    }
+
+    // Google Analytics 4
+    if (settings.googleAnalytics) {
+        const gaScript = document.createElement('script');
+        gaScript.async = true;
+        gaScript.src = `https://www.googletagmanager.com/gtag/js?id=${settings.googleAnalytics}`;
+        document.head.appendChild(gaScript);
+
+        const gaConfig = document.createElement('script');
+        gaConfig.textContent = `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${settings.googleAnalytics}');
+        `;
+        document.head.appendChild(gaConfig);
+        console.log('Google Analytics 4 loaded:', settings.googleAnalytics);
+    }
+
+    // Google Tag Manager
+    if (settings.googleTagManager) {
+        const gtmScript = document.createElement('script');
+        gtmScript.textContent = `
+            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+            })(window,document,'script','dataLayer','${settings.googleTagManager}');
+        `;
+        document.head.appendChild(gtmScript);
+
+        // GTM noscript (add to body when ready)
+        document.addEventListener('DOMContentLoaded', function() {
+            const noscript = document.createElement('noscript');
+            const iframe = document.createElement('iframe');
+            iframe.src = `https://www.googletagmanager.com/ns.html?id=${settings.googleTagManager}`;
+            iframe.height = '0';
+            iframe.width = '0';
+            iframe.style.display = 'none';
+            iframe.style.visibility = 'hidden';
+            noscript.appendChild(iframe);
+            document.body.insertBefore(noscript, document.body.firstChild);
+        });
+        console.log('Google Tag Manager loaded:', settings.googleTagManager);
+    }
+
+    // Facebook Pixel
+    if (settings.facebookPixel) {
+        const fbScript = document.createElement('script');
+        fbScript.textContent = `
+            !function(f,b,e,v,n,t,s)
+            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+            n.queue=[];t=b.createElement(e);t.async=!0;
+            t.src=v;s=b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t,s)}(window, document,'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+            fbq('init', '${settings.facebookPixel}');
+            fbq('track', 'PageView');
+        `;
+        document.head.appendChild(fbScript);
+
+        // Facebook noscript pixel
+        document.addEventListener('DOMContentLoaded', function() {
+            const noscript = document.createElement('noscript');
+            const img = document.createElement('img');
+            img.height = 1;
+            img.width = 1;
+            img.style.display = 'none';
+            img.src = `https://www.facebook.com/tr?id=${settings.facebookPixel}&ev=PageView&noscript=1`;
+            noscript.appendChild(img);
+            document.body.appendChild(noscript);
+        });
+        console.log('Facebook Pixel loaded:', settings.facebookPixel);
+    }
+
+    // Yandex Metrica
+    if (settings.yandexMetrica) {
+        const ymScript = document.createElement('script');
+        ymScript.textContent = `
+            (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+            m[i].l=1*new Date();
+            for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+            k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+            (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+            ym(${settings.yandexMetrica}, "init", {
+                clickmap:true,
+                trackLinks:true,
+                accurateTrackBounce:true,
+                webvisor:true
+            });
+        `;
+        document.head.appendChild(ymScript);
+
+        // Yandex noscript
+        document.addEventListener('DOMContentLoaded', function() {
+            const noscript = document.createElement('noscript');
+            const div = document.createElement('div');
+            const img = document.createElement('img');
+            img.src = `https://mc.yandex.ru/watch/${settings.yandexMetrica}`;
+            img.style.position = 'absolute';
+            img.style.left = '-9999px';
+            img.alt = '';
+            div.appendChild(img);
+            noscript.appendChild(div);
+            document.body.appendChild(noscript);
+        });
+        console.log('Yandex Metrica loaded:', settings.yandexMetrica);
+    }
+
+    // Custom head code
+    if (settings.customHeadCode) {
+        const customScript = document.createElement('div');
+        customScript.innerHTML = settings.customHeadCode;
+        Array.from(customScript.children).forEach(child => {
+            document.head.appendChild(child.cloneNode(true));
+        });
+    }
+
+    // Custom body code
+    if (settings.customBodyCode) {
+        document.addEventListener('DOMContentLoaded', function() {
+            const customDiv = document.createElement('div');
+            customDiv.innerHTML = settings.customBodyCode;
+            Array.from(customDiv.children).forEach(child => {
+                document.body.appendChild(child.cloneNode(true));
+            });
+        });
+    }
+})();
+
 document.addEventListener('DOMContentLoaded', async () => {
     try {
         // First check localStorage (demo mode)

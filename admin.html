@@ -107,6 +107,9 @@
                     <li data-section="seo">
                         <a href="#"><i class="fas fa-search"></i> SEO Ayarları</a>
                     </li>
+                    <li data-section="analytics">
+                        <a href="#"><i class="fas fa-chart-line"></i> Analitik & İzleme</a>
+                    </li>
                     <li class="nav-divider"></li>
                     <li data-section="translations">
                         <a href="#"><i class="fas fa-language"></i> Çeviriler</a>
@@ -791,6 +794,125 @@
                         <div class="form-group">
                             <label>Google Search Console Doğrulama</label>
                             <input type="text" id="seo-gscVerification" data-path="seo.gscVerification" placeholder="verification-code">
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Analytics & Tracking Section -->
+                <section id="section-analytics" class="admin-section">
+                    <div class="section-card">
+                        <h2><i class="fas fa-chart-line"></i> Analitik & İzleme Kodları</h2>
+                        <p class="section-desc">Site trafik analizleri için gerekli kodları buraya girin. Kodlar otomatik olarak tüm sayfalara eklenecektir.</p>
+
+                        <div class="analytics-status" id="analyticsStatus">
+                            <h4><i class="fas fa-check-circle"></i> Aktif Entegrasyonlar</h4>
+                            <div class="status-badges" id="activeIntegrations">
+                                <!-- Will be populated by JS -->
+                            </div>
+                        </div>
+
+                        <div class="settings-group">
+                            <h3><i class="fab fa-google"></i> Google Analytics / Tag Manager</h3>
+                            <p class="settings-desc">Google Analytics 4 veya Google Tag Manager ID'nizi girin.</p>
+
+                            <div class="form-group">
+                                <label>Google Analytics 4 ID</label>
+                                <input type="text" id="analytics-ga4" data-path="analytics.googleAnalytics" placeholder="G-XXXXXXXXXX">
+                                <small>Google Analytics 4 Measurement ID (G- ile başlar)</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Google Tag Manager ID</label>
+                                <input type="text" id="analytics-gtm" data-path="analytics.googleTagManager" placeholder="GTM-XXXXXXX">
+                                <small>Tag Manager Container ID (GTM- ile başlar)</small>
+                            </div>
+                        </div>
+
+                        <div class="settings-group">
+                            <h3><i class="fab fa-facebook"></i> Facebook Pixel</h3>
+                            <p class="settings-desc">Facebook reklam takibi ve yeniden pazarlama için Pixel ID'nizi girin.</p>
+
+                            <div class="form-group">
+                                <label>Facebook Pixel ID</label>
+                                <input type="text" id="analytics-fbPixel" data-path="analytics.facebookPixel" placeholder="1234567890123456">
+                                <small>Facebook Business Manager'dan alınan Pixel ID</small>
+                            </div>
+                        </div>
+
+                        <div class="settings-group">
+                            <h3><i class="fab fa-google"></i> Google Search Console</h3>
+                            <p class="settings-desc">Site sahipliğini doğrulamak için meta tag verification kodunu girin.</p>
+
+                            <div class="form-group">
+                                <label>Search Console Doğrulama Kodu</label>
+                                <input type="text" id="analytics-gsc" data-path="analytics.googleSearchConsole" placeholder="AbCdEfGhIjKlMnOpQrStUvWxYz">
+                                <small>HTML tag doğrulama kodundaki content değeri</small>
+                            </div>
+                        </div>
+
+                        <div class="settings-group">
+                            <h3><i class="fab fa-yandex"></i> Yandex</h3>
+                            <p class="settings-desc">Yandex arama motoru ve analitik entegrasyonu için kodları girin.</p>
+
+                            <div class="form-group">
+                                <label>Yandex Webmaster Doğrulama Kodu</label>
+                                <input type="text" id="analytics-yandexWM" data-path="analytics.yandexWebmaster" placeholder="abc123def456">
+                                <small>Yandex Webmaster doğrulama meta tag içeriği</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Yandex Metrica ID</label>
+                                <input type="text" id="analytics-yandexMetrica" data-path="analytics.yandexMetrica" placeholder="12345678">
+                                <small>Yandex Metrica sayaç numarası</small>
+                            </div>
+                        </div>
+
+                        <div class="settings-group">
+                            <h3><i class="fab fa-youtube"></i> YouTube Entegrasyonu</h3>
+                            <p class="settings-desc">YouTube video izleme ve analitik ayarları.</p>
+
+                            <div class="form-group">
+                                <label>YouTube Kanal ID</label>
+                                <input type="text" id="analytics-ytChannel" data-path="analytics.youtubeChannel" placeholder="UCxxxxxxxxxxxxxxxx">
+                                <small>YouTube kanal ID'niz (UC ile başlar)</small>
+                            </div>
+                        </div>
+
+                        <div class="settings-group">
+                            <h3><i class="fas fa-code"></i> Özel Kodlar</h3>
+                            <p class="settings-desc">Diğer izleme kodları veya özel scriptler için bu alanı kullanın.</p>
+
+                            <div class="form-group">
+                                <label>Head İçine Eklenecek Kodlar</label>
+                                <textarea id="analytics-customHead" data-path="analytics.customHeadCode" rows="5" placeholder="<!-- Özel kodlarınızı buraya yapıştırın -->"></textarea>
+                                <small>Bu kodlar &lt;head&gt; tagının sonuna eklenecektir</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Body Sonuna Eklenecek Kodlar</label>
+                                <textarea id="analytics-customBody" data-path="analytics.customBodyCode" rows="5" placeholder="<!-- Özel kodlarınızı buraya yapıştırın -->"></textarea>
+                                <small>Bu kodlar &lt;/body&gt; tagından hemen önce eklenecektir</small>
+                            </div>
+                        </div>
+
+                        <div class="analytics-actions">
+                            <button class="btn btn-primary" onclick="saveAnalyticsSettings()">
+                                <i class="fas fa-save"></i> Analitik Ayarlarını Kaydet
+                            </button>
+                            <button class="btn btn-info" onclick="testAnalyticsIntegration()">
+                                <i class="fas fa-vial"></i> Entegrasyonu Test Et
+                            </button>
+                            <button class="btn btn-outline" onclick="generateTrackingCode()">
+                                <i class="fas fa-code"></i> Kodu Görüntüle
+                            </button>
+                        </div>
+
+                        <div class="tracking-code-preview" id="trackingCodePreview" style="display: none;">
+                            <h4><i class="fas fa-code"></i> Üretilen İzleme Kodu</h4>
+                            <pre id="generatedTrackingCode"></pre>
+                            <button class="btn btn-sm btn-outline" onclick="copyTrackingCode()">
+                                <i class="fas fa-copy"></i> Kopyala
+                            </button>
                         </div>
                     </div>
                 </section>
