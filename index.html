@@ -1002,11 +1002,11 @@
 
     <!-- Teklif Formu Modal -->
     <div id="teklifModal" class="video-modal" onclick="closeTeklifModal()">
-        <div class="video-modal-content" onclick="event.stopPropagation()" style="max-width: 550px; padding: 40px;">
+        <div class="video-modal-content" onclick="event.stopPropagation()">
             <span class="close-video" onclick="closeTeklifModal()">&times;</span>
-            <div style="text-align: center; margin-bottom: 20px;">
-                <i class="fas fa-file-invoice" style="font-size: 2.5rem; color: var(--primary);"></i>
-                <h3 style="margin-top: 10px; color: var(--dark);" data-translate="quoteFormTitle">Ücretsiz Teklif Alın</h3>
+            <div style="text-align: center; margin-bottom: 10px;">
+                <i class="fas fa-file-invoice" style="color: var(--primary);"></i>
+                <h3 style="color: var(--dark);" data-translate="quoteFormTitle">Ücretsiz Teklif Alın</h3>
             </div>
             <form id="teklifForm" action="https://api.web3forms.com/submit" method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="access_key" value="a590c8e5-6cb3-452f-9bf6-f17d591d86f8">
@@ -1015,18 +1015,18 @@
                 <input type="hidden" name="replyto" id="replyToEmail">
                 <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
 
-                <div style="margin-bottom: 15px;">
-                    <input type="text" name="company" data-translate-placeholder="quoteCompany" placeholder="Firma Adı *" required style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 1rem;">
+                <div>
+                    <input type="text" name="company" data-translate-placeholder="quoteCompany" placeholder="Firma Adı *" required style="width: 100%; border: 1px solid #ddd;">
                 </div>
-                <div style="margin-bottom: 15px;">
-                    <input type="text" name="name" data-translate-placeholder="quoteName" placeholder="Ad Soyad *" required style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 1rem;">
+                <div>
+                    <input type="text" name="name" data-translate-placeholder="quoteName" placeholder="Ad Soyad *" required style="width: 100%; border: 1px solid #ddd;">
                 </div>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
-                    <input type="email" name="email" id="customerEmail" data-translate-placeholder="quoteEmail" placeholder="E-posta *" required style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 1rem;">
-                    <input type="tel" name="phone" data-translate-placeholder="quotePhone" placeholder="Telefon *" required style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 1rem;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                    <input type="email" name="email" id="customerEmail" data-translate-placeholder="quoteEmail" placeholder="E-posta *" required style="width: 100%; border: 1px solid #ddd;">
+                    <input type="tel" name="phone" data-translate-placeholder="quotePhone" placeholder="Telefon *" required style="width: 100%; border: 1px solid #ddd;">
                 </div>
-                <div style="margin-bottom: 15px;">
-                    <select name="product" id="teklifProduct" required style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 1rem;">
+                <div>
+                    <select name="product" id="teklifProduct" required style="width: 100%; border: 1px solid #ddd;">
                         <option value="" data-translate="quoteProductSelect">İlgilendiğiniz Ürün *</option>
                         <option value="Wafer Production Line">Wafer Üretim Hattı</option>
                         <option value="Cereal Bar / Protein Bar Line">Cereal Bar / Protein Bar Hattı</option>
@@ -1040,20 +1040,20 @@
                         <option value="Other">Diğer</option>
                     </select>
                 </div>
-                <div style="margin-bottom: 15px;">
-                    <textarea name="message" rows="2" data-translate-placeholder="quoteMessage" placeholder="Mesajınız (opsiyonel)" style="width: 100%; padding: 10px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 0.9rem; resize: none;"></textarea>
+                <div>
+                    <textarea name="message" rows="1" data-translate-placeholder="quoteMessage" placeholder="Mesajınız (opsiyonel)" style="width: 100%; border: 1px solid #ddd; resize: none;"></textarea>
                 </div>
-                <div style="margin-bottom: 15px;">
-                    <label style="display: flex; align-items: center; gap: 10px; padding: 12px; border: 2px dashed #e0e0e0; border-radius: 8px; cursor: pointer; transition: all 0.3s;">
+                <div>
+                    <label style="display: flex; align-items: center; gap: 8px; padding: 8px; border: 1px dashed #ddd; border-radius: 6px; cursor: pointer;">
                         <i class="fas fa-cloud-upload-alt" style="font-size: 1.2rem; color: #888;"></i>
                         <span id="fileLabel" data-translate="quoteFileUpload" style="color: #888; font-size: 0.9rem;">Görsel/Dosya Ekle (opsiyonel)</span>
                         <input type="file" name="attachment" accept="image/*,.pdf,.doc,.docx" style="display: none;" onchange="updateFileLabel(this)">
                     </label>
                 </div>
-                <div style="margin-bottom: 20px;">
-                    <label style="display: flex; align-items: flex-start; gap: 10px; cursor: pointer;">
-                        <input type="checkbox" required style="margin-top: 4px;">
-                        <span style="font-size: 0.85rem; color: #666;" data-translate="quotePrivacy">KVKK Aydınlatma Metni'ni okudum ve kabul ediyorum.</span>
+                <div>
+                    <label style="display: flex; align-items: flex-start; gap: 6px; cursor: pointer;">
+                        <input type="checkbox" required style="margin-top: 2px;">
+                        <span style="color: #666;" data-translate="quotePrivacy">KVKK Aydınlatma Metni'ni okudum ve kabul ediyorum.</span>
                     </label>
                 </div>
                 <button type="submit" class="btn btn-primary btn-lg btn-block" id="teklifSubmitBtn" data-translate="quoteSubmit">

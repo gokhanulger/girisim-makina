@@ -2895,51 +2895,66 @@ h4 { font-size: 1.25rem; }
 #teklifModal .video-modal-content {
     aspect-ratio: unset !important;
     height: auto !important;
-    max-height: 95vh;
-    max-width: 480px;
-    padding: 30px;
+    max-height: 98vh;
+    max-width: 420px;
+    padding: 20px 25px;
     background: var(--white);
     overflow-y: auto !important;
-    border-radius: 16px;
+    border-radius: 12px;
 }
 
 #teklifModal .video-modal-content h3 {
-    font-size: 1.3rem;
-    margin-top: 10px;
-}
-
-#teklifModal .video-modal-content p {
-    font-size: 0.9rem;
-    margin-bottom: 15px;
+    font-size: 1.1rem;
+    margin-top: 5px;
+    margin-bottom: 0;
 }
 
 #teklifModal .video-modal-content i.fa-file-invoice {
-    font-size: 2rem !important;
+    font-size: 1.5rem !important;
 }
 
 #teklifModal .video-modal-content input,
 #teklifModal .video-modal-content select,
 #teklifModal .video-modal-content textarea {
-    padding: 10px 12px !important;
-    font-size: 0.9rem !important;
+    padding: 8px 10px !important;
+    font-size: 0.85rem !important;
+    border-radius: 6px !important;
+    border-width: 1px !important;
 }
 
 #teklifModal .video-modal-content textarea {
-    rows: 2;
+    min-height: 50px;
 }
 
 #teklifModal .video-modal-content > div:first-child {
-    margin-bottom: 15px !important;
+    margin-bottom: 12px !important;
 }
 
 #teklifModal .video-modal-content form > div {
-    margin-bottom: 10px !important;
+    margin-bottom: 8px !important;
+}
+
+#teklifModal .video-modal-content label[style*="dashed"] {
+    padding: 8px 10px !important;
+}
+
+#teklifModal .video-modal-content label[style*="dashed"] span {
+    font-size: 0.8rem !important;
+}
+
+#teklifModal .video-modal-content label[style*="flex-start"] span {
+    font-size: 0.75rem !important;
+}
+
+#teklifModal #teklifSubmitBtn {
+    padding: 10px 20px !important;
+    font-size: 0.9rem !important;
 }
 
 #teklifModal .close-video {
-    top: 10px;
-    right: 15px;
-    font-size: 24px;
+    top: 8px;
+    right: 12px;
+    font-size: 22px;
     color: #666;
 }
 
@@ -2949,9 +2964,9 @@ h4 { font-size: 1.25rem; }
 
 @media (max-width: 600px) {
     #teklifModal .video-modal-content {
-        padding: 20px 15px;
+        padding: 15px;
         max-width: 95%;
-        max-height: 98vh;
+        max-height: 99vh;
     }
 
     #teklifModal .video-modal-content div[style*="grid-template-columns"] {
