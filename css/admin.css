@@ -1461,3 +1461,28 @@ body {
         justify-content: center;
     }
 }
+
+/* Get Code Link */
+.get-code-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--primary);
+    text-decoration: none;
+    margin-left: 10px;
+    padding: 3px 8px;
+    background: rgba(229, 57, 53, 0.1);
+    border-radius: 4px;
+    transition: var(--transition);
+}
+
+.get-code-link:hover {
+    background: var(--primary);
+    color: white;
+}
+
+.get-code-link i {
+    font-size: 10px;
+}
