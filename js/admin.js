@@ -1600,6 +1600,12 @@ function updateActiveIntegrations() {
     if (settings.youtubeChannel) {
         badges += '<span class="integration-badge active"><i class="fab fa-youtube"></i> YouTube</span>';
     }
+    if (settings.linkedinInsight) {
+        badges += '<span class="integration-badge active"><i class="fab fa-linkedin"></i> LinkedIn</span>';
+    }
+    if (settings.microsoftClarity) {
+        badges += '<span class="integration-badge active"><i class="fas fa-fire"></i> Clarity</span>';
+    }
 
     if (!badges) {
         badges = '<span class="integration-badge inactive">Henüz entegrasyon yok</span>';
@@ -1692,6 +1698,43 @@ src="https://www.facebook.com/tr?id=${settings.facebookPixel}&ev=PageView&noscri
 </script>
 <noscript><div><img src="https://mc.yandex.ru/watch/${settings.yandexMetrica}" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 <!-- /Yandex.Metrica -->\n\n`;
+    }
+
+    // LinkedIn Insight Tag
+    if (settings.linkedinInsight) {
+        headCode += `<!-- LinkedIn Insight Tag -->
+<script type="text/javascript">
+_linkedin_partner_id = "${settings.linkedinInsight}";
+window._linkedin_data_partner_ids = window._linkedin_data_partner_ids || [];
+window._linkedin_data_partner_ids.push(_linkedin_partner_id);
+</script>
+<script type="text/javascript">
+(function(l) {
+if (!l){window.lintrk = function(a,b){window.lintrk.q.push([a,b])};
+window.lintrk.q=[]}
+var s = document.getElementsByTagName("script")[0];
+var b = document.createElement("script");
+b.type = "text/javascript";b.async = true;
+b.src = "https://snap.licdn.com/li.lms-analytics/insight.min.js";
+s.parentNode.insertBefore(b, s);})(window.lintrk);
+</script>
+<noscript>
+<img height="1" width="1" style="display:none;" alt="" src="https://px.ads.linkedin.com/collect/?pid=${settings.linkedinInsight}&fmt=gif" />
+</noscript>
+<!-- End LinkedIn Insight Tag -->\n\n`;
+    }
+
+    // Microsoft Clarity
+    if (settings.microsoftClarity) {
+        headCode += `<!-- Microsoft Clarity -->
+<script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "${settings.microsoftClarity}");
+</script>
+<!-- End Microsoft Clarity -->\n\n`;
     }
 
     // Custom head code

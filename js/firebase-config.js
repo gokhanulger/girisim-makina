@@ -6,12 +6,13 @@
 // 3. Copy the firebaseConfig object and paste below
 
 const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT_ID.appspot.com",
-    messagingSenderId: "YOUR_SENDER_ID",
-    appId: "YOUR_APP_ID"
+    apiKey: "AIzaSyCevgh1HtlJvhWgFYkK5q5OPMHzYFwbgMc",
+    authDomain: "girisim-makina-2b308.firebaseapp.com",
+    projectId: "girisim-makina-2b308",
+    storageBucket: "girisim-makina-2b308.firebasestorage.app",
+    messagingSenderId: "1067142137150",
+    appId: "1:1067142137150:web:078ec7cd1452a6af0b986f",
+    measurementId: "G-4ZR0GGRGC5"
 };
 
 // Initialize Firebase

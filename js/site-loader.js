@@ -136,6 +136,50 @@
         console.log('Yandex Metrica loaded:', settings.yandexMetrica);
     }
 
+    // LinkedIn Insight Tag
+    if (settings.linkedinInsight) {
+        const liScript = document.createElement('script');
+        liScript.textContent = `
+            _linkedin_partner_id = "${settings.linkedinInsight}";
+            window._linkedin_data_partner_ids = window._linkedin_data_partner_ids || [];
+            window._linkedin_data_partner_ids.push(_linkedin_partner_id);
+        `;
+        document.head.appendChild(liScript);
+
+        const liTracker = document.createElement('script');
+        liTracker.async = true;
+        liTracker.src = 'https://snap.licdn.com/li.lms-analytics/insight.min.js';
+        document.head.appendChild(liTracker);
+
+        // LinkedIn noscript
+        document.addEventListener('DOMContentLoaded', function() {
+            const noscript = document.createElement('noscript');
+            const img = document.createElement('img');
+            img.height = 1;
+            img.width = 1;
+            img.style.display = 'none';
+            img.alt = '';
+            img.src = `https://px.ads.linkedin.com/collect/?pid=${settings.linkedinInsight}&fmt=gif`;
+            noscript.appendChild(img);
+            document.body.appendChild(noscript);
+        });
+        console.log('LinkedIn Insight Tag loaded:', settings.linkedinInsight);
+    }
+
+    // Microsoft Clarity
+    if (settings.microsoftClarity) {
+        const clarityScript = document.createElement('script');
+        clarityScript.textContent = `
+            (function(c,l,a,r,i,t,y){
+                c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+                t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+                y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+            })(window, document, "clarity", "script", "${settings.microsoftClarity}");
+        `;
+        document.head.appendChild(clarityScript);
+        console.log('Microsoft Clarity loaded:', settings.microsoftClarity);
+    }
+
     // Custom head code
     if (settings.customHeadCode) {
         const customScript = document.createElement('div');
