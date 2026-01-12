@@ -180,6 +180,45 @@
         console.log('Microsoft Clarity loaded:', settings.microsoftClarity);
     }
 
+    // Google Ads Conversion Tracking
+    if (settings.googleAdsConversionId) {
+        const gAdsScript = document.createElement('script');
+        gAdsScript.async = true;
+        gAdsScript.src = `https://www.googletagmanager.com/gtag/js?id=${settings.googleAdsConversionId}`;
+        document.head.appendChild(gAdsScript);
+
+        const gAdsConfig = document.createElement('script');
+        gAdsConfig.textContent = `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${settings.googleAdsConversionId}');
+
+            // Conversion tracking function
+            window.trackGoogleAdsConversion = function(label) {
+                gtag('event', 'conversion', {
+                    'send_to': '${settings.googleAdsConversionId}/' + (label || '${settings.googleAdsConversionLabel || ''}')
+                });
+            };
+        `;
+        document.head.appendChild(gAdsConfig);
+        console.log('Google Ads loaded:', settings.googleAdsConversionId);
+    }
+
+    // TikTok Pixel
+    if (settings.tiktokPixel) {
+        const ttScript = document.createElement('script');
+        ttScript.textContent = `
+            !function (w, d, t) {
+                w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var i="https://analytics.tiktok.com/i18n/pixel/events.js";ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=i,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};var o=document.createElement("script");o.type="text/javascript",o.async=!0,o.src=i+"?sdkid="+e+"&lib="+t;var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(o,a)};
+                ttq.load('${settings.tiktokPixel}');
+                ttq.page();
+            }(window, document, 'ttq');
+        `;
+        document.head.appendChild(ttScript);
+        console.log('TikTok Pixel loaded:', settings.tiktokPixel);
+    }
+
     // Custom head code
     if (settings.customHeadCode) {
         const customScript = document.createElement('div');
@@ -203,7 +242,17 @@
 
 document.addEventListener('DOMContentLoaded', async () => {
     try {
-        // First check localStorage (demo mode)
+        // Try Firebase first if available
+        if (typeof firebase !== 'undefined' && typeof loadSiteContent === 'function' && db) {
+            const content = await loadSiteContent();
+            if (content) {
+                console.log('Loading content from Firebase');
+                applySiteContent(content);
+                return;
+            }
+        }
+
+        // Fallback to localStorage (demo mode)
         const localContent = localStorage.getItem('girisim_site_content');
         if (localContent) {
             console.log('Loading content from localStorage (Demo Mode)');
@@ -211,13 +260,15 @@ document.addEventListener('DOMContentLoaded', async () => {
             return;
         }
 
-        // Try Firebase
-        const content = await loadSiteContent();
-        if (content) {
-            applySiteContent(content);
-        }
+        console.log('Using static content');
     } catch (error) {
-        console.log('Using static content (Firebase not configured or offline)');
+        console.log('Using static content (Firebase not configured or offline)', error);
+
+        // Try localStorage as fallback
+        const localContent = localStorage.getItem('girisim_site_content');
+        if (localContent) {
+            applySiteContent(JSON.parse(localContent));
+        }
     }
 });
 
@@ -349,9 +400,12 @@ function applySiteContent(content) {
             content.packaging.items.forEach((item, index) => {
                 if (packageCards[index]) {
                     const card = packageCards[index];
-                    card.querySelector('.package-icon i').className = item.icon;
-                    card.querySelector('h3').textContent = item.title;
-                    card.querySelector('p').textContent = item.description;
+                    const iconEl = card.querySelector('.package-icon i');
+                    const titleEl = card.querySelector('h3');
+                    const descEl = card.querySelector('p');
+                    if (iconEl) iconEl.className = item.icon;
+                    if (titleEl) titleEl.textContent = item.title;
+                    if (descEl) descEl.textContent = item.description;
                 }
             });
         }

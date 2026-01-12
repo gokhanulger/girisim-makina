@@ -1,4 +1,4 @@
-// Firebase Configuration
+// Firebase Configuration - Updated 2025-01-05
 // IMPORTANT: Replace these values with your Firebase project credentials
 // Go to: https://console.firebase.google.com
 // 1. Create a new project or select existing
@@ -18,10 +18,10 @@ const firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
-// Initialize services
-const db = firebase.firestore();
-const auth = firebase.auth();
-const storage = firebase.storage();
+// Initialize services (with safety checks)
+const db = firebase.firestore ? firebase.firestore() : null;
+const auth = firebase.auth ? firebase.auth() : null;
+const storage = firebase.storage ? firebase.storage() : null;
 
 // Default site content structure
 const defaultSiteContent = {

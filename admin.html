@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel - Girişim Makina</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/admin.css">
@@ -890,6 +891,34 @@
                         </div>
 
                         <div class="settings-group">
+                            <h3><i class="fab fa-google"></i> Google Ads Conversion Tracking</h3>
+                            <p class="settings-desc">Google Ads dönüşüm takibi için Conversion ID ve Label bilgilerinizi girin. Form gönderimlerinde otomatik dönüşüm kaydedilir.</p>
+
+                            <div class="form-group">
+                                <label>Google Ads Conversion ID <a href="https://ads.google.com/aw/conversions" target="_blank" class="get-code-link"><i class="fas fa-external-link-alt"></i> Kodu Al</a></label>
+                                <input type="text" id="analytics-googleAdsId" data-path="analytics.googleAdsConversionId" placeholder="AW-123456789">
+                                <small>Araçlar > Dönüşümler > Dönüşüm Etiketi > Conversion ID (AW- ile başlar)</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Conversion Label (İsteğe bağlı)</label>
+                                <input type="text" id="analytics-googleAdsLabel" data-path="analytics.googleAdsConversionLabel" placeholder="AbCdEfGhIjK">
+                                <small>Form gönderimi gibi belirli dönüşümler için etiket</small>
+                            </div>
+                        </div>
+
+                        <div class="settings-group">
+                            <h3><i class="fab fa-tiktok"></i> TikTok Pixel</h3>
+                            <p class="settings-desc">TikTok reklam takibi ve hedefleme için Pixel ID'nizi girin.</p>
+
+                            <div class="form-group">
+                                <label>TikTok Pixel ID <a href="https://ads.tiktok.com/i18n/events_manager/list" target="_blank" class="get-code-link"><i class="fas fa-external-link-alt"></i> Kodu Al</a></label>
+                                <input type="text" id="analytics-tiktokPixel" data-path="analytics.tiktokPixel" placeholder="CXXXXXXXXXXXXXXXXX">
+                                <small>Events Manager > Web Events > Pixel ID</small>
+                            </div>
+                        </div>
+
+                        <div class="settings-group">
                             <h3><i class="fas fa-fire"></i> Microsoft Clarity</h3>
                             <p class="settings-desc">Kullanıcı davranışı analizi, ısı haritaları ve oturum kayıtları için Clarity Project ID'nizi girin. (Ücretsiz)</p>
 
@@ -1152,7 +1181,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
-    <script src="js/firebase-config.js"></script>
+    <script src="js/firebase-init.js"></script>
     <script src="js/admin.js"></script>
 </body>
 </html>

@@ -1514,31 +1514,60 @@ function loadAnalyticsSettings() {
 
         // Populate form fields
         if (settings.googleAnalytics) {
-            document.getElementById('analytics-ga4').value = settings.googleAnalytics;
+            const el = document.getElementById('analytics-ga4');
+            if (el) el.value = settings.googleAnalytics;
         }
         if (settings.googleTagManager) {
-            document.getElementById('analytics-gtm').value = settings.googleTagManager;
+            const el = document.getElementById('analytics-gtm');
+            if (el) el.value = settings.googleTagManager;
         }
         if (settings.facebookPixel) {
-            document.getElementById('analytics-fbPixel').value = settings.facebookPixel;
+            const el = document.getElementById('analytics-fbPixel');
+            if (el) el.value = settings.facebookPixel;
         }
         if (settings.googleSearchConsole) {
-            document.getElementById('analytics-gsc').value = settings.googleSearchConsole;
+            const el = document.getElementById('analytics-gsc');
+            if (el) el.value = settings.googleSearchConsole;
         }
         if (settings.yandexWebmaster) {
-            document.getElementById('analytics-yandexWM').value = settings.yandexWebmaster;
+            const el = document.getElementById('analytics-yandexWM');
+            if (el) el.value = settings.yandexWebmaster;
         }
         if (settings.yandexMetrica) {
-            document.getElementById('analytics-yandexMetrica').value = settings.yandexMetrica;
+            const el = document.getElementById('analytics-yandexMetrica');
+            if (el) el.value = settings.yandexMetrica;
         }
         if (settings.youtubeChannel) {
-            document.getElementById('analytics-ytChannel').value = settings.youtubeChannel;
+            const el = document.getElementById('analytics-ytChannel');
+            if (el) el.value = settings.youtubeChannel;
+        }
+        if (settings.linkedinInsight) {
+            const el = document.getElementById('analytics-linkedinInsight');
+            if (el) el.value = settings.linkedinInsight;
+        }
+        if (settings.microsoftClarity) {
+            const el = document.getElementById('analytics-clarity');
+            if (el) el.value = settings.microsoftClarity;
+        }
+        if (settings.googleAdsConversionId) {
+            const el = document.getElementById('analytics-googleAdsId');
+            if (el) el.value = settings.googleAdsConversionId;
+        }
+        if (settings.googleAdsConversionLabel) {
+            const el = document.getElementById('analytics-googleAdsLabel');
+            if (el) el.value = settings.googleAdsConversionLabel;
+        }
+        if (settings.tiktokPixel) {
+            const el = document.getElementById('analytics-tiktokPixel');
+            if (el) el.value = settings.tiktokPixel;
         }
         if (settings.customHeadCode) {
-            document.getElementById('analytics-customHead').value = settings.customHeadCode;
+            const el = document.getElementById('analytics-customHead');
+            if (el) el.value = settings.customHeadCode;
         }
         if (settings.customBodyCode) {
-            document.getElementById('analytics-customBody').value = settings.customBodyCode;
+            const el = document.getElementById('analytics-customBody');
+            if (el) el.value = settings.customBodyCode;
         }
     }
 }
@@ -1553,6 +1582,11 @@ function saveAnalyticsSettings() {
         yandexWebmaster: document.getElementById('analytics-yandexWM')?.value?.trim() || '',
         yandexMetrica: document.getElementById('analytics-yandexMetrica')?.value?.trim() || '',
         youtubeChannel: document.getElementById('analytics-ytChannel')?.value?.trim() || '',
+        linkedinInsight: document.getElementById('analytics-linkedinInsight')?.value?.trim() || '',
+        microsoftClarity: document.getElementById('analytics-clarity')?.value?.trim() || '',
+        googleAdsConversionId: document.getElementById('analytics-googleAdsId')?.value?.trim() || '',
+        googleAdsConversionLabel: document.getElementById('analytics-googleAdsLabel')?.value?.trim() || '',
+        tiktokPixel: document.getElementById('analytics-tiktokPixel')?.value?.trim() || '',
         customHeadCode: document.getElementById('analytics-customHead')?.value || '',
         customBodyCode: document.getElementById('analytics-customBody')?.value || ''
     };
@@ -1830,4 +1864,395 @@ function testAnalyticsIntegration() {
     }
 
     alert('Entegrasyon Test Sonuçları:\n\n' + results.join('\n'));
+}
+
+// =============================================
+// Blog Management
+// =============================================
+
+// Initialize blog posts in siteContent if not exists
+function initBlogPosts() {
+    if (!siteContent.blog) {
+        siteContent.blog = {
+            posts: []
+        };
+    }
+}
+
+// Render blog posts
+function renderBlogPosts() {
+    initBlogPosts();
+    const container = document.getElementById('blog-posts-editor');
+    if (!container) return;
+
+    if (siteContent.blog.posts.length === 0) {
+        container.innerHTML = `
+            <div class="empty-state">
+                <i class="fas fa-blog"></i>
+                <p>Henüz blog yazısı eklenmedi.</p>
+                <button class="btn btn-primary" onclick="addBlogPost()">
+                    <i class="fas fa-plus"></i> İlk Yazıyı Ekle
+                </button>
+            </div>
+        `;
+        return;
+    }
+
+    container.innerHTML = siteContent.blog.posts.map((post, index) => `
+        <div class="item-card blog-card" data-index="${index}">
+            <div class="item-header">
+                <h4><i class="fas fa-file-alt"></i> ${post.title || 'Başlıksız Yazı'}</h4>
+                <div class="item-actions">
+                    <span class="post-status ${post.published ? 'published' : 'draft'}">
+                        ${post.published ? 'Yayında' : 'Taslak'}
+                    </span>
+                    <button class="btn-icon" onclick="editBlogPost(${index})" title="Düzenle">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="btn-icon delete" onclick="deleteBlogPost(${index})" title="Sil">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="blog-card-content">
+                <div class="blog-meta">
+                    <span><i class="fas fa-calendar"></i> ${post.date || 'Tarih yok'}</span>
+                    <span><i class="fas fa-folder"></i> ${post.category || 'Kategori yok'}</span>
+                    <span><i class="fas fa-user"></i> ${post.author || 'Yazar yok'}</span>
+                </div>
+                <p class="blog-excerpt">${(post.excerpt || post.content || '').substring(0, 150)}...</p>
+                ${post.image ? `<img src="${post.image}" alt="${post.title}" class="blog-thumbnail">` : ''}
+            </div>
+        </div>
+    `).join('');
+}
+
+// Add new blog post
+function addBlogPost() {
+    initBlogPosts();
+
+    const today = new Date().toISOString().split('T')[0];
+
+    siteContent.blog.posts.unshift({
+        id: Date.now(),
+        title: 'Yeni Blog Yazısı',
+        slug: 'yeni-blog-yazisi-' + Date.now(),
+        excerpt: 'Blog yazısının kısa açıklaması...',
+        content: 'Blog yazısının içeriği buraya gelecek...',
+        image: '',
+        category: 'Genel',
+        author: 'Admin',
+        date: today,
+        published: false,
+        tags: []
+    });
+
+    renderBlogPosts();
+    markAsChanged();
+    showToast('Yeni blog yazısı eklendi', 'success');
+
+    // Open editor for new post
+    editBlogPost(0);
+}
+
+// Edit blog post
+function editBlogPost(index) {
+    initBlogPosts();
+    const post = siteContent.blog.posts[index];
+    if (!post) return;
+
+    // Create modal for editing
+    const modal = document.createElement('div');
+    modal.className = 'modal-overlay';
+    modal.id = 'blogEditModal';
+    modal.innerHTML = `
+        <div class="modal-content blog-editor-modal">
+            <div class="modal-header">
+                <h3><i class="fas fa-edit"></i> Blog Yazısını Düzenle</h3>
+                <button class="modal-close" onclick="closeBlogEditor()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-row">
+                    <div class="form-group flex-2">
+                        <label>Başlık *</label>
+                        <input type="text" id="blog-edit-title" value="${post.title || ''}" placeholder="Blog yazısı başlığı">
+                    </div>
+                    <div class="form-group">
+                        <label>Kategori</label>
+                        <select id="blog-edit-category">
+                            <option value="Genel" ${post.category === 'Genel' ? 'selected' : ''}>Genel</option>
+                            <option value="Ürünler" ${post.category === 'Ürünler' ? 'selected' : ''}>Ürünler</option>
+                            <option value="Haberler" ${post.category === 'Haberler' ? 'selected' : ''}>Haberler</option>
+                            <option value="Teknoloji" ${post.category === 'Teknoloji' ? 'selected' : ''}>Teknoloji</option>
+                            <option value="Fuarlar" ${post.category === 'Fuarlar' ? 'selected' : ''}>Fuarlar</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Kısa Açıklama (Excerpt)</label>
+                    <textarea id="blog-edit-excerpt" rows="2" placeholder="Yazının kısa özeti...">${post.excerpt || ''}</textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>İçerik *</label>
+                    <textarea id="blog-edit-content" rows="10" placeholder="Blog yazısının içeriği...">${post.content || ''}</textarea>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Görsel URL</label>
+                        <input type="url" id="blog-edit-image" value="${post.image || ''}" placeholder="https://...">
+                    </div>
+                    <div class="form-group">
+                        <label>Tarih</label>
+                        <input type="date" id="blog-edit-date" value="${post.date || ''}">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Yazar</label>
+                        <input type="text" id="blog-edit-author" value="${post.author || ''}" placeholder="Yazar adı">
+                    </div>
+                    <div class="form-group">
+                        <label>URL Slug</label>
+                        <input type="text" id="blog-edit-slug" value="${post.slug || ''}" placeholder="blog-yazisi-url">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Etiketler (virgülle ayırın)</label>
+                    <input type="text" id="blog-edit-tags" value="${(post.tags || []).join(', ')}" placeholder="etiket1, etiket2, etiket3">
+                </div>
+
+                <div class="form-group checkbox-group">
+                    <label>
+                        <input type="checkbox" id="blog-edit-published" ${post.published ? 'checked' : ''}>
+                        <span>Yayınla</span>
+                    </label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeBlogEditor()">İptal</button>
+                <button class="btn btn-primary" onclick="saveBlogPost(${index})">
+                    <i class="fas fa-save"></i> Kaydet
+                </button>
+            </div>
+        </div>
+    `;
+
+    document.body.appendChild(modal);
+
+    // Auto-generate slug from title
+    document.getElementById('blog-edit-title').addEventListener('input', function() {
+        const slug = this.value
+            .toLowerCase()
+            .replace(/ğ/g, 'g').replace(/ü/g, 'u').replace(/ş/g, 's')
+            .replace(/ı/g, 'i').replace(/ö/g, 'o').replace(/ç/g, 'c')
+            .replace(/[^a-z0-9\s-]/g, '')
+            .replace(/\s+/g, '-')
+            .replace(/-+/g, '-');
+        document.getElementById('blog-edit-slug').value = slug;
+    });
+}
+
+// Save blog post
+function saveBlogPost(index) {
+    initBlogPosts();
+
+    const title = document.getElementById('blog-edit-title').value.trim();
+    const content = document.getElementById('blog-edit-content').value.trim();
+
+    if (!title) {
+        showToast('Başlık zorunludur', 'error');
+        return;
+    }
+
+    if (!content) {
+        showToast('İçerik zorunludur', 'error');
+        return;
+    }
+
+    const tagsInput = document.getElementById('blog-edit-tags').value;
+    const tags = tagsInput ? tagsInput.split(',').map(t => t.trim()).filter(t => t) : [];
+
+    siteContent.blog.posts[index] = {
+        ...siteContent.blog.posts[index],
+        title: title,
+        slug: document.getElementById('blog-edit-slug').value.trim() || title.toLowerCase().replace(/\s+/g, '-'),
+        excerpt: document.getElementById('blog-edit-excerpt').value.trim(),
+        content: content,
+        image: document.getElementById('blog-edit-image').value.trim(),
+        category: document.getElementById('blog-edit-category').value,
+        author: document.getElementById('blog-edit-author').value.trim() || 'Admin',
+        date: document.getElementById('blog-edit-date').value,
+        published: document.getElementById('blog-edit-published').checked,
+        tags: tags,
+        updatedAt: new Date().toISOString()
+    };
+
+    closeBlogEditor();
+    renderBlogPosts();
+    markAsChanged();
+    showToast('Blog yazısı kaydedildi', 'success');
+}
+
+// Delete blog post
+function deleteBlogPost(index) {
+    if (confirm('Bu blog yazısını silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.')) {
+        initBlogPosts();
+        siteContent.blog.posts.splice(index, 1);
+        renderBlogPosts();
+        markAsChanged();
+        showToast('Blog yazısı silindi', 'warning');
+    }
+}
+
+// Close blog editor modal
+function closeBlogEditor() {
+    const modal = document.getElementById('blogEditModal');
+    if (modal) {
+        modal.remove();
+    }
+}
+
+// =============================================
+// Google Ads Conversion Tracking
+// =============================================
+
+function saveGoogleAdsSettings() {
+    const conversionId = document.getElementById('analytics-googleAdsId')?.value?.trim() || '';
+    const conversionLabel = document.getElementById('analytics-googleAdsLabel')?.value?.trim() || '';
+
+    const saved = localStorage.getItem('girisim_analytics_settings');
+    const settings = saved ? JSON.parse(saved) : {};
+
+    settings.googleAdsConversionId = conversionId;
+    settings.googleAdsConversionLabel = conversionLabel;
+
+    localStorage.setItem('girisim_analytics_settings', JSON.stringify(settings));
+
+    if (siteContent) {
+        if (!siteContent.analytics) siteContent.analytics = {};
+        siteContent.analytics.googleAdsConversionId = conversionId;
+        siteContent.analytics.googleAdsConversionLabel = conversionLabel;
+    }
+
+    updateActiveIntegrations();
+    showToast('Google Ads ayarları kaydedildi!', 'success');
+}
+
+// =============================================
+// TikTok Pixel
+// =============================================
+
+function saveTikTokPixelSettings() {
+    const pixelId = document.getElementById('analytics-tiktokPixel')?.value?.trim() || '';
+
+    const saved = localStorage.getItem('girisim_analytics_settings');
+    const settings = saved ? JSON.parse(saved) : {};
+
+    settings.tiktokPixel = pixelId;
+
+    localStorage.setItem('girisim_analytics_settings', JSON.stringify(settings));
+
+    if (siteContent) {
+        if (!siteContent.analytics) siteContent.analytics = {};
+        siteContent.analytics.tiktokPixel = pixelId;
+    }
+
+    updateActiveIntegrations();
+    showToast('TikTok Pixel ayarları kaydedildi!', 'success');
+}
+
+// Update populateAllForms to include blog
+const originalPopulateAllForms = populateAllForms;
+populateAllForms = function() {
+    originalPopulateAllForms();
+    renderBlogPosts();
+    loadGoogleAdsSettings();
+    loadTikTokPixelSettings();
+};
+
+// Load Google Ads settings
+function loadGoogleAdsSettings() {
+    const saved = localStorage.getItem('girisim_analytics_settings');
+    if (saved) {
+        const settings = JSON.parse(saved);
+        if (settings.googleAdsConversionId) {
+            const input = document.getElementById('analytics-googleAdsId');
+            if (input) input.value = settings.googleAdsConversionId;
+        }
+        if (settings.googleAdsConversionLabel) {
+            const input = document.getElementById('analytics-googleAdsLabel');
+            if (input) input.value = settings.googleAdsConversionLabel;
+        }
+    }
+}
+
+// Load TikTok Pixel settings
+function loadTikTokPixelSettings() {
+    const saved = localStorage.getItem('girisim_analytics_settings');
+    if (saved) {
+        const settings = JSON.parse(saved);
+        if (settings.tiktokPixel) {
+            const input = document.getElementById('analytics-tiktokPixel');
+            if (input) input.value = settings.tiktokPixel;
+        }
+    }
+}
+
+// Update active integrations to include new platforms
+const originalUpdateActiveIntegrations = updateActiveIntegrations;
+updateActiveIntegrations = function() {
+    const container = document.getElementById('activeIntegrations');
+    if (!container) return;
+
+    const saved = localStorage.getItem('girisim_analytics_settings');
+    const settings = saved ? JSON.parse(saved) : {};
+
+    let badges = '';
+
+    if (settings.googleAnalytics) {
+        badges += '<span class="integration-badge active"><i class="fab fa-google"></i> GA4</span>';
+    }
+    if (settings.googleTagManager) {
+        badges += '<span class="integration-badge active"><i class="fab fa-google"></i> GTM</span>';
+    }
+    if (settings.googleAdsConversionId) {
+        badges += '<span class="integration-badge active"><i class="fab fa-google"></i> Google Ads</span>';
+    }
+    if (settings.facebookPixel) {
+        badges += '<span class="integration-badge active"><i class="fab fa-facebook"></i> Pixel</span>';
+    }
+    if (settings.tiktokPixel) {
+        badges += '<span class="integration-badge active"><i class="fab fa-tiktok"></i> TikTok</span>';
+    }
+    if (settings.googleSearchConsole) {
+        badges += '<span class="integration-badge active"><i class="fab fa-google"></i> GSC</span>';
+    }
+    if (settings.yandexWebmaster) {
+        badges += '<span class="integration-badge active"><i class="fab fa-yandex"></i> Yandex WM</span>';
+    }
+    if (settings.yandexMetrica) {
+        badges += '<span class="integration-badge active"><i class="fab fa-yandex"></i> Metrica</span>';
+    }
+    if (settings.youtubeChannel) {
+        badges += '<span class="integration-badge active"><i class="fab fa-youtube"></i> YouTube</span>';
+    }
+    if (settings.linkedinInsight) {
+        badges += '<span class="integration-badge active"><i class="fab fa-linkedin"></i> LinkedIn</span>';
+    }
+    if (settings.microsoftClarity) {
+        badges += '<span class="integration-badge active"><i class="fas fa-fire"></i> Clarity</span>';
+    }
+
+    if (!badges) {
+        badges = '<span class="integration-badge inactive">Henüz entegrasyon yok</span>';
+    }
+
+    container.innerHTML = badges;
 }
