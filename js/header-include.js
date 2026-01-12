@@ -208,8 +208,8 @@
     <a href="#" class="back-to-top" id="backToTop"><i class="fas fa-chevron-up"></i></a>
     `;
 
-    // Header'ı sayfaya ekle
-    document.addEventListener('DOMContentLoaded', function() {
+    // Header'ı sayfaya ekle - hemen çalıştır (script body sonunda olduğu için DOM hazır)
+    function initHeader() {
         // Header placeholder'ı bul veya body'nin başına ekle
         const headerPlaceholder = document.getElementById('header-placeholder');
         if (headerPlaceholder) {
@@ -229,7 +229,40 @@
 
         // Floating elements için scroll listener
         initFloatingElements();
-    });
+
+        // Hamburger menü için event listener
+        initHamburgerMenu();
+    }
+
+    // Hamburger menü
+    function initHamburgerMenu() {
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+
+        if (hamburger && navMenu) {
+            hamburger.addEventListener('click', function() {
+                hamburger.classList.toggle('active');
+                navMenu.classList.toggle('active');
+            });
+        }
+
+        // Dropdown menüler için
+        document.querySelectorAll('.dropdown > a').forEach(function(link) {
+            link.addEventListener('click', function(e) {
+                if (window.innerWidth <= 992) {
+                    e.preventDefault();
+                    this.parentElement.classList.toggle('active');
+                }
+            });
+        });
+    }
+
+    // Sayfa yüklendiyse hemen çalıştır, yoksa bekle
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initHeader);
+    } else {
+        initHeader();
+    }
 
     // Dil seçicilerini başlat
     function initLanguageSelectors() {
