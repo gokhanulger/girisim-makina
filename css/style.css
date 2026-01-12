@@ -616,6 +616,93 @@ h4 { font-size: 1.25rem; }
     opacity: 1;
 }
 
+/* Mega Menu Styles */
+.has-mega-menu {
+    position: static;
+}
+
+.mega-menu {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-10px);
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    padding: 30px 40px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    min-width: 600px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.has-mega-menu:hover .mega-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(5px);
+}
+
+.mega-menu-column {
+    min-width: 240px;
+}
+
+.mega-menu-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--primary-color);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--primary-color);
+}
+
+.mega-menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.mega-menu ul li {
+    margin-bottom: 8px;
+}
+
+.mega-menu ul li a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    color: var(--text-color);
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.mega-menu ul li a::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.mega-menu ul li a:hover {
+    background: linear-gradient(135deg, rgba(230, 57, 70, 0.08), rgba(230, 57, 70, 0.02));
+    color: var(--primary-color);
+    padding-left: 16px;
+}
+
+.mega-menu ul li a:hover::before {
+    opacity: 1;
+}
+
 /* Hamburger Menu */
 .hamburger {
     display: none;
@@ -2489,6 +2576,42 @@ h4 { font-size: 1.25rem; }
 
     .dropdown.active .dropdown-menu {
         display: block;
+    }
+
+    /* Mega Menu Mobile */
+    .mega-menu {
+        position: static;
+        transform: none;
+        opacity: 1;
+        visibility: visible;
+        box-shadow: none;
+        padding: 0;
+        display: none;
+        grid-template-columns: 1fr;
+        gap: 20px;
+        min-width: auto;
+        background: transparent;
+        border-radius: 0;
+    }
+
+    .has-mega-menu.active .mega-menu {
+        display: block;
+        padding: 15px 0 15px 20px;
+    }
+
+    .mega-menu-column {
+        min-width: auto;
+    }
+
+    .mega-menu-title {
+        font-size: 13px;
+        margin-bottom: 10px;
+        padding-bottom: 8px;
+    }
+
+    .mega-menu ul li a {
+        padding: 8px 10px;
+        font-size: 14px;
     }
 
     .hamburger {

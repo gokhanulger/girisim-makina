@@ -34,16 +34,32 @@ const translations = {
             byProduct: "Ürününüze Göre"
         },
         dropdown: {
-            wafer: "Wafer Üretim Hatları",
-            cereal: "Cereal Bar Hatları",
+            // Mega Menu Titles
+            productionMachines: "Üretim Makinaları",
+            packagingMachines: "Paketleme Makinaları",
+            // Production Machines
+            wafer: "Gofret Üretim Hatları",
+            cereal: "Tahıl Bar Üretim Hatları",
+            coconutBar: "Hindistan Cevizi Dolgulu Bar",
             protein: "Protein Bar Hatları",
-            chocolate: "Çikolata Kaplama Sistemleri",
-            biscuit: "Bisküvi Kremalama Makineleri",
-            flowpack: "Flow Pack Makineleri",
-            overwrap: "Overwrapping Makineleri",
-            thermoform: "Thermoform Makineleri",
-            vffs: "Dikey Dolum Makineleri (VFFS)",
-            halvah: "Helva Dilimleme & Paketleme"
+            biscuit: "Bisküvi Kremalama Makinaları",
+            cookieCapping: "Cookie Capping (Chocopie)",
+            chocolate: "Çikolata Kaplama Makinası",
+            chocolateCooling: "Çikolata Soğutma Tüneli",
+            chocolatePrep: "Çikolata Hazırlama Mutfağı",
+            sugarMill: "Pudra Şekeri Değirmeni",
+            // Packaging Machines
+            flowpack: "Yatay Flowpack Paketleme",
+            vffs: "Dikey Paketleme (VFFS)",
+            overwrap: "Zarf Tipi Paketleme",
+            thermoform: "Thermoform Paketleme",
+            filling: "Dolum Makinaları",
+            halvah: "Helva Dilimleme & Paketleme",
+            // Corporate Menu
+            mission: "Misyonumuz & Vizyonumuz",
+            values: "Değerlerimiz",
+            rnd: "AR-GE",
+            service: "Satış Sonrası Servis"
         },
         hero: {
             title1: "WAFER & CEREAL BAR",
@@ -279,16 +295,32 @@ const translations = {
             byProduct: "By Your Product"
         },
         dropdown: {
+            // Mega Menu Titles
+            productionMachines: "Production Machines",
+            packagingMachines: "Packaging Machines",
+            // Production Machines
             wafer: "Wafer Production Lines",
-            cereal: "Cereal Bar Lines",
+            cereal: "Cereal Bar Production Lines",
+            coconutBar: "Coconut Bar Production Lines",
             protein: "Protein Bar Lines",
-            chocolate: "Chocolate Coating Systems",
-            biscuit: "Biscuit Sandwiching Machines",
-            flowpack: "Flow Pack Machines",
+            biscuit: "Biscuit Cream Sandwiching Machines",
+            cookieCapping: "Cookie Capping (Chocopie)",
+            chocolate: "Chocolate Enrobing Machine",
+            chocolateCooling: "Chocolate Cooling Tunnel",
+            chocolatePrep: "Chocolate Preparation Kitchen",
+            sugarMill: "Powdered Sugar Mill",
+            // Packaging Machines
+            flowpack: "Horizontal Flowpack Packaging",
+            vffs: "Vertical Packaging (VFFS)",
             overwrap: "Overwrapping Machines",
-            thermoform: "Thermoform Machines",
-            vffs: "Vertical Form Fill Seal (VFFS)",
-            halvah: "Halvah Slicing & Packaging"
+            thermoform: "Thermoform Packaging",
+            filling: "Filling Machines",
+            halvah: "Halvah Slicing & Packaging",
+            // Corporate Menu
+            mission: "Our Mission & Vision",
+            values: "Our Values",
+            rnd: "R&D",
+            service: "After-Sales Service"
         },
         hero: {
             title1: "WAFER & CEREAL BAR",
@@ -524,16 +556,32 @@ const translations = {
             byProduct: "По вашему продукту"
         },
         dropdown: {
+            // Mega Menu Titles
+            productionMachines: "Производственные Машины",
+            packagingMachines: "Упаковочные Машины",
+            // Production Machines
             wafer: "Линии производства вафель",
             cereal: "Линии зерновых батончиков",
+            coconutBar: "Линии кокосовых батончиков",
             protein: "Линии протеиновых батончиков",
-            chocolate: "Системы шоколадной глазури",
             biscuit: "Машины для сэндвич-печенья",
-            flowpack: "Flow Pack машины",
+            cookieCapping: "Cookie Capping (Chocopie)",
+            chocolate: "Машина шоколадной глазури",
+            chocolateCooling: "Туннель охлаждения шоколада",
+            chocolatePrep: "Кухня приготовления шоколада",
+            sugarMill: "Мельница сахарной пудры",
+            // Packaging Machines
+            flowpack: "Горизонтальная упаковка Flowpack",
+            vffs: "Вертикальная упаковка (VFFS)",
             overwrap: "Машины overwrapping",
-            thermoform: "Термоформовочные машины",
-            vffs: "Вертикальные фасовочные машины (VFFS)",
-            halvah: "Нарезка и упаковка халвы"
+            thermoform: "Термоформовочная упаковка",
+            filling: "Машины розлива",
+            halvah: "Нарезка и упаковка халвы",
+            // Corporate Menu
+            mission: "Наша Миссия и Видение",
+            values: "Наши Ценности",
+            rnd: "НИОКР",
+            service: "Послепродажное обслуживание"
         },
         hero: {
             title1: "ВАФЛИ И ЗЕРНОВЫЕ БАТОНЧИКИ",
@@ -769,16 +817,32 @@ const translations = {
             byProduct: "حسب منتجك"
         },
         dropdown: {
+            // Mega Menu Titles
+            productionMachines: "آلات الإنتاج",
+            packagingMachines: "آلات التغليف",
+            // Production Machines
             wafer: "خطوط إنتاج الويفر",
-            cereal: "خطوط ألواح الحبوب",
+            cereal: "خطوط إنتاج ألواح الحبوب",
+            coconutBar: "خطوط إنتاج ألواح جوز الهند",
             protein: "خطوط ألواح البروتين",
-            chocolate: "أنظمة تغليف الشوكولاتة",
             biscuit: "آلات حشو البسكويت",
-            flowpack: "آلات فلو باك",
+            cookieCapping: "Cookie Capping (Chocopie)",
+            chocolate: "آلة تغليف الشوكولاتة",
+            chocolateCooling: "نفق تبريد الشوكولاتة",
+            chocolatePrep: "مطبخ تحضير الشوكولاتة",
+            sugarMill: "مطحنة السكر البودرة",
+            // Packaging Machines
+            flowpack: "تغليف Flowpack الأفقي",
+            vffs: "التغليف العمودي (VFFS)",
             overwrap: "آلات التغليف الظرفي",
-            thermoform: "آلات الثيرموفورم",
-            vffs: "آلات التعبئة العمودية (VFFS)",
-            halvah: "تقطيع وتغليف الحلاوة"
+            thermoform: "تغليف الثيرموفورم",
+            filling: "آلات التعبئة",
+            halvah: "تقطيع وتغليف الحلاوة",
+            // Corporate Menu
+            mission: "مهمتنا ورؤيتنا",
+            values: "قيمنا",
+            rnd: "البحث والتطوير",
+            service: "خدمة ما بعد البيع"
         },
         hero: {
             title1: "الويفر وألواح الحبوب",
@@ -1014,16 +1078,32 @@ const translations = {
             byProduct: "Par votre produit"
         },
         dropdown: {
+            // Mega Menu Titles
+            productionMachines: "Machines de Production",
+            packagingMachines: "Machines d'Emballage",
+            // Production Machines
             wafer: "Lignes de production de gaufrettes",
             cereal: "Lignes de barres de céréales",
+            coconutBar: "Lignes de barres de noix de coco",
             protein: "Lignes de barres protéinées",
-            chocolate: "Systèmes d'enrobage chocolat",
-            biscuit: "Machines de sandwich biscuit",
-            flowpack: "Machines Flow Pack",
+            biscuit: "Machines sandwich de biscuits",
+            cookieCapping: "Cookie Capping (Chocopie)",
+            chocolate: "Machine d'enrobage chocolat",
+            chocolateCooling: "Tunnel de refroidissement chocolat",
+            chocolatePrep: "Cuisine de préparation chocolat",
+            sugarMill: "Moulin à sucre glace",
+            // Packaging Machines
+            flowpack: "Emballage Flowpack horizontal",
+            vffs: "Emballage vertical (VFFS)",
             overwrap: "Machines d'emballage envelope",
-            thermoform: "Machines thermoformage",
-            vffs: "Machines de remplissage vertical (VFFS)",
-            halvah: "Découpe et emballage halva"
+            thermoform: "Emballage thermoformage",
+            filling: "Machines de remplissage",
+            halvah: "Découpe et emballage halva",
+            // Corporate Menu
+            mission: "Notre Mission & Vision",
+            values: "Nos Valeurs",
+            rnd: "R&D",
+            service: "Service Après-Vente"
         },
         hero: {
             title1: "GAUFRETTES & BARRES DE CÉRÉALES",
@@ -1259,16 +1339,32 @@ const translations = {
             byProduct: "Por seu produto"
         },
         dropdown: {
+            // Mega Menu Titles
+            productionMachines: "Máquinas de Produção",
+            packagingMachines: "Máquinas de Embalagem",
+            // Production Machines
             wafer: "Linhas de produção de wafer",
             cereal: "Linhas de barras de cereais",
+            coconutBar: "Linhas de barras de coco",
             protein: "Linhas de barras de proteína",
-            chocolate: "Sistemas de cobertura de chocolate",
             biscuit: "Máquinas de sanduíche de biscoito",
-            flowpack: "Máquinas Flow Pack",
+            cookieCapping: "Cookie Capping (Chocopie)",
+            chocolate: "Máquina de cobertura de chocolate",
+            chocolateCooling: "Túnel de resfriamento de chocolate",
+            chocolatePrep: "Cozinha de preparação de chocolate",
+            sugarMill: "Moinho de açúcar em pó",
+            // Packaging Machines
+            flowpack: "Embalagem Flowpack horizontal",
+            vffs: "Embalagem vertical (VFFS)",
             overwrap: "Máquinas Overwrapping",
-            thermoform: "Máquinas de termoformagem",
-            vffs: "Máquinas de envase vertical (VFFS)",
-            halvah: "Corte e embalagem de halva"
+            thermoform: "Embalagem de termoformagem",
+            filling: "Máquinas de enchimento",
+            halvah: "Corte e embalagem de halva",
+            // Corporate Menu
+            mission: "Nossa Missão e Visão",
+            values: "Nossos Valores",
+            rnd: "P&D",
+            service: "Serviço Pós-Venda"
         },
         hero: {
             title1: "WAFER E BARRAS DE CEREAIS",
@@ -1504,16 +1600,32 @@ const translations = {
             byProduct: "Por su producto"
         },
         dropdown: {
+            // Mega Menu Titles
+            productionMachines: "Máquinas de Producción",
+            packagingMachines: "Máquinas de Embalaje",
+            // Production Machines
             wafer: "Líneas de producción de wafer",
             cereal: "Líneas de barras de cereales",
+            coconutBar: "Líneas de barras de coco",
             protein: "Líneas de barras de proteínas",
-            chocolate: "Sistemas de recubrimiento de chocolate",
             biscuit: "Máquinas de sándwich de galletas",
-            flowpack: "Máquinas Flow Pack",
+            cookieCapping: "Cookie Capping (Chocopie)",
+            chocolate: "Máquina de recubrimiento de chocolate",
+            chocolateCooling: "Túnel de enfriamiento de chocolate",
+            chocolatePrep: "Cocina de preparación de chocolate",
+            sugarMill: "Molino de azúcar en polvo",
+            // Packaging Machines
+            flowpack: "Embalaje Flowpack horizontal",
+            vffs: "Embalaje vertical (VFFS)",
             overwrap: "Máquinas Overwrapping",
-            thermoform: "Máquinas de termoformado",
-            vffs: "Máquinas de llenado vertical (VFFS)",
-            halvah: "Corte y embalaje de halva"
+            thermoform: "Embalaje de termoformado",
+            filling: "Máquinas de llenado",
+            halvah: "Corte y embalaje de halva",
+            // Corporate Menu
+            mission: "Nuestra Misión y Visión",
+            values: "Nuestros Valores",
+            rnd: "I+D",
+            service: "Servicio Postventa"
         },
         hero: {
             title1: "WAFER Y BARRAS DE CEREALES",

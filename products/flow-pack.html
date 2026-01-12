@@ -3,12 +3,178 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Girişim Makina - Flow Pack Yatay Paketleme Makineleri. Bisküvi, çikolata, ekmek ve dondurma paketleme için yüksek hızlı flow pack çözümleri.">
-    <title>Flow Pack Makineleri | Girişim Makina</title>
+    <meta name="description" content="Girisim Makina - Yatay Flow Pack Paketleme Makineleri. FLM Serisi: Doner Cene, Gezer Cene (Box Motion), High Speed ve Ozel Cozumler.">
+    <title>Flow Pack Paketleme Makineleri | Girisim Makina</title>
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/product.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Product Category Grid Styles */
+        .product-categories {
+            padding: 80px 0;
+            background: #f8f9fa;
+        }
+        .category-section {
+            margin-bottom: 60px;
+        }
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--primary-color);
+        }
+        .category-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+        .category-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+        .category-title span {
+            color: var(--primary-color);
+            font-weight: 400;
+            font-size: 1rem;
+            margin-left: 10px;
+        }
+        .models-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+        }
+        .model-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+        }
+        .model-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+        }
+        .model-image {
+            position: relative;
+            height: 220px;
+            overflow: hidden;
+        }
+        .model-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .model-card:hover .model-image img {
+            transform: scale(1.05);
+        }
+        .model-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: var(--primary-color);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .model-content {
+            padding: 25px;
+        }
+        .model-name {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+        }
+        .model-desc {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        .model-specs {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        .model-spec {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+        .model-spec i {
+            color: var(--primary-color);
+        }
+        .model-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        .model-link i {
+            transition: transform 0.3s ease;
+        }
+        .model-card:hover .model-link i {
+            transform: translateX(5px);
+        }
+
+        /* Quick Stats Banner */
+        .quick-stats {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            padding: 40px 0;
+            margin: -40px 0 60px;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            text-align: center;
+        }
+        .stat-box {
+            color: white;
+        }
+        .stat-box .number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            display: block;
+        }
+        .stat-box .label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            .models-grid {
+                grid-template-columns: 1fr;
+            }
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .category-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="top-bar">
@@ -45,210 +211,353 @@
         <div class="container">
             <nav class="navbar">
                 <a href="../index.html" class="logo">
-                    <span class="logo-text">GİRİŞİM MAKİNA</span>
-                    <span class="logo-sub">PAKETLEME MAKİNALARI</span>
+                    <span class="logo-text">GIRISIM MAKINA</span>
+                    <span class="logo-sub">PAKETLEME MAKINALARI</span>
                 </a>
                 <ul class="nav-menu">
                     <li class="dropdown">
                         <a href="../index.html#about">Kurumsal <i class="fas fa-chevron-down"></i></a>
                         <ul class="dropdown-menu">
-                            <li><a href="../index.html#about">Hakkımızda</a></li>
-                            <li><a href="../index.html#why-us">Neden Girişim Makina?</a></li>
-                            <li><a href="../index.html#certificates">Sertifikalarımız</a></li>
-                            <li><a href="../hr.html">İnsan Kaynakları</a></li>
+                            <li><a href="../index.html#about">Hakkimizda</a></li>
+                            <li><a href="../index.html#mission">Misyonumuz & Vizyonumuz</a></li>
+                            <li><a href="../index.html#values">Degerlerimiz</a></li>
+                            <li><a href="../index.html#why-us">Neden Girisim Makina?</a></li>
+                            <li><a href="../index.html#rnd">AR-GE</a></li>
+                            <li><a href="../index.html#service">Satis Sonrasi Servis</a></li>
+                            <li><a href="../index.html#certificates">Sertifikalarimiz</a></li>
+                            <li><a href="../hr.html">Insan Kaynaklari</a></li>
                         </ul>
                     </li>
-                    <li class="dropdown">
-                        <a href="../index.html#production">Makinalarımız <i class="fas fa-chevron-down"></i></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="cereal-bar.html">Tahıl Bar Üretim Hatları</a></li>
-                            <li><a href="chocolate-coating.html">Çikolata Kaplama Makinaları</a></li>
-                            <li><a href="biscuit-sandwiching.html">Bisküvi Kremalama Makinaları</a></li>
-                            <li class="dropdown-divider"></li>
-                            <li><a href="flow-pack.html">Yatay Flowpack Paketleme</a></li>
-                            <li><a href="vffs.html">Dikey Paketleme Makinaları</a></li>
-                            <li><a href="overwrapping.html">Zarf Tipi Paketleme</a></li>
-                        </ul>
+                    <li class="dropdown has-mega-menu">
+                        <a href="../index.html#production">Makinalarimiz <i class="fas fa-chevron-down"></i></a>
+                        <div class="mega-menu">
+                            <div class="mega-menu-column">
+                                <h4 class="mega-menu-title" data-translate="dropdown.productionMachines">Uretim Makinalari</h4>
+                                <ul>
+                                    <li><a href="wafer.html">Gofret Uretim Hatlari</a></li>
+                                    <li><a href="cereal-bar.html">Tahil Bar Uretim Hatlari</a></li>
+                                    <li><a href="coconut-bar.html">Hindistan Cevizi Bar</a></li>
+                                    <li><a href="biscuit-sandwiching.html">Biskuvi Kremalama</a></li>
+                                    <li><a href="cookie-capping.html">Cookie Capping (Chocopie)</a></li>
+                                    <li><a href="chocolate-coating.html">Cikolata Kaplama</a></li>
+                                    <li><a href="chocolate-cooling.html">Cikolata Sogutma Tuneli</a></li>
+                                    <li><a href="chocolate-preparation.html">Cikolata Hazirlama</a></li>
+                                    <li><a href="sugar-mill.html">Pudra Sekeri Degirmeni</a></li>
+                                </ul>
+                            </div>
+                            <div class="mega-menu-column">
+                                <h4 class="mega-menu-title" data-translate="dropdown.packagingMachines">Paketleme Makinalari</h4>
+                                <ul>
+                                    <li><a href="flow-pack.html" class="active">Yatay Flowpack Paketleme</a></li>
+                                    <li><a href="vffs.html">Dikey Paketleme (VFFS)</a></li>
+                                    <li><a href="overwrapping.html">Zarf Tipi Paketleme</a></li>
+                                    <li><a href="thermoform.html">Thermoform Paketleme</a></li>
+                                    <li><a href="filling-machines.html">Dolum Makinalari</a></li>
+                                </ul>
+                            </div>
+                        </div>
                     </li>
                     <li class="dropdown">
                         <a href="../packaging-by-type.html">Paketleme Tercihiniz <i class="fas fa-chevron-down"></i></a>
                         <ul class="dropdown-menu">
-                            <li><a href="../packaging-by-type.html">Paket Tipine Göre</a></li>
-                            <li><a href="../packaging-by-product.html">Ürününüze Göre</a></li>
+                            <li><a href="../packaging-by-type.html">Paket Tipine Gore</a></li>
+                            <li><a href="../packaging-by-product.html">Urununuze Gore</a></li>
                         </ul>
                     </li>
                     <li><a href="../index.html#videos">Videolar</a></li>
-                    <li><a href="../blog.html">Blog</a></li>
-                    <li><a href="../index.html#contact">İletişim</a></li>
+                    <li><a href="../index.html#contact">Iletisim</a></li>
                 </ul>
-                <a href="https://wa.me/905468792927?text=Flow%20pack%20makinesi%20hakkında%20bilgi%20almak%20istiyorum" target="_blank" class="btn btn-primary"><i class="fab fa-whatsapp"></i> TEKLİF AL</a>
+                <a href="https://wa.me/905468792927?text=Flowpack%20makinesi%20hakkinda%20bilgi%20almak%20istiyorum" target="_blank" class="btn btn-primary"><i class="fab fa-whatsapp"></i> TEKLIF AL</a>
                 <div class="hamburger"><span></span><span></span><span></span></div>
             </nav>
         </div>
     </header>
 
+    <!-- Hero Section -->
     <section class="product-hero">
-        <div class="product-hero-bg" style="background-image: url('https://img.youtube.com/vi/tF6KbrRx9gI/maxresdefault.jpg');"></div>
+        <div class="product-hero-bg" style="background-image: url('../images/FLM 1000.jpg');"></div>
         <div class="container">
             <div class="product-hero-content">
-                <span class="product-tag">Paketleme Makineleri</span>
-                <h1>Flow Pack <span class="highlight">Makineleri</span></h1>
-                <p>Yatay akışlı paketleme makineleri. Bisküvi, çikolata, ekmek, dondurma ve birçok ürün için 800 paket/dakika hıza kadar.</p>
+                <span class="product-tag">Paketleme Makinalari</span>
+                <h1>Yatay Flowpack <span class="highlight">Paketleme Makineleri</span></h1>
+                <p>FLM Serisi: Doner Cene (Rotary Jaw), Gezer Cene (Box Motion), High Speed ve Ozel Cozumler. 10'dan fazla model, her ihtiyaca uygun cozum.</p>
                 <div class="product-hero-buttons">
-                    <a href="https://wa.me/905468792927?text=Flow%20pack%20makinesi%20hakkında%20bilgi%20almak%20istiyorum" target="_blank" class="btn btn-primary btn-lg"><i class="fab fa-whatsapp"></i> Teklif Al</a>
-                    <a href="https://www.youtube.com/@girisimpackagingmachinery" target="_blank" class="btn btn-outline btn-lg"><i class="fab fa-youtube"></i> Videoları İzle</a>
+                    <a href="https://wa.me/905468792927?text=Flowpack%20makinesi%20hakkinda%20bilgi%20almak%20istiyorum" target="_blank" class="btn btn-primary btn-lg"><i class="fab fa-whatsapp"></i> Teklif Al</a>
+                    <a href="https://www.youtube.com/@girisimpackagingmachinery" target="_blank" class="btn btn-outline btn-lg"><i class="fab fa-youtube"></i> Videolari Izle</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="product-overview">
+    <!-- Quick Stats -->
+    <section class="quick-stats">
         <div class="container">
-            <div class="overview-grid">
-                <div class="overview-content">
-                    <h2>Yüksek Hızlı <span class="highlight">Flow Pack Çözümleri</span></h2>
-                    <p>Flow pack (yatay akışlı) paketleme makineleri, gıda sektörünün en yaygın kullanılan paketleme çözümüdür. Hızlı, güvenilir ve çok yönlü yapıları ile bisküvi, çikolata, ekmek, dondurma ve birçok ürün için idealdir.</p>
-                    <p>Girişim Makina olarak, farklı kapasite ve özellikte flow pack makineleri sunuyoruz. Tek sıralı, çoklu sıralı ve magazinli besleme sistemleriyle entegre çözümler.</p>
-                    <div class="overview-stats">
-                        <div class="stat-item">
-                            <span class="stat-number">800</span>
-                            <span class="stat-label">Paket/Dakika</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-number">50+</span>
-                            <span class="stat-label">Ülke</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-number">24/7</span>
-                            <span class="stat-label">Destek</span>
-                        </div>
-                    </div>
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <span class="number">10+</span>
+                    <span class="label">Model Cesidi</span>
                 </div>
-                <div class="overview-image">
-                    <img src="https://img.youtube.com/vi/KfmMarRSl90/maxresdefault.jpg" alt="Flow Pack Makinesi">
+                <div class="stat-box">
+                    <span class="number">800</span>
+                    <span class="label">Paket/Dakika</span>
+                </div>
+                <div class="stat-box">
+                    <span class="number">57+</span>
+                    <span class="label">Ulke</span>
+                </div>
+                <div class="stat-box">
+                    <span class="number">24/7</span>
+                    <span class="label">Teknik Destek</span>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="product-features">
+    <!-- Product Categories -->
+    <section class="product-categories">
         <div class="container">
-            <div class="section-header text-center">
-                <span class="section-tag">Özellikler</span>
-                <h2>Makine <span class="highlight">Özellikleri</span></h2>
+
+            <!-- Category 1: Doner Cene (Rotary Jaw) -->
+            <div class="category-section" id="rotary-jaw">
+                <div class="category-header">
+                    <div class="category-icon"><i class="fas fa-sync-alt"></i></div>
+                    <h2 class="category-title">Doner Cene Sistemi <span>(Rotary Jaw)</span></h2>
+                </div>
+                <div class="models-grid">
+
+                    <!-- FLM 1000 -->
+                    <a href="flowpack/flm-1000.html" class="model-card">
+                        <div class="model-image">
+                            <img src="../images/FLM 1000.jpg" alt="FLM 1000 Flowpack Makinesi">
+                            <span class="model-badge">En Cok Satan</span>
+                        </div>
+                        <div class="model-content">
+                            <h3 class="model-name">FLM 1000</h3>
+                            <p class="model-desc">Standart yatay flowpack paketleme makinesi. Biskuvi, cikolata, ekmek ve diger gidalarin paketlenmesi icin ideal.</p>
+                            <div class="model-specs">
+                                <span class="model-spec"><i class="fas fa-tachometer-alt"></i> 300 ppm</span>
+                                <span class="model-spec"><i class="fas fa-arrows-alt-h"></i> 30-300mm</span>
+                            </div>
+                            <span class="model-link">Detayli Bilgi <i class="fas fa-arrow-right"></i></span>
+                        </div>
+                    </a>
+
+                    <!-- FLM 1000-CW -->
+                    <a href="flowpack/flm-1000-cw.html" class="model-card">
+                        <div class="model-image">
+                            <img src="../images/FLM 1000-CW HORIZONTAL FLOWPACK PACKAGING MACHINE.png" alt="FLM 1000-CW Cross Web">
+                            <span class="model-badge">Cross Web</span>
+                        </div>
+                        <div class="model-content">
+                            <h3 class="model-name">FLM 1000-CW</h3>
+                            <p class="model-desc">Cross-web (capraz) film beslemeli flowpack makinesi. Genis urunler icin daha ekonomik film kullanimi.</p>
+                            <div class="model-specs">
+                                <span class="model-spec"><i class="fas fa-tachometer-alt"></i> 250 ppm</span>
+                                <span class="model-spec"><i class="fas fa-arrows-alt-h"></i> 50-400mm</span>
+                            </div>
+                            <span class="model-link">Detayli Bilgi <i class="fas fa-arrow-right"></i></span>
+                        </div>
+                    </a>
+
+                    <!-- FLM 2000 -->
+                    <a href="flowpack/flm-2000.html" class="model-card">
+                        <div class="model-image">
+                            <img src="../images/FLM 2000 Roll Bread Automatic Feeding and Packaging Machine with Counting and Seperation System.jpg" alt="FLM 2000 Otomatik Besleme">
+                            <span class="model-badge">Otomatik Besleme</span>
+                        </div>
+                        <div class="model-content">
+                            <h3 class="model-name">FLM 2000</h3>
+                            <p class="model-desc">Sayma ve ayirma sistemli otomatik beslemeli flowpack makinesi. Rulo ekmek, sandvic biskuvi paketleme.</p>
+                            <div class="model-specs">
+                                <span class="model-spec"><i class="fas fa-tachometer-alt"></i> 200 ppm</span>
+                                <span class="model-spec"><i class="fas fa-layer-group"></i> Coklu Besleme</span>
+                            </div>
+                            <span class="model-link">Detayli Bilgi <i class="fas fa-arrow-right"></i></span>
+                        </div>
+                    </a>
+
+                    <!-- FLM 3000 -->
+                    <a href="flowpack/flm-3000.html" class="model-card">
+                        <div class="model-image">
+                            <img src="../images/FLM 3000 Horizontal Flowpack Packaging Machine with semi automatic feeding through conveyor band.jpg" alt="FLM 3000 Konveyor Besleme">
+                            <span class="model-badge">Konveyor Besleme</span>
+                        </div>
+                        <div class="model-content">
+                            <h3 class="model-name">FLM 3000</h3>
+                            <p class="model-desc">Konveyor bant ile yari otomatik beslemeli flowpack makinesi. Buyuk ve duzensiz seklilli urunler icin.</p>
+                            <div class="model-specs">
+                                <span class="model-spec"><i class="fas fa-tachometer-alt"></i> 150 ppm</span>
+                                <span class="model-spec"><i class="fas fa-box"></i> Buyuk Urunler</span>
+                            </div>
+                            <span class="model-link">Detayli Bilgi <i class="fas fa-arrow-right"></i></span>
+                        </div>
+                    </a>
+
+                    <!-- FLM 4000 -->
+                    <a href="flowpack/flm-4000.html" class="model-card">
+                        <div class="model-image">
+                            <img src="../images/FLM 4000 Horizontal Flowpack Machin on pile.jpg" alt="FLM 4000 Pile Paketleme">
+                            <span class="model-badge">Pile Paketleme</span>
+                        </div>
+                        <div class="model-content">
+                            <h3 class="model-name">FLM 4000</h3>
+                            <p class="model-desc">Yigin (pile) halinde paketleme yapan flowpack makinesi. Istifli biskuvi, kraker ve dilimli ekmek icin.</p>
+                            <div class="model-specs">
+                                <span class="model-spec"><i class="fas fa-tachometer-alt"></i> 120 ppm</span>
+                                <span class="model-spec"><i class="fas fa-layer-group"></i> Pile Besleme</span>
+                            </div>
+                            <span class="model-link">Detayli Bilgi <i class="fas fa-arrow-right"></i></span>
+                        </div>
+                    </a>
+
+                    <!-- FLM 5000 -->
+                    <a href="flowpack/flm-5000.html" class="model-card">
+                        <div class="model-image">
+                            <img src="../images/FLM 5000 Bottom Foil Feeding Rotary Jaw System  Horizontal Flowpack Packaging Machine.jpg" alt="FLM 5000 Alttan Besleme">
+                            <span class="model-badge">Alttan Besleme</span>
+                        </div>
+                        <div class="model-content">
+                            <h3 class="model-name">FLM 5000</h3>
+                            <p class="model-desc">Alttan film beslemeli (bottom foil) doner cene sistemi. Yapisan urunler ve ozel paketleme gereksinimleri icin.</p>
+                            <div class="model-specs">
+                                <span class="model-spec"><i class="fas fa-tachometer-alt"></i> 180 ppm</span>
+                                <span class="model-spec"><i class="fas fa-film"></i> Alttan Film</span>
+                            </div>
+                            <span class="model-link">Detayli Bilgi <i class="fas fa-arrow-right"></i></span>
+                        </div>
+                    </a>
+
+                </div>
             </div>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-tachometer-alt"></i></div>
-                    <h3>Yüksek Hız</h3>
-                    <p>800 paket/dakikaya kadar üretim kapasitesi. Servo motor teknolojisi.</p>
+
+            <!-- Category 2: Gezer Cene (Box Motion) -->
+            <div class="category-section" id="box-motion">
+                <div class="category-header">
+                    <div class="category-icon"><i class="fas fa-arrows-alt-h"></i></div>
+                    <h2 class="category-title">Gezer Cene Sistemi <span>(Box Motion)</span></h2>
                 </div>
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-cogs"></i></div>
-                    <h3>Kolay Ayar</h3>
-                    <p>Hızlı ürün değişimi. Tool-less format değişikliği.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-desktop"></i></div>
-                    <h3>Dokunmatik Panel</h3>
-                    <p>7" - 15" HMI ekran. Reçete kaydetme ve çağırma.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-film"></i></div>
-                    <h3>Film Uyumu</h3>
-                    <p>OPP, BOPP, CPP, lamine film ve kağıt uyumlu.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-barcode"></i></div>
-                    <h3>Entegrasyonlar</h3>
-                    <p>Tarih kodlama, etiketleme ve metal dedektör entegrasyonu.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
-                    <h3>Hijyenik Tasarım</h3>
-                    <p>Paslanmaz çelik gövde. Kolay temizlik tasarımı.</p>
+                <div class="models-grid">
+
+                    <!-- FLM 1000-BMS -->
+                    <a href="flowpack/flm-1000-bms.html" class="model-card">
+                        <div class="model-image">
+                            <img src="../images/FLM 1000-BM Upper Bobbin Feeding Box Motion Jaw System Horizontal Flowpack Packaging Machine.jpg" alt="FLM 1000-BMS Box Motion">
+                            <span class="model-badge">Box Motion</span>
+                        </div>
+                        <div class="model-content">
+                            <h3 class="model-name">FLM 1000-BMS</h3>
+                            <p class="model-desc">Ust bobinden beslemeli box motion cene sistemi. Hassas urunler ve premium paketleme kalitesi icin.</p>
+                            <div class="model-specs">
+                                <span class="model-spec"><i class="fas fa-tachometer-alt"></i> 200 ppm</span>
+                                <span class="model-spec"><i class="fas fa-gem"></i> Premium Kalite</span>
+                            </div>
+                            <span class="model-link">Detayli Bilgi <i class="fas fa-arrow-right"></i></span>
+                        </div>
+                    </a>
+
+                    <!-- FLM 5000-BMS -->
+                    <a href="flowpack/flm-5000-bms.html" class="model-card">
+                        <div class="model-image">
+                            <img src="../images/FLM-BM 5000 Bottom Bobbin Feeding Box Motion Jaw System Horizontal Flowpack Packaging Machine.jpg" alt="FLM 5000-BMS Box Motion Alttan Besleme">
+                            <span class="model-badge">Box Motion + Alttan</span>
+                        </div>
+                        <div class="model-content">
+                            <h3 class="model-name">FLM 5000-BMS</h3>
+                            <p class="model-desc">Alttan bobinden beslemeli box motion sistemi. Mukemmel kaynak kalitesi ve hassas urunler icin.</p>
+                            <div class="model-specs">
+                                <span class="model-spec"><i class="fas fa-tachometer-alt"></i> 150 ppm</span>
+                                <span class="model-spec"><i class="fas fa-film"></i> Alttan Film</span>
+                            </div>
+                            <span class="model-link">Detayli Bilgi <i class="fas fa-arrow-right"></i></span>
+                        </div>
+                    </a>
+
                 </div>
             </div>
+
+            <!-- Category 3: High Speed -->
+            <div class="category-section" id="high-speed">
+                <div class="category-header">
+                    <div class="category-icon"><i class="fas fa-bolt"></i></div>
+                    <h2 class="category-title">Yuksek Hiz Otomatik <span>(High Speed Automatic)</span></h2>
+                </div>
+                <div class="models-grid">
+
+                    <!-- FLM-HS 500 -->
+                    <a href="flowpack/flm-hs-500.html" class="model-card">
+                        <div class="model-image">
+                            <img src="../images/FLM-HS-500 High Speed Flowpack Packaging Machine with Automatic Product Feeding System.jpg" alt="FLM-HS 500 High Speed">
+                            <span class="model-badge">High Speed</span>
+                        </div>
+                        <div class="model-content">
+                            <h3 class="model-name">FLM-HS 500</h3>
+                            <p class="model-desc">Yuksek hizli otomatik beslemeli flowpack makinesi. Tam otomatik urun besleme sistemi ile maksimum verimlilik.</p>
+                            <div class="model-specs">
+                                <span class="model-spec"><i class="fas fa-tachometer-alt"></i> 500+ ppm</span>
+                                <span class="model-spec"><i class="fas fa-robot"></i> Tam Otomatik</span>
+                            </div>
+                            <span class="model-link">Detayli Bilgi <i class="fas fa-arrow-right"></i></span>
+                        </div>
+                    </a>
+
+                </div>
+            </div>
+
+            <!-- Category 4: Ozel Cozumler -->
+            <div class="category-section" id="special">
+                <div class="category-header">
+                    <div class="category-icon"><i class="fas fa-cog"></i></div>
+                    <h2 class="category-title">Ozel Cozumler <span>(Special Solutions)</span></h2>
+                </div>
+                <div class="models-grid">
+
+                    <!-- BPM 1000 On Edge -->
+                    <a href="flowpack/bpm-1000.html" class="model-card">
+                        <div class="model-image">
+                            <img src="../images/BPM 1000 Horizontal Flowpack Packaging Machine on Edge.jpg" alt="BPM 1000 On Edge">
+                            <span class="model-badge">On Edge</span>
+                        </div>
+                        <div class="model-content">
+                            <h3 class="model-name">BPM 1000 On Edge</h3>
+                            <p class="model-desc">Dikey konumda (on edge) paketleme yapan ozel flowpack makinesi. Sandvic, gofret ve diger yassı urunler icin.</p>
+                            <div class="model-specs">
+                                <span class="model-spec"><i class="fas fa-tachometer-alt"></i> 200 ppm</span>
+                                <span class="model-spec"><i class="fas fa-cookie"></i> Sandvic/Gofret</span>
+                            </div>
+                            <span class="model-link">Detayli Bilgi <i class="fas fa-arrow-right"></i></span>
+                        </div>
+                    </a>
+
+                </div>
+            </div>
+
         </div>
     </section>
 
-    <section class="product-videos">
-        <div class="container">
-            <div class="section-header text-center">
-                <span class="section-tag">Videolar</span>
-                <h2>Flow Pack <span class="highlight">Videoları</span></h2>
-            </div>
-            <div class="videos-grid">
-                <div class="video-card" onclick="openVideo('tF6KbrRx9gI')">
-                    <div class="video-thumbnail">
-                        <img src="https://img.youtube.com/vi/tF6KbrRx9gI/maxresdefault.jpg" alt="Bisküvi Flow Pack">
-                        <div class="play-button"><i class="fas fa-play"></i></div>
-                    </div>
-                    <h4>Bisküvi Paketleme</h4>
-                </div>
-                <div class="video-card" onclick="openVideo('8YMvvtf7pac')">
-                    <div class="video-thumbnail">
-                        <img src="https://img.youtube.com/vi/8YMvvtf7pac/maxresdefault.jpg" alt="Çikolata Bar Flow Pack">
-                        <div class="play-button"><i class="fas fa-play"></i></div>
-                    </div>
-                    <h4>Çikolata Bar Paketleme</h4>
-                </div>
-                <div class="video-card" onclick="openVideo('SjtQGO3k9CY')">
-                    <div class="video-thumbnail">
-                        <img src="https://img.youtube.com/vi/SjtQGO3k9CY/maxresdefault.jpg" alt="Ekmek Flow Pack">
-                        <div class="play-button"><i class="fas fa-play"></i></div>
-                    </div>
-                    <h4>Ekmek Paketleme</h4>
-                </div>
-            </div>
-        </div>
-    </section>
-
+    <!-- CTA Section -->
     <section class="product-cta">
         <div class="container">
             <div class="cta-content">
-                <h2>Flow Pack Makinesi İçin Teklif Alın</h2>
-                <p>Uzman ekibimiz projeniz için en uygun çözümü sunmak üzere hazır</p>
+                <h2>Projeniz Icin En Uygun Flowpack Makinesini Bulalim</h2>
+                <p>10+ model arasından uretim ihtiyaciniza en uygun makineyi sectirmemiz icin bizimle iletisime gecin</p>
                 <div class="cta-buttons">
-                    <a href="https://wa.me/905468792927?text=Flow%20pack%20makinesi%20hakkında%20detaylı%20bilgi%20almak%20istiyorum" target="_blank" class="btn btn-white btn-lg"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-                    <a href="mailto:export@girisimmak.com?subject=Flow%20Pack%20Makinesi%20Teklif%20Talebi" class="btn btn-outline-white btn-lg"><i class="fas fa-envelope"></i> E-posta</a>
+                    <a href="https://wa.me/905468792927?text=Flowpack%20makinesi%20secimi%20icin%20yardim%20istiyorum" target="_blank" class="btn btn-white btn-lg"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                    <a href="mailto:export@girisimmak.com?subject=Flowpack%20Makinesi%20Teklif%20Talebi" class="btn btn-outline-white btn-lg"><i class="fas fa-envelope"></i> E-posta</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="related-products">
-        <div class="container">
-            <div class="section-header text-center">
-                <span class="section-tag">İlgili Ürünler</span>
-                <h2>Diğer <span class="highlight">Makinelerimiz</span></h2>
-            </div>
-            <div class="related-grid">
-                <a href="overwrapping.html" class="related-card">
-                    <div class="related-image"><img src="https://img.youtube.com/vi/RdnibYpZZG4/maxresdefault.jpg" alt="Overwrapping"></div>
-                    <h4>Overwrapping Makineleri</h4>
-                </a>
-                <a href="vffs.html" class="related-card">
-                    <div class="related-image"><img src="https://img.youtube.com/vi/GlzQlLBKF-U/maxresdefault.jpg" alt="VFFS"></div>
-                    <h4>VFFS Dikey Dolum</h4>
-                </a>
-                <a href="wafer.html" class="related-card">
-                    <div class="related-image"><img src="https://img.youtube.com/vi/igEIPiJt3UI/maxresdefault.jpg" alt="Wafer"></div>
-                    <h4>Wafer Üretim Hatları</h4>
-                </a>
-            </div>
-        </div>
-    </section>
-
+    <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-about">
                     <a href="../index.html" class="footer-logo">
-                        <span class="logo-text">GİRİŞİM</span>
-                        <span class="logo-sub">MAKİNA TÜRKİYE</span>
+                        <span class="logo-text">GIRISIM</span>
+                        <span class="logo-sub">MAKINA TURKIYE</span>
                     </a>
-                    <p>1985'ten beri gıda işleme ve paketleme makineleri üretiyoruz. 57+ ülkeye ihracat.</p>
+                    <p>1985'ten beri gida isleme ve paketleme makineleri uretiyoruz. 57+ ulkeye ihracat.</p>
                     <div class="footer-social">
                         <a href="https://www.youtube.com/@girisimpackagingmachinery" target="_blank"><i class="fab fa-youtube"></i></a>
                         <a href="https://www.linkedin.com/company/girisim-food-processing-and-packaging-machinery-turkey" target="_blank"><i class="fab fa-linkedin-in"></i></a>
@@ -256,16 +565,16 @@
                     </div>
                 </div>
                 <div class="footer-contact">
-                    <h4>İletişim</h4>
+                    <h4>Iletisim</h4>
                     <ul>
-                        <li><i class="fas fa-map-marker-alt"></i> Güneşli, Bağcılar / İstanbul</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Gunesli, Bagcilar / Istanbul</li>
                         <li><i class="fab fa-whatsapp"></i> <a href="https://wa.me/905468792927">+90 546 879 29 27</a></li>
                         <li><i class="fas fa-envelope"></i> <a href="mailto:export@girisimmak.com">export@girisimmak.com</a></li>
                     </ul>
                 </div>
             </div>
         </div>
-        <div class="footer-bottom"><div class="container"><p>&copy; 2025 Girişim Makina Türkiye. Tüm hakları saklıdır.</p></div></div>
+        <div class="footer-bottom"><div class="container"><p>&copy; 2025 Girisim Makina Turkiye. Tum haklari saklidir.</p></div></div>
     </footer>
 
     <a href="https://wa.me/905468792927" class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
@@ -277,13 +586,13 @@
             <span id="currentLangLabel">TR</span>
         </button>
         <div class="language-float-dropdown" id="languageDropdown">
-            <a href="#" data-lang="tr">🇹🇷 TR</a>
-            <a href="#" data-lang="en">🇬🇧 EN</a>
-            <a href="#" data-lang="ru">🇷🇺 RU</a>
-            <a href="#" data-lang="ar">🇸🇦 AR</a>
-            <a href="#" data-lang="fr">🇫🇷 FR</a>
-            <a href="#" data-lang="pt">🇧🇷 PT</a>
-            <a href="#" data-lang="es">🇪🇸 ES</a>
+            <a href="#" data-lang="tr">TR</a>
+            <a href="#" data-lang="en">EN</a>
+            <a href="#" data-lang="ru">RU</a>
+            <a href="#" data-lang="ar">AR</a>
+            <a href="#" data-lang="fr">FR</a>
+            <a href="#" data-lang="pt">PT</a>
+            <a href="#" data-lang="es">ES</a>
         </div>
     </div>
 
@@ -298,32 +607,9 @@
 
     <a href="#" class="back-to-top" id="backToTop"><i class="fas fa-chevron-up"></i></a>
 
-    <div id="videoModal" class="video-modal" onclick="closeVideo()">
-        <div class="video-modal-content" onclick="event.stopPropagation()">
-            <span class="close-video" onclick="closeVideo()">&times;</span>
-            <iframe id="videoFrame" src="" frameborder="0" allowfullscreen></iframe>
-        </div>
-    </div>
-
     <script src="../js/main.js"></script>
     <script src="../js/product-translations.js"></script>
     <script>
-        function openVideo(videoId) {
-            const modal = document.getElementById('videoModal');
-            const iframe = document.getElementById('videoFrame');
-            iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
-            modal.style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-        }
-        function closeVideo() {
-            document.getElementById('videoModal').style.display = 'none';
-            document.getElementById('videoFrame').src = '';
-            document.body.style.overflow = '';
-        }
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') closeVideo();
-        });
-
         // Floating Language Selector
         function toggleLanguageDropdown() {
             document.getElementById('languageDropdown').classList.toggle('show');
@@ -369,6 +655,7 @@
                 if (a.getAttribute('data-lang') === currentLang) a.classList.add('active');
             });
         });
+    </script>
 
     <!--Start of Tawk.to Script-->
     <script type="text/javascript">
