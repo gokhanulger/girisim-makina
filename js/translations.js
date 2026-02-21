@@ -27,6 +27,21 @@ const translations = {
             email: "E-posta",
             export: "İhracat"
         },
+        blog: {
+            title: "Blog",
+            subtitle: "Sektörel haberler, ürün tanıtımları ve fuar duyuruları",
+            all: "Tümü",
+            general: "Genel",
+            products: "Ürünler",
+            industry: "Sektör",
+            fairs: "Fuarlar",
+            noPosts: "Henüz yazı yok",
+            noPostsDesc: "Bu kategoride henüz yazı bulunmamaktadır.",
+            readMore: "Devamını Oku",
+            newsletterTitle: "Bültenimize Abone Olun",
+            newsletterDesc: "Yeni ürünler ve fuar duyuruları için e-posta bültenimize abone olun.",
+            subscribe: "Abone Ol"
+        },
         corporate: {
             aboutUs: "Hakkımızda",
             whyUs: "Neden Girişim Makina?",
@@ -406,6 +421,21 @@ const translations = {
             phone: "Phone",
             email: "Email",
             export: "Export"
+        },
+        blog: {
+            title: "Blog",
+            subtitle: "Industry news, product introductions and fair announcements",
+            all: "All",
+            general: "General",
+            products: "Products",
+            industry: "Industry",
+            fairs: "Fairs",
+            noPosts: "No posts yet",
+            noPostsDesc: "There are no posts in this category yet.",
+            readMore: "Read More",
+            newsletterTitle: "Subscribe to Our Newsletter",
+            newsletterDesc: "Subscribe to our newsletter for new products and fair announcements.",
+            subscribe: "Subscribe"
         },
         corporate: {
             aboutUs: "About Us",
@@ -793,6 +823,21 @@ const translations = {
             email: "Эл. почта",
             export: "Экспорт"
         },
+        blog: {
+            title: "Блог",
+            subtitle: "Отраслевые новости, презентации продуктов и объявления о выставках",
+            all: "Все",
+            general: "Общее",
+            products: "Продукты",
+            industry: "Отрасль",
+            fairs: "Выставки",
+            noPosts: "Пока нет записей",
+            noPostsDesc: "В этой категории пока нет записей.",
+            readMore: "Читать далее",
+            newsletterTitle: "Подпишитесь на рассылку",
+            newsletterDesc: "Подпишитесь на нашу рассылку для получения новостей о продуктах и выставках.",
+            subscribe: "Подписаться"
+        },
         corporate: {
             aboutUs: "О нас",
             whyUs: "Почему Girişim Makina?",
@@ -1143,6 +1188,21 @@ const translations = {
             phone: "هاتف",
             email: "البريد الإلكتروني",
             export: "تصدير"
+        },
+        blog: {
+            title: "المدونة",
+            subtitle: "أخبار الصناعة وعروض المنتجات وإعلانات المعارض",
+            all: "الكل",
+            general: "عام",
+            products: "المنتجات",
+            industry: "الصناعة",
+            fairs: "المعارض",
+            noPosts: "لا توجد مقالات بعد",
+            noPostsDesc: "لا توجد مقالات في هذه الفئة بعد.",
+            readMore: "اقرأ المزيد",
+            newsletterTitle: "اشترك في نشرتنا الإخبارية",
+            newsletterDesc: "اشترك في نشرتنا الإخبارية للحصول على أخبار المنتجات والمعارض.",
+            subscribe: "اشترك"
         },
         corporate: {
             aboutUs: "معلومات عنا",
@@ -1495,6 +1555,21 @@ const translations = {
             email: "E-mail",
             export: "Exportation"
         },
+        blog: {
+            title: "Blog",
+            subtitle: "Actualités du secteur, présentations de produits et annonces de salons",
+            all: "Tous",
+            general: "Général",
+            products: "Produits",
+            industry: "Industrie",
+            fairs: "Salons",
+            noPosts: "Aucun article pour le moment",
+            noPostsDesc: "Il n'y a pas encore d'articles dans cette catégorie.",
+            readMore: "Lire la suite",
+            newsletterTitle: "Abonnez-vous à notre newsletter",
+            newsletterDesc: "Abonnez-vous pour recevoir les nouveautés produits et les annonces de salons.",
+            subscribe: "S'abonner"
+        },
         corporate: {
             aboutUs: "À propos",
             whyUs: "Pourquoi Girişim Makina?",
@@ -1846,6 +1921,21 @@ const translations = {
             email: "E-mail",
             export: "Exportação"
         },
+        blog: {
+            title: "Blog",
+            subtitle: "Notícias do setor, apresentações de produtos e anúncios de feiras",
+            all: "Todos",
+            general: "Geral",
+            products: "Produtos",
+            industry: "Indústria",
+            fairs: "Feiras",
+            noPosts: "Ainda não há artigos",
+            noPostsDesc: "Ainda não há artigos nesta categoria.",
+            readMore: "Leia mais",
+            newsletterTitle: "Assine nossa newsletter",
+            newsletterDesc: "Assine nossa newsletter para novidades de produtos e anúncios de feiras.",
+            subscribe: "Assinar"
+        },
         corporate: {
             aboutUs: "Sobre nós",
             whyUs: "Por que Girişim Makina?",
@@ -2196,6 +2286,21 @@ const translations = {
             phone: "Teléfono",
             email: "Correo electrónico",
             export: "Exportación"
+        },
+        blog: {
+            title: "Blog",
+            subtitle: "Noticias del sector, presentaciones de productos y anuncios de ferias",
+            all: "Todos",
+            general: "General",
+            products: "Productos",
+            industry: "Industria",
+            fairs: "Ferias",
+            noPosts: "Aún no hay artículos",
+            noPostsDesc: "Aún no hay artículos en esta categoría.",
+            readMore: "Leer más",
+            newsletterTitle: "Suscríbase a nuestro boletín",
+            newsletterDesc: "Suscríbase para recibir novedades de productos y anuncios de ferias.",
+            subscribe: "Suscribirse"
         },
         corporate: {
             aboutUs: "Nosotros",
@@ -2916,7 +3021,7 @@ function applyTranslations() {
     if (footerContactTitle) footerContactTitle.textContent = lang.footer.contactTitle;
 
     const copyright = document.querySelector('.footer-bottom-content p');
-    if (copyright) copyright.innerHTML = `&copy; 2024 ${lang.footer.copyright}`;
+    if (copyright) copyright.innerHTML = `&copy; 2025 ${lang.footer.copyright}`;
 
     const bottomLinks = document.querySelectorAll('.footer-bottom-links a');
     if (bottomLinks[0]) bottomLinks[0].textContent = lang.footer.privacy;
@@ -2991,10 +3096,8 @@ function applyTranslations() {
     }
 
     // Fuarlar Section
-    console.log('Fuarlar translation:', lang.fuarlar);
     if (lang.fuarlar) {
         const fuarTag = document.querySelector('[data-translate="fuarlar.tag"]');
-        console.log('fuarTag element:', fuarTag);
         if (fuarTag) fuarTag.textContent = lang.fuarlar.tag;
 
         const fuarTitle1 = document.querySelector('[data-translate="fuarlar.title1"]');

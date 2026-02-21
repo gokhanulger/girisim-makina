@@ -3,6 +3,7 @@ const productTranslations = {
     tr: {
         common: {
             tag_production: "Üretim Hatları",
+            tag_production_machinery: "Üretim Makinaları",
             tag_packaging: "Paketleme Makineleri",
             getQuote: "Teklif Al",
             whatsapp: "WhatsApp",
@@ -327,6 +328,7 @@ const productTranslations = {
     en: {
         common: {
             tag_production: "Production Lines",
+            tag_production_machinery: "Production Machinery",
             tag_packaging: "Packaging Machines",
             getQuote: "Get Quote",
             whatsapp: "WhatsApp",
@@ -651,6 +653,7 @@ const productTranslations = {
     ru: {
         common: {
             tag_production: "Производственные линии",
+            tag_production_machinery: "Производственное оборудование",
             tag_packaging: "Упаковочные машины",
             getQuote: "Получить предложение",
             whatsapp: "WhatsApp",
@@ -975,6 +978,7 @@ const productTranslations = {
     ar: {
         common: {
             tag_production: "خطوط الإنتاج",
+            tag_production_machinery: "آلات الإنتاج",
             tag_packaging: "آلات التعبئة والتغليف",
             getQuote: "احصل على عرض سعر",
             whatsapp: "واتساب",
@@ -1299,6 +1303,7 @@ const productTranslations = {
     fr: {
         common: {
             tag_production: "Lignes de production",
+            tag_production_machinery: "Machines de production",
             tag_packaging: "Machines d'emballage",
             getQuote: "Obtenir un devis",
             whatsapp: "WhatsApp",
@@ -1623,6 +1628,7 @@ const productTranslations = {
     pt: {
         common: {
             tag_production: "Linhas de Produção",
+            tag_production_machinery: "Máquinas de Produção",
             tag_packaging: "Máquinas de Embalagem",
             getQuote: "Solicitar Orçamento",
             whatsapp: "WhatsApp",
@@ -1947,6 +1953,7 @@ const productTranslations = {
     es: {
         common: {
             tag_production: "Líneas de producción",
+            tag_production_machinery: "Maquinaria de producción",
             tag_packaging: "Máquinas de envasado",
             getQuote: "Solicitar presupuesto",
             whatsapp: "WhatsApp",
@@ -2299,9 +2306,15 @@ function applyProductTranslations() {
     // Hero section
     const heroTag = document.querySelector('.product-tag');
     if (heroTag) {
-        heroTag.textContent = productKey.includes('bar') || productKey === 'wafer' || productKey === 'chocolate-coating' || productKey === 'biscuit-sandwiching'
-            ? common.tag_production
-            : common.tag_packaging;
+        var machineryProducts = ['chocolate-cooling', 'chocolate-preparation', 'sugar-mill'];
+        var productionProducts = ['wafer', 'chocolate-coating', 'biscuit-sandwiching', 'cookie-capping'];
+        if (machineryProducts.indexOf(productKey) !== -1) {
+            heroTag.textContent = common.tag_production_machinery;
+        } else if (productKey.includes('bar') || productionProducts.indexOf(productKey) !== -1) {
+            heroTag.textContent = common.tag_production;
+        } else {
+            heroTag.textContent = common.tag_packaging;
+        }
     }
 
     const heroTitle = document.querySelector('.product-hero-content h1');

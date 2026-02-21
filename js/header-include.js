@@ -175,7 +175,7 @@
                 links: [
                     { label: 'Gofret Üretim Hatları', href: bp + 'products/wafer.html', key: 'dropdown.wafer' },
                     { label: 'Tahıl Bar Üretim Hatları', href: bp + 'products/cereal-bar.html', key: 'dropdown.cerealBar' },
-                    { label: 'Protein Bar Hatları', href: bp + 'products/protein-bar.html', key: 'dropdown.proteinBar' },
+                    { label: 'Protein Bar Hatları', href: bp + 'products/protein-bar.html', key: 'dropdown.protein' },
                     { label: 'Hindistan Cevizi Bar', href: bp + 'products/coconut-bar.html', key: 'dropdown.coconutBar' },
                     { label: 'Helva Üretim Hatları', href: bp + 'products/halvah.html', key: 'dropdown.halvah' }
                 ]
@@ -316,16 +316,16 @@
                     <ul>
                         <li><a href="${basePath}products/wafer.html" data-translate="dropdown.wafer">Wafer Üretim Hatları</a></li>
                         <li><a href="${basePath}products/cereal-bar.html" data-translate="dropdown.cerealBar">Cereal Bar Hatları</a></li>
-                        <li><a href="${basePath}products/protein-bar.html" data-translate="dropdown.proteinBar">Protein Bar Hatları</a></li>
-                        <li><a href="${basePath}products/chocolate-coating.html" data-translate="dropdown.chocoCoating">Çikolata Kaplama</a></li>
-                        <li><a href="${basePath}products/biscuit-sandwiching.html" data-translate="dropdown.biscuitSandwich">Bisküvi Kremalama</a></li>
+                        <li><a href="${basePath}products/protein-bar.html" data-translate="dropdown.protein">Protein Bar Hatları</a></li>
+                        <li><a href="${basePath}products/chocolate-coating.html" data-translate="dropdown.chocolate">Çikolata Kaplama</a></li>
+                        <li><a href="${basePath}products/biscuit-sandwiching.html" data-translate="dropdown.biscuit">Bisküvi Kremalama</a></li>
                     </ul>
                 </div>
                 <div class="footer-links">
                     <h4 data-translate="footer.packagingTitle">Paketleme</h4>
                     <ul>
                         <li><a href="${basePath}products/flow-pack.html" data-translate="dropdown.flowpack">Flow Pack</a></li>
-                        <li><a href="${basePath}products/overwrapping.html" data-translate="dropdown.overwrapping">Overwrapping</a></li>
+                        <li><a href="${basePath}products/overwrapping.html" data-translate="dropdown.overwrap">Overwrapping</a></li>
                         <li><a href="${basePath}products/thermoform.html" data-translate="dropdown.thermoform">Thermoform</a></li>
                         <li><a href="${basePath}products/vffs.html" data-translate="dropdown.vffs">VFFS Dikey Dolum</a></li>
                         <li><a href="${basePath}products/filling-machines.html" data-translate="dropdown.filling">Dolum Makinaları</a></li>

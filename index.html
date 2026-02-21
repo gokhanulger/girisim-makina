@@ -40,7 +40,7 @@
     <link rel="canonical" href="https://girisimmak.com">
     <link rel="icon" type="image/png" href="/favicon.png">
     <link rel="apple-touch-icon" href="/favicon.png">
-    <link rel="stylesheet" href="css/style.css?v=20260222b">
+    <link rel="stylesheet" href="css/style.css?v=20260222c">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
@@ -876,7 +876,7 @@
         <div class="video-modal-content" onclick="event.stopPropagation()" style="max-width: 500px; padding: 40px;">
             <span class="close-video" onclick="closeCatalogModal()">&times;</span>
             <div style="text-align: center; margin-bottom: 25px;">
-                <i class="fas fa-file-pdf" style="font-size: 3rem; color: var(--primary);"></i>
+                <i class="fas fa-file-pdf" style="font-size: 3rem; color: var(--primary-color);"></i>
                 <h3 style="margin-top: 15px; color: var(--dark);">Kataloglarımızı İndirin</h3>
                 <p style="color: #666;">Bilgilerinizi girin, katalogları hemen indirin</p>
             </div>
@@ -913,7 +913,7 @@
         <div class="video-modal-content" onclick="event.stopPropagation()">
             <span class="close-video" onclick="closeTeklifModal()">&times;</span>
             <div style="text-align: center; margin-bottom: 10px;">
-                <i class="fas fa-file-invoice" style="color: var(--primary);"></i>
+                <i class="fas fa-file-invoice" style="color: var(--primary-color);"></i>
                 <h3 style="color: var(--dark);" data-translate="quoteFormTitle">Ücretsiz Teklif Alın</h3>
             </div>
             <form id="teklifForm" action="https://api.web3forms.com/submit" method="POST" enctype="multipart/form-data">
@@ -980,7 +980,7 @@
     <div id="exitPopup" class="video-modal" onclick="closeExitPopup()">
         <div class="video-modal-content" onclick="event.stopPropagation()" style="max-width: 450px; padding: 40px; text-align: center;">
             <span class="close-video" onclick="closeExitPopup()">&times;</span>
-            <i class="fas fa-gift" style="font-size: 3rem; color: var(--primary); margin-bottom: 20px;"></i>
+            <i class="fas fa-gift" style="font-size: 3rem; color: var(--primary-color); margin-bottom: 20px;"></i>
             <h3 style="color: var(--dark); margin-bottom: 15px;" data-translate="exitPopupTitle">Bekleyin! Gitmeyin</h3>
             <p style="color: #666; margin-bottom: 25px;" data-translate="exitPopupText">Kataloglarımızı göndermemizi ister misiniz? Size özel tekliflerimizden haberdar olun.</p>
             <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
@@ -996,34 +996,14 @@
 
     <!-- Supabase SDK -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="js/supabase-init.js?v=20260222b"></script>
-    <script src="js/site-loader.js?v=20260222b"></script>
-    <script src="js/seo-loader.js?v=20260222b"></script>
-    <script src="js/translations.js?v=20260222b"></script>
-    <script src="js/main.js?v=20260222b"></script>
+    <script src="js/supabase-init.js?v=20260222c"></script>
+    <script src="js/site-loader.js?v=20260222c"></script>
+    <script src="js/seo-loader.js?v=20260222c"></script>
+    <script src="js/translations.js?v=20260222c"></script>
+    <script src="js/main.js?v=20260222c"></script>
     <!-- Shared Header/Footer -->
-    <script src="js/header-include.js?v=20260222b"></script>
+    <script src="js/header-include.js?v=20260222c"></script>
     <script>
-        // Video Modal - YouTube embed
-        function openVideo(videoId) {
-            const modal = document.getElementById('videoModal');
-            const iframe = document.getElementById('videoFrame');
-            iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
-            modal.style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeVideo() {
-            document.getElementById('videoModal').style.display = 'none';
-            document.getElementById('videoFrame').src = '';
-            document.body.style.overflow = '';
-        }
-
-        // Close on Escape key
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') closeVideo();
-        });
-
         // Form submission - WhatsApp redirect
         document.getElementById('contactForm').addEventListener('submit', function(e) {
             e.preventDefault();
