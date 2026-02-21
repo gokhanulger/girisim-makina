@@ -29,7 +29,7 @@
             facebook: 'https://www.facebook.com/PackagingMachineryTurkey',
             tiktok: 'https://www.tiktok.com/@girisim.makina.turkiye'
         },
-        footerDescription: "1985'ten beri gıda işleme ve paketleme makineleri üretiyoruz. 57+ ülkeye ihracat.",
+        footerDescription: "1995'ten beri gıda işleme ve paketleme makineleri üretiyoruz. 57+ ülkeye ihracat.",
         footerCopyright: '2025 Girişim Makina Türkiye. Tüm hakları saklıdır.',
         address: 'Güneşli, Bağcılar / İstanbul'
     };

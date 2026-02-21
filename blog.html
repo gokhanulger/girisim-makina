@@ -363,7 +363,7 @@
                         var rows = await res.json();
                         if (rows[0] && rows[0].content && rows[0].content.blog && rows[0].content.blog.posts) {
                             posts = rows[0].content.blog.posts.filter(function(post) { return post.published; });
-                            console.log('Blog loaded via REST API:', posts.length, 'posts');
+
                         }
                     }
                 } catch (e) { console.warn('REST API blog load failed:', e); }

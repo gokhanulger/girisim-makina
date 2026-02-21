@@ -2293,7 +2293,7 @@ function applyProductTranslations() {
     const lang = productTranslations[productCurrentLang];
 
     if (!lang || !lang[productKey]) {
-        console.log('Translation not found for:', productKey, productCurrentLang);
+        // Translation not found for this product/language
         return;
     }
 

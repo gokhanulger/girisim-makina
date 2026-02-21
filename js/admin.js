@@ -164,8 +164,8 @@ async function loadContent() {
             siteContent = { ...defaultSiteContent };
             localStorage.setItem('girisim_site_content', JSON.stringify(siteContent));
         }
-        document.getElementById('firebaseStatus').textContent = 'Demo Mod (localStorage)';
-        document.getElementById('firebaseStatus').style.color = '#ff9800';
+        document.getElementById('supabaseStatus').textContent = 'Demo Mod (localStorage)';
+        document.getElementById('supabaseStatus').style.color = '#ff9800';
         populateAllForms();
         updateLastUpdateTime();
         return;
@@ -185,22 +185,22 @@ async function loadContent() {
                 id: 'main',
                 content: siteContent
             });
-            document.getElementById('firebaseStatus').textContent = 'Supabase Bağlı';
-            document.getElementById('firebaseStatus').style.color = '#4caf50';
+            document.getElementById('supabaseStatus').textContent = 'Supabase Bağlı';
+            document.getElementById('supabaseStatus').style.color = '#4caf50';
         } else if (error) {
             throw error;
         } else {
             siteContent = data.content;
-            document.getElementById('firebaseStatus').textContent = 'Supabase Bağlı';
-            document.getElementById('firebaseStatus').style.color = '#4caf50';
+            document.getElementById('supabaseStatus').textContent = 'Supabase Bağlı';
+            document.getElementById('supabaseStatus').style.color = '#4caf50';
         }
 
         populateAllForms();
         updateLastUpdateTime();
     } catch (error) {
         console.error('Error loading content:', error);
-        document.getElementById('firebaseStatus').textContent = 'Bağlantı hatası';
-        document.getElementById('firebaseStatus').style.color = '#f44336';
+        document.getElementById('supabaseStatus').textContent = 'Bağlantı hatası';
+        document.getElementById('supabaseStatus').style.color = '#f44336';
 
         // Use default content for offline editing
         siteContent = { ...defaultSiteContent };
