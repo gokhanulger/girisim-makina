@@ -1,11 +1,26 @@
-// Site Content Loader - Loads dynamic content from Firebase or localStorage
+// Site Content Loader - Loads dynamic content from Supabase or localStorage
 
 // Load Analytics & Tracking Codes - Must run ASAP
 (function loadAnalyticsTracking() {
+    // Try localStorage first for instant load (analytics needs to run ASAP)
+    let settings = null;
     const saved = localStorage.getItem('girisim_analytics_settings');
-    if (!saved) return;
+    if (saved) {
+        settings = JSON.parse(saved);
+    }
 
-    const settings = JSON.parse(saved);
+    // Also try to get from cached site content
+    if (!settings) {
+        try {
+            const cached = sessionStorage.getItem('girisim_site_cache');
+            if (cached) {
+                const { data } = JSON.parse(cached);
+                if (data?.analytics) settings = data.analytics;
+            }
+        } catch (e) { /* ignore */ }
+    }
+
+    if (!settings) return;
 
     // Create a container for head scripts
     const headScripts = [];
@@ -242,37 +257,115 @@
 
 document.addEventListener('DOMContentLoaded', async () => {
     try {
-        // Try Firebase first if available
-        if (typeof firebase !== 'undefined' && typeof loadSiteContent === 'function' && db) {
-            const content = await loadSiteContent();
-            if (content) {
-                console.log('Loading content from Firebase');
-                applySiteContent(content);
-                return;
+        // Use cached content loader (Supabase → sessionStorage → localStorage → defaults)
+        let content = null;
+
+        if (typeof getCachedSiteContent === 'function') {
+            content = await getCachedSiteContent();
+        } else if (typeof supabase !== 'undefined' && typeof loadSiteContent === 'function') {
+            content = await loadSiteContent();
+        }
+
+        if (!content) {
+            // Fallback to localStorage (demo mode)
+            const localContent = localStorage.getItem('girisim_site_content');
+            if (localContent) {
+                content = JSON.parse(localContent);
             }
         }
 
-        // Fallback to localStorage (demo mode)
-        const localContent = localStorage.getItem('girisim_site_content');
-        if (localContent) {
-            console.log('Loading content from localStorage (Demo Mode)');
-            applySiteContent(JSON.parse(localContent));
-            return;
+        if (content) {
+            // Set global for other scripts to use
+            window.__siteContent = content;
+            console.log('Site content loaded');
+            applySiteContent(content);
+
+            // Also update analytics from Supabase content if available
+            if (content.analytics) {
+                localStorage.setItem('girisim_analytics_settings', JSON.stringify(content.analytics));
+            }
+
+            // Merge Supabase translations and re-apply language
+            if (typeof mergeSupabaseTranslations === 'function') {
+                mergeSupabaseTranslations();
+                if (typeof applyTranslations === 'function') {
+                    applyTranslations();
+                }
+            }
+        } else {
+            console.log('Using static content');
         }
-
-        console.log('Using static content');
     } catch (error) {
-        console.log('Using static content (Firebase not configured or offline)', error);
-
-        // Try localStorage as fallback
+        console.log('Using static content (error):', error);
         const localContent = localStorage.getItem('girisim_site_content');
         if (localContent) {
-            applySiteContent(JSON.parse(localContent));
+            const content = JSON.parse(localContent);
+            window.__siteContent = content;
+            applySiteContent(content);
         }
     }
+
+    // Reveal page after all dynamic content is loaded
+    document.body.classList.add('site-ready');
 });
 
 function applySiteContent(content) {
+    // Contact Info (Office Phone, WhatsApp, Email) - Header & Footer
+    if (content.contactInfo) {
+        const ci = content.contactInfo;
+
+        // Update header office phone
+        const headerOfficePhone = document.querySelector('.top-bar .office-phone');
+        if (headerOfficePhone && ci.officePhone) {
+            headerOfficePhone.innerHTML = `<i class="fas fa-phone"></i> ${ci.officePhone}`;
+            headerOfficePhone.href = `tel:${ci.officePhone.replace(/\s/g, '')}`;
+        }
+
+        // Update header WhatsApp
+        const headerWhatsapp = document.querySelector('.top-bar .contact-info a[href*="wa.me"]');
+        if (headerWhatsapp && ci.whatsapp) {
+            const whatsappNumber = ci.whatsapp.replace(/\s/g, '').replace(/\+/g, '');
+            headerWhatsapp.innerHTML = `<i class="fab fa-whatsapp"></i> ${ci.whatsapp}`;
+            headerWhatsapp.href = `https://wa.me/${whatsappNumber}`;
+        }
+
+        // Update header email
+        const headerEmail = document.querySelector('.top-bar .contact-info a[href*="mailto:"]');
+        if (headerEmail && ci.email) {
+            headerEmail.innerHTML = `<i class="fas fa-envelope"></i> ${ci.email}`;
+            headerEmail.href = `mailto:${ci.email}`;
+        }
+
+        // Update footer office phone
+        const footerOfficePhone = document.querySelector('.footer-contact .office-phone');
+        if (footerOfficePhone && ci.officePhone) {
+            footerOfficePhone.textContent = ci.officePhone;
+            footerOfficePhone.href = `tel:${ci.officePhone.replace(/\s/g, '')}`;
+        }
+
+        // Update footer WhatsApp
+        const footerWhatsapp = document.querySelector('.footer-contact .whatsapp-phone');
+        if (footerWhatsapp && ci.whatsapp) {
+            const whatsappNumber = ci.whatsapp.replace(/\s/g, '').replace(/\+/g, '');
+            footerWhatsapp.textContent = ci.whatsapp;
+            footerWhatsapp.href = `https://wa.me/${whatsappNumber}`;
+        }
+
+        // Update WhatsApp float button
+        const whatsappFloat = document.querySelector('.whatsapp-float');
+        if (whatsappFloat && ci.whatsapp) {
+            const whatsappNumber = ci.whatsapp.replace(/\s/g, '').replace(/\+/g, '');
+            whatsappFloat.href = `https://wa.me/${whatsappNumber}`;
+        }
+
+        // Update header WhatsApp button
+        const headerWhatsappBtn = document.querySelector('.header .btn-primary[href*="wa.me"]');
+        if (headerWhatsappBtn && ci.whatsapp) {
+            const whatsappNumber = ci.whatsapp.replace(/\s/g, '').replace(/\+/g, '');
+            headerWhatsappBtn.href = `https://wa.me/${whatsappNumber}?text=Bilgi%20almak%20istiyorum`;
+        }
+    }
+
     // Top Bar
     if (content.topBar) {
         const phoneEl = document.querySelector('.top-bar .contact-info a[href^="tel:"]');
@@ -287,30 +380,67 @@ function applySiteContent(content) {
         }
     }
 
-    // Hero Section
-    if (content.hero) {
-        const heroTitle = document.querySelector('.hero-content h1');
-        if (heroTitle) {
-            heroTitle.innerHTML = `${content.hero.title}<br><span class="highlight">${content.hero.titleHighlight}</span> ${content.hero.titleEnd}`;
-        }
+    // Hero Banner Slider - Dynamic from admin heroSlides
+    if (content.heroSlides && Array.isArray(content.heroSlides) && content.heroSlides.length > 0) {
+        const sliderContainer = document.querySelector('.banner-slider');
+        if (sliderContainer) {
+            // Build slides HTML
+            const slidesHtml = content.heroSlides.map((slide, i) => {
+                const bgImage = slide.image || slide.backgroundImage || 'images/fabrika-ici-1.jpeg';
 
-        const heroDesc = document.querySelector('.hero-content > p');
-        if (heroDesc) heroDesc.textContent = content.hero.description;
-
-        const heroBg = document.querySelector('.hero-bg');
-        if (heroBg && content.hero.backgroundImage) {
-            heroBg.style.backgroundImage = `url('${content.hero.backgroundImage}')`;
-        }
-
-        // Hero Stats
-        if (content.hero.stats) {
-            const statEls = document.querySelectorAll('.hero-stats .stat');
-            content.hero.stats.forEach((stat, index) => {
-                if (statEls[index]) {
-                    statEls[index].querySelector('.stat-number').textContent = stat.number;
-                    statEls[index].querySelector('.stat-text').textContent = stat.text;
+                // Support both formats: buttons[] array AND flat button1Text/button1Link fields
+                let buttons = '';
+                if (slide.buttons && Array.isArray(slide.buttons) && slide.buttons.length > 0) {
+                    buttons = slide.buttons.map((btn, bi) => {
+                        const btnClass = bi === 0 ? 'btn btn-primary btn-lg' : 'btn btn-banner-outline btn-lg';
+                        const icon = btn.icon ? `<i class="${btn.icon}"></i> ` : '';
+                        return `<a href="${btn.url || btn.href || '#'}" ${btn.target === '_blank' ? 'target="_blank"' : ''} class="${btnClass}">${icon}${btn.text || ''}</a>`;
+                    }).join('');
+                } else {
+                    // Flat format from admin: button1Text/button1Link, button2Text/button2Link
+                    if (slide.button1Text && slide.button1Link) {
+                        buttons += `<a href="${slide.button1Link}" class="btn btn-primary btn-lg">${slide.button1Text}</a>`;
+                    }
+                    if (slide.button2Text && slide.button2Link) {
+                        const isExternal = slide.button2Link.includes('wa.me') || slide.button2Link.startsWith('http');
+                        buttons += `<a href="${slide.button2Link}" ${isExternal ? 'target="_blank"' : ''} class="btn btn-banner-outline btn-lg">${slide.button2Text}</a>`;
+                    }
                 }
-            });
+
+                return `
+                    <div class="banner-slide${i === 0 ? ' active' : ''}" style="background-image: url('${bgImage}');">
+                        <div class="banner-overlay"></div>
+                        <div class="container">
+                            <div class="banner-content">
+                                ${slide.tag ? `<span class="banner-tag">${slide.tag}</span>` : ''}
+                                <h1>${slide.title || ''}${slide.titleHighlight ? '<br>' + slide.titleHighlight : ''}</h1>
+                                ${slide.description ? `<p>${slide.description}</p>` : ''}
+                                ${buttons ? `<div class="banner-buttons">${buttons}</div>` : ''}
+                            </div>
+                        </div>
+                    </div>`;
+            }).join('');
+
+            sliderContainer.innerHTML = slidesHtml;
+
+            // Rebuild dots
+            const dotsContainer = document.querySelector('.banner-dots');
+            if (dotsContainer) {
+                dotsContainer.innerHTML = '';
+                content.heroSlides.forEach((_, i) => {
+                    const dot = document.createElement('div');
+                    dot.className = 'dot' + (i === 0 ? ' active' : '');
+                    dot.onclick = () => {
+                        if (typeof goToBannerSlide === 'function') goToBannerSlide(i);
+                    };
+                    dotsContainer.appendChild(dot);
+                });
+            }
+
+            // Reset slider state
+            if (typeof window.bannerCurrent !== 'undefined') {
+                window.bannerCurrent = 0;
+            }
         }
     }
 
@@ -348,31 +478,34 @@ function applySiteContent(content) {
         }
     }
 
-    // Machines Section
+    // Machines Section (id="production" in index.html)
     if (content.machines) {
-        const machinesTag = document.querySelector('#machines .section-tag');
+        const machinesTag = document.querySelector('#production .section-tag');
         if (machinesTag) machinesTag.textContent = content.machines.tag;
 
-        const machinesTitle = document.querySelector('#machines .section-header h2');
+        const machinesTitle = document.querySelector('#production .section-header h2');
         if (machinesTitle) {
             machinesTitle.innerHTML = `${content.machines.title} <span class="highlight">${content.machines.titleHighlight}</span>`;
         }
 
-        const machinesSubtitle = document.querySelector('#machines .section-header p');
+        const machinesSubtitle = document.querySelector('#production .section-header p');
         if (machinesSubtitle) machinesSubtitle.textContent = content.machines.subtitle;
 
         // Machine Cards
         if (content.machines.items) {
-            const machineCards = document.querySelectorAll('#machines .machine-card');
+            const machineCards = document.querySelectorAll('#production .machine-card');
             content.machines.items.forEach((item, index) => {
                 if (machineCards[index]) {
                     const card = machineCards[index];
-                    card.querySelector('.machine-image img').src = item.image;
-                    card.querySelector('.machine-info h3').textContent = item.title;
-                    card.querySelector('.machine-info > p').textContent = item.description;
+                    const imgEl = card.querySelector('.machine-image img');
+                    if (imgEl) imgEl.src = item.image;
+                    const titleEl = card.querySelector('.machine-info h3');
+                    if (titleEl) titleEl.textContent = item.title;
+                    const descEl = card.querySelector('.machine-info > p');
+                    if (descEl) descEl.textContent = item.description;
 
                     const featureEls = card.querySelectorAll('.machine-features li');
-                    item.features.forEach((feature, fIndex) => {
+                    if (item.features) item.features.forEach((feature, fIndex) => {
                         if (featureEls[fIndex]) {
                             featureEls[fIndex].innerHTML = `<i class="fas fa-check"></i> ${feature}`;
                         }
@@ -490,6 +623,31 @@ function applySiteContent(content) {
         }
     }
 
+    // Featured Video
+    if (content.featuredVideo) {
+        const fv = content.featuredVideo;
+        const featuredVideoEl = document.querySelector('.featured-video');
+
+        if (featuredVideoEl && fv.videoId) {
+            featuredVideoEl.setAttribute('onclick', `openVideo('${fv.videoId}')`);
+
+            const thumbnail = featuredVideoEl.querySelector('.featured-video-thumbnail img');
+            if (thumbnail) {
+                thumbnail.src = `https://img.youtube.com/vi/${fv.videoId}/maxresdefault.jpg`;
+                thumbnail.alt = fv.title || 'Öne Çıkan Video';
+            }
+
+            const titleEl = featuredVideoEl.querySelector('.featured-video-overlay h3');
+            if (titleEl) titleEl.textContent = fv.title || '';
+
+            const subtitleEl = featuredVideoEl.querySelector('.featured-video-overlay p');
+            if (subtitleEl) subtitleEl.textContent = fv.subtitle || '';
+
+            const badgeEl = featuredVideoEl.querySelector('.featured-badge');
+            if (badgeEl) badgeEl.innerHTML = `<i class="fas fa-star"></i> ${fv.badge || 'Öne Çıkan'}`;
+        }
+    }
+
     // Videos Section
     if (content.videos) {
         const videosTag = document.querySelector('#videos .section-tag');
@@ -514,10 +672,63 @@ function applySiteContent(content) {
                 if (videoCards[index]) {
                     const card = videoCards[index];
                     card.setAttribute('onclick', `openVideo('${item.videoId}')`);
-                    card.querySelector('.video-thumbnail img').src = item.thumbnail;
-                    card.querySelector('h4').textContent = item.title;
+                    const thumbImg = card.querySelector('.video-thumbnail img');
+                    const titleEl = card.querySelector('h4');
+                    if (thumbImg) thumbImg.src = item.thumbnail;
+                    if (titleEl) titleEl.textContent = item.title;
                 }
             });
+        }
+    }
+
+    // Fuarlar Section
+    if (content.fuarlar && content.fuarlar.items) {
+        const fuarTag = document.querySelector('#fuarlar .section-tag');
+        if (fuarTag) fuarTag.textContent = content.fuarlar.tag || 'Fuarlar';
+
+        const fuarTitle = document.querySelector('#fuarlar .section-header h2');
+        if (fuarTitle) {
+            const title1 = content.fuarlar.title?.split(' ')[0] || 'Fuar';
+            const title2 = content.fuarlar.title?.split(' ').slice(1).join(' ') || 'Katılımlarımız';
+            fuarTitle.innerHTML = `<span data-translate="fuarlar.title1">${title1}</span> <span class="highlight" data-translate="fuarlar.title2">${title2}</span>`;
+        }
+
+        const fuarSubtitle = document.querySelector('#fuarlar .section-header p');
+        if (fuarSubtitle) fuarSubtitle.textContent = content.fuarlar.subtitle || '';
+
+        // Render fuar items dynamically
+        const fuarSlider = document.getElementById('fuarSlider');
+        const fuarDots = document.getElementById('fuarDots');
+
+        if (fuarSlider && content.fuarlar.items.length > 0) {
+            fuarSlider.innerHTML = content.fuarlar.items.map((item, index) => `
+                <div class="fuar-video-card" onclick="openVideo('${item.videoId}')">
+                    <div class="fuar-video-thumbnail">
+                        <img src="https://img.youtube.com/vi/${item.videoId}/maxresdefault.jpg" alt="${item.title}">
+                        <div class="play-button">
+                            <i class="fas fa-play"></i>
+                        </div>
+                    </div>
+                    <h4>${item.title}</h4>
+                </div>
+            `).join('');
+
+            // Update dots
+            if (fuarDots) {
+                fuarDots.innerHTML = content.fuarlar.items.map((_, index) => `
+                    <span class="fuar-dot ${index === 0 ? 'active' : ''}" onclick="goToFuarSlide(${index})"></span>
+                `).join('');
+            }
+
+            // Reinitialize slider variables
+            window.fuarCards = document.querySelectorAll('.fuar-video-card');
+            window.fuarTotalSlides = content.fuarlar.items.length;
+            window.fuarCurrentSlide = 0;
+
+            // Reinitialize slider events
+            if (typeof initFuarSlider === 'function') {
+                initFuarSlider();
+            }
         }
     }
 
@@ -529,7 +740,7 @@ function applySiteContent(content) {
         const ctaDesc = document.querySelector('.cta-content p');
         if (ctaDesc) ctaDesc.textContent = content.cta.description;
 
-        const whatsappBtn = document.querySelector('.cta-buttons .btn-outline-white');
+        const whatsappBtn = document.querySelector('.cta-buttons .btn-primary[href*="wa.me"], .cta-buttons a[href*="wa.me"]');
         if (whatsappBtn && content.cta.whatsapp) {
             whatsappBtn.href = `https://wa.me/${content.cta.whatsapp}`;
         }
@@ -594,6 +805,33 @@ function applySiteContent(content) {
             const mapIframe = document.querySelector('.map-section iframe');
             if (mapIframe) mapIframe.src = content.contact.mapEmbed;
         }
+    }
+
+    // Certificates
+    if (content.certificates && content.certificates.items && content.certificates.items.length > 0) {
+        const certsGrid = document.querySelector('.certificates-grid');
+        if (certsGrid) {
+            certsGrid.innerHTML = content.certificates.items.map(cert => `
+                <div class="certificate-card">
+                    <div class="certificate-icon">
+                        <i class="${cert.icon || 'fas fa-certificate'}"></i>
+                    </div>
+                    <h4>${cert.title || ''}</h4>
+                    <p>${cert.description || ''}</p>
+                    ${cert.file ? `<a href="${cert.file}" target="_blank" class="btn btn-outline btn-sm"><i class="fas fa-download"></i> İndir</a>` : ''}
+                </div>
+            `).join('');
+        }
+    }
+
+    // Catalog
+    if (content.catalog && content.catalog.url) {
+        const catalogLinks = document.querySelectorAll('a[onclick*="openCatalogModal"]');
+        // Also update any direct catalog download links
+        const catalogBtns = document.querySelectorAll('.catalog-download-btn');
+        catalogBtns.forEach(btn => {
+            btn.href = content.catalog.url;
+        });
     }
 
     // Footer

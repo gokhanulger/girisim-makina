@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /admin.html
+Disallow: /venv/
+Disallow: /.firebase/
+
+Sitemap: https://www.girisimmak.com/sitemap.xml

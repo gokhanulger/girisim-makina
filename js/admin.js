@@ -1,11 +1,17 @@
-// Admin Panel JavaScript
+// Admin Panel JavaScript - Powered by Supabase
 let siteContent = null;
 let currentUser = null;
 let DEMO_MODE = false;
 
-// Demo credentials
-const DEMO_EMAIL = 'admin@girisimmak.com';
-const DEMO_PASSWORD = 'admin123';
+// HTML escape utility to prevent XSS in template literals
+function escHtml(str) {
+    if (str == null) return '';
+    return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+
+// Demo mode is disabled when Supabase is configured
+let DEMO_EMAIL = '';
+let DEMO_PASSWORD = '';
 
 // DOM Elements
 const loginScreen = document.getElementById('loginScreen');
@@ -26,26 +32,38 @@ document.addEventListener('DOMContentLoaded', () => {
     initSidebar();
 });
 
-// Authentication
+// Authentication - Supabase
 function initAuth() {
-    // Check if Firebase is configured
-    const isFirebaseConfigured = typeof firebase !== 'undefined' &&
-        firebaseConfig.apiKey !== 'YOUR_API_KEY';
+    // Check if Supabase is configured
+    const isSupabaseConfigured = typeof supabase !== 'undefined' && SUPABASE_URL;
 
-    if (isFirebaseConfigured) {
-        auth.onAuthStateChanged(async (user) => {
-            if (user) {
-                currentUser = user;
+    if (isSupabaseConfigured) {
+        // Check current session
+        supabase.auth.getSession().then(({ data: { session } }) => {
+            if (session?.user) {
+                currentUser = session.user;
                 showAdminPanel();
-                await loadContent();
+                loadContent();
             } else {
                 showLoginScreen();
             }
         });
+
+        // Listen for auth changes
+        supabase.auth.onAuthStateChange((event, session) => {
+            if (session?.user) {
+                currentUser = session.user;
+                showAdminPanel();
+                loadContent();
+            } else {
+                currentUser = null;
+                showLoginScreen();
+            }
+        });
     } else {
-        // Demo mode - Firebase not configured
+        // Demo mode - Supabase not configured
         DEMO_MODE = true;
-        console.log('Firebase not configured - Running in DEMO MODE');
+        console.log('Supabase not configured - Running in DEMO MODE');
 
         // Check if already logged in (demo mode session)
         const demoSession = localStorage.getItem('girisim_demo_session');
@@ -79,16 +97,21 @@ async function handleLogin(e) {
             await loadContent();
             showToast('Demo modunda giriş yapıldı', 'warning');
         } else {
-            loginError.textContent = 'Demo giriş: admin@girisimmak.com / admin123';
+            loginError.textContent = 'Geçersiz e-posta veya şifre';
             loginError.style.display = 'block';
         }
         return;
     }
 
     try {
-        await auth.signInWithEmailAndPassword(email, password);
+        const { data, error } = await supabase.auth.signInWithPassword({
+            email: email,
+            password: password
+        });
+
+        if (error) throw error;
     } catch (error) {
-        loginError.textContent = getErrorMessage(error.code);
+        loginError.textContent = getErrorMessage(error.message);
         loginError.style.display = 'block';
     }
 }
@@ -103,21 +126,20 @@ async function handleLogout() {
     }
 
     try {
-        await auth.signOut();
+        await supabase.auth.signOut();
     } catch (error) {
         showToast('Çıkış yapılırken hata oluştu', 'error');
     }
 }
 
-function getErrorMessage(code) {
+function getErrorMessage(message) {
     const messages = {
-        'auth/user-not-found': 'Kullanıcı bulunamadı',
-        'auth/wrong-password': 'Hatalı şifre',
-        'auth/invalid-email': 'Geçersiz e-posta adresi',
-        'auth/too-many-requests': 'Çok fazla deneme. Lütfen bekleyin.',
-        'auth/invalid-credential': 'Geçersiz kimlik bilgileri'
+        'Invalid login credentials': 'Geçersiz e-posta veya şifre',
+        'Email not confirmed': 'E-posta doğrulanmamış',
+        'User not found': 'Kullanıcı bulunamadı',
+        'Invalid email': 'Geçersiz e-posta adresi'
     };
-    return messages[code] || 'Giriş başarısız';
+    return messages[message] || message || 'Giriş başarısız';
 }
 
 function showLoginScreen() {
@@ -131,7 +153,7 @@ function showAdminPanel() {
     userEmailSpan.textContent = currentUser.email;
 }
 
-// Content Management
+// Content Management - Supabase
 async function loadContent() {
     // Demo mode - use localStorage
     if (DEMO_MODE) {
@@ -150,16 +172,27 @@ async function loadContent() {
     }
 
     try {
-        const doc = await db.collection('siteContent').doc('main').get();
+        const { data, error } = await supabase
+            .from('site_content')
+            .select('content')
+            .eq('id', 'main')
+            .single();
 
-        if (doc.exists) {
-            siteContent = doc.data();
-            document.getElementById('firebaseStatus').textContent = 'Bağlı';
-            document.getElementById('firebaseStatus').style.color = '#4caf50';
-        } else {
-            // Initialize with default content
+        if (error && error.code === 'PGRST116') {
+            // No data found, initialize with default
             siteContent = { ...defaultSiteContent };
-            await db.collection('siteContent').doc('main').set(siteContent);
+            await supabase.from('site_content').insert({
+                id: 'main',
+                content: siteContent
+            });
+            document.getElementById('firebaseStatus').textContent = 'Supabase Bağlı';
+            document.getElementById('firebaseStatus').style.color = '#4caf50';
+        } else if (error) {
+            throw error;
+        } else {
+            siteContent = data.content;
+            document.getElementById('firebaseStatus').textContent = 'Supabase Bağlı';
+            document.getElementById('firebaseStatus').style.color = '#4caf50';
         }
 
         populateAllForms();
@@ -172,7 +205,7 @@ async function loadContent() {
         // Use default content for offline editing
         siteContent = { ...defaultSiteContent };
         populateAllForms();
-        showToast('Firebase bağlantısı kurulamadı. Lütfen yapılandırmayı kontrol edin.', 'error');
+        showToast('Supabase bağlantısı kurulamadı. Lütfen yapılandırmayı kontrol edin.', 'error');
     }
 }
 
@@ -200,15 +233,86 @@ function populateAllForms() {
 
     // Populate complex sections
     renderHeroStats();
+    renderHeroSlides();
+    renderFeaturedSearchItems();
     renderAboutFeatures();
     renderMachineItems();
     renderPackagingItems();
     renderSectorItems();
     renderWhyUsItems();
     renderTestimonialItems();
+    renderCertificateItems();
+    renderFeaturedVideo();
     renderVideoItems();
+    renderFuarItems();
     renderContactPhones();
     renderContactEmails();
+    renderContactInfo();
+    renderBlogPosts();
+    loadGoogleAdsSettings();
+    loadTikTokPixelSettings();
+}
+
+// Contact Info (Office Phone, WhatsApp, Email)
+function renderContactInfo() {
+    if (!siteContent.contactInfo) {
+        siteContent.contactInfo = {
+            officePhone: '+90 212 879 29 27',
+            officePhone2: '',
+            mobilePhone: '',
+            fax: '',
+            whatsapp: '+90 546 879 29 27',
+            whatsapp2: '',
+            email: 'info@girisimmak.com',
+            salesEmail: ''
+        };
+    }
+
+    // Populate all contact info fields
+    const fields = {
+        'topbar-office-phone': 'officePhone',
+        'topbar-office-phone2': 'officePhone2',
+        'topbar-mobile-phone': 'mobilePhone',
+        'topbar-fax': 'fax',
+        'topbar-phone': 'whatsapp',
+        'topbar-phone2': 'whatsapp2',
+        'topbar-email': 'email',
+        'topbar-email2': 'salesEmail'
+    };
+
+    for (const [inputId, fieldKey] of Object.entries(fields)) {
+        const input = document.getElementById(inputId);
+        if (input && siteContent.contactInfo[fieldKey] !== undefined) {
+            input.value = siteContent.contactInfo[fieldKey] || '';
+        }
+    }
+}
+
+function updateContactInfo() {
+    if (!siteContent.contactInfo) {
+        siteContent.contactInfo = {};
+    }
+
+    // Update all contact info fields
+    const fields = {
+        'topbar-office-phone': 'officePhone',
+        'topbar-office-phone2': 'officePhone2',
+        'topbar-mobile-phone': 'mobilePhone',
+        'topbar-fax': 'fax',
+        'topbar-phone': 'whatsapp',
+        'topbar-phone2': 'whatsapp2',
+        'topbar-email': 'email',
+        'topbar-email2': 'salesEmail'
+    };
+
+    for (const [inputId, fieldKey] of Object.entries(fields)) {
+        const input = document.getElementById(inputId);
+        if (input) {
+            siteContent.contactInfo[fieldKey] = input.value;
+        }
+    }
+
+    markAsChanged();
 }
 
 // Helper functions for nested object access
@@ -242,15 +346,15 @@ function updateImagePreview(input) {
     }
 }
 
-// Image Upload Handler
-function handleImageUpload(fileInput, targetInputId) {
+// Image Upload Handler - uses Supabase Storage when available, base64 fallback
+async function handleImageUpload(fileInput, targetInputId) {
     const file = fileInput.files[0];
     if (!file) return;
 
-    // Check file size (max 2MB for localStorage compatibility)
-    const maxSize = 2 * 1024 * 1024; // 2MB
+    // Check file size (max 5MB)
+    const maxSize = 5 * 1024 * 1024;
     if (file.size > maxSize) {
-        showToast('Dosya boyutu çok büyük! Maksimum 2MB olmalı.', 'error');
+        showToast('Dosya boyutu çok büyük! Maksimum 5MB olmalı.', 'error');
         fileInput.value = '';
         return;
     }
@@ -262,65 +366,42 @@ function handleImageUpload(fileInput, targetInputId) {
         return;
     }
 
-    const reader = new FileReader();
+    const targetInput = document.getElementById(targetInputId);
+    if (!targetInput) return;
 
-    reader.onload = function(e) {
-        const base64Data = e.target.result;
-        const targetInput = document.getElementById(targetInputId);
-
-        if (targetInput) {
-            targetInput.value = base64Data;
-
-            // Trigger change event to update siteContent
+    // Try Supabase Storage first
+    if (!DEMO_MODE && typeof uploadImage === 'function') {
+        try {
+            showToast('Görsel yükleniyor...', 'info');
+            const publicUrl = await uploadImage(file, 'site-images');
+            targetInput.value = publicUrl;
             const event = new Event('input', { bubbles: true });
             targetInput.dispatchEvent(event);
-
-            // Update preview
             updateImagePreview(targetInput);
-
-            // Save to uploaded images storage
-            saveUploadedImage(targetInputId, base64Data, file.name);
-
-            showToast('Görsel başarıyla yüklendi!', 'success');
+            showToast('Görsel Supabase Storage\'a yüklendi!', 'success');
+            return;
+        } catch (error) {
+            console.warn('Supabase Storage upload failed, falling back to base64:', error);
         }
-    };
+    }
 
+    // Fallback: base64 (for demo mode or if Storage fails)
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        targetInput.value = e.target.result;
+        const event = new Event('input', { bubbles: true });
+        targetInput.dispatchEvent(event);
+        updateImagePreview(targetInput);
+        showToast('Görsel yüklendi (base64)', 'success');
+    };
     reader.onerror = function() {
         showToast('Görsel yüklenirken hata oluştu!', 'error');
     };
-
     reader.readAsDataURL(file);
-}
-
-// Save uploaded images to localStorage
-function saveUploadedImage(inputId, base64Data, fileName) {
-    let uploadedImages = JSON.parse(localStorage.getItem('girisim_uploaded_images') || '{}');
-    uploadedImages[inputId] = {
-        data: base64Data,
-        fileName: fileName,
-        uploadedAt: new Date().toISOString()
-    };
-
-    try {
-        localStorage.setItem('girisim_uploaded_images', JSON.stringify(uploadedImages));
-    } catch (e) {
-        if (e.name === 'QuotaExceededError') {
-            showToast('Depolama alanı dolu! Bazı eski görselleri silin.', 'error');
-        }
-    }
-}
-
-// Get uploaded images list
-function getUploadedImages() {
-    return JSON.parse(localStorage.getItem('girisim_uploaded_images') || '{}');
 }
 
 // Clear uploaded image
 function clearUploadedImage(inputId) {
-    let uploadedImages = getUploadedImages();
-    delete uploadedImages[inputId];
-    localStorage.setItem('girisim_uploaded_images', JSON.stringify(uploadedImages));
-
     const targetInput = document.getElementById(inputId);
     if (targetInput) {
         targetInput.value = '';
@@ -338,11 +419,11 @@ function renderHeroStats() {
         <div class="stat-item" data-index="${index}">
             <div class="form-group">
                 <label>Sayı</label>
-                <input type="text" value="${stat.number}" onchange="updateHeroStat(${index}, 'number', this.value)">
+                <input type="text" value="${escHtml(stat.number)}" onchange="updateHeroStat(${index}, 'number', this.value)">
             </div>
             <div class="form-group">
                 <label>Metin</label>
-                <input type="text" value="${stat.text}" onchange="updateHeroStat(${index}, 'text', this.value)">
+                <input type="text" value="${escHtml(stat.text)}" onchange="updateHeroStat(${index}, 'text', this.value)">
             </div>
         </div>
     `).join('');
@@ -353,6 +434,336 @@ function updateHeroStat(index, field, value) {
     markAsChanged();
 }
 
+// ========================================
+// HERO SLIDES MANAGEMENT
+// ========================================
+
+let currentHeroSlideIndex = 0;
+
+function initHeroSlides() {
+    if (!siteContent.heroSlides) {
+        siteContent.heroSlides = [
+            {
+                tag: 'Anahtar Teslim Üretim',
+                title: 'WAFER & CEREAL BAR',
+                titleHighlight: 'ÜRETİM HATLARI',
+                description: 'Komple wafer ve cereal bar üretim hatları. Hamur hazırlamadan paketlemeye anahtar teslim çözümler.',
+                stats: [
+                    { number: '57+', text: 'Ülkeye İhracat' },
+                    { number: '12.000', text: 'M² Tesis' },
+                    { number: '30+', text: 'Yıl Tecrübe' },
+                    { number: '500+', text: 'Mutlu Müşteri' }
+                ],
+                button1Text: 'HEMEN TEKLİF AL',
+                button1Link: 'https://wa.me/905468792927',
+                button2Text: 'VİDEOLARI İZLE',
+                button2Link: '#videos',
+                image: 'images/hero/wafer-line.png'
+            },
+            {
+                tag: 'Paketleme Çözümleri',
+                title: 'FLOWPACK',
+                titleHighlight: 'PAKETLEME MAKİNELERİ',
+                description: 'Yatay paketleme makineleri. Bisküvi, wafer, çikolata, sabun ve daha fazlası için yüksek hızlı çözümler.',
+                stats: [
+                    { number: '800', text: 'Paket/Dakika' },
+                    { number: '10+', text: 'Farklı Model' },
+                    { number: '%99', text: 'Verimlilik' },
+                    { number: '24/7', text: 'Destek' }
+                ],
+                button1Text: 'HEMEN TEKLİF AL',
+                button1Link: 'https://wa.me/905468792927',
+                button2Text: 'MAKİNELERİ İNCELE',
+                button2Link: 'products/flow-pack.html',
+                image: 'images/hero/flowpack.png'
+            },
+            {
+                tag: 'Yüksek Hız',
+                title: 'HIGH SPEED',
+                titleHighlight: 'OTOMATİK BESLEME',
+                description: 'Yüksek hızlı otomatik beslemeli flowpack makineleri. Tam otomatik üretim hatları için ideal çözüm.',
+                stats: [
+                    { number: '500+', text: 'Paket/Dakika' },
+                    { number: '%100', text: 'Otomasyon' },
+                    { number: 'CE', text: 'Sertifikalı' },
+                    { number: '2', text: 'Yıl Garanti' }
+                ],
+                button1Text: 'HEMEN TEKLİF AL',
+                button1Link: 'https://wa.me/905468792927',
+                button2Text: 'DETAYLI BİLGİ',
+                button2Link: 'products/flow-pack.html',
+                image: 'images/hero/high-speed.png'
+            }
+        ];
+    }
+}
+
+function renderHeroSlides() {
+    initHeroSlides();
+
+    const tabsContainer = document.getElementById('sliderTabs');
+    const editorContainer = document.getElementById('heroSlidesEditor');
+
+    if (!tabsContainer || !editorContainer) return;
+
+    // Render tabs
+    tabsContainer.innerHTML = siteContent.heroSlides.map((slide, index) => `
+        <button class="slider-tab ${index === currentHeroSlideIndex ? 'active' : ''}"
+                onclick="switchHeroSlideTab(${index})">
+            Slide ${index + 1}
+        </button>
+    `).join('');
+
+    // Render current slide editor
+    const slide = siteContent.heroSlides[currentHeroSlideIndex];
+    if (!slide) return;
+
+    editorContainer.innerHTML = `
+        <div class="slide-editor-card">
+            <div class="slide-header">
+                <h3><i class="fas fa-desktop"></i> Slide ${currentHeroSlideIndex + 1}</h3>
+                ${siteContent.heroSlides.length > 1 ? `
+                    <button class="btn btn-danger btn-sm" onclick="deleteHeroSlide(${currentHeroSlideIndex})">
+                        <i class="fas fa-trash"></i> Slide'ı Sil
+                    </button>
+                ` : ''}
+            </div>
+
+            <div class="form-section">
+                <h4><i class="fas fa-heading"></i> Başlık Bilgileri</h4>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Etiket (Tag)</label>
+                        <input type="text" value="${escHtml(slide.tag || '')}"
+                               onchange="updateHeroSlide(${currentHeroSlideIndex}, 'tag', this.value)"
+                               placeholder="Örn: Anahtar Teslim Üretim">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Ana Başlık</label>
+                        <input type="text" value="${escHtml(slide.title || '')}"
+                               onchange="updateHeroSlide(${currentHeroSlideIndex}, 'title', this.value)"
+                               placeholder="Örn: WAFER & CEREAL BAR">
+                    </div>
+                    <div class="form-group">
+                        <label>Vurgulu Başlık</label>
+                        <input type="text" value="${escHtml(slide.titleHighlight || '')}"
+                               onchange="updateHeroSlide(${currentHeroSlideIndex}, 'titleHighlight', this.value)"
+                               placeholder="Örn: ÜRETİM HATLARI">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Açıklama</label>
+                    <textarea rows="3" onchange="updateHeroSlide(${currentHeroSlideIndex}, 'description', this.value)"
+                              placeholder="Slide açıklaması...">${slide.description || ''}</textarea>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h4><i class="fas fa-chart-bar"></i> İstatistikler</h4>
+                <div class="stats-grid" id="slideStatsEditor-${currentHeroSlideIndex}">
+                    ${(slide.stats || []).map((stat, statIndex) => `
+                        <div class="stat-edit-item">
+                            <input type="text" value="${escHtml(stat.number)}"
+                                   onchange="updateHeroSlideStat(${currentHeroSlideIndex}, ${statIndex}, 'number', this.value)"
+                                   placeholder="57+">
+                            <input type="text" value="${escHtml(stat.text)}"
+                                   onchange="updateHeroSlideStat(${currentHeroSlideIndex}, ${statIndex}, 'text', this.value)"
+                                   placeholder="Ülkeye İhracat">
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h4><i class="fas fa-mouse-pointer"></i> Butonlar</h4>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Buton 1 Metni</label>
+                        <input type="text" value="${escHtml(slide.button1Text || '')}"
+                               onchange="updateHeroSlide(${currentHeroSlideIndex}, 'button1Text', this.value)"
+                               placeholder="HEMEN TEKLİF AL">
+                    </div>
+                    <div class="form-group">
+                        <label>Buton 1 Linki</label>
+                        <input type="text" value="${escHtml(slide.button1Link || '')}"
+                               onchange="updateHeroSlide(${currentHeroSlideIndex}, 'button1Link', this.value)"
+                               placeholder="https://wa.me/905468792927">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Buton 2 Metni</label>
+                        <input type="text" value="${escHtml(slide.button2Text || '')}"
+                               onchange="updateHeroSlide(${currentHeroSlideIndex}, 'button2Text', this.value)"
+                               placeholder="VİDEOLARI İZLE">
+                    </div>
+                    <div class="form-group">
+                        <label>Buton 2 Linki</label>
+                        <input type="text" value="${escHtml(slide.button2Link || '')}"
+                               onchange="updateHeroSlide(${currentHeroSlideIndex}, 'button2Link', this.value)"
+                               placeholder="#videos">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h4><i class="fas fa-image"></i> Görsel</h4>
+                <div class="form-group">
+                    <label>Görsel URL</label>
+                    <input type="text" value="${escHtml(slide.image || '')}"
+                           onchange="updateHeroSlide(${currentHeroSlideIndex}, 'image', this.value)"
+                           placeholder="images/hero/slide.png">
+                </div>
+                ${slide.image ? `<div class="image-preview"><img src="${slide.image}" alt="Preview"></div>` : ''}
+            </div>
+        </div>
+    `;
+}
+
+function switchHeroSlideTab(index) {
+    currentHeroSlideIndex = index;
+    renderHeroSlides();
+}
+
+function updateHeroSlide(slideIndex, field, value) {
+    if (!siteContent.heroSlides[slideIndex]) return;
+    siteContent.heroSlides[slideIndex][field] = value;
+    markAsChanged();
+}
+
+function updateHeroSlideStat(slideIndex, statIndex, field, value) {
+    if (!siteContent.heroSlides[slideIndex]?.stats[statIndex]) return;
+    siteContent.heroSlides[slideIndex].stats[statIndex][field] = value;
+    markAsChanged();
+}
+
+function addHeroSlide() {
+    initHeroSlides();
+
+    const newSlide = {
+        tag: 'Yeni Slide',
+        title: 'BAŞLIK',
+        titleHighlight: 'VURGULU METİN',
+        description: 'Slide açıklaması buraya gelecek.',
+        stats: [
+            { number: '100+', text: 'İstatistik 1' },
+            { number: '50+', text: 'İstatistik 2' },
+            { number: '25+', text: 'İstatistik 3' },
+            { number: '10+', text: 'İstatistik 4' }
+        ],
+        button1Text: 'BUTON 1',
+        button1Link: '#',
+        button2Text: 'BUTON 2',
+        button2Link: '#',
+        image: ''
+    };
+
+    siteContent.heroSlides.push(newSlide);
+    currentHeroSlideIndex = siteContent.heroSlides.length - 1;
+    renderHeroSlides();
+    markAsChanged();
+    showToast('Yeni slide eklendi', 'success');
+}
+
+function deleteHeroSlide(index) {
+    if (siteContent.heroSlides.length <= 1) {
+        showToast('En az 1 slide olmalı', 'error');
+        return;
+    }
+
+    if (!confirm('Bu slide\'ı silmek istediğinize emin misiniz?')) return;
+
+    siteContent.heroSlides.splice(index, 1);
+    if (currentHeroSlideIndex >= siteContent.heroSlides.length) {
+        currentHeroSlideIndex = siteContent.heroSlides.length - 1;
+    }
+    renderHeroSlides();
+    markAsChanged();
+    showToast('Slide silindi', 'info');
+}
+
+// ========================================
+// END HERO SLIDES MANAGEMENT
+// ========================================
+
+// ========================================
+// FEATURED SEARCH ITEMS MANAGEMENT
+// ========================================
+
+function initFeaturedSearchItems() {
+    if (!siteContent.featuredSearchItems) {
+        siteContent.featuredSearchItems = [
+            { title: 'Yatay Flowpack Paketleme', url: 'products/flow-pack.html', icon: 'fas fa-box' },
+            { title: 'Gofret Üretim Hatları', url: 'products/wafer.html', icon: 'fas fa-cookie' },
+            { title: 'Tahıl Bar Üretim Hatları', url: 'products/cereal-bar.html', icon: 'fas fa-seedling' },
+            { title: 'Çikolata Kaplama Makinası', url: 'products/chocolate-coating.html', icon: 'fas fa-candy-cane' },
+            { title: 'Dikey Paketleme (VFFS)', url: 'products/vffs.html', icon: 'fas fa-arrows-alt-v' },
+            { title: 'Bisküvi Kremalama', url: 'products/biscuit-sandwiching.html', icon: 'fas fa-cookie-bite' }
+        ];
+    }
+}
+
+function renderFeaturedSearchItems() {
+    initFeaturedSearchItems();
+    const container = document.getElementById('featured-search-editor');
+    if (!container) return;
+
+    container.innerHTML = siteContent.featuredSearchItems.map((item, index) => `
+        <div class="item-row" data-index="${index}">
+            <div class="item-drag"><i class="fas fa-grip-vertical"></i></div>
+            <div class="item-icon">
+                <i class="${item.icon || 'fas fa-cog'}"></i>
+            </div>
+            <div class="item-inputs">
+                <input type="text" value="${escHtml(item.title)}"
+                       onchange="updateFeaturedSearchItem(${index}, 'title', this.value)"
+                       placeholder="Makine Adı">
+                <input type="text" value="${escHtml(item.url)}"
+                       onchange="updateFeaturedSearchItem(${index}, 'url', this.value)"
+                       placeholder="products/xxx.html">
+                <input type="text" value="${escHtml(item.icon || 'fas fa-cog')}"
+                       onchange="updateFeaturedSearchItem(${index}, 'icon', this.value)"
+                       placeholder="fas fa-icon">
+            </div>
+            <button class="item-delete" onclick="deleteFeaturedSearchItem(${index})">
+                <i class="fas fa-trash"></i>
+            </button>
+        </div>
+    `).join('');
+}
+
+function updateFeaturedSearchItem(index, field, value) {
+    if (!siteContent.featuredSearchItems[index]) return;
+    siteContent.featuredSearchItems[index][field] = value;
+    markAsChanged();
+}
+
+function addFeaturedSearchItem() {
+    initFeaturedSearchItems();
+    siteContent.featuredSearchItems.push({
+        title: 'Yeni Makine',
+        url: 'products/',
+        icon: 'fas fa-cog'
+    });
+    renderFeaturedSearchItems();
+    markAsChanged();
+    showToast('Yeni makine eklendi', 'success');
+}
+
+function deleteFeaturedSearchItem(index) {
+    if (!confirm('Bu makineyi silmek istediğinize emin misiniz?')) return;
+    siteContent.featuredSearchItems.splice(index, 1);
+    renderFeaturedSearchItems();
+    markAsChanged();
+    showToast('Makine silindi', 'info');
+}
+
+// ========================================
+// END FEATURED SEARCH ITEMS MANAGEMENT
+// ========================================
+
 // About Features
 function renderAboutFeatures() {
     const container = document.getElementById('about-features-editor');
@@ -362,11 +773,11 @@ function renderAboutFeatures() {
         <div class="feature-item" data-index="${index}">
             <div class="form-group">
                 <label>İkon (Font Awesome)</label>
-                <input type="text" value="${feature.icon}" onchange="updateAboutFeature(${index}, 'icon', this.value)" placeholder="fas fa-icon">
+                <input type="text" value="${escHtml(feature.icon)}" onchange="updateAboutFeature(${index}, 'icon', this.value)" placeholder="fas fa-icon">
             </div>
             <div class="form-group">
                 <label>Metin</label>
-                <input type="text" value="${feature.text}" onchange="updateAboutFeature(${index}, 'text', this.value)">
+                <input type="text" value="${escHtml(feature.text)}" onchange="updateAboutFeature(${index}, 'text', this.value)">
             </div>
         </div>
     `).join('');
@@ -391,23 +802,23 @@ function renderMachineItems() {
             <div class="form-row">
                 <div class="form-group">
                     <label>Başlık</label>
-                    <input type="text" value="${item.title}" onchange="updateMachineItem(${index}, 'title', this.value)">
+                    <input type="text" value="${escHtml(item.title)}" onchange="updateMachineItem(${index}, 'title', this.value)">
                 </div>
                 <div class="form-group">
                     <label>Görsel URL</label>
-                    <input type="url" value="${item.image}" onchange="updateMachineItem(${index}, 'image', this.value)">
+                    <input type="url" value="${escHtml(item.image)}" onchange="updateMachineItem(${index}, 'image', this.value)">
                 </div>
             </div>
             <div class="form-group">
                 <label>Açıklama</label>
-                <textarea onchange="updateMachineItem(${index}, 'description', this.value)" rows="2">${item.description}</textarea>
+                <textarea onchange="updateMachineItem(${index}, 'description', this.value)" rows="2">${escHtml(item.description)}</textarea>
             </div>
             <div class="form-group">
                 <label>Özellikler</label>
                 <div class="machine-features-list">
                     ${item.features.map((feature, fIndex) => `
                         <div class="feature-input">
-                            <input type="text" value="${feature}" onchange="updateMachineFeature(${index}, ${fIndex}, this.value)">
+                            <input type="text" value="${escHtml(feature)}" onchange="updateMachineFeature(${index}, ${fIndex}, this.value)">
                             <button onclick="deleteMachineFeature(${index}, ${fIndex})"><i class="fas fa-times"></i></button>
                         </div>
                     `).join('')}
@@ -467,22 +878,26 @@ function renderPackagingItems() {
     container.innerHTML = siteContent.packaging.items.map((item, index) => `
         <div class="item-card" data-index="${index}">
             <div class="item-header">
-                <h4><i class="${item.icon}"></i> ${item.title}</h4>
+                <h4><i class="fas fa-box"></i> ${item.title}</h4>
                 <button class="delete-item" onclick="deletePackagingItem(${index})"><i class="fas fa-trash"></i></button>
             </div>
             <div class="form-row">
                 <div class="form-group">
-                    <label>İkon (Font Awesome)</label>
-                    <input type="text" value="${item.icon}" onchange="updatePackagingItem(${index}, 'icon', this.value)">
+                    <label>Başlık</label>
+                    <input type="text" value="${escHtml(item.title)}" onchange="updatePackagingItem(${index}, 'title', this.value)">
                 </div>
                 <div class="form-group">
-                    <label>Başlık</label>
-                    <input type="text" value="${item.title}" onchange="updatePackagingItem(${index}, 'title', this.value)">
+                    <label>Sayfa Linki</label>
+                    <input type="text" value="${escHtml(item.link || '')}" onchange="updatePackagingItem(${index}, 'link', this.value)" placeholder="products/flow-pack.html">
                 </div>
             </div>
             <div class="form-group">
+                <label>Görsel URL</label>
+                <input type="url" value="${escHtml(item.image || '')}" onchange="updatePackagingItem(${index}, 'image', this.value)" placeholder="https://img.youtube.com/vi/...">
+            </div>
+            <div class="form-group">
                 <label>Açıklama</label>
-                <textarea onchange="updatePackagingItem(${index}, 'description', this.value)" rows="2">${item.description}</textarea>
+                <textarea onchange="updatePackagingItem(${index}, 'description', this.value)" rows="2">${escHtml(item.description)}</textarea>
             </div>
         </div>
     `).join('');
@@ -495,9 +910,10 @@ function updatePackagingItem(index, field, value) {
 
 function addPackagingItem() {
     siteContent.packaging.items.push({
-        icon: 'fas fa-box',
-        title: 'Yeni Paketleme',
-        description: 'Açıklama'
+        title: 'Yeni Paketleme Türü',
+        description: 'Paketleme türü açıklaması',
+        image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600',
+        link: 'products/yeni-paketleme.html'
     });
     renderPackagingItems();
     markAsChanged();
@@ -525,12 +941,16 @@ function renderSectorItems() {
             <div class="form-row">
                 <div class="form-group">
                     <label>İkon (Font Awesome)</label>
-                    <input type="text" value="${item.icon}" onchange="updateSectorItem(${index}, 'icon', this.value)">
+                    <input type="text" value="${escHtml(item.icon)}" onchange="updateSectorItem(${index}, 'icon', this.value)" placeholder="fas fa-cookie">
                 </div>
                 <div class="form-group">
                     <label>Başlık</label>
-                    <input type="text" value="${item.title}" onchange="updateSectorItem(${index}, 'title', this.value)">
+                    <input type="text" value="${escHtml(item.title)}" onchange="updateSectorItem(${index}, 'title', this.value)">
                 </div>
+            </div>
+            <div class="form-group">
+                <label>Sayfa Linki</label>
+                <input type="text" value="${escHtml(item.link || '')}" onchange="updateSectorItem(${index}, 'link', this.value)" placeholder="packaging-by-product.html">
             </div>
         </div>
     `).join('');
@@ -543,8 +963,9 @@ function updateSectorItem(index, field, value) {
 
 function addSectorItem() {
     siteContent.sectors.items.push({
-        icon: 'fas fa-industry',
-        title: 'Yeni Sektör'
+        icon: 'fas fa-box',
+        title: 'Yeni Ürün',
+        link: 'packaging-by-product.html'
     });
     renderSectorItems();
     markAsChanged();
@@ -572,16 +993,16 @@ function renderWhyUsItems() {
             <div class="form-row">
                 <div class="form-group">
                     <label>İkon (Font Awesome)</label>
-                    <input type="text" value="${item.icon}" onchange="updateWhyUsItem(${index}, 'icon', this.value)">
+                    <input type="text" value="${escHtml(item.icon)}" onchange="updateWhyUsItem(${index}, 'icon', this.value)">
                 </div>
                 <div class="form-group">
                     <label>Başlık</label>
-                    <input type="text" value="${item.title}" onchange="updateWhyUsItem(${index}, 'title', this.value)">
+                    <input type="text" value="${escHtml(item.title)}" onchange="updateWhyUsItem(${index}, 'title', this.value)">
                 </div>
             </div>
             <div class="form-group">
                 <label>Açıklama</label>
-                <textarea onchange="updateWhyUsItem(${index}, 'description', this.value)" rows="2">${item.description}</textarea>
+                <textarea onchange="updateWhyUsItem(${index}, 'description', this.value)" rows="2">${escHtml(item.description)}</textarea>
             </div>
         </div>
     `).join('');
@@ -623,21 +1044,21 @@ function renderTestimonialItems() {
             </div>
             <div class="form-group">
                 <label>Yorum</label>
-                <textarea onchange="updateTestimonialItem(${index}, 'text', this.value)" rows="3">${item.text}</textarea>
+                <textarea onchange="updateTestimonialItem(${index}, 'text', this.value)" rows="3">${escHtml(item.text)}</textarea>
             </div>
             <div class="form-row">
                 <div class="form-group">
                     <label>Müşteri Adı</label>
-                    <input type="text" value="${item.author}" onchange="updateTestimonialItem(${index}, 'author', this.value)">
+                    <input type="text" value="${escHtml(item.author)}" onchange="updateTestimonialItem(${index}, 'author', this.value)">
                 </div>
                 <div class="form-group">
                     <label>Pozisyon / Ülke</label>
-                    <input type="text" value="${item.role}" onchange="updateTestimonialItem(${index}, 'role', this.value)">
+                    <input type="text" value="${escHtml(item.role)}" onchange="updateTestimonialItem(${index}, 'role', this.value)">
                 </div>
             </div>
             <div class="form-group">
                 <label>Bayrak Görseli URL</label>
-                <input type="text" value="${item.flag}" onchange="updateTestimonialItem(${index}, 'flag', this.value)">
+                <input type="text" value="${escHtml(item.flag)}" onchange="updateTestimonialItem(${index}, 'flag', this.value)">
             </div>
         </div>
     `).join('');
@@ -667,6 +1088,119 @@ function deleteTestimonialItem(index) {
     }
 }
 
+// Certificate Items
+function renderCertificateItems() {
+    const container = document.getElementById('certificates-editor');
+    if (!container) return;
+
+    if (!siteContent.certificates) {
+        siteContent.certificates = {
+            tag: 'Sertifikalarımız',
+            title: 'CE',
+            titleHighlight: 'Sertifikaları',
+            subtitle: 'Makinelerimiz Avrupa CE standartlarına uygun olarak üretilmektedir',
+            items: [
+                { title: 'Horizontal Flow Pack CE', description: 'Yatay paketleme makineleri CE sertifikası', pdfUrl: 'sertifika/Horizontal CE.pdf' },
+                { title: 'Thermoform CE', description: 'Termoform paketleme makineleri CE sertifikası', pdfUrl: 'sertifika/Termoform CE.pdf' },
+                { title: 'Vertical VFFS CE', description: 'Dikey dolum makineleri CE sertifikası', pdfUrl: 'sertifika/Vertical CE.pdf' }
+            ]
+        };
+    }
+
+    container.innerHTML = siteContent.certificates.items.map((item, index) => `
+        <div class="item-card" data-index="${index}">
+            <div class="item-header">
+                <h4><i class="fas fa-certificate"></i> ${item.title}</h4>
+                <button class="delete-item" onclick="deleteCertificateItem(${index})"><i class="fas fa-trash"></i></button>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Sertifika Adı</label>
+                    <input type="text" value="${escHtml(item.title)}" onchange="updateCertificateItem(${index}, 'title', this.value)">
+                </div>
+                <div class="form-group">
+                    <label>PDF URL</label>
+                    <input type="text" value="${escHtml(item.pdfUrl)}" onchange="updateCertificateItem(${index}, 'pdfUrl', this.value)" placeholder="sertifika/dosya.pdf">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Açıklama</label>
+                <textarea onchange="updateCertificateItem(${index}, 'description', this.value)" rows="2">${escHtml(item.description)}</textarea>
+            </div>
+        </div>
+    `).join('');
+}
+
+function updateCertificateItem(index, field, value) {
+    siteContent.certificates.items[index][field] = value;
+    markAsChanged();
+}
+
+function addCertificate() {
+    if (!siteContent.certificates) {
+        siteContent.certificates = { items: [] };
+    }
+    siteContent.certificates.items.push({
+        title: 'Yeni Sertifika',
+        description: 'Sertifika açıklaması',
+        pdfUrl: 'sertifika/yeni-sertifika.pdf'
+    });
+    renderCertificateItems();
+    markAsChanged();
+}
+
+function deleteCertificateItem(index) {
+    if (confirm('Bu sertifikayı silmek istediğinizden emin misiniz?')) {
+        siteContent.certificates.items.splice(index, 1);
+        renderCertificateItems();
+        markAsChanged();
+    }
+}
+
+// Featured Video
+function renderFeaturedVideo() {
+    if (!siteContent.featuredVideo) {
+        siteContent.featuredVideo = {
+            title: 'Girişim Makina - Fuar Röportajı',
+            videoId: '03u4_rZC1nA',
+            subtitle: 'Kurucumuz ile özel röportaj',
+            badge: 'Öne Çıkan'
+        };
+    }
+
+    const fv = siteContent.featuredVideo;
+    document.getElementById('featured-video-title').value = fv.title || '';
+    document.getElementById('featured-video-id').value = fv.videoId || '';
+    document.getElementById('featured-video-subtitle').value = fv.subtitle || '';
+    document.getElementById('featured-video-badge').value = fv.badge || 'Öne Çıkan';
+
+    // Update preview
+    const preview = document.getElementById('featured-video-preview');
+    if (preview && fv.videoId) {
+        preview.innerHTML = `
+            <img src="https://img.youtube.com/vi/${fv.videoId}/mqdefault.jpg" alt="Öne Çıkan Video" style="width:200px; border-radius:8px;">
+            <a href="https://www.youtube.com/watch?v=${fv.videoId}" target="_blank" class="btn btn-outline btn-sm" style="margin-left:15px;">
+                <i class="fab fa-youtube"></i> Videoyu Gör
+            </a>
+        `;
+    }
+}
+
+function updateFeaturedVideo() {
+    if (!siteContent.featuredVideo) {
+        siteContent.featuredVideo = {};
+    }
+
+    siteContent.featuredVideo.title = document.getElementById('featured-video-title').value;
+    siteContent.featuredVideo.videoId = document.getElementById('featured-video-id').value;
+    siteContent.featuredVideo.subtitle = document.getElementById('featured-video-subtitle').value;
+    siteContent.featuredVideo.badge = document.getElementById('featured-video-badge').value;
+
+    // Update preview
+    renderFeaturedVideo();
+    markAsChanged();
+}
+
 // Video Items
 function renderVideoItems() {
     const container = document.getElementById('videos-items-editor');
@@ -681,16 +1215,16 @@ function renderVideoItems() {
             <div class="form-row">
                 <div class="form-group">
                     <label>Başlık</label>
-                    <input type="text" value="${item.title}" onchange="updateVideoItem(${index}, 'title', this.value)">
+                    <input type="text" value="${escHtml(item.title)}" onchange="updateVideoItem(${index}, 'title', this.value)">
                 </div>
                 <div class="form-group">
                     <label>YouTube Video ID</label>
-                    <input type="text" value="${item.videoId}" onchange="updateVideoItem(${index}, 'videoId', this.value)" placeholder="dQw4w9WgXcQ">
+                    <input type="text" value="${escHtml(item.videoId)}" onchange="updateVideoItem(${index}, 'videoId', this.value)" placeholder="dQw4w9WgXcQ">
                 </div>
             </div>
             <div class="form-group">
                 <label>Thumbnail URL</label>
-                <input type="url" value="${item.thumbnail}" onchange="updateVideoItem(${index}, 'thumbnail', this.value)">
+                <input type="url" value="${escHtml(item.thumbnail)}" onchange="updateVideoItem(${index}, 'thumbnail', this.value)">
             </div>
         </div>
     `).join('');
@@ -719,6 +1253,113 @@ function deleteVideoItem(index) {
     }
 }
 
+// Fuarlar (Exhibitions)
+function renderFuarItems() {
+    const container = document.getElementById('fuarlar-items-editor');
+    if (!container) return;
+
+    // Initialize fuarlar if not exists
+    if (!siteContent.fuarlar) {
+        siteContent.fuarlar = {
+            tag: 'Fuarlar',
+            title: 'Fuar Katılımlarımız',
+            subtitle: 'Uluslararası fuarlarda Türkiye\'yi temsil ediyoruz',
+            items: [
+                { title: 'CNR FOTEG 2022', videoId: 'NYe_58LMnNM' },
+                { title: 'Gulfood Manufacturing 2024', videoId: '_pMe5CT0ptQ' },
+                { title: 'Interpack 2023', videoId: 'BVQdeQya0Cw' },
+                { title: 'PackExpo 2024', videoId: 'rBRjOWLoHvE' }
+            ]
+        };
+    }
+
+    const items = siteContent.fuarlar.items || [];
+
+    container.innerHTML = items.map((item, index) => `
+        <div class="item-card" data-index="${index}">
+            <div class="item-header">
+                <h4><i class="fas fa-calendar-alt"></i> ${item.title}</h4>
+                <div class="item-actions">
+                    <button class="move-item" onclick="moveFuarItem(${index}, -1)" ${index === 0 ? 'disabled' : ''} title="Yukarı"><i class="fas fa-arrow-up"></i></button>
+                    <button class="move-item" onclick="moveFuarItem(${index}, 1)" ${index === items.length - 1 ? 'disabled' : ''} title="Aşağı"><i class="fas fa-arrow-down"></i></button>
+                    <button class="delete-item" onclick="deleteFuarItem(${index})" title="Sil"><i class="fas fa-trash"></i></button>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Fuar Adı</label>
+                    <input type="text" value="${escHtml(item.title)}" onchange="updateFuarItem(${index}, 'title', this.value)" placeholder="Gulfood Manufacturing 2024">
+                </div>
+                <div class="form-group">
+                    <label>YouTube Video ID</label>
+                    <input type="text" value="${escHtml(item.videoId)}" onchange="updateFuarItem(${index}, 'videoId', this.value)" placeholder="NYe_58LMnNM">
+                </div>
+            </div>
+            <div class="video-preview">
+                <img src="https://img.youtube.com/vi/${item.videoId}/mqdefault.jpg" alt="${item.title}" style="width:120px; border-radius:8px;">
+                <a href="https://www.youtube.com/watch?v=${item.videoId}" target="_blank" class="btn btn-outline btn-xs" style="margin-left:10px;">
+                    <i class="fab fa-youtube"></i> Videoyu Gör
+                </a>
+            </div>
+        </div>
+    `).join('');
+
+    // Update header inputs
+    document.getElementById('fuarlar-tag').value = siteContent.fuarlar.tag || 'Fuarlar';
+    document.getElementById('fuarlar-title').value = siteContent.fuarlar.title || 'Fuar Katılımlarımız';
+    document.getElementById('fuarlar-subtitle').value = siteContent.fuarlar.subtitle || '';
+}
+
+function updateFuarItem(index, field, value) {
+    if (!siteContent.fuarlar?.items) return;
+    siteContent.fuarlar.items[index][field] = value;
+    renderFuarItems();
+    markAsChanged();
+}
+
+function addFuarItem() {
+    if (!siteContent.fuarlar) {
+        siteContent.fuarlar = { tag: 'Fuarlar', title: 'Fuar Katılımlarımız', subtitle: '', items: [] };
+    }
+    if (!siteContent.fuarlar.items) {
+        siteContent.fuarlar.items = [];
+    }
+    siteContent.fuarlar.items.push({
+        title: 'Yeni Fuar',
+        videoId: ''
+    });
+    renderFuarItems();
+    markAsChanged();
+}
+
+function deleteFuarItem(index) {
+    if (confirm('Bu fuar videosunu silmek istediğinizden emin misiniz?')) {
+        siteContent.fuarlar.items.splice(index, 1);
+        renderFuarItems();
+        markAsChanged();
+    }
+}
+
+function moveFuarItem(index, direction) {
+    const items = siteContent.fuarlar.items;
+    const newIndex = index + direction;
+    if (newIndex < 0 || newIndex >= items.length) return;
+
+    [items[index], items[newIndex]] = [items[newIndex], items[index]];
+    renderFuarItems();
+    markAsChanged();
+}
+
+function updateFuarSettings() {
+    if (!siteContent.fuarlar) {
+        siteContent.fuarlar = { items: [] };
+    }
+    siteContent.fuarlar.tag = document.getElementById('fuarlar-tag').value;
+    siteContent.fuarlar.title = document.getElementById('fuarlar-title').value;
+    siteContent.fuarlar.subtitle = document.getElementById('fuarlar-subtitle').value;
+    markAsChanged();
+}
+
 // Contact Phones
 function renderContactPhones() {
     const container = document.getElementById('contact-phones-editor');
@@ -726,7 +1367,7 @@ function renderContactPhones() {
 
     container.innerHTML = siteContent.contact.phones.map((phone, index) => `
         <div class="array-item">
-            <input type="tel" value="${phone}" onchange="updateContactPhone(${index}, this.value)">
+            <input type="tel" value="${escHtml(phone)}" onchange="updateContactPhone(${index}, this.value)">
             <button class="delete-array-item" onclick="deleteContactPhone(${index})"><i class="fas fa-times"></i></button>
         </div>
     `).join('');
@@ -756,7 +1397,7 @@ function renderContactEmails() {
 
     container.innerHTML = siteContent.contact.emails.map((email, index) => `
         <div class="array-item">
-            <input type="email" value="${email}" onchange="updateContactEmail(${index}, this.value)">
+            <input type="email" value="${escHtml(email)}" onchange="updateContactEmail(${index}, this.value)">
             <button class="delete-array-item" onclick="deleteContactEmail(${index})"><i class="fas fa-times"></i></button>
         </div>
     `).join('');
@@ -809,14 +1450,15 @@ function navigateToSection(section) {
     // Update page title
     const titles = {
         dashboard: 'Dashboard',
+        header: 'Header Yönetimi',
         topbar: 'Üst Bar',
         hero: 'Hero Bölümü',
         about: 'Hakkımızda',
-        machines: 'Üretim Hatları',
-        packaging: 'Paketleme',
-        sectors: 'Sektörler',
-        whyus: 'Neden Biz',
-        testimonials: 'Referanslar',
+        machines: 'Gıda İşleme Makinelerimiz',
+        packaging: 'Paketleme Makinelerimiz',
+        sectors: 'Paketlediğimiz Ürünler',
+        whyus: 'Neden Girişim Makina?',
+        testimonials: 'Müşterilerimiz Ne Diyor?',
         videos: 'Videolar',
         cta: 'CTA Bölümü',
         contact: 'İletişim',
@@ -824,7 +1466,7 @@ function navigateToSection(section) {
         blog: 'Blog Yönetimi',
         products: 'Ürün Sayfaları',
         hr: 'İK Sayfası',
-        certificates: 'Sertifikalar',
+        certificates: 'Sertifikalarımız',
         catalog: 'Katalog',
         seo: 'SEO Ayarları',
         analytics: 'Analitik & İzleme',
@@ -832,6 +1474,17 @@ function navigateToSection(section) {
         settings: 'Ayarlar'
     };
     pageTitle.textContent = titles[section] || section;
+
+    // Initialize section-specific content
+    if (section === 'translations' || section === 'settings') {
+        initTranslations();
+    }
+    if (section === 'analytics') {
+        initAnalytics();
+    }
+    if (section === 'header') {
+        if (typeof initHeaderManagement === 'function') initHeaderManagement();
+    }
 
     // Close sidebar on mobile
     if (window.innerWidth <= 992) {
@@ -855,7 +1508,7 @@ function initSidebar() {
     });
 }
 
-// Save Content
+// Save Content - Supabase
 async function saveAllContent() {
     saveAllBtn.disabled = true;
     saveAllBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Kaydediliyor...';
@@ -863,6 +1516,8 @@ async function saveAllContent() {
     // Demo mode - save to localStorage
     if (DEMO_MODE) {
         localStorage.setItem('girisim_site_content', JSON.stringify(siteContent));
+        if (typeof clearSiteCache === 'function') clearSiteCache();
+        sessionStorage.removeItem('girisim_site_cache');
         showToast('Demo modunda kaydedildi (localStorage)', 'success');
         updateLastUpdateTime();
         saveAllBtn.classList.remove('btn-warning');
@@ -873,7 +1528,20 @@ async function saveAllContent() {
     }
 
     try {
-        await db.collection('siteContent').doc('main').set(siteContent);
+        const { error } = await supabase
+            .from('site_content')
+            .upsert({
+                id: 'main',
+                content: siteContent,
+                updated_at: new Date().toISOString()
+            });
+
+        if (error) throw error;
+
+        // Clear site cache so live site picks up new content
+        if (typeof clearSiteCache === 'function') clearSiteCache();
+        sessionStorage.removeItem('girisim_site_cache');
+
         showToast('Tüm değişiklikler kaydedildi!', 'success');
         updateLastUpdateTime();
         saveAllBtn.classList.remove('btn-warning');
@@ -912,104 +1580,112 @@ function showToast(message, type = 'info') {
 // Translation Management
 // =============================================
 
-// Translation content structure for Turkish source
-const turkishContent = {
-    nav: {
-        about: "Hakkımızda",
-        production: "Üretim Hatları",
-        packaging: "Paketleme",
-        sectors: "Sektörler",
-        videos: "Videolar",
-        contact: "İletişim",
-        getQuote: "TEKLİF AL"
-    },
-    hero: {
-        title1: "WAFER & CEREAL BAR",
-        title2: "ÜRETİM HATLARI",
-        title3: "& PAKETLEME",
-        description: "1985'ten beri gıda işleme ve paketleme makineleri üretiyoruz. Türkiye'nin lider üreticisi olarak 57 ülkeye ihracat yapıyoruz.",
-        stat1: "Ülkeye İhracat",
-        stat2: "m² Üretim Alanı",
-        stat3: "Yıllık Tecrübe",
-        cta1: "HEMEN TEKLİF AL",
-        cta2: "VİDEOLARI İZLE"
-    },
-    about: {
-        tag: "Hakkımızda",
-        title1: "Gıda Üreticilerinin",
-        title2: "Global Büyüme Ortağı",
-        p1: "Girişim Makina olarak, 1985 yılından bu yana gıda işleme ve paketleme sektöründe Türkiye'nin lider üreticisiyiz.",
-        p2: "Avrupa, Ortadoğu, Afrika ve Asya'da 57'den fazla ülkeye ihracat yaparak, dünya standartlarında kalite sunuyoruz.",
-        feature1: "3 Üretim Tesisi",
-        feature2: "57+ Ülke İhracat",
-        feature3: "7/24 Teknik Destek",
-        catalog: "Katalogları İndir"
-    },
-    production: {
-        tag: "Üretim Hatları",
-        title1: "Gıda İşleme",
-        title2: "Makinelerimiz",
-        subtitle: "Komple anahtar teslim üretim hatları ve tek makine çözümleri"
-    },
-    packaging: {
-        tag: "Paketleme Çözümleri",
-        title1: "Paketleme",
-        title2: "Makinelerimiz",
-        subtitle: "Her ürün ve sektör için özelleştirilmiş paketleme çözümleri"
-    },
-    sectors: {
-        tag: "Uzmanlık Alanlarımız",
-        title1: "Paketlediğimiz",
-        title2: "Ürünler",
-        subtitle: "40 yıllık tecrübeyle her sektöre özel çözümler"
-    },
-    whyUs: {
-        tag: "Neden Biz?",
-        title1: "Neden",
-        title2: "Girişim Makina?"
-    },
-    videos: {
-        tag: "Video Galeri",
-        title1: "Makinelerimizi",
-        title2: "İzleyin",
-        subtitle: "YouTube kanalımızda 100+ makine videosu",
-        cta: "YouTube Kanalımız"
-    },
-    cta: {
-        title: "Projeniz İçin Ücretsiz Teklif Alın",
-        subtitle: "Uzman ekibimiz size en uygun çözümü sunmak için hazır"
-    },
-    contact: {
-        tag: "İletişim",
-        title1: "Bizimle",
-        title2: "İletişime Geçin",
-        address: "Adres",
-        whatsapp: "WhatsApp",
-        email: "E-Posta",
-        hours: "Çalışma Saatleri",
-        formTitle: "Teklif Formu",
-        formSubmit: "Teklif İste"
-    },
-    footer: {
-        desc: "1985'ten beri gıda işleme ve paketleme makineleri üretiyoruz.",
-        production: "Üretim Hatları",
-        packaging: "Paketleme",
-        corporate: "Kurumsal",
-        copyright: "Girişim Makina Türkiye. Tüm hakları saklıdır."
-    },
-    products: {
-        wafer: { title: "Wafer Üretim Hatları", desc: "Komple wafer üretim hatları" },
-        cereal: { title: "Cereal Bar Hatları", desc: "Cereal bar ve granola bar üretim hatları" },
-        protein: { title: "Protein Bar Hatları", desc: "Protein bar ve enerji bar üretim hatları" },
-        chocolate: { title: "Çikolata Kaplama", desc: "Çikolata enrobing ve soğutma sistemleri" },
-        biscuit: { title: "Bisküvi Kremalama", desc: "Sandviç bisküvi üretim makineleri" },
-        flowpack: { title: "Flow Pack", desc: "Yatay flow pack paketleme makineleri" },
-        overwrap: { title: "Overwrapping", desc: "Zarf tipi sarma makineleri" },
-        thermoform: { title: "Thermoform", desc: "Thermoform paketleme makineleri" },
-        vffs: { title: "VFFS Dikey Dolum", desc: "Dikey dolum makineleri" },
-        halvah: { title: "Helva Paketleme", desc: "Helva dilimleme ve paketleme" }
-    }
+// Translation content structure - dynamically built from siteContent
+// Falls back to defaults if siteContent is not loaded yet
+const turkishContentDefaults = {
+    nav: { about: "Hakkımızda", production: "Üretim Hatları", packaging: "Paketleme", sectors: "Sektörler", videos: "Videolar", contact: "İletişim", getQuote: "TEKLİF AL" },
+    hero: { title1: "WAFER & CEREAL BAR", title2: "ÜRETİM HATLARI", title3: "& PAKETLEME", description: "1985'ten beri gıda işleme ve paketleme makineleri üretiyoruz.", stat1: "Ülkeye İhracat", stat2: "m² Üretim Alanı", stat3: "Yıllık Tecrübe", cta1: "HEMEN TEKLİF AL", cta2: "VİDEOLARI İZLE" },
+    about: { tag: "Hakkımızda", title1: "Gıda Üreticilerinin", title2: "Global Büyüme Ortağı", p1: "", p2: "", feature1: "3 Üretim Tesisi", feature2: "57+ Ülke İhracat", feature3: "7/24 Teknik Destek", catalog: "Katalogları İndir" },
+    production: { tag: "Üretim Hatları", title1: "Gıda İşleme", title2: "Makinelerimiz", subtitle: "" },
+    packaging: { tag: "Paketleme Çözümleri", title1: "Paketleme", title2: "Makinelerimiz", subtitle: "" },
+    sectors: { tag: "Uzmanlık Alanlarımız", title1: "Paketlediğimiz", title2: "Ürünler", subtitle: "" },
+    whyUs: { tag: "Neden Biz?", title1: "Neden", title2: "Girişim Makina?" },
+    videos: { tag: "Video Galeri", title1: "Makinelerimizi", title2: "İzleyin", subtitle: "", cta: "YouTube Kanalımız" },
+    cta: { title: "Projeniz İçin Ücretsiz Teklif Alın", subtitle: "" },
+    contact: { tag: "İletişim", title1: "Bizimle", title2: "İletişime Geçin", address: "Adres", whatsapp: "WhatsApp", email: "E-Posta", hours: "Çalışma Saatleri", formTitle: "Teklif Formu", formSubmit: "Teklif İste" },
+    footer: { desc: "", production: "Üretim Hatları", packaging: "Paketleme", corporate: "Kurumsal", copyright: "" },
+    products: { wafer: { title: "Wafer Üretim Hatları", desc: "" }, cereal: { title: "Cereal Bar Hatları", desc: "" }, protein: { title: "Protein Bar Hatları", desc: "" }, chocolate: { title: "Çikolata Kaplama", desc: "" }, biscuit: { title: "Bisküvi Kremalama", desc: "" }, flowpack: { title: "Flow Pack", desc: "" }, overwrap: { title: "Overwrapping", desc: "" }, thermoform: { title: "Thermoform", desc: "" }, vffs: { title: "VFFS Dikey Dolum", desc: "" }, halvah: { title: "Helva Paketleme", desc: "" } }
 };
+
+// Build turkishContent dynamically from current siteContent
+function getTurkishContent() {
+    if (!siteContent) return turkishContentDefaults;
+
+    const sc = siteContent;
+    return {
+        nav: turkishContentDefaults.nav,
+        hero: {
+            title1: sc.heroSlides?.[0]?.title || sc.hero?.title || turkishContentDefaults.hero.title1,
+            title2: sc.heroSlides?.[0]?.titleHighlight || sc.hero?.titleHighlight || turkishContentDefaults.hero.title2,
+            title3: turkishContentDefaults.hero.title3,
+            description: sc.heroSlides?.[0]?.description || sc.hero?.description || turkishContentDefaults.hero.description,
+            stat1: sc.hero?.stats?.[0]?.text || turkishContentDefaults.hero.stat1,
+            stat2: sc.hero?.stats?.[1]?.text || turkishContentDefaults.hero.stat2,
+            stat3: sc.hero?.stats?.[2]?.text || turkishContentDefaults.hero.stat3,
+            cta1: sc.heroSlides?.[0]?.button1Text || turkishContentDefaults.hero.cta1,
+            cta2: sc.heroSlides?.[0]?.button2Text || turkishContentDefaults.hero.cta2
+        },
+        about: {
+            tag: sc.about?.tag || turkishContentDefaults.about.tag,
+            title1: sc.about?.title || turkishContentDefaults.about.title1,
+            title2: sc.about?.titleHighlight || turkishContentDefaults.about.title2,
+            p1: sc.about?.paragraph1 || turkishContentDefaults.about.p1,
+            p2: sc.about?.paragraph2 || turkishContentDefaults.about.p2,
+            feature1: sc.about?.features?.[0]?.text || turkishContentDefaults.about.feature1,
+            feature2: sc.about?.features?.[1]?.text || turkishContentDefaults.about.feature2,
+            feature3: sc.about?.features?.[2]?.text || turkishContentDefaults.about.feature3,
+            catalog: turkishContentDefaults.about.catalog
+        },
+        production: {
+            tag: sc.machines?.tag || turkishContentDefaults.production.tag,
+            title1: sc.machines?.title || turkishContentDefaults.production.title1,
+            title2: sc.machines?.titleHighlight || turkishContentDefaults.production.title2,
+            subtitle: sc.machines?.subtitle || turkishContentDefaults.production.subtitle
+        },
+        packaging: {
+            tag: sc.packaging?.tag || turkishContentDefaults.packaging.tag,
+            title1: sc.packaging?.title || turkishContentDefaults.packaging.title1,
+            title2: sc.packaging?.titleHighlight || turkishContentDefaults.packaging.title2,
+            subtitle: sc.packaging?.subtitle || turkishContentDefaults.packaging.subtitle
+        },
+        sectors: {
+            tag: sc.sectors?.tag || turkishContentDefaults.sectors.tag,
+            title1: sc.sectors?.title || turkishContentDefaults.sectors.title1,
+            title2: sc.sectors?.titleHighlight || turkishContentDefaults.sectors.title2,
+            subtitle: sc.sectors?.subtitle || turkishContentDefaults.sectors.subtitle
+        },
+        whyUs: {
+            tag: sc.whyUs?.tag || turkishContentDefaults.whyUs.tag,
+            title1: sc.whyUs?.title || turkishContentDefaults.whyUs.title1,
+            title2: sc.whyUs?.titleHighlight || turkishContentDefaults.whyUs.title2
+        },
+        videos: {
+            tag: sc.videos?.tag || turkishContentDefaults.videos.tag,
+            title1: sc.videos?.title || turkishContentDefaults.videos.title1,
+            title2: sc.videos?.titleHighlight || turkishContentDefaults.videos.title2,
+            subtitle: sc.videos?.subtitle || turkishContentDefaults.videos.subtitle,
+            cta: turkishContentDefaults.videos.cta
+        },
+        cta: {
+            title: sc.cta?.title || turkishContentDefaults.cta.title,
+            subtitle: sc.cta?.description || turkishContentDefaults.cta.subtitle
+        },
+        contact: {
+            tag: sc.contact?.tag || turkishContentDefaults.contact.tag,
+            title1: sc.contact?.title || turkishContentDefaults.contact.title1,
+            title2: sc.contact?.titleHighlight || turkishContentDefaults.contact.title2,
+            address: turkishContentDefaults.contact.address,
+            whatsapp: turkishContentDefaults.contact.whatsapp,
+            email: turkishContentDefaults.contact.email,
+            hours: turkishContentDefaults.contact.hours,
+            formTitle: turkishContentDefaults.contact.formTitle,
+            formSubmit: turkishContentDefaults.contact.formSubmit
+        },
+        footer: {
+            desc: sc.footer?.description || turkishContentDefaults.footer.desc,
+            production: turkishContentDefaults.footer.production,
+            packaging: turkishContentDefaults.footer.packaging,
+            corporate: turkishContentDefaults.footer.corporate,
+            copyright: sc.footer?.copyright || turkishContentDefaults.footer.copyright
+        },
+        products: turkishContentDefaults.products
+    };
+}
+
+// Backward compatibility - turkishContent is now a getter
+Object.defineProperty(window, 'turkishContent', {
+    get: function() { return getTurkishContent(); }
+});
 
 // Stored translations
 let customTranslations = {};
@@ -1020,16 +1696,20 @@ const langLabels = {
     ru: "🇷🇺 Rusça",
     ar: "🇸🇦 Arapça",
     fr: "🇫🇷 Fransızca",
-    de: "🇩🇪 Almanca",
+    pt: "🇧🇷 Portekizce",
     es: "🇪🇸 İspanyolca"
 };
 
 // Initialize translation section
 function initTranslations() {
-    // Load saved translations from localStorage
-    const saved = localStorage.getItem('girisim_custom_translations');
-    if (saved) {
-        customTranslations = JSON.parse(saved);
+    // Load saved translations from siteContent (Supabase) or localStorage
+    if (siteContent && siteContent.translations && Object.keys(siteContent.translations).length > 0) {
+        customTranslations = siteContent.translations;
+    } else {
+        const saved = localStorage.getItem('girisim_custom_translations');
+        if (saved) {
+            customTranslations = JSON.parse(saved);
+        }
     }
 
     // Load API settings
@@ -1078,7 +1758,7 @@ function loadTranslationContent() {
                 targetHtml += `
                     <div class="translation-item">
                         <label>${key}.${subKey}</label>
-                        <input type="text" data-key="${fullKey}" value="${existingTranslation}" placeholder="Çeviri girin...">
+                        <input type="text" data-key="${fullKey}" value="${escHtml(existingTranslation)}" placeholder="Çeviri girin...">
                     </div>
                 `;
             });
@@ -1096,7 +1776,7 @@ function loadTranslationContent() {
             targetHtml += `
                 <div class="translation-item">
                     <label>${key}</label>
-                    <input type="text" data-key="${fullKey}" value="${existingTranslation}" placeholder="Çeviri girin...">
+                    <input type="text" data-key="${fullKey}" value="${escHtml(existingTranslation)}" placeholder="Çeviri girin...">
                 </div>
             `;
         }
@@ -1124,7 +1804,7 @@ async function autoTranslateSection() {
         ru: 'Russian',
         ar: 'Arabic',
         fr: 'French',
-        de: 'German',
+        pt: 'Portuguese',
         es: 'Spanish'
     };
 
@@ -1210,7 +1890,11 @@ async function autoTranslateSection() {
             target[keys[keys.length - 1]] = translatedTexts[index];
         });
 
-        // Save translations
+        // Save translations to siteContent + localStorage
+        if (siteContent) {
+            siteContent.translations = customTranslations;
+            markAsChanged();
+        }
         localStorage.setItem('girisim_custom_translations', JSON.stringify(customTranslations));
 
         // Update UI
@@ -1225,6 +1909,121 @@ async function autoTranslateSection() {
     } finally {
         translateBtn.innerHTML = originalBtnText;
         translateBtn.disabled = false;
+    }
+}
+
+// Auto-translate ALL languages for ALL sections at once
+async function autoTranslateAll() {
+    const apiKey = localStorage.getItem('openai_api_key');
+    if (!apiKey) {
+        showToast('Lütfen önce Ayarlar bölümünden OpenAI API anahtarınızı girin.', 'error');
+        navigateToSection('settings');
+        return;
+    }
+
+    const model = localStorage.getItem('openai_model') || 'gpt-4o-mini';
+    const allLangs = ['en', 'ru', 'ar', 'fr', 'pt', 'es'];
+    const langNames = { en: 'English', ru: 'Russian', ar: 'Arabic', fr: 'French', pt: 'Portuguese', es: 'Spanish' };
+    const sections = Object.keys(turkishContent);
+
+    // Show progress
+    const btn = document.getElementById('btnTranslateAll');
+    if (btn) {
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Tüm diller çevriliyor...';
+        btn.disabled = true;
+    }
+
+    let completed = 0;
+    const total = allLangs.length * sections.length;
+
+    try {
+        for (const lang of allLangs) {
+            if (!customTranslations[lang]) customTranslations[lang] = {};
+
+            for (const section of sections) {
+                const sourceData = turkishContent[section];
+                if (!sourceData) continue;
+
+                // Flatten content
+                const textsToTranslate = [];
+                const flattenContent = (obj, prefix = '') => {
+                    Object.entries(obj).forEach(([key, value]) => {
+                        const fullKey = prefix ? `${prefix}.${key}` : key;
+                        if (typeof value === 'object') {
+                            flattenContent(value, fullKey);
+                        } else {
+                            textsToTranslate.push({ key: fullKey, text: value });
+                        }
+                    });
+                };
+                flattenContent(sourceData);
+
+                if (textsToTranslate.length === 0) continue;
+
+                const textsJson = JSON.stringify(textsToTranslate.map(t => t.text));
+
+                const response = await fetch('https://api.openai.com/v1/chat/completions', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${apiKey}`
+                    },
+                    body: JSON.stringify({
+                        model: model,
+                        messages: [
+                            {
+                                role: 'system',
+                                content: `You are a professional translator specializing in industrial machinery and food processing equipment. Translate the following Turkish texts to ${langNames[lang]}. Maintain technical accuracy and professional tone. Return ONLY a JSON array of translated strings in the same order as input, no explanations.`
+                            },
+                            {
+                                role: 'user',
+                                content: `Translate these Turkish texts to ${langNames[lang]}:\n${textsJson}`
+                            }
+                        ],
+                        temperature: 0.3
+                    })
+                });
+
+                if (!response.ok) continue;
+
+                const data = await response.json();
+                const translatedTexts = JSON.parse(data.choices[0].message.content);
+
+                if (!customTranslations[lang][section]) customTranslations[lang][section] = {};
+
+                textsToTranslate.forEach((item, index) => {
+                    const keys = item.key.split('.');
+                    let target = customTranslations[lang][section];
+                    for (let i = 0; i < keys.length - 1; i++) {
+                        if (!target[keys[i]]) target[keys[i]] = {};
+                        target = target[keys[i]];
+                    }
+                    target[keys[keys.length - 1]] = translatedTexts[index];
+                });
+
+                completed++;
+                if (btn) btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> ${completed}/${total} bölüm çevrildi...`;
+            }
+        }
+
+        // Save all translations
+        if (siteContent) {
+            siteContent.translations = customTranslations;
+            markAsChanged();
+        }
+        localStorage.setItem('girisim_custom_translations', JSON.stringify(customTranslations));
+        updateTranslationStatus();
+        loadTranslationContent();
+
+        showToast('Tüm diller başarıyla çevrildi! "Tümünü Kaydet" ile yayınlayın.', 'success');
+    } catch (error) {
+        console.error('Bulk translation error:', error);
+        showToast('Toplu çeviri hatası: ' + error.message, 'error');
+    } finally {
+        if (btn) {
+            btn.innerHTML = '<i class="fas fa-language"></i> Tüm Dilleri Çevir';
+            btn.disabled = false;
+        }
     }
 }
 
@@ -1263,11 +2062,15 @@ function saveTranslation() {
         }
     });
 
-    // Save to localStorage
+    // Save to siteContent + localStorage
+    if (siteContent) {
+        siteContent.translations = customTranslations;
+        markAsChanged();
+    }
     localStorage.setItem('girisim_custom_translations', JSON.stringify(customTranslations));
     updateTranslationStatus();
 
-    showToast('Çeviri kaydedildi!', 'success');
+    showToast('Çeviri kaydedildi! "Tümünü Kaydet" ile Supabase\'e aktarın.', 'success');
 }
 
 // Publish translations to translation files
@@ -1308,7 +2111,7 @@ function generateTranslationsFile() {
 
 // Update translation status badges
 function updateTranslationStatus() {
-    const languages = ['en', 'ru', 'ar', 'fr', 'de', 'es'];
+    const languages = ['en', 'ru', 'ar', 'fr', 'pt', 'es'];
 
     languages.forEach(lang => {
         const badge = document.getElementById(`status-${lang}`);
@@ -1345,7 +2148,7 @@ function loadApiSettings() {
     document.getElementById('defaultLanguage').value = defaultLang;
 
     // Load active languages
-    const activeLanguages = JSON.parse(localStorage.getItem('active_languages') || '["en","ru","ar","fr","de","es"]');
+    const activeLanguages = JSON.parse(localStorage.getItem('active_languages') || '["en","ru","ar","fr","pt","es"]');
     activeLanguages.forEach(lang => {
         const checkbox = document.getElementById(`lang-${lang}-active`);
         if (checkbox) checkbox.checked = true;
@@ -1481,20 +2284,7 @@ function resetAllTranslations() {
     }
 }
 
-// Initialize translations when navigating to translations section
-document.addEventListener('DOMContentLoaded', () => {
-    // Add translations init on section navigation
-    const origNavigate = navigateToSection;
-    navigateToSection = function(section) {
-        origNavigate(section);
-        if (section === 'translations' || section === 'settings') {
-            initTranslations();
-        }
-        if (section === 'analytics') {
-            initAnalytics();
-        }
-    };
-});
+// Section-specific init is now handled directly in navigateToSection()
 
 // =============================================
 // Analytics & Tracking Management
@@ -1506,11 +2296,17 @@ function initAnalytics() {
     updateActiveIntegrations();
 }
 
-// Load analytics settings from localStorage/Firebase
+// Load analytics settings from siteContent/localStorage
 function loadAnalyticsSettings() {
-    const saved = localStorage.getItem('girisim_analytics_settings');
-    if (saved) {
-        const settings = JSON.parse(saved);
+    // Try siteContent first (Supabase), then localStorage
+    let settings = null;
+    if (siteContent && siteContent.analytics) {
+        settings = siteContent.analytics;
+    } else {
+        const saved = localStorage.getItem('girisim_analytics_settings');
+        if (saved) settings = JSON.parse(saved);
+    }
+    if (settings) {
 
         // Populate form fields
         if (settings.googleAnalytics) {
@@ -1591,16 +2387,16 @@ function saveAnalyticsSettings() {
         customBodyCode: document.getElementById('analytics-customBody')?.value || ''
     };
 
-    // Save to localStorage
-    localStorage.setItem('girisim_analytics_settings', JSON.stringify(settings));
-
-    // Also save to siteContent if available
+    // Save to siteContent (will persist to Supabase on "Save All")
     if (siteContent) {
         siteContent.analytics = settings;
     }
+    // Also keep localStorage as fast cache for instant analytics loading
+    localStorage.setItem('girisim_analytics_settings', JSON.stringify(settings));
+    markAsChanged();
 
     updateActiveIntegrations();
-    showToast('Analitik ayarları kaydedildi!', 'success');
+    showToast('Analitik ayarları kaydedildi! "Tümünü Kaydet" ile Supabase\'e aktarın.', 'success');
 }
 
 // Update active integrations display
@@ -1619,8 +2415,14 @@ function updateActiveIntegrations() {
     if (settings.googleTagManager) {
         badges += '<span class="integration-badge active"><i class="fab fa-google"></i> GTM</span>';
     }
+    if (settings.googleAdsConversionId) {
+        badges += '<span class="integration-badge active"><i class="fab fa-google"></i> Google Ads</span>';
+    }
     if (settings.facebookPixel) {
         badges += '<span class="integration-badge active"><i class="fab fa-facebook"></i> Pixel</span>';
+    }
+    if (settings.tiktokPixel) {
+        badges += '<span class="integration-badge active"><i class="fab fa-tiktok"></i> TikTok</span>';
     }
     if (settings.googleSearchConsole) {
         badges += '<span class="integration-badge active"><i class="fab fa-google"></i> GSC</span>';
@@ -1955,18 +2757,33 @@ function addBlogPost() {
     editBlogPost(0);
 }
 
-// Edit blog post
+// Edit blog post with multi-language support
 function editBlogPost(index) {
     initBlogPosts();
     const post = siteContent.blog.posts[index];
     if (!post) return;
+
+    // Initialize translations if not exists
+    if (!post.translations) {
+        post.translations = {};
+    }
+
+    const languages = [
+        { code: 'tr', name: 'Türkçe', flag: '🇹🇷' },
+        { code: 'en', name: 'English', flag: '🇬🇧' },
+        { code: 'ru', name: 'Русский', flag: '🇷🇺' },
+        { code: 'ar', name: 'العربية', flag: '🇸🇦' },
+        { code: 'fr', name: 'Français', flag: '🇫🇷' },
+        { code: 'pt', name: 'Português', flag: '🇧🇷' },
+        { code: 'es', name: 'Español', flag: '🇪🇸' }
+    ];
 
     // Create modal for editing
     const modal = document.createElement('div');
     modal.className = 'modal-overlay';
     modal.id = 'blogEditModal';
     modal.innerHTML = `
-        <div class="modal-content blog-editor-modal">
+        <div class="modal-content blog-editor-modal" style="max-width: 900px;">
             <div class="modal-header">
                 <h3><i class="fas fa-edit"></i> Blog Yazısını Düzenle</h3>
                 <button class="modal-close" onclick="closeBlogEditor()">
@@ -1974,58 +2791,121 @@ function editBlogPost(index) {
                 </button>
             </div>
             <div class="modal-body">
-                <div class="form-row">
-                    <div class="form-group flex-2">
-                        <label>Başlık *</label>
-                        <input type="text" id="blog-edit-title" value="${post.title || ''}" placeholder="Blog yazısı başlığı">
+                <!-- Language Tabs -->
+                <div class="blog-lang-tabs" style="display: flex; gap: 5px; margin-bottom: 20px; flex-wrap: wrap;">
+                    ${languages.map((lang, i) => `
+                        <button type="button" class="blog-lang-tab ${i === 0 ? 'active' : ''}"
+                                data-lang="${lang.code}"
+                                onclick="switchBlogLang('${lang.code}')"
+                                style="padding: 8px 16px; border: 2px solid #e0e0e0; background: ${i === 0 ? 'var(--primary-color)' : 'white'}; color: ${i === 0 ? 'white' : '#333'}; border-radius: 20px; cursor: pointer; font-size: 13px;">
+                            ${lang.flag} ${lang.name}
+                        </button>
+                    `).join('')}
+                </div>
+
+                <!-- TR Content (Default - always visible first) -->
+                <div class="blog-lang-content active" data-lang-content="tr">
+                    <div class="form-row">
+                        <div class="form-group flex-2">
+                            <label>Başlık * (Türkçe)</label>
+                            <input type="text" id="blog-edit-title-tr" value="${escHtml(post.title || '')}" placeholder="Blog yazısı başlığı">
+                        </div>
+                        <div class="form-group">
+                            <label>Kategori</label>
+                            <select id="blog-edit-category">
+                                <option value="Genel" ${post.category === 'Genel' ? 'selected' : ''}>Genel</option>
+                                <option value="Ürünler" ${post.category === 'Ürünler' ? 'selected' : ''}>Ürünler</option>
+                                <option value="Sektör" ${post.category === 'Sektör' ? 'selected' : ''}>Sektör</option>
+                                <option value="Fuarlar" ${post.category === 'Fuarlar' ? 'selected' : ''}>Fuarlar</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label>Kategori</label>
-                        <select id="blog-edit-category">
-                            <option value="Genel" ${post.category === 'Genel' ? 'selected' : ''}>Genel</option>
-                            <option value="Ürünler" ${post.category === 'Ürünler' ? 'selected' : ''}>Ürünler</option>
-                            <option value="Haberler" ${post.category === 'Haberler' ? 'selected' : ''}>Haberler</option>
-                            <option value="Teknoloji" ${post.category === 'Teknoloji' ? 'selected' : ''}>Teknoloji</option>
-                            <option value="Fuarlar" ${post.category === 'Fuarlar' ? 'selected' : ''}>Fuarlar</option>
-                        </select>
+                        <label>Kısa Açıklama (Türkçe)</label>
+                        <textarea id="blog-edit-excerpt-tr" rows="2" placeholder="Yazının kısa özeti...">${post.excerpt || ''}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>İçerik * (Türkçe)</label>
+                        <div id="blog-edit-content-tr" class="blog-quill-editor" style="height: 250px;"></div>
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label>Kısa Açıklama (Excerpt)</label>
-                    <textarea id="blog-edit-excerpt" rows="2" placeholder="Yazının kısa özeti...">${post.excerpt || ''}</textarea>
-                </div>
+                <!-- Other Languages -->
+                ${languages.filter(l => l.code !== 'tr').map(lang => `
+                    <div class="blog-lang-content" data-lang-content="${lang.code}" style="display: none;">
+                        <div class="form-group">
+                            <label>Başlık (${lang.name}) ${lang.flag}</label>
+                            <input type="text" id="blog-edit-title-${lang.code}"
+                                   value="${escHtml(post.translations[lang.code]?.title || '')}"
+                                   placeholder="Blog title in ${lang.name}">
+                        </div>
+                        <div class="form-group">
+                            <label>Kısa Açıklama (${lang.name})</label>
+                            <textarea id="blog-edit-excerpt-${lang.code}" rows="2"
+                                      placeholder="Short description in ${lang.name}...">${post.translations[lang.code]?.excerpt || ''}</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>İçerik (${lang.name})</label>
+                            <div id="blog-edit-content-${lang.code}" class="blog-quill-editor" style="height: 250px;"></div>
+                        </div>
+                        <button type="button" class="btn btn-outline btn-sm" onclick="autoTranslateBlog('tr', '${lang.code}')" style="margin-top: 10px;">
+                            <i class="fas fa-language"></i> Türkçe'den Otomatik Çevir
+                        </button>
+                    </div>
+                `).join('')}
 
-                <div class="form-group">
-                    <label>İçerik *</label>
-                    <textarea id="blog-edit-content" rows="10" placeholder="Blog yazısının içeriği...">${post.content || ''}</textarea>
-                </div>
+                <hr style="margin: 20px 0; border: none; border-top: 1px solid #e0e0e0;">
 
+                <!-- Common Settings -->
                 <div class="form-row">
                     <div class="form-group">
-                        <label>Görsel URL</label>
-                        <input type="url" id="blog-edit-image" value="${post.image || ''}" placeholder="https://...">
+                        <label>Blog Görseli</label>
+                        <div id="blogImagePreview" style="${post.image ? '' : 'display:none;'} margin-bottom:10px;">
+                            <img src="${post.image || ''}" id="blogImagePreviewImg" alt="Preview"
+                                 style="max-width:100%; max-height:200px; border-radius:8px; object-fit:cover;">
+                            <button type="button" class="btn btn-sm btn-outline" onclick="removeBlogImage()" style="margin-top:8px;">
+                                <i class="fas fa-trash"></i> Görseli Kaldır
+                            </button>
+                        </div>
+                        <div style="display:flex; gap:10px; align-items:end; flex-wrap:wrap;">
+                            <div>
+                                <input type="file" id="blog-image-file" accept="image/*" onchange="handleBlogImageSelect(this)" style="display:none;">
+                                <button type="button" class="btn btn-outline" onclick="document.getElementById('blog-image-file').click()">
+                                    <i class="fas fa-upload"></i> Görsel Yükle
+                                </button>
+                                <span id="blogImageFileName" style="margin-left:10px; font-size:13px; color:#888;"></span>
+                            </div>
+                            <div style="flex:1; min-width:200px;">
+                                <input type="url" id="blog-edit-image" value="${escHtml(post.image || '')}" placeholder="veya URL yapıştırın..." style="width:100%;">
+                            </div>
+                        </div>
+                        <div id="blogImageUploadProgress" style="display:none; margin-top:10px;">
+                            <div style="background:#e0e0e0; border-radius:4px; height:6px; overflow:hidden;">
+                                <div id="blogImageProgressBar" style="background:var(--primary-color); height:100%; width:0%; transition:width 0.3s;"></div>
+                            </div>
+                            <span style="font-size:12px; color:#888;">Yükleniyor...</span>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label>Tarih</label>
-                        <input type="date" id="blog-edit-date" value="${post.date || ''}">
+                        <input type="date" id="blog-edit-date" value="${escHtml(post.date || '')}">
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group">
                         <label>Yazar</label>
-                        <input type="text" id="blog-edit-author" value="${post.author || ''}" placeholder="Yazar adı">
+                        <input type="text" id="blog-edit-author" value="${escHtml(post.author || '')}" placeholder="Yazar adı">
                     </div>
                     <div class="form-group">
                         <label>URL Slug</label>
-                        <input type="text" id="blog-edit-slug" value="${post.slug || ''}" placeholder="blog-yazisi-url">
+                        <input type="text" id="blog-edit-slug" value="${escHtml(post.slug || '')}" placeholder="blog-yazisi-url">
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label>Etiketler (virgülle ayırın)</label>
-                    <input type="text" id="blog-edit-tags" value="${(post.tags || []).join(', ')}" placeholder="etiket1, etiket2, etiket3">
+                    <input type="text" id="blog-edit-tags" value="${escHtml((post.tags || []).join(', '))}" placeholder="etiket1, etiket2, etiket3">
                 </div>
 
                 <div class="form-group checkbox-group">
@@ -2046,8 +2926,53 @@ function editBlogPost(index) {
 
     document.body.appendChild(modal);
 
+    // Initialize Quill editors
+    const quillToolbar = [
+        [{ 'header': [2, 3, false] }],
+        ['bold', 'italic', 'underline', 'strike'],
+        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+        ['blockquote', 'link', 'image'],
+        ['clean']
+    ];
+
+    window._blogQuillInstances = {};
+
+    // TR Quill
+    const quillTr = new Quill('#blog-edit-content-tr', {
+        theme: 'snow',
+        modules: { toolbar: quillToolbar },
+        placeholder: 'Blog içeriğini yazın...'
+    });
+    quillTr.root.innerHTML = post.content || '';
+    window._blogQuillInstances['tr'] = quillTr;
+
+    // Other languages
+    const otherLangs = ['en', 'ru', 'ar', 'fr', 'pt', 'es'];
+    otherLangs.forEach(lang => {
+        const q = new Quill(`#blog-edit-content-${lang}`, {
+            theme: 'snow',
+            modules: { toolbar: quillToolbar },
+            placeholder: `Content in ${lang.toUpperCase()}...`
+        });
+        q.root.innerHTML = post.translations[lang]?.content || '';
+        window._blogQuillInstances[lang] = q;
+    });
+
+    // Image URL input → preview sync
+    document.getElementById('blog-edit-image').addEventListener('input', function() {
+        const url = this.value.trim();
+        const preview = document.getElementById('blogImagePreview');
+        const img = document.getElementById('blogImagePreviewImg');
+        if (url) {
+            img.src = url;
+            preview.style.display = '';
+        } else {
+            preview.style.display = 'none';
+        }
+    });
+
     // Auto-generate slug from title
-    document.getElementById('blog-edit-title').addEventListener('input', function() {
+    document.getElementById('blog-edit-title-tr').addEventListener('input', function() {
         const slug = this.value
             .toLowerCase()
             .replace(/ğ/g, 'g').replace(/ü/g, 'u').replace(/ş/g, 's')
@@ -2059,19 +2984,117 @@ function editBlogPost(index) {
     });
 }
 
-// Save blog post
+// Switch blog language tab
+function switchBlogLang(lang) {
+    // Update tab buttons
+    document.querySelectorAll('.blog-lang-tab').forEach(tab => {
+        tab.classList.remove('active');
+        tab.style.background = 'white';
+        tab.style.color = '#333';
+    });
+    const activeTab = document.querySelector(`.blog-lang-tab[data-lang="${lang}"]`);
+    if (activeTab) {
+        activeTab.classList.add('active');
+        activeTab.style.background = 'var(--primary-color)';
+        activeTab.style.color = 'white';
+    }
+
+    // Show/hide content sections
+    document.querySelectorAll('.blog-lang-content').forEach(content => {
+        content.style.display = 'none';
+    });
+    const activeContent = document.querySelector(`.blog-lang-content[data-lang-content="${lang}"]`);
+    if (activeContent) {
+        activeContent.style.display = 'block';
+    }
+}
+
+// Auto translate blog content using OpenAI API
+async function autoTranslateBlog(fromLang, toLang) {
+    const title = document.getElementById(`blog-edit-title-${fromLang}`).value;
+    const excerpt = document.getElementById(`blog-edit-excerpt-${fromLang}`).value;
+    const fromQuill = window._blogQuillInstances?.[fromLang];
+    const content = fromQuill ? fromQuill.root.innerHTML : '';
+
+    if (!title && (!content || content === '<p><br></p>')) {
+        showToast('Çevrilecek içerik yok', 'warning');
+        return;
+    }
+
+    const apiKey = localStorage.getItem('openai_api_key');
+    if (!apiKey) {
+        // Fallback: copy content if no API key
+        document.getElementById(`blog-edit-title-${toLang}`).value = title;
+        document.getElementById(`blog-edit-excerpt-${toLang}`).value = excerpt;
+        const toQuill = window._blogQuillInstances?.[toLang];
+        if (toQuill) toQuill.root.innerHTML = content;
+        showToast('API anahtarı yok. İçerik kopyalandı, Ayarlar\'dan OpenAI API key girin.', 'warning');
+        return;
+    }
+
+    const langNames = { tr: 'Turkish', en: 'English', ru: 'Russian', ar: 'Arabic', fr: 'French', pt: 'Portuguese', es: 'Spanish' };
+    const model = localStorage.getItem('openai_model') || 'gpt-4o-mini';
+
+    showToast('AI ile çevriliyor...', 'info');
+
+    try {
+        const textsToTranslate = [];
+        if (title) textsToTranslate.push(title);
+        if (excerpt) textsToTranslate.push(excerpt);
+        const hasContent = content && content !== '<p><br></p>';
+        if (hasContent) textsToTranslate.push(content);
+
+        const response = await fetch('https://api.openai.com/v1/chat/completions', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${apiKey}` },
+            body: JSON.stringify({
+                model: model,
+                messages: [
+                    { role: 'system', content: `You are a professional translator for an industrial machinery company blog. Translate from ${langNames[fromLang] || fromLang} to ${langNames[toLang] || toLang}. If the text contains HTML tags, preserve them exactly. Return ONLY a JSON array of translated strings in the same order, no explanations.` },
+                    { role: 'user', content: JSON.stringify(textsToTranslate) }
+                ],
+                temperature: 0.3
+            })
+        });
+
+        if (!response.ok) {
+            const err = await response.json();
+            throw new Error(err.error?.message || 'API hatası');
+        }
+
+        const data = await response.json();
+        const translated = JSON.parse(data.choices[0].message.content);
+
+        let idx = 0;
+        if (title) document.getElementById(`blog-edit-title-${toLang}`).value = translated[idx++];
+        if (excerpt) document.getElementById(`blog-edit-excerpt-${toLang}`).value = translated[idx++];
+        if (hasContent) {
+            const toQuill = window._blogQuillInstances?.[toLang];
+            if (toQuill) toQuill.root.innerHTML = translated[idx];
+        }
+
+        showToast(`Blog ${langNames[toLang] || toLang} diline çevrildi!`, 'success');
+    } catch (error) {
+        console.error('Blog translation error:', error);
+        showToast('Çeviri hatası: ' + error.message, 'error');
+    }
+}
+
+// Save blog post with translations
 function saveBlogPost(index) {
     initBlogPosts();
 
-    const title = document.getElementById('blog-edit-title').value.trim();
-    const content = document.getElementById('blog-edit-content').value.trim();
+    const title = document.getElementById('blog-edit-title-tr').value.trim();
+    const trQuill = window._blogQuillInstances?.['tr'];
+    const content = trQuill ? trQuill.root.innerHTML.trim() : '';
+    const isEmptyContent = !content || content === '<p><br></p>';
 
     if (!title) {
         showToast('Başlık zorunludur', 'error');
         return;
     }
 
-    if (!content) {
+    if (isEmptyContent) {
         showToast('İçerik zorunludur', 'error');
         return;
     }
@@ -2079,11 +3102,31 @@ function saveBlogPost(index) {
     const tagsInput = document.getElementById('blog-edit-tags').value;
     const tags = tagsInput ? tagsInput.split(',').map(t => t.trim()).filter(t => t) : [];
 
+    // Collect translations
+    const translations = {};
+    const languages = ['en', 'ru', 'ar', 'fr', 'pt', 'es'];
+
+    languages.forEach(lang => {
+        const langTitle = document.getElementById(`blog-edit-title-${lang}`)?.value.trim();
+        const langExcerpt = document.getElementById(`blog-edit-excerpt-${lang}`)?.value.trim();
+        const langQuill = window._blogQuillInstances?.[lang];
+        let langContent = langQuill ? langQuill.root.innerHTML.trim() : '';
+        if (langContent === '<p><br></p>') langContent = '';
+
+        if (langTitle || langExcerpt || langContent) {
+            translations[lang] = {
+                title: langTitle || '',
+                excerpt: langExcerpt || '',
+                content: langContent || ''
+            };
+        }
+    });
+
     siteContent.blog.posts[index] = {
         ...siteContent.blog.posts[index],
         title: title,
         slug: document.getElementById('blog-edit-slug').value.trim() || title.toLowerCase().replace(/\s+/g, '-'),
-        excerpt: document.getElementById('blog-edit-excerpt').value.trim(),
+        excerpt: document.getElementById('blog-edit-excerpt-tr').value.trim(),
         content: content,
         image: document.getElementById('blog-edit-image').value.trim(),
         category: document.getElementById('blog-edit-category').value,
@@ -2091,6 +3134,7 @@ function saveBlogPost(index) {
         date: document.getElementById('blog-edit-date').value,
         published: document.getElementById('blog-edit-published').checked,
         tags: tags,
+        translations: translations,
         updatedAt: new Date().toISOString()
     };
 
@@ -2113,10 +3157,85 @@ function deleteBlogPost(index) {
 
 // Close blog editor modal
 function closeBlogEditor() {
+    // Clean up Quill instances
+    if (window._blogQuillInstances) {
+        Object.keys(window._blogQuillInstances).forEach(lang => {
+            delete window._blogQuillInstances[lang];
+        });
+        window._blogQuillInstances = null;
+    }
     const modal = document.getElementById('blogEditModal');
     if (modal) {
         modal.remove();
     }
+}
+
+// Handle blog image file selection and upload
+async function handleBlogImageSelect(input) {
+    const file = input.files[0];
+    if (!file) return;
+
+    // Validate file
+    const validTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
+    if (!validTypes.includes(file.type)) {
+        showToast('Geçersiz dosya formatı. JPG, PNG, WebP veya GIF kullanın.', 'error');
+        input.value = '';
+        return;
+    }
+    if (file.size > 5 * 1024 * 1024) {
+        showToast('Dosya boyutu 5MB\'dan küçük olmalıdır.', 'error');
+        input.value = '';
+        return;
+    }
+
+    // Show progress
+    const progress = document.getElementById('blogImageUploadProgress');
+    const progressBar = document.getElementById('blogImageProgressBar');
+    const fileName = document.getElementById('blogImageFileName');
+    progress.style.display = '';
+    progressBar.style.width = '20%';
+    fileName.textContent = file.name;
+
+    try {
+        progressBar.style.width = '50%';
+
+        // Upload to Supabase Storage
+        const timestamp = Date.now();
+        const ext = file.name.split('.').pop();
+        const path = `blog/${timestamp}.${ext}`;
+        const publicUrl = await uploadImage(file, path);
+
+        progressBar.style.width = '100%';
+
+        if (publicUrl) {
+            // Set URL in input and show preview
+            document.getElementById('blog-edit-image').value = publicUrl;
+            const preview = document.getElementById('blogImagePreview');
+            const img = document.getElementById('blogImagePreviewImg');
+            img.src = publicUrl;
+            preview.style.display = '';
+            showToast('Görsel yüklendi!', 'success');
+        } else {
+            showToast('Görsel yüklenemedi', 'error');
+        }
+    } catch (error) {
+        console.error('Blog image upload error:', error);
+        showToast('Görsel yükleme hatası: ' + error.message, 'error');
+    } finally {
+        setTimeout(() => {
+            progress.style.display = 'none';
+            progressBar.style.width = '0%';
+        }, 1000);
+        input.value = '';
+    }
+}
+
+// Remove blog image
+function removeBlogImage() {
+    document.getElementById('blog-edit-image').value = '';
+    document.getElementById('blogImagePreview').style.display = 'none';
+    document.getElementById('blogImagePreviewImg').src = '';
+    document.getElementById('blogImageFileName').textContent = '';
 }
 
 // =============================================
@@ -2168,15 +3287,6 @@ function saveTikTokPixelSettings() {
     showToast('TikTok Pixel ayarları kaydedildi!', 'success');
 }
 
-// Update populateAllForms to include blog
-const originalPopulateAllForms = populateAllForms;
-populateAllForms = function() {
-    originalPopulateAllForms();
-    renderBlogPosts();
-    loadGoogleAdsSettings();
-    loadTikTokPixelSettings();
-};
-
 // Load Google Ads settings
 function loadGoogleAdsSettings() {
     const saved = localStorage.getItem('girisim_analytics_settings');
@@ -2205,54 +3315,254 @@ function loadTikTokPixelSettings() {
     }
 }
 
-// Update active integrations to include new platforms
-const originalUpdateActiveIntegrations = updateActiveIntegrations;
-updateActiveIntegrations = function() {
-    const container = document.getElementById('activeIntegrations');
-    if (!container) return;
+// All integration badges are now handled in the main updateActiveIntegrations() function above
 
-    const saved = localStorage.getItem('girisim_analytics_settings');
-    const settings = saved ? JSON.parse(saved) : {};
+// =============================================
+// Header Management
+// =============================================
 
-    let badges = '';
+const defaultHeaderConfig = {
+    showTopBar: true,
+    showLanguages: true,
+    showSocial: true,
+    showWhatsappButton: true,
+    social: {
+        youtube: 'https://www.youtube.com/@girisimpackagingmachinery',
+        linkedin: 'https://www.linkedin.com/company/girisim-food-processing-and-packaging-machinery-turkey',
+        instagram: 'https://www.instagram.com/girisim.machinery.turkey',
+        facebook: 'https://www.facebook.com/PackagingMachineryTurkey',
+        tiktok: 'https://www.tiktok.com/@girisim.makina.turkiye'
+    },
+    menuItems: [
+        { label: 'Kurumsal', href: '#about', type: 'dropdown', visible: true },
+        { label: 'Makinalarımız', href: '#production', type: 'mega-menu', visible: true },
+        { label: 'Paketleme Tercihiniz', href: '#packaging-choice', type: 'dropdown', visible: true },
+        { label: 'Videolar', href: '#videos', type: 'link', visible: true },
+        { label: 'İletişim', href: '#contact', type: 'link', visible: true }
+    ],
+    corporateMenu: [
+        { label: 'Hakkımızda', href: '#about', visible: true },
+        { label: 'Misyonumuz & Vizyonumuz', href: '#mission', visible: true },
+        { label: 'Değerlerimiz', href: '#values', visible: true },
+        { label: 'Neden Girişim Makina?', href: '#why-us', visible: true },
+        { label: 'AR-GE', href: '#rnd', visible: true },
+        { label: 'Satış Sonrası Servis', href: '#service', visible: true },
+        { label: 'Sertifikalarımız', href: '#certificates', visible: true },
+        { label: 'İnsan Kaynakları', href: 'hr.html', visible: true }
+    ],
+    productionMenu: [
+        { label: 'Gofret Üretim Hatları', href: 'products/wafer.html', visible: true },
+        { label: 'Tahıl Bar Üretim Hatları', href: 'products/cereal-bar.html', visible: true },
+        { label: 'Hindistan Cevizi Dolgulu Bar', href: 'products/coconut-bar.html', visible: true },
+        { label: 'Bisküvi Kremalama Makinaları', href: 'products/biscuit-sandwiching.html', visible: true },
+        { label: 'Cookie Capping (Chocopie)', href: 'products/cookie-capping.html', visible: true },
+        { label: 'Çikolata Kaplama Makinası', href: 'products/chocolate-coating.html', visible: true },
+        { label: 'Çikolata Soğutma Tüneli', href: 'products/chocolate-cooling.html', visible: true },
+        { label: 'Çikolata Hazırlama Mutfağı', href: 'products/chocolate-preparation.html', visible: true },
+        { label: 'Pudra Şekeri Değirmeni', href: 'products/sugar-mill.html', visible: true }
+    ],
+    packagingMenu: [
+        { label: 'Yatay Flowpack Paketleme', href: 'products/flow-pack.html', visible: true },
+        { label: 'Dikey Paketleme (VFFS)', href: 'products/vffs.html', visible: true },
+        { label: 'Zarf Tipi Paketleme', href: 'products/overwrapping.html', visible: true },
+        { label: 'Thermoform Paketleme', href: 'products/thermoform.html', visible: true },
+        { label: 'Dolum Makinaları', href: 'products/filling-machines.html', visible: true }
+    ]
+};
 
-    if (settings.googleAnalytics) {
-        badges += '<span class="integration-badge active"><i class="fab fa-google"></i> GA4</span>';
+function loadHeaderConfig() {
+    // Try siteContent first (Supabase), then localStorage fallback
+    if (siteContent && siteContent.headerConfig) {
+        return { ...defaultHeaderConfig, ...siteContent.headerConfig };
     }
-    if (settings.googleTagManager) {
-        badges += '<span class="integration-badge active"><i class="fab fa-google"></i> GTM</span>';
+    const saved = localStorage.getItem('girisim_header_config');
+    if (saved) {
+        return { ...defaultHeaderConfig, ...JSON.parse(saved) };
     }
-    if (settings.googleAdsConversionId) {
-        badges += '<span class="integration-badge active"><i class="fab fa-google"></i> Google Ads</span>';
-    }
-    if (settings.facebookPixel) {
-        badges += '<span class="integration-badge active"><i class="fab fa-facebook"></i> Pixel</span>';
-    }
-    if (settings.tiktokPixel) {
-        badges += '<span class="integration-badge active"><i class="fab fa-tiktok"></i> TikTok</span>';
-    }
-    if (settings.googleSearchConsole) {
-        badges += '<span class="integration-badge active"><i class="fab fa-google"></i> GSC</span>';
-    }
-    if (settings.yandexWebmaster) {
-        badges += '<span class="integration-badge active"><i class="fab fa-yandex"></i> Yandex WM</span>';
-    }
-    if (settings.yandexMetrica) {
-        badges += '<span class="integration-badge active"><i class="fab fa-yandex"></i> Metrica</span>';
-    }
-    if (settings.youtubeChannel) {
-        badges += '<span class="integration-badge active"><i class="fab fa-youtube"></i> YouTube</span>';
-    }
-    if (settings.linkedinInsight) {
-        badges += '<span class="integration-badge active"><i class="fab fa-linkedin"></i> LinkedIn</span>';
-    }
-    if (settings.microsoftClarity) {
-        badges += '<span class="integration-badge active"><i class="fas fa-fire"></i> Clarity</span>';
-    }
-
-    if (!badges) {
-        badges = '<span class="integration-badge inactive">Henüz entegrasyon yok</span>';
-    }
-
-    container.innerHTML = badges;
+    return { ...defaultHeaderConfig };
 }
+
+function saveHeaderConfig(config) {
+    // Save to siteContent (will be persisted to Supabase on "Save All")
+    if (siteContent) {
+        siteContent.headerConfig = config;
+    }
+    // Also keep localStorage as fast cache
+    localStorage.setItem('girisim_header_config', JSON.stringify(config));
+    markAsChanged();
+}
+
+function updateHeaderSetting(key, value) {
+    const config = loadHeaderConfig();
+    config[key] = value;
+    saveHeaderConfig(config);
+    showToast('Ayar güncellendi', 'success');
+}
+
+function initHeaderManagement() {
+    const config = loadHeaderConfig();
+    const topbarEl = document.getElementById('header-show-topbar');
+    const langEl = document.getElementById('header-show-languages');
+    const socialEl = document.getElementById('header-show-social');
+    const waEl = document.getElementById('header-show-whatsapp-btn');
+    if (topbarEl) topbarEl.checked = config.showTopBar;
+    if (langEl) langEl.checked = config.showLanguages;
+    if (socialEl) socialEl.checked = config.showSocial;
+    if (waEl) waEl.checked = config.showWhatsappButton;
+    if (config.social) {
+        ['youtube', 'linkedin', 'instagram', 'facebook', 'tiktok'].forEach(field => {
+            const input = document.getElementById('header-' + field);
+            if (input && config.social[field]) input.value = config.social[field];
+        });
+    }
+    renderHeaderMenuItems(config);
+    renderCorporateMenuItems(config);
+    renderProductionMenuItems(config);
+    renderPackagingMenuItems(config);
+}
+
+function renderHeaderMenuItems(config) {
+    const container = document.getElementById('header-menu-editor');
+    if (!container) return;
+    container.innerHTML = config.menuItems.map((item, index) => `
+        <div class="menu-item-row" data-index="${index}">
+            <label class="visibility-toggle"><input type="checkbox" ${item.visible ? 'checked' : ''} onchange="toggleHeaderMenuItem(${index}, this.checked)"></label>
+            <input type="text" value="${escHtml(item.label)}" class="menu-label-input" onchange="updateHeaderMenuLabel(${index}, this.value)" placeholder="Menü adı">
+            <span class="menu-type-badge">${item.type}</span>
+        </div>
+    `).join('');
+}
+
+function renderCorporateMenuItems(config) {
+    const container = document.getElementById('header-corporate-editor');
+    if (!container) return;
+    container.innerHTML = config.corporateMenu.map((item, index) => `
+        <div class="submenu-item-row" data-index="${index}">
+            <label class="visibility-toggle"><input type="checkbox" ${item.visible ? 'checked' : ''} onchange="toggleCorporateMenuItem(${index}, this.checked)"></label>
+            <input type="text" value="${escHtml(item.label)}" class="menu-label-input" onchange="updateCorporateMenuLabel(${index}, this.value)">
+            <input type="text" value="${escHtml(item.href)}" class="menu-href-input" onchange="updateCorporateMenuHref(${index}, this.value)">
+            <button class="btn-icon delete" onclick="deleteCorporateMenuItem(${index})"><i class="fas fa-trash"></i></button>
+        </div>
+    `).join('');
+}
+
+function renderProductionMenuItems(config) {
+    const container = document.getElementById('header-production-editor');
+    if (!container) return;
+    container.innerHTML = config.productionMenu.map((item, index) => `
+        <div class="submenu-item-row" data-index="${index}">
+            <label class="visibility-toggle"><input type="checkbox" ${item.visible ? 'checked' : ''} onchange="toggleProductionMenuItem(${index}, this.checked)"></label>
+            <input type="text" value="${escHtml(item.label)}" class="menu-label-input" onchange="updateProductionMenuLabel(${index}, this.value)">
+            <button class="btn-icon delete" onclick="deleteProductionMenuItem(${index})"><i class="fas fa-trash"></i></button>
+        </div>
+    `).join('');
+}
+
+function renderPackagingMenuItems(config) {
+    const container = document.getElementById('header-packaging-menu-editor');
+    if (!container) return;
+    container.innerHTML = config.packagingMenu.map((item, index) => `
+        <div class="submenu-item-row" data-index="${index}">
+            <label class="visibility-toggle"><input type="checkbox" ${item.visible ? 'checked' : ''} onchange="togglePackagingMenuItem(${index}, this.checked)"></label>
+            <input type="text" value="${escHtml(item.label)}" class="menu-label-input" onchange="updatePackagingMenuLabel(${index}, this.value)">
+            <button class="btn-icon delete" onclick="deletePackagingMenuItem(${index})"><i class="fas fa-trash"></i></button>
+        </div>
+    `).join('');
+}
+
+function toggleHeaderMenuItem(index, visible) { const config = loadHeaderConfig(); config.menuItems[index].visible = visible; saveHeaderConfig(config); }
+function toggleCorporateMenuItem(index, visible) { const config = loadHeaderConfig(); config.corporateMenu[index].visible = visible; saveHeaderConfig(config); }
+function toggleProductionMenuItem(index, visible) { const config = loadHeaderConfig(); config.productionMenu[index].visible = visible; saveHeaderConfig(config); }
+function togglePackagingMenuItem(index, visible) { const config = loadHeaderConfig(); config.packagingMenu[index].visible = visible; saveHeaderConfig(config); }
+
+function updateHeaderMenuLabel(index, label) { const config = loadHeaderConfig(); config.menuItems[index].label = label; saveHeaderConfig(config); }
+function updateCorporateMenuLabel(index, label) { const config = loadHeaderConfig(); config.corporateMenu[index].label = label; saveHeaderConfig(config); }
+function updateCorporateMenuHref(index, href) { const config = loadHeaderConfig(); config.corporateMenu[index].href = href; saveHeaderConfig(config); }
+function updateProductionMenuLabel(index, label) { const config = loadHeaderConfig(); config.productionMenu[index].label = label; saveHeaderConfig(config); }
+function updatePackagingMenuLabel(index, label) { const config = loadHeaderConfig(); config.packagingMenu[index].label = label; saveHeaderConfig(config); }
+
+function addHeaderMenuItem() { const config = loadHeaderConfig(); config.menuItems.push({ label: 'Yeni Menü', href: '#', type: 'link', visible: true }); saveHeaderConfig(config); renderHeaderMenuItems(config); showToast('Yeni menü öğesi eklendi', 'success'); }
+function addCorporateMenuItem() { const config = loadHeaderConfig(); config.corporateMenu.push({ label: 'Yeni Alt Menü', href: '#', visible: true }); saveHeaderConfig(config); renderCorporateMenuItems(config); showToast('Yeni alt menü eklendi', 'success'); }
+function addProductionMenuItem() { const config = loadHeaderConfig(); config.productionMenu.push({ label: 'Yeni Ürün', href: 'products/new.html', visible: true }); saveHeaderConfig(config); renderProductionMenuItems(config); showToast('Yeni üretim makinası eklendi', 'success'); }
+function addPackagingMenuItem() { const config = loadHeaderConfig(); config.packagingMenu.push({ label: 'Yeni Paketleme', href: 'products/new.html', visible: true }); saveHeaderConfig(config); renderPackagingMenuItems(config); showToast('Yeni paketleme makinası eklendi', 'success'); }
+
+function deleteCorporateMenuItem(index) { if (confirm('Silmek istediğinizden emin misiniz?')) { const config = loadHeaderConfig(); config.corporateMenu.splice(index, 1); saveHeaderConfig(config); renderCorporateMenuItems(config); showToast('Menü öğesi silindi', 'warning'); }}
+function deleteProductionMenuItem(index) { if (confirm('Silmek istediğinizden emin misiniz?')) { const config = loadHeaderConfig(); config.productionMenu.splice(index, 1); saveHeaderConfig(config); renderProductionMenuItems(config); showToast('Menü öğesi silindi', 'warning'); }}
+function deletePackagingMenuItem(index) { if (confirm('Silmek istediğinizden emin misiniz?')) { const config = loadHeaderConfig(); config.packagingMenu.splice(index, 1); saveHeaderConfig(config); renderPackagingMenuItems(config); showToast('Menü öğesi silindi', 'warning'); }}
+
+// =============================================
+// Product Package Images Management
+// =============================================
+
+function getProductPackageImages() {
+    // Try siteContent first
+    if (siteContent && siteContent.products) {
+        return siteContent.products;
+    }
+    return JSON.parse(localStorage.getItem('girisim_product_package_images') || '{}');
+}
+function saveProductPackageImages(config) {
+    // Save to siteContent (Supabase on "Save All")
+    if (siteContent) {
+        siteContent.products = config;
+        markAsChanged();
+    }
+    localStorage.setItem('girisim_product_package_images', JSON.stringify(config));
+}
+
+function editProduct(productId) {
+    const images = getProductPackageImages();
+    const productImages = images[productId] || [];
+    const modal = document.createElement('div');
+    modal.className = 'modal-overlay';
+    modal.id = 'productEditModal';
+    modal.innerHTML = `
+        <div class="modal-content product-editor-modal">
+            <div class="modal-header">
+                <h3><i class="fas fa-images"></i> ${productId} - Paket Görselleri</h3>
+                <button class="modal-close" onclick="closeProductEditor()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <p class="settings-desc">Ürün sayfasında makina görsellerinin altında gösterilecek paket görsellerini ekleyin.</p>
+                <div class="package-images-list" id="package-images-list">
+                    ${productImages.map((img, i) => `
+                        <div class="package-image-item" data-index="${i}">
+                            <img src="${img.url}" alt="Paket ${i+1}" class="package-preview">
+                            <div class="package-image-info">
+                                <input type="text" value="${escHtml(img.title||'')}" placeholder="Başlık" onchange="updatePackageImageTitle('${productId}',${i},this.value)">
+                                <input type="url" value="${escHtml(img.url)}" placeholder="URL" onchange="updatePackageImageUrl('${productId}',${i},this.value)">
+                            </div>
+                            <button class="btn-icon delete" onclick="deletePackageImage('${productId}',${i})"><i class="fas fa-trash"></i></button>
+                        </div>
+                    `).join('') || '<p class="empty-message">Henüz paket görseli eklenmedi.</p>'}
+                </div>
+                <div class="add-package-image">
+                    <h4>Yeni Görsel Ekle</h4>
+                    <div class="form-row">
+                        <div class="form-group"><label>Görsel URL</label><input type="url" id="new-package-url" placeholder="https://..."></div>
+                        <div class="form-group"><label>Başlık</label><input type="text" id="new-package-title" placeholder="Paket adı"></div>
+                    </div>
+                    <button class="btn btn-primary" onclick="addPackageImage('${productId}')"><i class="fas fa-plus"></i> Görsel Ekle</button>
+                </div>
+            </div>
+            <div class="modal-footer"><button class="btn btn-outline" onclick="closeProductEditor()">Kapat</button></div>
+        </div>`;
+    document.body.appendChild(modal);
+}
+
+function addPackageImage(productId) {
+    const url = document.getElementById('new-package-url').value.trim();
+    if (!url) { showToast('Görsel URL gerekli', 'error'); return; }
+    const images = getProductPackageImages();
+    if (!images[productId]) images[productId] = [];
+    images[productId].push({ url: url, title: document.getElementById('new-package-title').value.trim() });
+    saveProductPackageImages(images);
+    closeProductEditor();
+    editProduct(productId);
+    showToast('Paket görseli eklendi', 'success');
+}
+
+function updatePackageImageUrl(productId, index, url) { const images = getProductPackageImages(); if (images[productId]?.[index]) { images[productId][index].url = url; saveProductPackageImages(images); }}
+function updatePackageImageTitle(productId, index, title) { const images = getProductPackageImages(); if (images[productId]?.[index]) { images[productId][index].title = title; saveProductPackageImages(images); }}
+function deletePackageImage(productId, index) { if (confirm('Görseli silmek istediğinizden emin misiniz?')) { const images = getProductPackageImages(); if (images[productId]) { images[productId].splice(index,1); saveProductPackageImages(images); closeProductEditor(); editProduct(productId); showToast('Görsel silindi','warning'); }}}
+function closeProductEditor() { const modal = document.getElementById('productEditModal'); if (modal) modal.remove(); }

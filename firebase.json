@@ -1,20 +1,40 @@
 {
   "hosting": {
+    "site": "girisim-makina-2b308",
     "public": ".",
     "cleanUrls": true,
     "ignore": [
       "firebase.json",
       "**/.*",
       "**/node_modules/**",
-      "**/*.md"
+      "**/venv/**",
+      "**/__pycache__/**",
+      "**/*.py",
+      "**/*.pyc",
+      "**/*.so",
+      "**/*.dylib",
+      "**/*.exe",
+      "**/*.dll",
+      "**/*.md",
+      "**/*.xls",
+      "**/*.xlsx"
     ],
     "headers": [
+      {
+        "source": "**/*.html",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "no-cache, no-store, must-revalidate"
+          }
+        ]
+      },
       {
         "source": "**/*.@(js|css)",
         "headers": [
           {
             "key": "Cache-Control",
-            "value": "max-age=31536000"
+            "value": "no-cache, must-revalidate"
           }
         ]
       },
@@ -23,7 +43,7 @@
         "headers": [
           {
             "key": "Cache-Control",
-            "value": "max-age=31536000"
+            "value": "max-age=86400"
           }
         ]
       }

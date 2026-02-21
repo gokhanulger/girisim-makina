@@ -1,0 +1,28 @@
+# Large folders
+wetransfer_*/
+wetransfer*/
+
+# Firebase (no longer needed)
+.firebase/
+firebase.json
+.firebaserc
+
+# Git
+.git/
+.gitignore
+
+# Development
+node_modules/
+*.log
+.DS_Store
+
+# Excel files
+*.xls
+*.xlsx
+
+# Markdown docs
+*.md
+
+# Editor configs
+.vscode/
+.idea/

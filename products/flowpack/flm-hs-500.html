@@ -6,8 +6,8 @@
     <meta name="description" content="FLM-HS 500 High Speed Flowpack Makinesi - Tam otomatik ürün besleme sistemi ile 500+ paket/dakika hız.">
     <title>FLM-HS 500 High Speed Flowpack | Girişim Makina</title>
     <link rel="icon" type="image/png" href="../../favicon.png">
-    <link rel="stylesheet" href="../../css/style.css">
-    <link rel="stylesheet" href="../../css/product.css">
+    <link rel="stylesheet" href="../../css/style.css?v=20260222a">
+    <link rel="stylesheet" href="../../css/product.css?v=20260222a">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
@@ -18,12 +18,18 @@
     <!-- Breadcrumb -->
     <div class="breadcrumb-bar">
         <div class="container">
-            <a href="../flow-pack.html"><i class="fas fa-arrow-left"></i> <span data-translate="breadcrumb.allFlowpack">Tüm Flowpack Modelleri</span></a>
+            <nav class="breadcrumb-nav">
+                <a href="../../index.html">Ana Sayfa</a>
+                <i class="fas fa-chevron-right"></i>
+                <a href="../flow-pack.html" data-translate="breadcrumb.allFlowpack">Flowpack Makineleri</a>
+                <i class="fas fa-chevron-right"></i>
+                <span>FLM-HS 500</span>
+            </nav>
         </div>
     </div>
 
+    <!-- Product Hero with Gallery -->
     <section class="product-hero">
-        <div class="product-hero-bg" style="background-image: url('../../images/FLM-HS-500 High Speed Flowpack Packaging Machine with Automatic Product Feeding System.jpg');"></div>
         <div class="container">
             <div class="product-hero-content">
                 <span class="product-tag" data-translate="flowpack.highSpeed">Yüksek Hız Otomatik (High Speed)</span>
@@ -34,74 +40,124 @@
                     <a href="https://www.youtube.com/@girisimpackagingmachinery" target="_blank" class="btn btn-outline btn-lg"><i class="fab fa-youtube"></i> <span data-translate="buttons.watchVideo">Video İzle</span></a>
                 </div>
             </div>
+            <div class="product-hero-gallery">
+                <div class="product-main-image">
+                    <img src="../../images/FLM-HS-500-nobg.png" alt="FLM-HS 500 High Speed Flowpack Makinesi">
+                </div>
+                <div class="product-thumbnails">
+                    <div class="product-thumbnail active">
+                        <img src="../../images/FLM-HS-500-nobg.png" data-full="../../images/FLM-HS-500-nobg.png" alt="FLM-HS 500 - 1">
+                    </div>
+                    <div class="product-thumbnail">
+                        <img src="../../images/FLM-HS-500 High Speed Flowpack Packaging Machine with Automatic Product Feeding System.jpg" data-full="../../images/FLM-HS-500 High Speed Flowpack Packaging Machine with Automatic Product Feeding System.jpg" alt="FLM-HS 500 - 2">
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
-    <section class="product-overview">
+    <!-- Key Features Strip -->
+    <section class="product-key-features">
         <div class="container">
-            <div class="overview-grid">
-                <div class="overview-content">
+            <div class="key-features-grid">
+                <div class="key-feature">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <div>
+                        <strong>500+</strong>
+                        <span data-translate="specs.packPerMin">paket/dakika</span>
+                    </div>
+                </div>
+                <div class="key-feature">
+                    <i class="fas fa-sync-alt"></i>
+                    <div>
+                        <strong data-translate="features.rotaryJaw">Döner Çene</strong>
+                        <span>Rotary Jaw</span>
+                    </div>
+                </div>
+                <div class="key-feature">
+                    <i class="fas fa-film"></i>
+                    <div>
+                        <strong>Max. 350 mm</strong>
+                        <span data-translate="specs.filmWidth">Film Genişliği</span>
+                    </div>
+                </div>
+                <div class="key-feature">
+                    <i class="fas fa-bolt"></i>
+                    <div>
+                        <strong>8.0 kW</strong>
+                        <span data-translate="specs.power">Güç Tüketimi</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Description -->
+    <section class="product-description">
+        <div class="container">
+            <div class="description-grid">
+                <div class="description-content">
                     <h2 data-translate="flmhs500.overviewTitle">Maksimum Hız, <span class="highlight">Maksimum Verimlilik</span></h2>
                     <p data-translate="flmhs500.overviewDesc1">FLM-HS 500, yüksek hacimli üretim hatları için tasarlanmış en hızlı flowpack modelimizdir. Tam otomatik ürün besleme sistemi sayesinde manuel müdahale olmadan sürekli yüksek hızda üretim yapar.</p>
                     <p data-translate="flmhs500.overviewDesc2">Bisküvi, çikolata bar, şekerleme ve benzeri küçük-orta boy ürünlerin yüksek kapasiteli paketlenmesi için idealdir. Servo motor teknolojisi ve hassas kontrol sistemleri ile minimum hata oranı.</p>
-                    <div class="overview-stats">
-                        <div class="stat-item">
-                            <span class="stat-number">500+</span>
-                            <span class="stat-label" data-translate="stats.packPerMin">Paket/Dakika</span>
+
+                    <div class="feature-list">
+                        <div class="feature-list-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span data-translate="features.highSpeed500Desc">Sınıfının en hızlı makinesi. Yüksek hacimli üretim hatları için.</span>
                         </div>
-                        <div class="stat-item">
-                            <span class="stat-number">Tam</span>
-                            <span class="stat-label" data-translate="stats.automatic">Otomatik</span>
+                        <div class="feature-list-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span data-translate="features.fullAutoFeedDesc">Otomatik ürün besleme sistemi. Manuel müdahale gerektirmez.</span>
                         </div>
-                        <div class="stat-item">
-                            <span class="stat-number">%99</span>
-                            <span class="stat-label" data-translate="stats.efficiency">Verimlilik</span>
+                        <div class="feature-list-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span data-translate="features.servoTechDesc">Tam servo tahrik. Hassas kontrol, düşük bakım.</span>
+                        </div>
+                        <div class="feature-list-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span data-translate="features.continuousDesc">7/24 kesintisiz çalışma kapasitesi. Yüksek dayanıklılık.</span>
+                        </div>
+                        <div class="feature-list-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span data-translate="features.lineIntegrationDesc">Üretim hattınıza tam entegrasyon. SCADA uyumlu.</span>
                         </div>
                     </div>
                 </div>
-                <div class="overview-image">
-                    <img src="../../images/FLM-HS-500 High Speed Flowpack Packaging Machine with Automatic Product Feeding System.jpg" alt="FLM-HS 500 High Speed">
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <section class="product-features">
-        <div class="container">
-            <div class="section-header text-center">
-                <span class="section-tag" data-translate="sections.features">Özellikler</span>
-                <h2>FLM-HS 500 <span class="highlight" data-translate="sections.techSpecs">Teknik Özellikler</span></h2>
-            </div>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-bolt"></i></div>
-                    <h3 data-translate="features.highSpeed500">500+ Paket/Dakika</h3>
-                    <p data-translate="features.highSpeed500Desc">Sınıfının en hızlı makinesi. Yüksek hacimli üretim hatları için.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-robot"></i></div>
-                    <h3 data-translate="features.fullAutoFeed">Tam Otomatik Besleme</h3>
-                    <p data-translate="features.fullAutoFeedDesc">Otomatik ürün besleme sistemi. Manuel müdahale gerektirmez.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-microchip"></i></div>
-                    <h3 data-translate="features.servoTech">Servo Teknolojisi</h3>
-                    <p data-translate="features.servoTechDesc">Tam servo tahrik. Hassas kontrol, düşük bakım.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-sync-alt"></i></div>
-                    <h3 data-translate="features.continuous">Sürekli Üretim</h3>
-                    <p data-translate="features.continuousDesc">7/24 kesintisiz çalışma kapasitesi. Yüksek dayanıklılık.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
-                    <h3 data-translate="features.efficiency99">%99 Verimlilik</h3>
-                    <p data-translate="features.efficiency99Desc">Minimum hata oranı. Maksimum ürün çıkışı.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-network-wired"></i></div>
-                    <h3 data-translate="features.lineIntegration">Hat Entegrasyonu</h3>
-                    <p data-translate="features.lineIntegrationDesc">Üretim hattınıza tam entegrasyon. SCADA uyumlu.</p>
+                <!-- Inline Quote Form -->
+                <div class="product-quote-form">
+                    <div class="quote-form-card">
+                        <h3 data-translate="quoteForm.title">Teklif İsteyin</h3>
+                        <p data-translate="quoteForm.subtitle">Uzmanlarımız size en kısa sürede dönüş yapacaktır.</p>
+                        <form id="productQuoteForm" onsubmit="submitQuoteForm(event)">
+                            <input type="hidden" name="product" value="FLM-HS 500">
+                            <div class="form-group">
+                                <input type="text" name="name" placeholder="Ad Soyad *" data-translate-placeholder="quoteForm.name" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" name="email" placeholder="E-posta *" data-translate-placeholder="quoteForm.email" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="tel" name="phone" placeholder="Telefon *" data-translate-placeholder="quoteForm.phone">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="company" placeholder="Firma Adı *" data-translate-placeholder="quoteForm.company">
+                            </div>
+                            <div class="form-group">
+                                <textarea name="message" rows="3" placeholder="Mesajınız (opsiyonel)" data-translate-placeholder="quoteForm.message"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block">
+                                <i class="fas fa-paper-plane"></i> <span data-translate="quoteForm.submit">Teklif Talebi Gönder</span>
+                            </button>
+                        </form>
+                        <div class="quote-form-footer">
+                            <span data-translate="quoteForm.or">veya</span>
+                            <a href="https://wa.me/905468792927?text=FLM-HS%20500%20high%20speed%20flowpack%20hakkında%20bilgi%20almak%20istiyorum" target="_blank">
+                                <i class="fab fa-whatsapp"></i> WhatsApp
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -238,24 +294,57 @@
     <div id="footer-placeholder"></div>
 
     <!-- Scripts -->
-    <script src="../../js/main.js"></script>
-    <script src="../../js/translations.js"></script>
-    <script src="../../js/product-translations.js"></script>
-    <script src="../../js/flowpack-translations.js"></script>
-    <script src="../../js/header-include.js"></script>
+    <script src="../../js/main.js?v=20260222a"></script>
+    <script src="../../js/translations.js?v=20260222a"></script>
+    <script src="../../js/product-translations.js?v=20260222a"></script>
+    <script src="../../js/flowpack-translations.js?v=20260222a"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../../js/supabase-init.js?v=20260222a"></script>
+    <script src="../../js/site-loader.js?v=20260222a"></script>
+    <script src="../../js/seo-loader.js?v=20260222a"></script>
+    <script src="../../js/header-include.js?v=20260222a"></script>
+    <script src="../../js/product-gallery.js?v=20260222a"></script>
+    <script src="../../js/product-loader.js?v=20260222a"></script>
 
-    <!--Start of Tawk.to Script-->
-    <script type="text/javascript">
-    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-    (function(){
-    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-    s1.async=true;
-    s1.src='https://embed.tawk.to/694f0b9fdab8b61980b541b9/1jdecaqaj';
-    s1.charset='UTF-8';
-    s1.setAttribute('crossorigin','*');
-    s0.parentNode.insertBefore(s1,s0);
-    })();
+    <script>
+    function submitQuoteForm(e) {
+        e.preventDefault();
+        const form = e.target;
+        const data = new FormData(form);
+        const product = data.get('product');
+        const name = data.get('name');
+        const email = data.get('email');
+        const phone = data.get('phone') || '-';
+        const company = data.get('company') || '-';
+        const message = data.get('message') || '';
+
+        // WhatsApp message as fallback
+        const whatsappMsg = encodeURIComponent(
+            `Merhaba, ${product} için teklif almak istiyorum.\n\nAd: ${name}\nE-posta: ${email}\nTelefon: ${phone}\nFirma: ${company}\n${message ? 'Mesaj: ' + message : ''}`
+        );
+
+        // Try Supabase first
+        if (typeof window.supabase !== 'undefined') {
+            window.supabase.from('quote_requests').insert({
+                product: product,
+                name: name,
+                email: email,
+                phone: phone,
+                company: company,
+                message: message,
+                source: window.location.href,
+                created_at: new Date().toISOString()
+            }).then(function(res) {
+                if (res.error) {
+                    window.open('https://wa.me/905468792927?text=' + whatsappMsg, '_blank');
+                } else {
+                    form.innerHTML = '<div class="quote-success"><i class="fas fa-check-circle"></i><h4>Talebiniz Alındı!</h4><p>En kısa sürede size dönüş yapacağız.</p></div>';
+                }
+            });
+        } else {
+            window.open('https://wa.me/905468792927?text=' + whatsappMsg, '_blank');
+        }
+    }
     </script>
-    <!--End of Tawk.to Script-->
 </body>
 </html>
