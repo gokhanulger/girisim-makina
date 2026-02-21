@@ -2,6 +2,40 @@
 // GIRIŞIM MAKİNA - Main JavaScript
 // =============================================
 
+// Video Modal - available on all pages
+function openVideo(videoId) {
+    var modal = document.getElementById('videoModal');
+    var iframe = document.getElementById('videoFrame');
+    if (!modal || !iframe) {
+        // Create modal if it doesn't exist (product pages)
+        modal = document.createElement('div');
+        modal.id = 'videoModal';
+        modal.className = 'video-modal';
+        modal.style.cssText = 'display:flex;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:10000;align-items:center;justify-content:center;';
+        modal.innerHTML = '<div style="position:relative;width:90%;max-width:900px;aspect-ratio:16/9;"><iframe id="videoFrame" src="https://www.youtube.com/embed/' + videoId + '?autoplay=1&rel=0" style="width:100%;height:100%;border:none;" allow="autoplay;encrypted-media" allowfullscreen></iframe><button onclick="closeVideo()" style="position:absolute;top:-40px;right:0;background:none;border:none;color:white;font-size:2rem;cursor:pointer;">&times;</button></div>';
+        document.body.appendChild(modal);
+    } else {
+        iframe.src = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1&rel=0';
+        modal.style.display = 'flex';
+    }
+    document.body.style.overflow = 'hidden';
+}
+
+function closeVideo() {
+    var modal = document.getElementById('videoModal');
+    if (modal) {
+        modal.style.display = 'none';
+        var iframe = document.getElementById('videoFrame');
+        if (iframe) iframe.src = '';
+    }
+    document.body.style.overflow = '';
+}
+
+// Close video on Escape key
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeVideo();
+});
+
 document.addEventListener('DOMContentLoaded', function() {
 
     // =============================================

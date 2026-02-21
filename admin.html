@@ -7,7 +7,7 @@
     <link rel="icon" type="image/png" href="/favicon.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/admin.css?v=20260222a">
+    <link rel="stylesheet" href="css/admin.css?v=20260222b">
     <!-- Quill Rich Text Editor -->
     <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet">
 </head>
@@ -35,7 +35,7 @@
                 <div id="loginError" class="error-message"></div>
             </form>
             <div class="login-info">
-                <p><i class="fas fa-info-circle"></i> Firebase Authentication ile giriş yapın.</p>
+                <p><i class="fas fa-info-circle"></i> Supabase Authentication ile giriş yapın.</p>
             </div>
         </div>
     </div>
@@ -165,7 +165,7 @@
                         <div class="dashboard-card">
                             <div class="card-icon"><i class="fas fa-database"></i></div>
                             <div class="card-content">
-                                <h3>Firebase</h3>
+                                <h3>Supabase</h3>
                                 <p id="firebaseStatus">Bağlanıyor...</p>
                             </div>
                         </div>
@@ -195,27 +195,27 @@
                         </div>
                     </div>
                     <div class="setup-guide">
-                        <h3><i class="fas fa-rocket"></i> Firebase Kurulum Rehberi</h3>
+                        <h3><i class="fas fa-rocket"></i> Supabase Kurulum Rehberi</h3>
                         <ol>
                             <li>
-                                <strong>Firebase Console'a gidin:</strong>
-                                <a href="https://console.firebase.google.com" target="_blank">console.firebase.google.com</a>
+                                <strong>Supabase Dashboard'a gidin:</strong>
+                                <a href="https://supabase.com/dashboard" target="_blank">supabase.com/dashboard</a>
                             </li>
                             <li><strong>Yeni proje oluşturun</strong> veya mevcut projeyi seçin</li>
-                            <li><strong>Web uygulaması ekleyin</strong> (Project Settings > Your apps > Web)</li>
+                            <li><strong>site_content</strong> tablosunu oluşturun (Table Editor)</li>
                             <li>
-                                <strong>Firestore Database</strong> oluşturun (Build > Firestore Database)
-                                <br><small>Test modunda başlayabilirsiniz</small>
+                                <strong>Row Level Security (RLS)</strong> aktifleştirin
+                                <br><small>Public read + Authenticated write politikaları</small>
                             </li>
                             <li>
-                                <strong>Authentication</strong> aktifleştirin (Build > Authentication)
+                                <strong>Authentication</strong> aktifleştirin (Authentication > Providers)
                                 <br><small>Email/Password sign-in metodunu etkinleştirin</small>
                             </li>
                             <li>
                                 <strong>Admin kullanıcısı oluşturun</strong> (Authentication > Users > Add user)
                             </li>
                             <li>
-                                <strong>js/firebase-config.js</strong> dosyasını Firebase bilgilerinizle güncelleyin
+                                <strong>js/supabase-init.js</strong> dosyasındaki URL ve ANON_KEY'i güncelleyin
                             </li>
                         </ol>
                     </div>
@@ -1259,8 +1259,8 @@
 
     <!-- Supabase SDK -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="js/supabase-init.js?v=20260222a"></script>
+    <script src="js/supabase-init.js?v=20260222b"></script>
     <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
-    <script src="js/admin.js?v=20260222a"></script>
+    <script src="js/admin.js?v=20260222b"></script>
 </body>
 </html>
