@@ -5,3 +5,14 @@ node_modules/
 wetransfer_*/
 .vercel
 .env*.local
+venv/
+supabase/
+.firebase/
+*.xls
+*.doc
+populate-blog*.js
+extend-blogs.js
+fix-videos.js
+update-blog*.js
+supabase-rls.sql
+.vercelignore
