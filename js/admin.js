@@ -209,6 +209,33 @@ async function loadContent() {
     }
 }
 
+// SEO: Load meta fields for a specific page
+function loadSeoForPage(pageId) {
+    if (!siteContent.seo) siteContent.seo = {};
+    if (!siteContent.seo[pageId]) siteContent.seo[pageId] = { title: '', description: '', keywords: '', ogImage: '', canonical: '' };
+
+    var pageSeo = siteContent.seo[pageId];
+    var fields = ['title', 'description', 'keywords', 'ogImage', 'canonical'];
+    var selector = document.getElementById('seo-page-selector');
+    var pageLabel = selector ? selector.options[selector.selectedIndex].text : pageId;
+    var pageTitle = document.getElementById('seo-page-title');
+    if (pageTitle) pageTitle.textContent = pageLabel + ' SEO';
+
+    fields.forEach(function(field) {
+        var el = document.getElementById('seo-' + field);
+        if (el) {
+            el.value = pageSeo[field] || '';
+            el.setAttribute('data-path', 'seo.' + pageId + '.' + field);
+            // Re-bind input listener
+            el.oninput = function() {
+                if (!siteContent.seo[pageId]) siteContent.seo[pageId] = {};
+                siteContent.seo[pageId][field] = el.value;
+                markAsChanged();
+            };
+        }
+    });
+}
+
 function populateAllForms() {
     // Populate simple inputs with data-path attribute
     document.querySelectorAll('[data-path]').forEach(input => {
@@ -1484,6 +1511,10 @@ function navigateToSection(section) {
     }
     if (section === 'header') {
         if (typeof initHeaderManagement === 'function') initHeaderManagement();
+    }
+    if (section === 'seo') {
+        var selector = document.getElementById('seo-page-selector');
+        loadSeoForPage(selector ? selector.value : 'homepage');
     }
 
     // Close sidebar on mobile

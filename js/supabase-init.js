@@ -296,7 +296,7 @@ const defaultSiteContent = {
     seo: {
         homepage: {
             title: "Girişim Makina | Gıda İşleme ve Paketleme Makineleri",
-            description: "1985'ten beri gıda işleme ve paketleme makineleri üretiyoruz. Gofret hatları, flow pack, çikolata kaplama ve daha fazlası.",
+            description: "1995'ten beri gıda işleme ve paketleme makineleri üretiyoruz. Gofret hatları, flow pack, çikolata kaplama ve daha fazlası.",
             keywords: "paketleme makinesi, flow pack, gofret üretim hattı, çikolata kaplama",
             ogImage: ""
         }

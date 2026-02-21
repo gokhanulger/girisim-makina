@@ -56,6 +56,17 @@
             metaKeys.content = seo.keywords;
         }
 
+        // Canonical URL
+        if (seo.canonical) {
+            var link = document.querySelector('link[rel="canonical"]');
+            if (!link) {
+                link = document.createElement('link');
+                link.rel = 'canonical';
+                document.head.appendChild(link);
+            }
+            link.href = seo.canonical;
+        }
+
         // Open Graph tags
         if (seo.title) setOGTag('og:title', seo.title);
         if (seo.description) setOGTag('og:description', seo.description);

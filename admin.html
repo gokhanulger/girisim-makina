@@ -846,36 +846,63 @@
                 <section id="section-seo" class="admin-section">
                     <div class="section-card">
                         <h2><i class="fas fa-search"></i> SEO Ayarları</h2>
-                        <p class="section-desc">Arama motoru optimizasyonu ayarlarını yönetin.</p>
+                        <p class="section-desc">Her sayfa için arama motoru optimizasyonu ayarlarını yönetin.</p>
 
-                        <h3>Ana Sayfa SEO</h3>
+                        <div class="form-group">
+                            <label>Sayfa Seçin</label>
+                            <select id="seo-page-selector" onchange="loadSeoForPage(this.value)" style="width:100%;padding:10px;border:2px solid #e0e0e0;border-radius:8px;font-size:1rem;">
+                                <optgroup label="Ana Sayfalar">
+                                    <option value="homepage">Ana Sayfa</option>
+                                    <option value="blog">Blog</option>
+                                    <option value="hr">İnsan Kaynakları</option>
+                                    <option value="packaging-by-type">Paket Tipine Göre</option>
+                                    <option value="packaging-by-product">Ürününüze Göre</option>
+                                </optgroup>
+                                <optgroup label="Üretim Hatları">
+                                    <option value="product-wafer">Wafer Üretim Hatları</option>
+                                    <option value="product-cereal-bar">Cereal Bar Hatları</option>
+                                    <option value="product-protein-bar">Protein Bar Hatları</option>
+                                    <option value="product-coconut-bar">Hindistan Cevizi Bar</option>
+                                    <option value="product-biscuit-sandwiching">Bisküvi Kremalama</option>
+                                    <option value="product-cookie-capping">Cookie Capping</option>
+                                    <option value="product-chocolate-coating">Çikolata Kaplama</option>
+                                    <option value="product-chocolate-cooling">Çikolata Soğutma</option>
+                                    <option value="product-chocolate-preparation">Çikolata Hazırlama</option>
+                                    <option value="product-sugar-mill">Pudra Şekeri Değirmeni</option>
+                                </optgroup>
+                                <optgroup label="Paketleme Makineleri">
+                                    <option value="product-flow-pack">Flow Pack</option>
+                                    <option value="product-overwrapping">Overwrapping</option>
+                                    <option value="product-thermoform">Thermoform</option>
+                                    <option value="product-vffs">VFFS Dikey Dolum</option>
+                                    <option value="product-filling-machines">Dolum Makinaları</option>
+                                    <option value="product-halvah">Helva Dilimleme</option>
+                                </optgroup>
+                            </select>
+                        </div>
+
+                        <h3 id="seo-page-title">Ana Sayfa SEO</h3>
                         <div class="form-group">
                             <label>Sayfa Başlığı (Title)</label>
-                            <input type="text" id="seo-title" data-path="seo.title" value="Girişim Makina | Gıda İşleme ve Paketleme Makineleri">
+                            <input type="text" id="seo-title" data-path="seo.homepage.title">
                         </div>
                         <div class="form-group">
                             <label>Meta Açıklama (Description)</label>
-                            <textarea id="seo-description" data-path="seo.description" rows="3">Girişim Makina - 1985'ten beri gıda işleme ve paketleme makineleri üretimi. Wafer, çikolata kaplama, flow pack ve dikey dolum makineleri.</textarea>
+                            <textarea id="seo-description" data-path="seo.homepage.description" rows="3"></textarea>
                         </div>
                         <div class="form-group">
                             <label>Anahtar Kelimeler (Keywords)</label>
-                            <textarea id="seo-keywords" data-path="seo.keywords" rows="2">paketleme makinesi, gıda makineleri, wafer üretim hattı, flow pack, Türkiye</textarea>
+                            <textarea id="seo-keywords" data-path="seo.homepage.keywords" rows="2"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Canonical URL</label>
+                            <input type="url" id="seo-canonical" data-path="seo.homepage.canonical" placeholder="https://girisimmak.com/...">
                         </div>
 
                         <h3>Open Graph (Sosyal Medya)</h3>
                         <div class="form-group">
                             <label>OG Image URL</label>
-                            <input type="url" id="seo-ogImage" data-path="seo.ogImage" placeholder="https://...">
-                        </div>
-
-                        <h3>Diğer Ayarlar</h3>
-                        <div class="form-group">
-                            <label>Google Analytics ID</label>
-                            <input type="text" id="seo-gaId" data-path="seo.googleAnalyticsId" placeholder="G-XXXXXXXXXX">
-                        </div>
-                        <div class="form-group">
-                            <label>Google Search Console Doğrulama</label>
-                            <input type="text" id="seo-gscVerification" data-path="seo.gscVerification" placeholder="verification-code">
+                            <input type="url" id="seo-ogImage" data-path="seo.homepage.ogImage" placeholder="https://...">
                         </div>
                     </div>
                 </section>
