@@ -228,6 +228,37 @@
             border-radius: 8px;
             margin: 15px 0;
         }
+        /* Loading skeleton */
+        .skeleton-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+        .skeleton-img {
+            width: 100%;
+            height: 220px;
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+        }
+        .skeleton-text {
+            padding: 30px;
+        }
+        .skeleton-line {
+            height: 14px;
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: 7px;
+            margin-bottom: 12px;
+        }
+        .skeleton-line.short { width: 60%; }
+        .skeleton-line.medium { width: 80%; }
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
     </style>
 </head>
 <body>
@@ -254,7 +285,10 @@
             </div>
 
             <div class="blog-grid" id="blogGrid">
-                <!-- Blog posts will be loaded dynamically -->
+                <!-- Loading skeletons - shown instantly -->
+                <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-text"><div class="skeleton-line short"></div><div class="skeleton-line"></div><div class="skeleton-line medium"></div></div></div>
+                <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-text"><div class="skeleton-line short"></div><div class="skeleton-line"></div><div class="skeleton-line medium"></div></div></div>
+                <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-text"><div class="skeleton-line short"></div><div class="skeleton-line"></div><div class="skeleton-line medium"></div></div></div>
             </div>
         </div>
     </section>
@@ -306,10 +340,34 @@
         window._blogPosts = [];
         window._blogContent = null;
 
-        // Load blog posts from admin
-        document.addEventListener('DOMContentLoaded', function() {
-            loadBlogPosts();
-            initCategoryFilter();
+        // === CACHE-FIRST BLOG LOADING ===
+        // 1) Show cached posts INSTANTLY (no network wait)
+        // 2) Fetch fresh data in background & update if changed
+
+        // Try to show cached content immediately (before DOMContentLoaded)
+        (function instantBlogLoad() {
+            var posts = extractPostsFromCache();
+            if (posts && posts.length > 0) {
+                window._blogPosts = posts;
+                // Render as soon as DOM is ready
+                if (document.readyState === 'loading') {
+                    document.addEventListener('DOMContentLoaded', function() {
+                        renderBlogCards(posts);
+                        initCategoryFilter();
+                    });
+                } else {
+                    renderBlogCards(posts);
+                    initCategoryFilter();
+                }
+                // Still fetch fresh in background
+                backgroundRefresh();
+            } else {
+                // No cache - must wait for network
+                document.addEventListener('DOMContentLoaded', function() {
+                    loadBlogPostsFresh();
+                    initCategoryFilter();
+                });
+            }
 
             // Re-render on language change
             document.addEventListener('languageChanged', function() {
@@ -317,79 +375,100 @@
                     renderBlogCards(window._blogPosts);
                 }
             });
-        });
+        })();
 
-        async function loadBlogPosts() {
-            const blogGrid = document.getElementById('blogGrid');
-            const currentLang = localStorage.getItem('girisim_lang') || 'tr';
-
-            let posts = [];
-
-            // 1. Try Supabase JS client
+        function extractPostsFromCache() {
+            // Try sessionStorage first (fastest, most recent)
             try {
-                if (typeof supabase !== 'undefined' && typeof loadSiteContent === 'function') {
-                    const content = await loadSiteContent();
-                    if (content && content.blog && content.blog.posts && content.blog.posts.length > 0) {
-                        posts = content.blog.posts.filter(function(post) { return post.published; });
+                var cached = sessionStorage.getItem('girisim_site_cache');
+                if (cached) {
+                    var obj = JSON.parse(cached);
+                    if (obj.data && obj.data.blog && obj.data.blog.posts && obj.data.blog.posts.length > 0) {
+                        return obj.data.blog.posts.filter(function(p) { return p.published; });
                     }
                 }
-            } catch (e) { console.warn('Supabase JS blog load failed:', e); }
+            } catch (e) { /* ignore */ }
 
-            // 2. Direct REST API fetch (bypasses SDK issues)
-            if (posts.length === 0) {
-                try {
-                    var sbUrl = typeof SUPABASE_URL !== 'undefined' ? SUPABASE_URL : 'https://yvptjiowxqllxfzlkosy.supabase.co';
-                    var sbKey = typeof SUPABASE_ANON_KEY !== 'undefined' ? SUPABASE_ANON_KEY : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl2cHRqaW93eHFsbHhmemxrb3N5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njk0NTQxMTksImV4cCI6MjA4NTAzMDExOX0.9soLQNOJZEpQx__vhJEQzB9SBImPi-ccceB-23WNWAQ';
-                    var res = await fetch(sbUrl + '/rest/v1/site_content?select=content&id=eq.main', {
-                        headers: { 'apikey': sbKey, 'Authorization': 'Bearer ' + sbKey }
-                    });
-                    if (res.ok) {
-                        var rows = await res.json();
-                        if (rows[0] && rows[0].content && rows[0].content.blog && rows[0].content.blog.posts) {
-                            posts = rows[0].content.blog.posts.filter(function(post) { return post.published; });
-
-                        }
+            // Try localStorage
+            try {
+                var local = localStorage.getItem('girisim_site_content');
+                if (local) {
+                    var content = JSON.parse(local);
+                    if (content.blog && content.blog.posts && content.blog.posts.length > 0) {
+                        return content.blog.posts.filter(function(p) { return p.published; });
                     }
-                } catch (e) { console.warn('REST API blog load failed:', e); }
-            }
+                }
+            } catch (e) { /* ignore */ }
 
-            // 3. Fallback to cached content
+            return null;
+        }
+
+        function backgroundRefresh() {
+            // Fetch fresh data from Supabase REST API directly (no SDK dependency)
+            var sbUrl = 'https://yvptjiowxqllxfzlkosy.supabase.co';
+            var sbKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl2cHRqaW93eHFsbHhmemxrb3N5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njk0NTQxMTksImV4cCI6MjA4NTAzMDExOX0.9soLQNOJZEpQx__vhJEQzB9SBImPi-ccceB-23WNWAQ';
+
+            fetch(sbUrl + '/rest/v1/site_content?select=content&id=eq.main', {
+                headers: { 'apikey': sbKey, 'Authorization': 'Bearer ' + sbKey }
+            }).then(function(res) { return res.json(); }).then(function(rows) {
+                if (rows[0] && rows[0].content && rows[0].content.blog && rows[0].content.blog.posts) {
+                    var freshPosts = rows[0].content.blog.posts.filter(function(p) { return p.published; });
+                    if (freshPosts.length > 0 && JSON.stringify(freshPosts) !== JSON.stringify(window._blogPosts)) {
+                        window._blogPosts = freshPosts;
+                        renderBlogCards(freshPosts);
+                    }
+                    // Update session cache
+                    try {
+                        sessionStorage.setItem('girisim_site_cache', JSON.stringify({
+                            data: rows[0].content, timestamp: Date.now()
+                        }));
+                    } catch (e) { /* ignore */ }
+                }
+            }).catch(function() { /* silently fail - we already have cached data */ });
+        }
+
+        async function loadBlogPostsFresh() {
+            var blogGrid = document.getElementById('blogGrid');
+            var posts = [];
+
+            // Direct REST API fetch (fastest - no SDK overhead)
+            try {
+                var sbUrl = 'https://yvptjiowxqllxfzlkosy.supabase.co';
+                var sbKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl2cHRqaW93eHFsbHhmemxrb3N5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njk0NTQxMTksImV4cCI6MjA4NTAzMDExOX0.9soLQNOJZEpQx__vhJEQzB9SBImPi-ccceB-23WNWAQ';
+                var res = await fetch(sbUrl + '/rest/v1/site_content?select=content&id=eq.main', {
+                    headers: { 'apikey': sbKey, 'Authorization': 'Bearer ' + sbKey }
+                });
+                if (res.ok) {
+                    var rows = await res.json();
+                    if (rows[0] && rows[0].content && rows[0].content.blog && rows[0].content.blog.posts) {
+                        posts = rows[0].content.blog.posts.filter(function(p) { return p.published; });
+                        // Cache for next visit
+                        try {
+                            sessionStorage.setItem('girisim_site_cache', JSON.stringify({
+                                data: rows[0].content, timestamp: Date.now()
+                            }));
+                        } catch (e) { /* ignore */ }
+                    }
+                }
+            } catch (e) { console.warn('Blog fetch failed:', e); }
+
+            // Fallback: try getCachedSiteContent (may use Supabase SDK)
             if (posts.length === 0) {
                 try {
                     if (typeof getCachedSiteContent === 'function') {
-                        var content2 = await getCachedSiteContent();
-                        if (content2 && content2.blog && content2.blog.posts && content2.blog.posts.length > 0) {
-                            posts = content2.blog.posts.filter(function(post) { return post.published; });
-                        }
-                    }
-                } catch (e) { /* ignore */ }
-            }
-
-            // 4. Fallback to localStorage
-            if (posts.length === 0) {
-                try {
-                    var siteContentStr = localStorage.getItem('girisim_site_content');
-                    if (siteContentStr) {
-                        var content3 = JSON.parse(siteContentStr);
-                        if (content3.blog && content3.blog.posts && content3.blog.posts.length > 0) {
-                            posts = content3.blog.posts.filter(function(post) { return post.published; });
+                        var content = await getCachedSiteContent();
+                        if (content && content.blog && content.blog.posts && content.blog.posts.length > 0) {
+                            posts = content.blog.posts.filter(function(p) { return p.published; });
                         }
                     }
                 } catch (e) { /* ignore */ }
             }
 
             if (posts.length === 0) {
-                blogGrid.innerHTML = `
-                    <div class="empty-state" style="grid-column: 1 / -1;">
-                        <i class="fas fa-blog"></i>
-                        <h3 data-translate="blog.noPosts">Henüz blog yazısı yok</h3>
-                        <p data-translate="blog.noPostsDesc">Yakında yeni içerikler eklenecek. Takipte kalın!</p>
-                    </div>
-                `;
+                blogGrid.innerHTML = '<div class="empty-state" style="grid-column: 1 / -1;"><i class="fas fa-blog"></i><h3 data-translate="blog.noPosts">Henüz blog yazısı yok</h3><p data-translate="blog.noPostsDesc">Yakında yeni içerikler eklenecek. Takipte kalın!</p></div>';
                 return;
             }
 
-            // Store posts globally for detail view and language switch
             window._blogPosts = posts;
             renderBlogCards(posts);
         }
@@ -404,7 +483,7 @@
                 var content = getTranslatedField(post, 'content', currentLang);
 
                 return '<div class="blog-card" data-category="' + (post.category || 'Genel') + '">' +
-                    '<img src="' + (post.image || 'images/pexels-factory-machinery.jpg') + '" alt="' + title + '">' +
+                    '<img loading="lazy" src="' + (post.image || 'images/pexels-factory-machinery.jpg') + '" alt="' + title + '">' +
                     '<div class="card-content">' +
                         '<div class="card-meta">' +
                             '<span><i class="fas fa-calendar"></i> ' + formatDate(post.date) + '</span>' +
