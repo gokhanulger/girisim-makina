@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex">
+    <title>404 - Sayfa Bulunamadı | Girişim Makina</title>
+    <link rel="stylesheet" href="css/style.css?v=20260223a">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <script src="js/lang-detect.js?v=20260223a"></script>
+    <style>
+        .error-page {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #0a0a0f 0%, #141420 100%);
+            padding: 40px 20px;
+            text-align: center;
+        }
+        .error-content {
+            max-width: 600px;
+        }
+        .error-code {
+            font-size: clamp(6rem, 15vw, 10rem);
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+            margin-bottom: 20px;
+        }
+        .error-content h2 {
+            color: #fff;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        .error-content p {
+            color: rgba(255,255,255,0.6);
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin-bottom: 35px;
+        }
+        .error-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .error-buttons .btn {
+            min-width: 180px;
+        }
+        .error-links {
+            margin-top: 50px;
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .error-links a {
+            color: rgba(255,255,255,0.5);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+        .error-links a:hover {
+            color: var(--primary-color);
+        }
+        .error-links a i {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <section class="error-page">
+        <div class="error-content">
+            <div class="error-code">404</div>
+            <h2 data-translate="error.title">Sayfa Bulunamadı</h2>
+            <p data-translate="error.description">Aradığınız sayfa taşınmış, silinmiş veya hiç var olmamış olabilir. Ana sayfamızdan devam edebilirsiniz.</p>
+            <div class="error-buttons">
+                <a href="/" class="btn btn-primary btn-lg" id="homeBtn">
+                    <i class="fas fa-home"></i> <span data-translate="error.homeBtn">Ana Sayfa</span>
+                </a>
+                <a href="https://wa.me/905468792927" target="_blank" class="btn btn-outline btn-lg" style="border-color: rgba(255,255,255,0.3); color: #fff;">
+                    <i class="fab fa-whatsapp"></i> <span data-translate="error.contactBtn">İletişim</span>
+                </a>
+            </div>
+            <div class="error-links">
+                <a href="/products/flow-pack"><i class="fas fa-box"></i> Flow Pack</a>
+                <a href="/products/wafer"><i class="fas fa-stroopwafel"></i> <span data-translate="error.wafer">Gofret Hatları</span></a>
+                <a href="/products/cereal-bar"><i class="fas fa-seedling"></i> Cereal Bar</a>
+                <a href="/blog"><i class="fas fa-newspaper"></i> Blog</a>
+            </div>
+        </div>
+    </section>
+
+    <script src="js/translations.js?v=20260223a"></script>
+    <script>
+        // Apply language-aware links
+        document.addEventListener('DOMContentLoaded', function() {
+            var prefix = window.getLangPrefix ? window.getLangPrefix() : '';
+            if (prefix) {
+                // Update all internal links with lang prefix
+                document.querySelectorAll('.error-buttons a[href^="/"], .error-links a[href^="/"]').forEach(function(a) {
+                    if (!a.href.includes('wa.me')) {
+                        a.href = prefix + a.getAttribute('href');
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

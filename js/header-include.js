@@ -5,13 +5,20 @@
 
 (function() {
     // Sayfa derinliğini belirle (products/, products/flowpack/ vb.)
-    const path = window.location.pathname;
-    let basePath = '';
+    const rawPath = window.location.pathname;
 
-    if (path.includes('/products/flowpack/')) {
+    // Strip language prefix for depth calculation (/en/products/flow-pack → /products/flow-pack)
+    const langMatch = rawPath.match(/^\/(en|ru|ar|fr|pt|es)(\/|$)/);
+    const cleanPath = langMatch ? rawPath.replace(/^\/(en|ru|ar|fr|pt|es)/, '') : rawPath;
+
+    let basePath = '';
+    if (cleanPath.includes('/products/flowpack/')) {
         basePath = '../../';
-    } else if (path.includes('/products/')) {
+    } else if (cleanPath.includes('/products/')) {
         basePath = '../';
+    } else if (langMatch && (cleanPath === '' || cleanPath === '/')) {
+        // Root page with lang prefix: /en → need "lang/" for relative link resolution
+        basePath = langMatch[1] + '/';
     } else {
         basePath = '';
     }
@@ -764,6 +771,16 @@
                 const lang = this.getAttribute('data-lang');
                 localStorage.setItem('girisim_lang', lang);
 
+                // Navigate to the language-prefixed URL (e.g., /en/blog, /ru/products/flow-pack)
+                if (typeof window.switchLangUrl === 'function') {
+                    var newUrl = window.switchLangUrl(lang);
+                    if (newUrl !== window.location.pathname) {
+                        window.location.href = newUrl;
+                        return;
+                    }
+                }
+
+                // Same page (or switchLangUrl not available) - update in place
                 document.querySelectorAll('[data-lang]').forEach(a => a.classList.remove('active'));
                 document.querySelectorAll('[data-lang="' + lang + '"]').forEach(a => a.classList.add('active'));
 
