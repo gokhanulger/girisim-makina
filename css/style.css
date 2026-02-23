@@ -1361,7 +1361,7 @@ h4 { font-size: 1.25rem; }
     gap: 15px;
     padding: 25px;
     background: var(--light-bg);
-    border-radius: 20px;
+    border-radius: 16px;
     text-align: center;
     transition: var(--transition);
 }
@@ -1416,7 +1416,7 @@ h4 { font-size: 1.25rem; }
 
 .certificate-card {
     background: var(--white);
-    border-radius: 20px;
+    border-radius: 16px;
     padding: 40px 30px;
     text-align: center;
     box-shadow: var(--shadow);
@@ -1735,7 +1735,7 @@ h4 { font-size: 1.25rem; }
     padding: 35px 20px;
     background: rgba(255, 255, 255, 0.03);
     backdrop-filter: blur(10px);
-    border-radius: 20px;
+    border-radius: 16px;
     border: 1px solid rgba(255, 255, 255, 0.05);
     transition: var(--transition);
 }
@@ -1800,7 +1800,7 @@ h4 { font-size: 1.25rem; }
     gap: 25px;
     align-items: flex-start;
     padding: 25px;
-    border-radius: 20px;
+    border-radius: 16px;
     transition: var(--transition);
 }
 
@@ -3878,7 +3878,7 @@ body.rtl .form-row {
     min-width: 300px;
     scroll-snap-align: start;
     background: var(--white);
-    border-radius: 20px;
+    border-radius: 16px;
     overflow: hidden;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
     cursor: pointer;
@@ -4873,5 +4873,44 @@ body.rtl .form-row {
 
     .search-results {
         max-height: 55vh;
+    }
+}
+
+/* =============================================
+   PAGE HERO - Shared across sub-pages
+   (blog, hr, packaging-by-product, packaging-by-type)
+   ============================================= */
+.page-hero {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    padding: 120px 0 60px;
+    color: white;
+    text-align: center;
+}
+
+.page-hero h1 {
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    margin-bottom: 0.75rem;
+    font-weight: 700;
+}
+
+.page-hero h1 i {
+    margin-right: 10px;
+    opacity: 0.9;
+}
+
+.page-hero p {
+    font-size: 1.05rem;
+    opacity: 0.9;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.7;
+}
+
+@media (max-width: 768px) {
+    .page-hero {
+        padding: 100px 0 40px;
+    }
+    .page-hero h1 {
+        font-size: 1.6rem;
     }
 }
