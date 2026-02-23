@@ -14,7 +14,7 @@
     let basePath = '';
     if (cleanPath.includes('/products/flowpack/')) {
         basePath = '../../';
-    } else if (cleanPath.includes('/products/')) {
+    } else if (cleanPath.includes('/products/') || cleanPath.includes('/machines/')) {
         basePath = '../';
     } else if (langMatch && (cleanPath === '' || cleanPath === '/')) {
         // Root page with lang prefix: /en → need "lang/" for relative link resolution
@@ -173,79 +173,20 @@
             filling: `<svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="28" y="10" width="24" height="18" rx="3" fill="#e53935" opacity="0.2" stroke="#e53935" stroke-width="1.5"/><path d="M32 28 L36 42 L44 42 L48 28 Z" fill="#e53935" opacity="0.3" stroke="#e53935" stroke-width="1.5"/><line x1="40" y1="42" x2="40" y2="52" stroke="#e53935" stroke-width="2" stroke-dasharray="3 2" opacity="0.6"/><rect x="32" y="52" width="16" height="18" rx="2" fill="#e53935" opacity="0.15" stroke="#e53935" stroke-width="1.5"/><rect x="36" y="48" width="8" height="4" rx="1" fill="#e53935" opacity="0.3"/><rect x="33.5" y="58" width="13" height="10" rx="1" fill="#e53935" opacity="0.35"/><circle cx="18" cy="24" r="8" fill="none" stroke="#e53935" stroke-width="1.5" opacity="0.3"/><circle cx="18" cy="24" r="3" fill="#e53935" opacity="0.2"/><circle cx="62" cy="24" r="6" fill="none" stroke="#e53935" stroke-width="1.5" opacity="0.3"/><circle cx="62" cy="24" r="2" fill="#e53935" opacity="0.2"/></svg>`
         };
 
-        // Build mega dropdown for Makinelerimiz (Hipermak style - full-width icon grid)
+        // Mega menü kategorileri - her biri kendi sayfasına link
         const megaCategories = [
-            {
-                svgKey: 'production',
-                title: 'Üretim Hatları',
-                titleKey: 'megaMenu.productionLines',
-                links: [
-                    { label: 'Gofret Üretim Hatları', href: bp + 'products/wafer.html', key: 'dropdown.wafer' },
-                    { label: 'Tahıl Bar Üretim Hatları', href: bp + 'products/cereal-bar.html', key: 'dropdown.cerealBar' },
-                    { label: 'Protein Bar Hatları', href: bp + 'products/protein-bar.html', key: 'dropdown.protein' },
-                    { label: 'Hindistan Cevizi Bar', href: bp + 'products/coconut-bar.html', key: 'dropdown.coconutBar' },
-                    { label: 'Helva Üretim Hatları', href: bp + 'products/halvah.html', key: 'dropdown.halvah' }
-                ]
-            },
-            {
-                svgKey: 'biscuit',
-                title: 'Bisküvi & Çikolata',
-                titleKey: 'megaMenu.biscuitChocolate',
-                links: [
-                    { label: 'Bisküvi Kremalama', href: bp + 'products/biscuit-sandwiching.html', key: 'dropdown.biscuit' },
-                    { label: 'Cookie Capping', href: bp + 'products/cookie-capping.html', key: 'dropdown.cookieCapping' },
-                    { label: 'Çikolata Kaplama', href: bp + 'products/chocolate-coating.html', key: 'dropdown.chocolate' },
-                    { label: 'Çikolata Soğutma', href: bp + 'products/chocolate-cooling.html', key: 'dropdown.chocolateCooling' },
-                    { label: 'Çikolata Hazırlama', href: bp + 'products/chocolate-preparation.html', key: 'dropdown.chocolatePrep' }
-                ]
-            },
-            {
-                svgKey: 'horizontal',
-                title: 'Yatay Paketleme',
-                titleKey: 'megaMenu.horizontalPack',
-                links: [
-                    { label: 'Flowpack Makineleri', href: bp + 'products/flow-pack.html', key: 'dropdown.flowpack' },
-                    { label: 'Zarf Tipi (Overwrap)', href: bp + 'products/overwrapping.html', key: 'dropdown.overwrap' }
-                ]
-            },
-            {
-                svgKey: 'vertical',
-                title: 'Dikey Paketleme',
-                titleKey: 'megaMenu.verticalPack',
-                links: [
-                    { label: 'VFFS Dikey Dolum', href: bp + 'products/vffs.html', key: 'dropdown.vffs' },
-                    { label: 'Thermoform Paketleme', href: bp + 'products/thermoform.html', key: 'dropdown.thermoform' }
-                ]
-            },
-            {
-                svgKey: 'filling',
-                title: 'Dolum & Yardımcı',
-                titleKey: 'megaMenu.fillingAux',
-                links: [
-                    { label: 'Dolum Makinaları', href: bp + 'products/filling-machines.html', key: 'dropdown.filling' },
-                    { label: 'Pudra Şekeri Değirmeni', href: bp + 'products/sugar-mill.html', key: 'dropdown.sugarMill' }
-                ]
-            }
+            { svgKey: 'production', title: 'Üretim Hatları', titleKey: 'megaMenu.productionLines', href: bp + 'machines/production-lines.html' },
+            { svgKey: 'biscuit', title: 'Bisküvi & Çikolata', titleKey: 'megaMenu.biscuitChocolate', href: bp + 'machines/biscuit-chocolate.html' },
+            { svgKey: 'horizontal', title: 'Yatay Paketleme', titleKey: 'megaMenu.horizontalPack', href: bp + 'machines/horizontal-packaging.html' },
+            { svgKey: 'vertical', title: 'Dikey Paketleme', titleKey: 'megaMenu.verticalPack', href: bp + 'machines/vertical-packaging.html' },
+            { svgKey: 'filling', title: 'Dolum & Yardımcı', titleKey: 'megaMenu.fillingAux', href: bp + 'machines/filling-auxiliary.html' }
         ];
 
-        // Build tab headers (icon strip)
-        const tabHeadersHTML = megaCategories.map((cat, i) => `
-            <div class="mega-tab${i === 0 ? ' active' : ''}" data-tab="${i}">
-                <div class="mega-tab-icon">${megaSvgIcons[cat.svgKey]}</div>
-                <div class="mega-tab-label" ${cat.titleKey ? 'data-translate="' + cat.titleKey + '"' : ''}>${cat.title}</div>
-            </div>`).join('');
-
-        // Build tab content panels
-        const tabPanelsHTML = megaCategories.map((cat, i) => {
-            const linksHTML = cat.links.map(l =>
-                `<a href="${l.href}" ${l.key ? 'data-translate="' + l.key + '"' : ''}>${l.label}</a>`
-            ).join('');
-            return `
-            <div class="mega-tab-panel${i === 0 ? ' active' : ''}" data-panel="${i}">
-                <div class="mega-tab-panel-title" ${cat.titleKey ? 'data-translate="' + cat.titleKey + '"' : ''}>${cat.title}</div>
-                <div class="mega-tab-panel-links">${linksHTML}</div>
-            </div>`;
-        }).join('');
+        const megaItemsHTML = megaCategories.map(cat => `
+            <a href="${cat.href}" class="mega-cat-item">
+                <div class="mega-cat-icon">${megaSvgIcons[cat.svgKey]}</div>
+                <div class="mega-cat-label" ${cat.titleKey ? 'data-translate="' + cat.titleKey + '"' : ''}>${cat.title}</div>
+            </a>`).join('');
 
         return `
                     <li class="dropdown">
@@ -264,8 +205,7 @@
                     <li class="has-mega-menu">
                         <a href="${bp}index.html#production" data-translate="nav.production">Makinelerimiz</a>
                         <div class="mega-dropdown">
-                            <div class="mega-tabs-header">${tabHeadersHTML}</div>
-                            <div class="mega-tabs-content">${tabPanelsHTML}</div>
+                            <div class="mega-cat-grid">${megaItemsHTML}</div>
                         </div>
                     </li>
                     <li><a href="${bp}index.html#videos" data-translate="nav.videos">Videolar</a></li>
@@ -537,7 +477,7 @@
         initLanguageSelectors();
         initFloatingElements();
         initHamburgerMenu();
-        initMegaMenuTabs();
+        // Mega menü artık sadece kategori linkleri - tab etkileşimi yok
 
         // Remove placeholder min-height after header is loaded
         if (headerPlaceholder) headerPlaceholder.style.minHeight = '0';
@@ -723,22 +663,8 @@
             navMenu.addEventListener('click', function(e) {
                 if (window.innerWidth > 768) return;
 
-                // Mega tab panel title tıklaması - akordeon toggle (mobil)
-                var panelTitle = e.target.closest('.mega-tab-panel-title');
-                if (panelTitle) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    var panel = panelTitle.parentElement;
-                    var wasOpen = panel.classList.contains('active');
-                    navMenu.querySelectorAll('.mega-tab-panel.active').forEach(function(p) {
-                        if (p !== panel) p.classList.remove('active');
-                    });
-                    panel.classList.toggle('active', !wasOpen);
-                    return;
-                }
-
                 // Mega dropdown veya normal dropdown içindeki ürün linklerine tıklama - navigasyona izin ver
-                var megaLink = e.target.closest('.mega-tab-panel-links a, .mega-links a, .dropdown-menu a');
+                var megaLink = e.target.closest('.mega-cat-item, .mega-links a, .dropdown-menu a');
                 if (megaLink) {
                     // Ürün/sayfa linki - navigasyona izin ver, menüyü kapat
                     window.closeMobileMenu();
@@ -827,38 +753,6 @@
         }
         if (typeof setProductLanguage === 'function') {
             setProductLanguage(currentLang);
-        }
-    }
-
-    // Mega menü sekme etkileşimi
-    function initMegaMenuTabs() {
-        function activateMegaTab(index) {
-            document.querySelectorAll('.mega-tab').forEach(function(t) { t.classList.remove('active'); });
-            document.querySelectorAll('.mega-tab-panel').forEach(function(p) { p.classList.remove('active'); });
-            var tab = document.querySelector('.mega-tab[data-tab="' + index + '"]');
-            var panel = document.querySelector('.mega-tab-panel[data-panel="' + index + '"]');
-            if (tab) tab.classList.add('active');
-            if (panel) panel.classList.add('active');
-        }
-
-        // Desktop: hover ile sekme değiştir
-        document.querySelectorAll('.mega-tab').forEach(function(tab) {
-            tab.addEventListener('mouseenter', function() {
-                if (window.innerWidth <= 768) return;
-                activateMegaTab(this.getAttribute('data-tab'));
-            });
-            tab.addEventListener('click', function(e) {
-                e.preventDefault();
-                activateMegaTab(this.getAttribute('data-tab'));
-            });
-        });
-
-        // Mega menü açıldığında ilk sekmeyi aktif yap
-        var megaParent = document.querySelector('.has-mega-menu');
-        if (megaParent) {
-            megaParent.addEventListener('mouseenter', function() {
-                if (window.innerWidth > 768) activateMegaTab(0);
-            });
         }
     }
 
