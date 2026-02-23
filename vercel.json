@@ -60,7 +60,6 @@
     { "source": "/ar/:path*", "destination": "/:path*" },
     { "source": "/fr/:path*", "destination": "/:path*" },
     { "source": "/pt/:path*", "destination": "/:path*" },
-    { "source": "/es/:path*", "destination": "/:path*" },
-    { "source": "/(.*)", "destination": "/$1" }
+    { "source": "/es/:path*", "destination": "/:path*" }
   ]
 }
