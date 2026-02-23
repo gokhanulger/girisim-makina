@@ -49,14 +49,18 @@
     }
   ],
   "rewrites": [
-    { "source": "/:lang(en|ru|ar|fr|pt|es)/js/:file*", "destination": "/js/:file*" },
-    { "source": "/:lang(en|ru|ar|fr|pt|es)/css/:file*", "destination": "/css/:file*" },
-    { "source": "/:lang(en|ru|ar|fr|pt|es)/images/:path*", "destination": "/images/:path*" },
-    { "source": "/:lang(en|ru|ar|fr|pt|es)/favicon.png", "destination": "/favicon.png" },
-    { "source": "/:lang(en|ru|ar|fr|pt|es)/products/flowpack/:page", "destination": "/products/flowpack/:page" },
-    { "source": "/:lang(en|ru|ar|fr|pt|es)/products/:page", "destination": "/products/:page" },
-    { "source": "/:lang(en|ru|ar|fr|pt|es)/:page", "destination": "/:page" },
-    { "source": "/:lang(en|ru|ar|fr|pt|es)", "destination": "/index.html" },
+    { "source": "/en", "destination": "/index.html" },
+    { "source": "/ru", "destination": "/index.html" },
+    { "source": "/ar", "destination": "/index.html" },
+    { "source": "/fr", "destination": "/index.html" },
+    { "source": "/pt", "destination": "/index.html" },
+    { "source": "/es", "destination": "/index.html" },
+    { "source": "/en/:path*", "destination": "/:path*" },
+    { "source": "/ru/:path*", "destination": "/:path*" },
+    { "source": "/ar/:path*", "destination": "/:path*" },
+    { "source": "/fr/:path*", "destination": "/:path*" },
+    { "source": "/pt/:path*", "destination": "/:path*" },
+    { "source": "/es/:path*", "destination": "/:path*" },
     { "source": "/(.*)", "destination": "/$1" }
   ]
 }
