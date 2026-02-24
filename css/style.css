@@ -795,7 +795,7 @@ h4 { font-size: 1.25rem; }
 .mega-cat-grid {
     display: flex;
     justify-content: center;
-    gap: 8px;
+    gap: 12px;
 }
 
 .mega-cat-item {
@@ -803,11 +803,11 @@ h4 { font-size: 1.25rem; }
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    padding: 16px 20px 14px;
-    border-radius: 10px;
+    padding: 18px 24px 16px;
+    border-radius: 12px;
     text-decoration: none;
     transition: all 0.25s ease;
-    min-width: 120px;
+    min-width: 140px;
     text-align: center;
 }
 
@@ -817,22 +817,22 @@ h4 { font-size: 1.25rem; }
 }
 
 .mega-cat-icon {
-    width: 64px;
-    height: 64px;
+    width: 90px;
+    height: 72px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
     transition: transform 0.25s ease;
 }
 
 .mega-cat-item:hover .mega-cat-icon {
-    transform: scale(1.12);
+    transform: scale(1.1);
 }
 
 .mega-cat-icon svg {
-    width: 56px;
-    height: 56px;
+    width: 84px;
+    height: 68px;
 }
 
 .mega-cat-label {

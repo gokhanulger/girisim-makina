@@ -166,11 +166,153 @@
 
         // SVG icons for mega dropdown categories
         const megaSvgIcons = {
-            production: `<svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="8" y="52" width="64" height="6" rx="3" fill="#e53935" opacity="0.15"/><circle cx="16" cy="58" r="5" fill="#e53935" opacity="0.3"/><circle cx="64" cy="58" r="5" fill="#e53935" opacity="0.3"/><line x1="8" y1="55" x2="72" y2="55" stroke="#e53935" stroke-width="2"/><rect x="18" y="40" width="12" height="12" rx="2" fill="#e53935" opacity="0.7"/><rect x="34" y="38" width="12" height="14" rx="2" fill="#e53935" opacity="0.5"/><rect x="50" y="40" width="12" height="12" rx="2" fill="#e53935" opacity="0.7"/><rect x="14" y="18" width="20" height="22" rx="3" fill="#e53935" opacity="0.2" stroke="#e53935" stroke-width="1.5"/><rect x="46" y="22" width="20" height="18" rx="3" fill="#e53935" opacity="0.2" stroke="#e53935" stroke-width="1.5"/><circle cx="24" cy="28" r="4" fill="#e53935" opacity="0.4"/><circle cx="56" cy="30" r="3" fill="#e53935" opacity="0.4"/></svg>`,
-            biscuit: `<svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="12" y="44" width="24" height="14" rx="7" fill="#e53935" opacity="0.6"/><rect x="12" y="38" width="24" height="8" rx="4" fill="#e53935" opacity="0.3"/><rect x="12" y="50" width="24" height="8" rx="4" fill="#e53935" opacity="0.3"/><path d="M48 20 C48 20 44 28 44 34 C44 38 46 40 50 40 L62 40 C66 40 68 38 68 34 C68 28 64 20 64 20" stroke="#e53935" stroke-width="2" fill="#e53935" opacity="0.15"/><rect x="44" y="40" width="24" height="20" rx="3" fill="#e53935" opacity="0.2" stroke="#e53935" stroke-width="1.5"/><circle cx="50" cy="52" r="2" fill="#e53935" opacity="0.5"/><circle cx="56" cy="48" r="2.5" fill="#e53935" opacity="0.5"/><circle cx="62" cy="53" r="2" fill="#e53935" opacity="0.5"/><circle cx="20" cy="45" r="1.5" fill="#fff" opacity="0.6"/><circle cx="24" cy="48" r="1.5" fill="#fff" opacity="0.6"/><circle cx="28" cy="45" r="1.5" fill="#fff" opacity="0.6"/></svg>`,
-            horizontal: `<svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="10" y="28" width="60" height="30" rx="4" fill="#e53935" opacity="0.12" stroke="#e53935" stroke-width="1.5"/><circle cx="16" cy="43" r="8" fill="#e53935" opacity="0.2" stroke="#e53935" stroke-width="1.5"/><circle cx="16" cy="43" r="3" fill="#e53935" opacity="0.4"/><line x1="28" y1="43" x2="56" y2="43" stroke="#e53935" stroke-width="2.5" stroke-linecap="round"/><polyline points="52,38 58,43 52,48" fill="none" stroke="#e53935" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><rect x="60" y="36" width="16" height="14" rx="3" fill="#e53935" opacity="0.5"/><line x1="68" y1="36" x2="68" y2="50" stroke="#e53935" stroke-width="1" opacity="0.3"/></svg>`,
-            vertical: `<svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="24" y="12" width="32" height="56" rx="4" fill="#e53935" opacity="0.12" stroke="#e53935" stroke-width="1.5"/><circle cx="40" cy="20" r="6" fill="#e53935" opacity="0.2" stroke="#e53935" stroke-width="1.5"/><circle cx="40" cy="20" r="2" fill="#e53935" opacity="0.4"/><line x1="40" y1="28" x2="40" y2="50" stroke="#e53935" stroke-width="2.5" stroke-linecap="round"/><polyline points="35,46 40,52 45,46" fill="none" stroke="#e53935" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M30 56 L34 62 L46 62 L50 56 Z" fill="#e53935" opacity="0.5"/><rect x="34" y="56" width="12" height="10" rx="1" fill="#e53935" opacity="0.4"/><line x1="28" y1="40" x2="24" y2="40" stroke="#e53935" stroke-width="1.5" opacity="0.5"/><line x1="52" y1="40" x2="56" y2="40" stroke="#e53935" stroke-width="1.5" opacity="0.5"/></svg>`,
-            filling: `<svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="28" y="10" width="24" height="18" rx="3" fill="#e53935" opacity="0.2" stroke="#e53935" stroke-width="1.5"/><path d="M32 28 L36 42 L44 42 L48 28 Z" fill="#e53935" opacity="0.3" stroke="#e53935" stroke-width="1.5"/><line x1="40" y1="42" x2="40" y2="52" stroke="#e53935" stroke-width="2" stroke-dasharray="3 2" opacity="0.6"/><rect x="32" y="52" width="16" height="18" rx="2" fill="#e53935" opacity="0.15" stroke="#e53935" stroke-width="1.5"/><rect x="36" y="48" width="8" height="4" rx="1" fill="#e53935" opacity="0.3"/><rect x="33.5" y="58" width="13" height="10" rx="1" fill="#e53935" opacity="0.35"/><circle cx="18" cy="24" r="8" fill="none" stroke="#e53935" stroke-width="1.5" opacity="0.3"/><circle cx="18" cy="24" r="3" fill="#e53935" opacity="0.2"/><circle cx="62" cy="24" r="6" fill="none" stroke="#e53935" stroke-width="1.5" opacity="0.3"/><circle cx="62" cy="24" r="2" fill="#e53935" opacity="0.2"/></svg>`
+            production: `<svg viewBox="0 0 100 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Konveyör bant -->
+                <rect x="5" y="58" width="90" height="6" rx="3" fill="#e53935" opacity="0.18"/>
+                <circle cx="14" cy="64" r="4.5" fill="#e53935" opacity="0.35"/><circle cx="14" cy="64" r="2" fill="#e53935" opacity="0.5"/>
+                <circle cx="86" cy="64" r="4.5" fill="#e53935" opacity="0.35"/><circle cx="86" cy="64" r="2" fill="#e53935" opacity="0.5"/>
+                <line x1="14" y1="64" x2="86" y2="64" stroke="#e53935" stroke-width="1" opacity="0.2"/>
+                <!-- Sol makina gövdesi -->
+                <rect x="8" y="22" width="26" height="36" rx="3" fill="#e53935" opacity="0.1" stroke="#e53935" stroke-width="1.5"/>
+                <rect x="12" y="26" width="18" height="10" rx="2" fill="#e53935" opacity="0.25"/>
+                <circle cx="21" cy="31" r="3" fill="#e53935" opacity="0.45"/>
+                <rect x="14" y="40" width="14" height="6" rx="1" fill="#e53935" opacity="0.15"/>
+                <rect x="14" y="48" width="14" height="6" rx="1" fill="#e53935" opacity="0.15"/>
+                <!-- Orta ürünler konveyör üzerinde -->
+                <rect x="38" y="44" width="10" height="14" rx="2" fill="#e53935" opacity="0.6"/>
+                <rect x="51" y="46" width="10" height="12" rx="2" fill="#e53935" opacity="0.45"/>
+                <rect x="64" y="44" width="10" height="14" rx="2" fill="#e53935" opacity="0.6"/>
+                <!-- Sağ makina gövdesi -->
+                <rect x="66" y="22" width="26" height="36" rx="3" fill="#e53935" opacity="0.1" stroke="#e53935" stroke-width="1.5"/>
+                <rect x="70" y="26" width="18" height="10" rx="2" fill="#e53935" opacity="0.25"/>
+                <circle cx="79" cy="31" r="3" fill="#e53935" opacity="0.45"/>
+                <rect x="72" y="40" width="14" height="6" rx="1" fill="#e53935" opacity="0.15"/>
+                <!-- Bağlantı okları -->
+                <line x1="34" y1="40" x2="38" y2="40" stroke="#e53935" stroke-width="1.5" opacity="0.4" stroke-linecap="round"/>
+                <line x1="62" y1="40" x2="66" y2="40" stroke="#e53935" stroke-width="1.5" opacity="0.4" stroke-linecap="round"/>
+                <!-- Üst panel göstergeler -->
+                <rect x="15" y="10" width="8" height="8" rx="1.5" fill="#e53935" opacity="0.12" stroke="#e53935" stroke-width="1"/>
+                <rect x="77" y="10" width="8" height="8" rx="1.5" fill="#e53935" opacity="0.12" stroke="#e53935" stroke-width="1"/>
+                <line x1="19" y1="18" x2="19" y2="22" stroke="#e53935" stroke-width="1" opacity="0.3"/>
+                <line x1="81" y1="18" x2="81" y2="22" stroke="#e53935" stroke-width="1" opacity="0.3"/>
+            </svg>`,
+            biscuit: `<svg viewBox="0 0 100 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Bisküvi sandviç (sol) -->
+                <rect x="8" y="42" width="28" height="10" rx="5" fill="#e53935" opacity="0.5"/>
+                <rect x="8" y="36" width="28" height="8" rx="4" fill="#e53935" opacity="0.25"/>
+                <rect x="8" y="50" width="28" height="8" rx="4" fill="#e53935" opacity="0.25"/>
+                <circle cx="15" cy="40" r="1.2" fill="#fff" opacity="0.5"/>
+                <circle cx="22" cy="39" r="1.2" fill="#fff" opacity="0.5"/>
+                <circle cx="29" cy="40" r="1.2" fill="#fff" opacity="0.5"/>
+                <circle cx="18" cy="54" r="1.2" fill="#fff" opacity="0.5"/>
+                <circle cx="25" cy="55" r="1.2" fill="#fff" opacity="0.5"/>
+                <!-- Krema katmanı -->
+                <rect x="10" y="44" width="24" height="4" rx="2" fill="#e53935" opacity="0.7"/>
+                <!-- Çikolata kaplama makinesi (sağ) -->
+                <rect x="48" y="16" width="44" height="14" rx="3" fill="#e53935" opacity="0.15" stroke="#e53935" stroke-width="1.5"/>
+                <rect x="52" y="20" width="8" height="6" rx="1" fill="#e53935" opacity="0.3"/>
+                <rect x="63" y="20" width="8" height="6" rx="1" fill="#e53935" opacity="0.3"/>
+                <rect x="74" y="20" width="8" height="6" rx="1" fill="#e53935" opacity="0.3"/>
+                <!-- Çikolata akışı -->
+                <line x1="56" y1="30" x2="56" y2="38" stroke="#e53935" stroke-width="2" opacity="0.5" stroke-linecap="round"/>
+                <line x1="67" y1="30" x2="67" y2="36" stroke="#e53935" stroke-width="2" opacity="0.5" stroke-linecap="round"/>
+                <line x1="78" y1="30" x2="78" y2="38" stroke="#e53935" stroke-width="2" opacity="0.5" stroke-linecap="round"/>
+                <!-- Konveyör + kaplanmış ürünler -->
+                <line x1="44" y1="52" x2="96" y2="52" stroke="#e53935" stroke-width="2" opacity="0.3"/>
+                <rect x="50" y="40" width="12" height="12" rx="2" fill="#e53935" opacity="0.55"/>
+                <rect x="65" y="40" width="12" height="12" rx="2" fill="#e53935" opacity="0.4"/>
+                <rect x="80" y="40" width="12" height="12" rx="2" fill="#e53935" opacity="0.55"/>
+                <!-- Soğutma dalgaları -->
+                <path d="M50 60 Q55 56 60 60 Q65 64 70 60" stroke="#e53935" stroke-width="1" opacity="0.2" fill="none"/>
+                <path d="M70 60 Q75 56 80 60 Q85 64 90 60" stroke="#e53935" stroke-width="1" opacity="0.2" fill="none"/>
+            </svg>`,
+            horizontal: `<svg viewBox="0 0 100 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Ana makina gövdesi -->
+                <rect x="8" y="20" width="84" height="40" rx="5" fill="#e53935" opacity="0.08" stroke="#e53935" stroke-width="1.5"/>
+                <!-- Film rulosu (sol) -->
+                <circle cx="20" cy="40" r="14" fill="#e53935" opacity="0.1" stroke="#e53935" stroke-width="1.5"/>
+                <circle cx="20" cy="40" r="8" fill="#e53935" opacity="0.15" stroke="#e53935" stroke-width="1"/>
+                <circle cx="20" cy="40" r="3" fill="#e53935" opacity="0.4"/>
+                <!-- Film akışı -->
+                <path d="M34 40 L52 40" stroke="#e53935" stroke-width="2" opacity="0.35" stroke-linecap="round"/>
+                <!-- Ürün giriş -->
+                <rect x="42" y="30" width="14" height="20" rx="3" fill="#e53935" opacity="0.25" stroke="#e53935" stroke-width="1"/>
+                <!-- Yatay ok (flow yönü) -->
+                <line x1="58" y1="40" x2="76" y2="40" stroke="#e53935" stroke-width="2.5" stroke-linecap="round" opacity="0.6"/>
+                <polyline points="73,35 79,40 73,45" fill="none" stroke="#e53935" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.6"/>
+                <!-- Paketlenmiş ürün çıkış -->
+                <rect x="78" y="32" width="18" height="16" rx="3" fill="#e53935" opacity="0.5"/>
+                <line x1="84" y1="32" x2="84" y2="48" stroke="#fff" stroke-width="1" opacity="0.4"/>
+                <line x1="90" y1="32" x2="90" y2="48" stroke="#fff" stroke-width="1" opacity="0.3"/>
+                <!-- Mühür çizgileri -->
+                <line x1="78" y1="36" x2="96" y2="36" stroke="#fff" stroke-width="0.8" opacity="0.3"/>
+                <line x1="78" y1="44" x2="96" y2="44" stroke="#fff" stroke-width="0.8" opacity="0.3"/>
+                <!-- Alt konveyör -->
+                <line x1="8" y1="66" x2="92" y2="66" stroke="#e53935" stroke-width="2" opacity="0.2"/>
+                <circle cx="16" cy="66" r="3" fill="#e53935" opacity="0.2"/>
+                <circle cx="84" cy="66" r="3" fill="#e53935" opacity="0.2"/>
+            </svg>`,
+            vertical: `<svg viewBox="0 0 100 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Üst film rulosu -->
+                <circle cx="50" cy="10" r="7" fill="#e53935" opacity="0.12" stroke="#e53935" stroke-width="1.5"/>
+                <circle cx="50" cy="10" r="3" fill="#e53935" opacity="0.3"/>
+                <!-- Ana makina gövdesi -->
+                <rect x="30" y="18" width="40" height="42" rx="4" fill="#e53935" opacity="0.08" stroke="#e53935" stroke-width="1.5"/>
+                <!-- Form shoulder (omuz) -->
+                <path d="M34 22 L50 18 L66 22 L66 28 L34 28 Z" fill="#e53935" opacity="0.2"/>
+                <!-- Tüp oluşumu -->
+                <rect x="40" y="28" width="20" height="24" rx="2" fill="#e53935" opacity="0.12" stroke="#e53935" stroke-width="1"/>
+                <!-- Dikey mühür çizgisi -->
+                <line x1="50" y1="28" x2="50" y2="52" stroke="#e53935" stroke-width="1.5" opacity="0.35" stroke-dasharray="3 2"/>
+                <!-- Yatay mühür çeneleri -->
+                <rect x="34" y="44" width="8" height="8" rx="1.5" fill="#e53935" opacity="0.35"/>
+                <rect x="58" y="44" width="8" height="8" rx="1.5" fill="#e53935" opacity="0.35"/>
+                <line x1="42" y1="48" x2="58" y2="48" stroke="#e53935" stroke-width="2" opacity="0.4"/>
+                <!-- Dikey ok (aşağı akış) -->
+                <line x1="50" y1="54" x2="50" y2="64" stroke="#e53935" stroke-width="2.5" stroke-linecap="round" opacity="0.6"/>
+                <polyline points="45,61 50,67 55,61" fill="none" stroke="#e53935" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.6"/>
+                <!-- Dolmuş poşet -->
+                <rect x="42" y="66" width="16" height="12" rx="2" fill="#e53935" opacity="0.5"/>
+                <line x1="42" y1="70" x2="58" y2="70" stroke="#fff" stroke-width="0.8" opacity="0.4"/>
+                <!-- Yan kontrol panelleri -->
+                <rect x="12" y="26" width="14" height="20" rx="2" fill="#e53935" opacity="0.1" stroke="#e53935" stroke-width="1"/>
+                <circle cx="19" cy="32" r="2" fill="#e53935" opacity="0.3"/>
+                <rect x="15" y="38" width="8" height="4" rx="1" fill="#e53935" opacity="0.2"/>
+                <rect x="74" y="26" width="14" height="20" rx="2" fill="#e53935" opacity="0.1" stroke="#e53935" stroke-width="1"/>
+                <circle cx="81" cy="32" r="2" fill="#e53935" opacity="0.3"/>
+                <rect x="77" y="38" width="8" height="4" rx="1" fill="#e53935" opacity="0.2"/>
+            </svg>`,
+            filling: `<svg viewBox="0 0 100 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Ana dolum hunisi -->
+                <rect x="34" y="6" width="32" height="14" rx="3" fill="#e53935" opacity="0.15" stroke="#e53935" stroke-width="1.5"/>
+                <path d="M38 20 L44 38 L56 38 L62 20 Z" fill="#e53935" opacity="0.2" stroke="#e53935" stroke-width="1.5"/>
+                <!-- Dolum nozulu -->
+                <rect x="47" y="38" width="6" height="10" rx="1" fill="#e53935" opacity="0.4"/>
+                <!-- Dolum akışı (damla) -->
+                <line x1="50" y1="48" x2="50" y2="56" stroke="#e53935" stroke-width="2" stroke-dasharray="2 2" opacity="0.5" stroke-linecap="round"/>
+                <!-- Şişe/kutu (orta) -->
+                <rect x="42" y="56" width="16" height="20" rx="2.5" fill="#e53935" opacity="0.12" stroke="#e53935" stroke-width="1.5"/>
+                <rect x="45" y="52" width="10" height="5" rx="1.5" fill="#e53935" opacity="0.3"/>
+                <rect x="44" y="62" width="12" height="12" rx="1" fill="#e53935" opacity="0.35"/>
+                <!-- Sol şişe (bekleyen) -->
+                <rect x="14" y="58" width="12" height="18" rx="2" fill="#e53935" opacity="0.1" stroke="#e53935" stroke-width="1"/>
+                <rect x="16" y="55" width="8" height="4" rx="1.5" fill="#e53935" opacity="0.2"/>
+                <rect x="15.5" y="64" width="9" height="10" rx="1" fill="#e53935" opacity="0.2"/>
+                <!-- Sağ şişe (dolu) -->
+                <rect x="74" y="58" width="12" height="18" rx="2" fill="#e53935" opacity="0.1" stroke="#e53935" stroke-width="1.5"/>
+                <rect x="76" y="55" width="8" height="4" rx="1.5" fill="#e53935" opacity="0.3"/>
+                <rect x="75.5" y="64" width="9" height="10" rx="1" fill="#e53935" opacity="0.45"/>
+                <!-- Konveyör -->
+                <line x1="8" y1="76" x2="92" y2="76" stroke="#e53935" stroke-width="2" opacity="0.25"/>
+                <circle cx="14" cy="76" r="2.5" fill="#e53935" opacity="0.2"/>
+                <circle cx="50" cy="76" r="2.5" fill="#e53935" opacity="0.2"/>
+                <circle cx="86" cy="76" r="2.5" fill="#e53935" opacity="0.2"/>
+                <!-- Oklar (sol→orta→sağ) -->
+                <line x1="26" y1="68" x2="38" y2="68" stroke="#e53935" stroke-width="1.5" opacity="0.3" stroke-linecap="round"/>
+                <polyline points="36,65 40,68 36,71" fill="none" stroke="#e53935" stroke-width="1.5" opacity="0.3" stroke-linecap="round"/>
+                <line x1="60" y1="68" x2="72" y2="68" stroke="#e53935" stroke-width="1.5" opacity="0.3" stroke-linecap="round"/>
+                <polyline points="70,65 74,68 70,71" fill="none" stroke="#e53935" stroke-width="1.5" opacity="0.3" stroke-linecap="round"/>
+            </svg>`
         };
 
         // Mega menü kategorileri - her biri kendi sayfasına link
