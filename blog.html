@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Girişim Makina Blog - Gıda işleme ve paketleme makineleri hakkında bilgiler">
     <title>Blog | Girişim Makina</title>
-    <link rel="stylesheet" href="css/style.css?v=20260223a">
+    <link rel="stylesheet" href="css/min/style.min.css?v=20260224m">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="favicon.png">
-    <script src="js/lang-detect.js?v=20260223a"></script>
+    <script defer src="js/min/lang-detect.min.js?v=20260224m"></script>
     <style>
         .blog-section {
             padding: 80px 0;
@@ -298,7 +298,7 @@
     <div class="blog-detail-modal" id="blogDetailModal">
         <div class="blog-detail-content">
             <button class="blog-detail-close" onclick="closeBlogDetail()"><i class="fas fa-times"></i></button>
-            <img class="blog-detail-image" id="blogDetailImage" src="" alt="">
+            <img loading="lazy" class="blog-detail-image" id="blogDetailImage" src="" alt="">
             <div class="blog-detail-body">
                 <h1 id="blogDetailTitle"></h1>
                 <div class="meta">
@@ -328,13 +328,13 @@
     <div id="footer-placeholder"></div>
 
     <!-- Scripts -->
-    <script src="js/main.js?v=20260223a"></script>
-    <script src="js/translations.js?v=20260223a"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="js/supabase-init.js?v=20260223a"></script>
-    <script src="js/site-loader.js?v=20260223a"></script>
-    <script src="js/seo-loader.js?v=20260223a"></script>
-    <script src="js/header-include.js?v=20260223a"></script>
+    <script defer src="js/min/main.min.js?v=20260224m"></script>
+    <script defer src="js/min/translations.min.js?v=20260224m"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script defer src="js/min/supabase-init.min.js?v=20260224m"></script>
+    <script defer src="js/min/site-loader.min.js?v=20260224m"></script>
+    <script defer src="js/min/seo-loader.min.js?v=20260224m"></script>
+    <script defer src="js/min/header-include.min.js?v=20260224m"></script>
 
     <script>
         // Store loaded posts globally for detail view and language switch
