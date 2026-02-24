@@ -67,6 +67,9 @@
                     <li data-section="machines">
                         <a href="#"><i class="fas fa-cogs"></i> Üretim Hatları</a>
                     </li>
+                    <li data-section="machineCategories">
+                        <a href="#"><i class="fas fa-th-large"></i> Makine Kategorileri</a>
+                    </li>
                     <li data-section="packaging">
                         <a href="#"><i class="fas fa-box"></i> Paketleme</a>
                     </li>
@@ -347,6 +350,17 @@
                         <button class="btn btn-primary btn-sm" onclick="addMachineItem()">
                             <i class="fas fa-plus"></i> Yeni Makine Ekle
                         </button>
+                    </div>
+                </section>
+
+                <!-- Machine Categories Section -->
+                <section id="section-machineCategories" class="admin-section">
+                    <div class="section-card">
+                        <h2>Makine Kategorileri (Mega Menü & Kategori Sayfaları)</h2>
+                        <p style="color:#666;margin-bottom:20px">Mega menüdeki kategori ikonlarını ve kategori sayfalarındaki makine fotoğraflarını buradan yönetebilirsiniz.</p>
+                        <div id="machine-categories-editor">
+                            <!-- Categories will be rendered by JS -->
+                        </div>
                     </div>
                 </section>
 

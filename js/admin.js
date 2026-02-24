@@ -1497,12 +1497,16 @@ function navigateToSection(section) {
         catalog: 'Katalog',
         seo: 'SEO Ayarları',
         analytics: 'Analitik & İzleme',
+        machineCategories: 'Makine Kategorileri',
         translations: 'Çeviriler',
         settings: 'Ayarlar'
     };
     pageTitle.textContent = titles[section] || section;
 
     // Initialize section-specific content
+    if (section === 'machineCategories') {
+        loadMachineCategories();
+    }
     if (section === 'translations' || section === 'settings') {
         initTranslations();
     }
@@ -3597,3 +3601,173 @@ function updatePackageImageUrl(productId, index, url) { const images = getProduc
 function updatePackageImageTitle(productId, index, title) { const images = getProductPackageImages(); if (images[productId]?.[index]) { images[productId][index].title = title; saveProductPackageImages(images); }}
 function deletePackageImage(productId, index) { if (confirm('Görseli silmek istediğinizden emin misiniz?')) { const images = getProductPackageImages(); if (images[productId]) { images[productId].splice(index,1); saveProductPackageImages(images); closeProductEditor(); editProduct(productId); showToast('Görsel silindi','warning'); }}}
 function closeProductEditor() { const modal = document.getElementById('productEditModal'); if (modal) modal.remove(); }
+
+// =============================================
+// Machine Categories Management
+// =============================================
+
+function loadMachineCategories() {
+    const editor = document.getElementById('machine-categories-editor');
+    if (!editor) return;
+
+    if (!siteContent.machineCategories || !siteContent.machineCategories.length) {
+        editor.innerHTML = '<p style="color:#999">Kategori verisi bulunamadı.</p>';
+        return;
+    }
+
+    editor.innerHTML = siteContent.machineCategories.map(function(cat, catIdx) {
+        var iconPreview = cat.icon
+            ? '<img src="' + cat.icon + '" style="width:80px;height:64px;object-fit:contain;border:1px solid #eee;border-radius:8px;background:#f9f9f9">'
+            : '<div style="width:80px;height:64px;background:#f0f0f0;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#999;font-size:11px">Varsayılan SVG</div>';
+
+        var machinesHTML = (cat.machines || []).map(function(m, mIdx) {
+            var imgPreview = m.image
+                ? '<img src="' + m.image + '" style="width:60px;height:45px;object-fit:cover;border-radius:6px">'
+                : '<div style="width:60px;height:45px;background:#f0f0f0;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:9px;color:#999">Varsayılan</div>';
+
+            return '<div class="machine-cat-admin-item" style="display:flex;align-items:center;gap:12px;padding:10px 12px;border:1px solid #eee;border-radius:8px;margin-bottom:8px;background:#fafafa">' +
+                '<div class="machine-img-preview">' + imgPreview + '</div>' +
+                '<div style="flex:1">' +
+                    '<input type="text" value="' + (m.title || '') + '" onchange="updateMachineCatMachine(' + catIdx + ',' + mIdx + ',\'title\',this.value)" style="width:100%;margin-bottom:4px;padding:4px 8px;border:1px solid #ddd;border-radius:4px;font-size:13px" placeholder="Makine adı">' +
+                    '<div style="display:flex;gap:6px;align-items:center">' +
+                        '<label style="font-size:11px;color:#666;cursor:pointer;padding:4px 8px;background:#fff;border:1px solid #ddd;border-radius:4px;display:inline-flex;align-items:center;gap:4px">' +
+                            '<i class="fas fa-upload" style="font-size:10px"></i> Fotoğraf' +
+                            '<input type="file" accept="image/*" style="display:none" onchange="uploadMachineCatImage(' + catIdx + ',' + mIdx + ',this)">' +
+                        '</label>' +
+                        (m.image ? '<button onclick="clearMachineCatImage(' + catIdx + ',' + mIdx + ')" style="font-size:11px;padding:4px 8px;background:#fff;border:1px solid #ddd;border-radius:4px;cursor:pointer;color:#e53935" title="Fotoğrafı kaldır"><i class="fas fa-times"></i></button>' : '') +
+                        '<button onclick="removeMachineCatMachine(' + catIdx + ',' + mIdx + ')" style="font-size:11px;padding:4px 8px;background:#fff;border:1px solid #ddd;border-radius:4px;cursor:pointer;color:#e53935;margin-left:auto" title="Makineyi sil"><i class="fas fa-trash"></i></button>' +
+                    '</div>' +
+                '</div>' +
+            '</div>';
+        }).join('');
+
+        return '<div class="machine-cat-admin-card" style="border:1px solid #e0e0e0;border-radius:12px;padding:20px;margin-bottom:20px;background:#fff">' +
+            '<div style="display:flex;align-items:center;gap:16px;margin-bottom:16px">' +
+                '<div>' + iconPreview + '</div>' +
+                '<div style="flex:1">' +
+                    '<input type="text" value="' + (cat.title || '') + '" onchange="updateMachineCatField(' + catIdx + ',\'title\',this.value)" style="font-size:16px;font-weight:600;border:1px solid #ddd;border-radius:6px;padding:6px 10px;width:100%;margin-bottom:6px">' +
+                    '<div style="display:flex;gap:6px;align-items:center">' +
+                        '<label style="font-size:11px;color:#666;cursor:pointer;padding:4px 10px;background:#f5f5f5;border:1px solid #ddd;border-radius:4px;display:inline-flex;align-items:center;gap:4px">' +
+                            '<i class="fas fa-image" style="font-size:10px"></i> İkon Yükle' +
+                            '<input type="file" accept="image/*" style="display:none" onchange="uploadMachineCatIcon(' + catIdx + ',this)">' +
+                        '</label>' +
+                        (cat.icon ? '<button onclick="clearMachineCatIcon(' + catIdx + ')" style="font-size:11px;padding:4px 10px;background:#f5f5f5;border:1px solid #ddd;border-radius:4px;cursor:pointer;color:#666"><i class="fas fa-undo"></i> Varsayılan SVG\'ye Dön</button>' : '') +
+                    '</div>' +
+                '</div>' +
+            '</div>' +
+            '<h4 style="font-size:13px;color:#666;margin-bottom:10px;font-weight:600">Alt Makineler</h4>' +
+            machinesHTML +
+            '<button onclick="addMachineCatMachine(' + catIdx + ')" style="font-size:12px;padding:6px 12px;background:#e53935;color:#fff;border:none;border-radius:6px;cursor:pointer;display:inline-flex;align-items:center;gap:4px"><i class="fas fa-plus"></i> Makine Ekle</button>' +
+        '</div>';
+    }).join('');
+}
+
+function updateMachineCatField(catIdx, field, value) {
+    if (!siteContent.machineCategories[catIdx]) return;
+    siteContent.machineCategories[catIdx][field] = value;
+    contentChanged = true;
+}
+
+function updateMachineCatMachine(catIdx, mIdx, field, value) {
+    if (!siteContent.machineCategories[catIdx]?.machines?.[mIdx]) return;
+    siteContent.machineCategories[catIdx].machines[mIdx][field] = value;
+    contentChanged = true;
+}
+
+async function uploadMachineCatIcon(catIdx, fileInput) {
+    var file = fileInput.files[0];
+    if (!file) return;
+    if (file.size > 5 * 1024 * 1024) { showToast('Dosya max 5MB olmalı', 'error'); return; }
+    if (!file.type.startsWith('image/')) { showToast('Sadece görsel yüklenebilir', 'error'); return; }
+
+    showToast('İkon yükleniyor...', 'info');
+    try {
+        if (!DEMO_MODE && typeof uploadImage === 'function') {
+            var url = await uploadImage(file, 'site-images/category-icons');
+            siteContent.machineCategories[catIdx].icon = url;
+        } else {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                siteContent.machineCategories[catIdx].icon = e.target.result;
+                contentChanged = true;
+                loadMachineCategories();
+                showToast('İkon yüklendi', 'success');
+            };
+            reader.readAsDataURL(file);
+            return;
+        }
+        contentChanged = true;
+        loadMachineCategories();
+        showToast('İkon yüklendi!', 'success');
+    } catch (err) {
+        showToast('Yükleme hatası: ' + err.message, 'error');
+    }
+}
+
+function clearMachineCatIcon(catIdx) {
+    if (!siteContent.machineCategories[catIdx]) return;
+    siteContent.machineCategories[catIdx].icon = '';
+    contentChanged = true;
+    loadMachineCategories();
+    showToast('Varsayılan SVG\'ye döndürüldü', 'success');
+}
+
+async function uploadMachineCatImage(catIdx, mIdx, fileInput) {
+    var file = fileInput.files[0];
+    if (!file) return;
+    if (file.size > 5 * 1024 * 1024) { showToast('Dosya max 5MB olmalı', 'error'); return; }
+    if (!file.type.startsWith('image/')) { showToast('Sadece görsel yüklenebilir', 'error'); return; }
+
+    showToast('Fotoğraf yükleniyor...', 'info');
+    try {
+        if (!DEMO_MODE && typeof uploadImage === 'function') {
+            var url = await uploadImage(file, 'site-images/category-machines');
+            siteContent.machineCategories[catIdx].machines[mIdx].image = url;
+        } else {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                siteContent.machineCategories[catIdx].machines[mIdx].image = e.target.result;
+                contentChanged = true;
+                loadMachineCategories();
+                showToast('Fotoğraf yüklendi', 'success');
+            };
+            reader.readAsDataURL(file);
+            return;
+        }
+        contentChanged = true;
+        loadMachineCategories();
+        showToast('Fotoğraf yüklendi!', 'success');
+    } catch (err) {
+        showToast('Yükleme hatası: ' + err.message, 'error');
+    }
+}
+
+function clearMachineCatImage(catIdx, mIdx) {
+    if (!siteContent.machineCategories[catIdx]?.machines?.[mIdx]) return;
+    siteContent.machineCategories[catIdx].machines[mIdx].image = '';
+    contentChanged = true;
+    loadMachineCategories();
+    showToast('Fotoğraf kaldırıldı', 'success');
+}
+
+function addMachineCatMachine(catIdx) {
+    if (!siteContent.machineCategories[catIdx]) return;
+    if (!siteContent.machineCategories[catIdx].machines) siteContent.machineCategories[catIdx].machines = [];
+    siteContent.machineCategories[catIdx].machines.push({
+        title: 'Yeni Makine',
+        titleKey: '',
+        image: '',
+        href: 'products/new-machine.html'
+    });
+    contentChanged = true;
+    loadMachineCategories();
+    showToast('Yeni makine eklendi', 'success');
+}
+
+function removeMachineCatMachine(catIdx, mIdx) {
+    if (!confirm('Bu makineyi silmek istediğinizden emin misiniz?')) return;
+    siteContent.machineCategories[catIdx].machines.splice(mIdx, 1);
+    contentChanged = true;
+    loadMachineCategories();
+    showToast('Makine silindi', 'warning');
+}

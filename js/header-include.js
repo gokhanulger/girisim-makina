@@ -315,8 +315,15 @@
             </svg>`
         };
 
-        // Mega menü kategorileri - her biri kendi sayfasına link
-        const megaCategories = [
+        // Mega menü kategorileri - siteContent'ten veya fallback
+        const adminCats = window.__siteContent?.machineCategories;
+        const megaCategories = (adminCats && adminCats.length) ? adminCats.map(cat => ({
+            svgKey: cat.id,
+            customIcon: cat.icon || '',
+            title: cat.title,
+            titleKey: cat.titleKey,
+            href: bp + cat.href
+        })) : [
             { svgKey: 'production', title: 'Üretim Hatları', titleKey: 'megaMenu.productionLines', href: bp + 'machines/production-lines.html' },
             { svgKey: 'biscuit', title: 'Bisküvi & Çikolata', titleKey: 'megaMenu.biscuitChocolate', href: bp + 'machines/biscuit-chocolate.html' },
             { svgKey: 'horizontal', title: 'Yatay Paketleme', titleKey: 'megaMenu.horizontalPack', href: bp + 'machines/horizontal-packaging.html' },
@@ -326,7 +333,7 @@
 
         const megaItemsHTML = megaCategories.map(cat => `
             <a href="${cat.href}" class="mega-cat-item">
-                <div class="mega-cat-icon">${megaSvgIcons[cat.svgKey]}</div>
+                <div class="mega-cat-icon">${cat.customIcon ? '<img src="' + cat.customIcon + '" alt="' + cat.title + '" style="width:84px;height:68px;object-fit:contain">' : (megaSvgIcons[cat.svgKey] || '')}</div>
                 <div class="mega-cat-label" ${cat.titleKey ? 'data-translate="' + cat.titleKey + '"' : ''}>${cat.title}</div>
             </a>`).join('');
 

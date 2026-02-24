@@ -132,6 +132,71 @@ const defaultSiteContent = {
         ]
     },
 
+    // Machine Categories (mega menü + kategori sayfaları)
+    machineCategories: [
+        {
+            id: 'production',
+            title: 'Üretim Hatları',
+            titleKey: 'megaMenu.productionLines',
+            icon: '',
+            href: 'machines/production-lines.html',
+            machines: [
+                { title: 'Gofret Üretim Hatları', titleKey: 'dropdown.wafer', image: '', href: 'products/wafer.html' },
+                { title: 'Tahıl Bar Üretim Hatları', titleKey: 'dropdown.cerealBar', image: '', href: 'products/cereal-bar.html' },
+                { title: 'Protein Bar Üretim Hatları', titleKey: 'dropdown.protein', image: '', href: 'products/protein-bar.html' },
+                { title: 'Hindistan Cevizi Dolgulu Bar', titleKey: 'dropdown.coconutBar', image: '', href: 'products/coconut-bar.html' },
+                { title: 'Helva Üretim Hatları', titleKey: 'dropdown.halvah', image: '', href: 'products/halvah.html' }
+            ]
+        },
+        {
+            id: 'biscuit',
+            title: 'Bisküvi & Çikolata',
+            titleKey: 'megaMenu.biscuitChocolate',
+            icon: '',
+            href: 'machines/biscuit-chocolate.html',
+            machines: [
+                { title: 'Bisküvi Kremalama Makinaları', titleKey: 'dropdown.biscuit', image: '', href: 'products/biscuit-sandwiching.html' },
+                { title: 'Cookie Capping (Chocopie)', titleKey: 'dropdown.cookieCapping', image: '', href: 'products/cookie-capping.html' },
+                { title: 'Çikolata Kaplama Makinası', titleKey: 'dropdown.chocolate', image: '', href: 'products/chocolate-coating.html' },
+                { title: 'Çikolata Soğutma Tüneli', titleKey: 'dropdown.chocolateCooling', image: '', href: 'products/chocolate-cooling.html' },
+                { title: 'Çikolata Hazırlama Mutfağı', titleKey: 'dropdown.chocolatePrep', image: '', href: 'products/chocolate-preparation.html' }
+            ]
+        },
+        {
+            id: 'horizontal',
+            title: 'Yatay Paketleme',
+            titleKey: 'megaMenu.horizontalPack',
+            icon: '',
+            href: 'machines/horizontal-packaging.html',
+            machines: [
+                { title: 'Yatay Flowpack Paketleme', titleKey: 'dropdown.flowpack', image: '', href: 'products/flow-pack.html' },
+                { title: 'Zarf Tipi Paketleme (Overwrapping)', titleKey: 'dropdown.overwrap', image: '', href: 'products/overwrapping.html' }
+            ]
+        },
+        {
+            id: 'vertical',
+            title: 'Dikey Paketleme',
+            titleKey: 'megaMenu.verticalPack',
+            icon: '',
+            href: 'machines/vertical-packaging.html',
+            machines: [
+                { title: 'Dikey Paketleme (VFFS)', titleKey: 'dropdown.vffs', image: '', href: 'products/vffs.html' },
+                { title: 'Thermoform Paketleme', titleKey: 'dropdown.thermoform', image: '', href: 'products/thermoform.html' }
+            ]
+        },
+        {
+            id: 'filling',
+            title: 'Dolum & Yardımcı',
+            titleKey: 'megaMenu.fillingAux',
+            icon: '',
+            href: 'machines/filling-auxiliary.html',
+            machines: [
+                { title: 'Dolum Makinaları', titleKey: 'dropdown.filling', image: '', href: 'products/filling-machines.html' },
+                { title: 'Pudra Şekeri Değirmeni', titleKey: 'dropdown.sugarMill', image: '', href: 'products/sugar-mill.html' }
+            ]
+        }
+    ],
+
     // Why Us Section
     whyUs: {
         tag: "Neden Biz?",
