@@ -1,32 +1,6 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <!-- Google tag (gtag.js) - Analytics + Ads -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-4ZR0GGRGC5"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-4ZR0GGRGC5');
-      gtag('config', 'AW-973751797');
-    </script>
-    <!-- Meta Pixel Code -->
-    <script>
-    !function(f,b,e,v,n,t,s)
-    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s)}(window, document,'script',
-    'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '1021181833050554');
-    fbq('track', 'PageView');
-    </script>
-    <noscript><img height="1" width="1" style="display:none"
-    src="https://www.facebook.com/tr?id=1021181833050554&ev=PageView&noscript=1"
-    /></noscript>
-    <!-- End Meta Pixel Code -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Girişim Makina - 1995'ten beri wafer üretim hatları, cereal bar makineleri, çikolata kaplama ve paketleme çözümleri. 57 ülkeye ihracat yapan Türkiye'nin lider gıda makineleri üreticisi.">
@@ -39,11 +13,44 @@
     <title>Girişim Makina | Wafer & Cereal Bar Üretim Hatları | Paketleme Makineleri</title>
     <link rel="canonical" href="https://girisimmak.com">
     <link rel="icon" type="image/png" href="/favicon.png">
-    <script src="js/min/lang-detect.min.js?v=20260224b" defer></script>
+    <script src="js/min/lang-detect.min.js?v=20260224c" defer></script>
     <link rel="apple-touch-icon" href="/favicon.png">
-    <link rel="stylesheet" href="css/min/style.min.css?v=20260224b">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Critical CSS inline for FCP/LCP -->
+    <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--primary-color:#e63946;--dark:#1a1a2e;--white:#ffffff}
+    body{font-family:'Poppins',sans-serif;color:#333;overflow-x:hidden}
+    .container{max-width:1200px;margin:0 auto;padding:0 20px}
+    #header-placeholder{min-height:80px;background:var(--white)}
+    .hero-banner{position:relative;width:100%;height:85vh;min-height:500px;max-height:800px;overflow:hidden}
+    .banner-slider{position:relative;width:100%;height:100%}
+    .banner-slide{position:absolute;top:0;left:0;width:100%;height:100%;background-size:cover;background-position:center;opacity:0;transition:opacity 1s ease;z-index:1}
+    .banner-slide.active{opacity:1;z-index:2}
+    .banner-overlay{position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(to right,rgba(0,0,0,.7) 0%,rgba(0,0,0,.3) 60%,rgba(0,0,0,.1) 100%)}
+    .banner-slide .container{position:relative;z-index:3;height:100%;display:flex;align-items:center}
+    .banner-content{max-width:600px;color:#fff}
+    .banner-content h1{font-size:3rem;font-weight:800;line-height:1.1;margin-bottom:15px}
+    .banner-content p{font-size:1.1rem;opacity:.9;margin-bottom:25px}
+    .banner-tag{display:inline-block;background:var(--primary-color);color:#fff;padding:6px 16px;border-radius:20px;font-size:.85rem;font-weight:600;margin-bottom:15px}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;border-radius:8px;font-weight:600;text-decoration:none;transition:all .3s ease;font-size:.95rem;border:none;cursor:pointer}
+    .btn-primary{background:var(--primary-color);color:#fff}
+    .btn-banner-outline{border:2px solid rgba(255,255,255,.5);color:#fff;background:transparent}
+    .btn-lg{padding:14px 32px;font-size:1rem}
+    .banner-nav{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);z-index:10;display:flex;align-items:center;gap:15px}
+    </style>
+    <!-- Preload LCP image + preconnect -->
+    <link rel="preload" as="image" href="images/fabrika-ici-1.webp" type="image/webp" fetchpriority="high">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <!-- Non-render-blocking CSS -->
+    <link rel="stylesheet" href="css/min/style.min.css?v=20260224c" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="css/min/style.min.css?v=20260224c"></noscript>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet"></noscript>
 </head>
 <body>
     <script>
@@ -70,7 +77,7 @@
     })();
     </script>
     <!-- Header Placeholder - Generated by header-include.js -->
-    <div id="header-placeholder" style="min-height: 120px;"></div>
+    <div id="header-placeholder" style="min-height:80px;height:80px;"></div>
 
     <!-- Hero Section - Full-Width Banner Slider -->
     <section class="hero-banner">
@@ -1296,6 +1303,30 @@
         if (bannerTotal > 1) {
             setInterval(() => changeBannerSlide(1), 6000);
         }
+    </script>
+
+    <!-- Google Analytics + Ads (deferred) -->
+    <script>
+    setTimeout(function(){
+        var gs=document.createElement('script');gs.async=true;
+        gs.src='https://www.googletagmanager.com/gtag/js?id=G-4ZR0GGRGC5';
+        document.head.appendChild(gs);
+        window.dataLayer=window.dataLayer||[];
+        function gtag(){dataLayer.push(arguments);}
+        window.gtag=gtag;gtag('js',new Date());
+        gtag('config','G-4ZR0GGRGC5');gtag('config','AW-973751797');
+    }, 2000);
+    </script>
+    <!-- Meta Pixel Code (deferred) -->
+    <script>
+    setTimeout(function(){
+        !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+        n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}
+        (window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init','1021181833050554');fbq('track','PageView');
+    }, 3000);
     </script>
 
 </body>
