@@ -1,0 +1,919 @@
+// Product Pages Default Data - All product page content
+// Admin overrides take priority over this data
+window.__defaultProductPages = {
+    'wafer': {
+        tag: 'Üretim Hatları',
+        title: 'Wafer',
+        titleHighlight: 'Üretim Hatları',
+        description: 'Hamur hazırlamadan paketlemeye kadar komple anahtar teslim wafer üretim hatları. 40 yıllık tecrübe ile dünya standartlarında kalite.',
+        heroImages: ['images/pexels-factory-machinery.jpg'],
+        overviewTitle: 'Komple Wafer',
+        overviewTitleHighlight: 'Üretim Çözümleri',
+        overviewDesc: [
+            'Girişim Makina olarak, wafer üretiminin her aşaması için yüksek teknolojili makineler sunuyoruz. Hamur hazırlamadan son paketlemeye kadar tüm üretim hattını tek bir noktadan temin edebilirsiniz.',
+            'Wafer üretim hatlarımız, farklı kapasiteler ve konfigürasyonlarla sunulmakta olup, müşterilerimizin özel ihtiyaçlarına göre özelleştirilebilmektedir.'
+        ],
+        features: [
+            { icon: 'fas fa-blender', title: 'Hamur Hazırlama', desc: 'Otomatik dozajlama ve karıştırma sistemleri ile homojen hamur hazırlama. PLC kontrollü tam otomatik sistem.' },
+            { icon: 'fas fa-fire', title: 'Wafer Fırınları', desc: 'Yüksek kapasiteli gaz veya elektrikli fırınlar. Hassas sıcaklık kontrolü ve düşük enerji tüketimi.' },
+            { icon: 'fas fa-layer-group', title: 'Kremalama Sistemi', desc: 'Tek veya çok katlı wafer kremalama. Farklı krem tipleri için ayarlanabilir sistem.' },
+            { icon: 'fas fa-snowflake', title: 'Soğutma Tüneli', desc: 'Verimli soğutma sistemi ile hızlı katılaşma. Enerji tasarruflu tasarım.' },
+            { icon: 'fas fa-cut', title: 'Kesim Makinesi', desc: 'Hassas boyut kesimi. Farklı boyut ve şekiller için ayarlanabilir.' },
+            { icon: 'fas fa-box', title: 'Paketleme', desc: 'Flow pack veya overwrapping ile son paketleme. Entegre çözümler.' }
+        ],
+        specsHeaders: ['Model', 'Kapasite', 'Plaka Boyutu', 'Plaka Sayısı', 'Güç'],
+        specs: [
+            { cells: ['WL-27', '500 kg/saat', '470x325 mm', '27 Plaka', '150 kW'] },
+            { cells: ['WL-39', '750 kg/saat', '470x325 mm', '39 Plaka', '220 kW'] },
+            { cells: ['WL-51', '1000 kg/saat', '470x325 mm', '51 Plaka', '300 kW'] },
+            { cells: ['WL-75', '1500 kg/saat', '470x325 mm', '75 Plaka', '450 kW'] }
+        ],
+        whatsappText: 'Wafer üretim hattı hakkında detaylı bilgi almak istiyorum',
+        videos: [
+            { title: 'Wafer Nasıl Yapılır?', videoId: 'igEIPiJt3UI' },
+            { title: 'FOTEG 2023 Fuarı', videoId: 'ilbFvYAV-N0' },
+            { title: 'Pudra Şekeri Değirmeni', videoId: 'SIbwLTlrqTE' }
+        ],
+        relatedProducts: ['chocolate-coating', 'flow-pack', 'cereal-bar']
+    },
+
+    'cereal-bar': {
+        tag: 'Üretim Hatları',
+        title: 'Cereal Bar',
+        titleHighlight: 'Üretim Hatları',
+        description: 'Granola, müsli, enerji ve tahıl barı üretimi için komple anahtar teslim hatlar. Karıştırma, şekillendirme, soğutma ve paketleme.',
+        heroImages: ['images/pexels-energy-bar.jpg'],
+        overviewTitle: 'Komple Cereal Bar',
+        overviewTitleHighlight: 'Üretim Çözümleri',
+        overviewDesc: [
+            'Cereal bar, granola bar, müsli bar ve enerji barı üretimi için yüksek teknolojili üretim hatları sunuyoruz.',
+            'Farklı bar tipleri (sıcak presleme, soğuk presleme, ekstrüzyon) için özelleştirilmiş hatlar mevcuttur.'
+        ],
+        features: [
+            { icon: 'fas fa-blender', title: 'Karıştırma Sistemi', desc: 'Tahıl, kuruyemiş, bal ve diğer bağlayıcıların homojen karışımı için otomatik dozajlama ve karıştırma.' },
+            { icon: 'fas fa-fire', title: 'Pişirme/Isıtma', desc: 'Bal bazlı karışımlar için kontrollü ısıtma sistemi.' },
+            { icon: 'fas fa-compress-arrows-alt', title: 'Şekillendirme', desc: 'Farklı boyut ve kalınlıklarda bar şekillendirme.' },
+            { icon: 'fas fa-snowflake', title: 'Soğutma Tüneli', desc: 'Hızlı ve kontrollü soğutma. Bar stabilitesi için optimize edilmiş.' },
+            { icon: 'fas fa-cut', title: 'Kesim Sistemi', desc: 'Ultrasonik veya bıçaklı kesim. Hassas boyut kontrolü.' },
+            { icon: 'fas fa-box', title: 'Paketleme', desc: 'Flow pack paketleme entegrasyonu.' }
+        ],
+        specsHeaders: ['Model', 'Kapasite', 'Bar Boyutu', 'Hat Genişliği', 'Güç'],
+        specs: [
+            { cells: ['CB-200', '200 kg/saat', '20-100g', '400 mm', '45 kW'] },
+            { cells: ['CB-400', '400 kg/saat', '20-100g', '600 mm', '75 kW'] },
+            { cells: ['CB-600', '600 kg/saat', '20-100g', '800 mm', '110 kW'] },
+            { cells: ['CB-1000', '1000 kg/saat', '20-100g', '1200 mm', '180 kW'] }
+        ],
+        whatsappText: 'Cereal bar hattı hakkında detaylı bilgi almak istiyorum',
+        relatedProducts: ['protein-bar', 'chocolate-coating', 'flow-pack']
+    },
+
+    'protein-bar': {
+        tag: 'Üretim Hatları',
+        title: 'Protein Bar',
+        titleHighlight: 'Üretim Hatları',
+        description: 'Protein bar, enerji bar, nuga bar ve karamel bar üretimi için komple hatlar.',
+        heroImages: ['images/pexels-protein-bar.jpg'],
+        overviewTitle: 'Protein Bar',
+        overviewTitleHighlight: 'Üretim Çözümleri',
+        overviewDesc: [
+            'Protein bar pazarı hızla büyüyor. Girişim Makina olarak, nuga, karamel, fındık ezmesi ve diğer dolguları işleyebilen komple bar üretim hatları sunuyoruz.',
+            'Ekstrüzyon veya slab forming sistemleri, çikolata enrobing, soğutma tüneli ve flow pack paketleme ile entegre çözümler.'
+        ],
+        features: [
+            { icon: 'fas fa-blender', title: 'Karıştırma/Ekstrüzyon', desc: 'Protein hamuru hazırlama ve ekstrüzyon sistemi.' },
+            { icon: 'fas fa-compress-arrows-alt', title: 'Şekillendirme', desc: 'Slab forming veya ekstrüzyon ile bar şekillendirme.' },
+            { icon: 'fas fa-snowflake', title: 'Soğutma Tüneli', desc: 'Kaplama öncesi ve sonrası soğutma.' },
+            { icon: 'fas fa-cookie-bite', title: 'Çikolata Kaplama', desc: 'Enrobing sistemi ile tam veya yarı kaplama.' },
+            { icon: 'fas fa-cut', title: 'Kesim Sistemi', desc: 'Ultrasonik veya giyotin kesim.' },
+            { icon: 'fas fa-box', title: 'Paketleme', desc: 'Flow pack paketleme entegrasyonu.' }
+        ],
+        specsHeaders: ['Model', 'Kapasite', 'Bar Ağırlığı', 'Hat Genişliği', 'Güç'],
+        specs: [
+            { cells: ['PB-200', '200 kg/saat', '30-100g', '400 mm', '55 kW'] },
+            { cells: ['PB-400', '400 kg/saat', '30-100g', '600 mm', '85 kW'] },
+            { cells: ['PB-600', '600 kg/saat', '30-100g', '800 mm', '120 kW'] }
+        ],
+        whatsappText: 'Protein bar üretim hattı hakkında bilgi almak istiyorum',
+        videos: [
+            { title: 'Nuga Bar Hattı', videoId: 'x2IZbYuavgY' },
+            { title: 'Coco Bar Hattı', videoId: 'PadWvj8-jcc' }
+        ],
+        relatedProducts: ['cereal-bar', 'coconut-bar', 'chocolate-coating']
+    },
+
+    'coconut-bar': {
+        tag: 'Üretim Hatları',
+        title: 'Hindistan Cevizi Dolgulu',
+        titleHighlight: 'Bar Üretim Hatları',
+        description: 'Bounty tipi hindistan cevizi dolgulu bar üretimi için komple anahtar teslim hatlar.',
+        heroImages: ['images/pexels-energy-bar.jpg'],
+        overviewTitle: 'Komple Coconut Bar',
+        overviewTitleHighlight: 'Üretim Çözümleri',
+        overviewDesc: [
+            'Hindistan cevizi dolgulu bar üretimi için yüksek teknolojili üretim hatları sunuyoruz.',
+            'Farklı dolgu formülasyonları ve kaplama seçenekleri için özelleştirilmiş hatlar mevcuttur.'
+        ],
+        features: [
+            { icon: 'fas fa-database', title: 'Glikoz Tankı', desc: 'Glikoz şurubu depolama ve dozajlama sistemi.' },
+            { icon: 'fas fa-fire', title: 'Şurup Pişirme', desc: 'İnvert şurup pişirme tankı. Hassas sıcaklık kontrolü.' },
+            { icon: 'fas fa-blender', title: 'Z-Tip Mikser', desc: 'Hindistan cevizi ve şurup karıştırma.' },
+            { icon: 'fas fa-compress-arrows-alt', title: 'Kalıplama Makinası', desc: 'Bar şekline presleme. Farklı kalıp seçenekleri.' },
+            { icon: 'fas fa-snowflake', title: 'Soğutma Tüneli', desc: 'Kalıplanmış barların soğutulması.' },
+            { icon: 'fas fa-cookie-bite', title: 'Çikolata Kaplama', desc: 'Tam kaplama sistemi. Soğutma tüneli entegrasyonu.' }
+        ],
+        specsHeaders: ['Model', 'Kapasite', 'Bar Ağırlığı', 'Hat Genişliği', 'Güç'],
+        specs: [
+            { cells: ['CCB-200', '200 kg/saat', '25-60g', '400 mm', '55 kW'] },
+            { cells: ['CCB-400', '400 kg/saat', '25-60g', '600 mm', '85 kW'] },
+            { cells: ['CCB-600', '600 kg/saat', '25-60g', '800 mm', '120 kW'] }
+        ],
+        whatsappText: 'Hindistan cevizi bar hattı hakkında detaylı bilgi almak istiyorum',
+        relatedProducts: ['cereal-bar', 'chocolate-coating', 'flow-pack']
+    },
+
+    'halvah': {
+        tag: 'Paketleme Makineleri',
+        title: 'Helva',
+        titleHighlight: 'Paketleme',
+        description: 'Helva dilimleme ve paketleme makineleri. Tahin helva, un helva, pişmaniye için çözümler.',
+        heroImages: ['images/pexels-production-line.jpg'],
+        overviewTitle: 'Helva',
+        overviewTitleHighlight: 'İşleme Çözümleri',
+        overviewDesc: [
+            'Helva paketleme makineleri, blok helvanın dilimleyerek veya doğrudan paketleme için tasarlanmıştır.',
+            'Flow pack veya thermoform paketleme ile entegre edilebilir.'
+        ],
+        features: [
+            { icon: 'fas fa-cut', title: 'Ultrasonik Kesim', desc: 'Helva bloğunu hassas dilimleme.' },
+            { icon: 'fas fa-ruler', title: 'Ayarlanabilir Boyut', desc: 'Farklı dilim kalınlıkları ve gramajlar.' },
+            { icon: 'fas fa-box', title: 'Flow Pack Entegrasyonu', desc: 'Otomatik paketleme entegrasyonu.' },
+            { icon: 'fas fa-cogs', title: 'PLC Kontrol', desc: 'Dokunmatik ekranlı otomatik kontrol.' }
+        ],
+        whatsappText: 'Helva paketleme makinesi hakkında bilgi almak istiyorum',
+        videos: [{ title: 'Briket Tip Paketleme', videoId: '71CGtazjx8Q' }],
+        relatedProducts: ['overwrapping', 'flow-pack', 'thermoform']
+    },
+
+    'biscuit-sandwiching': {
+        tag: 'Üretim Hatları',
+        title: 'Bisküvi Kremalama',
+        titleHighlight: 'Makineleri',
+        description: 'Sandviç bisküvi üretimi için kremalama ve bisküvi birleştirme makineleri.',
+        heroImages: ['images/pexels-sandwich-cookies.jpg'],
+        overviewTitle: 'Sandviç Bisküvi',
+        overviewTitleHighlight: 'Üretim Çözümleri',
+        overviewDesc: [
+            'Bisküvi kremalama makineleri, yuvarlak veya kare bisküvilere krem sürerek sandviç bisküvi oluşturur.',
+            'Servo motorlu hassas dozajlama, otomatik bisküvi dizme ve birleştirme sistemi.'
+        ],
+        features: [
+            { icon: 'fas fa-cookie', title: 'Bisküvi Besleme', desc: 'Otomatik bisküvi dizme ve besleme sistemi.' },
+            { icon: 'fas fa-fill-drip', title: 'Krem Dozajlama', desc: 'Servo motorlu hassas krem dozajlama.' },
+            { icon: 'fas fa-layer-group', title: 'Birleştirme', desc: 'Üst bisküviyi otomatik yerleştirme.' },
+            { icon: 'fas fa-box', title: 'Paketleme', desc: 'Flow pack paketleme entegrasyonu.' }
+        ],
+        whatsappText: 'Bisküvi kremalama makinesi hakkında bilgi almak istiyorum',
+        videos: [{ title: 'Bisküvi Üretim Hattı', videoId: 'gfMiy8vIisY' }],
+        relatedProducts: ['cookie-capping', 'chocolate-coating', 'flow-pack']
+    },
+
+    'cookie-capping': {
+        tag: 'Üretim Hatları',
+        title: 'Cookie Capping',
+        titleHighlight: '(Chocopie) Hatları',
+        description: 'Marshmallow dolgulu bisküvi (Chocopie tipi) üretimi için komple anahtar teslim hatlar.',
+        heroImages: ['images/pexels-sandwich-cookies.jpg'],
+        overviewTitle: 'Komple Chocopie',
+        overviewTitleHighlight: 'Üretim Çözümleri',
+        overviewDesc: [
+            'Marshmallow dolgulu bisküvi üretimi için yüksek teknolojili üretim hatları sunuyoruz.',
+            'Farklı bisküvi boyutları ve dolgu miktarları için özelleştirilmiş hatlar mevcuttur.'
+        ],
+        features: [
+            { icon: 'fas fa-cookie', title: 'Bisküvi Besleme', desc: 'Otomatik bisküvi besleme ve sıralama.' },
+            { icon: 'fas fa-blender', title: 'Marshmallow Hazırlama', desc: 'Marshmallow hazırlama ve pişirme ekipmanları.' },
+            { icon: 'fas fa-fill-drip', title: 'Depositor', desc: 'Hassas marshmallow dozajlama.' },
+            { icon: 'fas fa-layer-group', title: 'Kapatma Sistemi', desc: 'Üst bisküviyi otomatik yerleştirme.' },
+            { icon: 'fas fa-cookie-bite', title: 'Çikolata Kaplama', desc: 'Tam kaplama sistemi.' },
+            { icon: 'fas fa-box', title: 'Paketleme', desc: 'Flow pack paketleme entegrasyonu.' }
+        ],
+        specsHeaders: ['Model', 'Kapasite', 'Bisküvi Çapı', 'Dolgu Miktarı', 'Güç'],
+        specs: [
+            { cells: ['CCP-300', '300 adet/dk', '40-80 mm', '5-20g', '35 kW'] },
+            { cells: ['CCP-500', '500 adet/dk', '40-80 mm', '5-20g', '55 kW'] },
+            { cells: ['CCP-800', '800 adet/dk', '40-80 mm', '5-20g', '75 kW'] }
+        ],
+        whatsappText: 'Cookie capping hattı hakkında detaylı bilgi almak istiyorum',
+        relatedProducts: ['biscuit-sandwiching', 'chocolate-coating', 'flow-pack']
+    },
+
+    'chocolate-coating': {
+        tag: 'Üretim Hatları',
+        title: 'Çikolata Kaplama',
+        titleHighlight: 'Makineleri',
+        description: 'Wafer, bisküvi, cereal bar ve şekerleme ürünleri için profesyonel çikolata enrobing sistemleri.',
+        heroImages: ['images/pexels-stainless-machinery.jpg'],
+        overviewTitle: 'Profesyonel',
+        overviewTitleHighlight: 'Enrobing Sistemleri',
+        overviewDesc: [
+            'Çikolata kaplama makinelerimiz, ürünlerinize tam veya yarı kaplama sağlar. Temperleme ünitesi, kaplama perdesi, soğutma tüneli ile eksiksiz çözümler.',
+            'Farklı viskozitelerde çikolata, kuvertür, karamel ile uyumlu.'
+        ],
+        features: [
+            { icon: 'fas fa-temperature-low', title: 'Temperleme', desc: 'Otomatik çikolata temperleme ünitesi.' },
+            { icon: 'fas fa-water', title: 'Kaplama Perdesi', desc: 'Üst ve alt kaplama sistemi. Ayarlanabilir kalınlık.' },
+            { icon: 'fas fa-snowflake', title: 'Soğutma Tüneli', desc: 'Kontrollü soğutma. Parlak yüzey için optimize.' },
+            { icon: 'fas fa-paint-brush', title: 'Dekorasyon', desc: 'Çizgileme ve serpme sistemleri.' },
+            { icon: 'fas fa-recycle', title: 'Geri Dönüşüm', desc: 'Fazla çikolatanın geri kazanımı.' },
+            { icon: 'fas fa-sliders-h', title: 'PLC Kontrol', desc: 'Tam otomatik kontrol. Reçete kaydetme.' }
+        ],
+        specsHeaders: ['Model', 'Bant Genişliği', 'Kapasite', 'Soğutma Tüneli', 'Güç'],
+        specs: [
+            { cells: ['ECM-400', '400 mm', '200 kg/saat', '8 m', '25 kW'] },
+            { cells: ['ECM-600', '600 mm', '400 kg/saat', '12 m', '40 kW'] },
+            { cells: ['ECM-800', '800 mm', '600 kg/saat', '18 m', '55 kW'] },
+            { cells: ['ECM-1200', '1200 mm', '1000 kg/saat', '24 m', '80 kW'] }
+        ],
+        whatsappText: 'Çikolata kaplama makinesi hakkında bilgi almak istiyorum',
+        videos: [
+            { title: 'Nuga Bar Enrobing', videoId: 'x2IZbYuavgY' },
+            { title: 'Hindistancevizi Bar', videoId: 'PadWvj8-jcc' },
+            { title: 'Çikolata Dolum', videoId: 'CasFkGUJMao' }
+        ],
+        relatedProducts: ['chocolate-cooling', 'chocolate-preparation', 'cereal-bar']
+    },
+
+    'chocolate-cooling': {
+        tag: 'Üretim Makinaları',
+        title: 'Çikolata',
+        titleHighlight: 'Soğutma Tüneli',
+        description: 'Çikolata kaplama sonrası hızlı ve kontrollü soğutma. Kristalizasyon ve parlak yüzey için optimize.',
+        heroImages: ['images/pexels-stainless-machinery.jpg'],
+        overviewTitle: 'Profesyonel',
+        overviewTitleHighlight: 'Soğutma Sistemleri',
+        overviewDesc: [
+            'Çikolata kaplama sonrası ürünlerin doğru sıcaklık profilinde soğutulması için tasarlanmış endüstriyel tüneller.',
+            'Farklı ürün tipleri için özelleştirilmiş soğutma profilleri.'
+        ],
+        features: [
+            { icon: 'fas fa-thermometer-half', title: 'Çoklu Sıcaklık Bölgesi', desc: '3-5 bağımsız soğutma bölgesi.' },
+            { icon: 'fas fa-wind', title: 'Hava Sirkülasyonu', desc: 'Optimize edilmiş hava akışı.' },
+            { icon: 'fas fa-tachometer-alt', title: 'Ayarlanabilir Hız', desc: 'Bant hızı kontrolü.' },
+            { icon: 'fas fa-bolt', title: 'Enerji Verimliliği', desc: 'Yüksek verimli kompresörler.' },
+            { icon: 'fas fa-cogs', title: 'PLC Kontrol', desc: 'Dokunmatik ekranlı kontrol paneli.' },
+            { icon: 'fas fa-shield-alt', title: 'Paslanmaz Çelik', desc: 'Tam paslanmaz çelik yapı.' }
+        ],
+        specsHeaders: ['Model', 'Uzunluk', 'Bant Genişliği', 'Soğutma Kapasitesi', 'Güç'],
+        specs: [
+            { cells: ['CCT-8', '8 m', '600 mm', '200 kg/saat', '15 kW'] },
+            { cells: ['CCT-12', '12 m', '800 mm', '400 kg/saat', '25 kW'] },
+            { cells: ['CCT-18', '18 m', '1000 mm', '600 kg/saat', '40 kW'] },
+            { cells: ['CCT-24', '24 m', '1200 mm', '1000 kg/saat', '55 kW'] }
+        ],
+        whatsappText: 'Çikolata soğutma tüneli hakkında detaylı bilgi almak istiyorum',
+        relatedProducts: ['chocolate-coating', 'chocolate-preparation', 'cereal-bar']
+    },
+
+    'chocolate-preparation': {
+        tag: 'Üretim Makinaları',
+        title: 'Çikolata Hazırlama',
+        titleHighlight: 'Mutfağı',
+        description: 'Çikolata üretimi için komple hazırlık ekipmanları. Yağ eritme, karıştırma, öğütme, temperleme ve depolama.',
+        heroImages: ['images/pexels-stainless-machinery.jpg'],
+        overviewTitle: 'Komple Çikolata',
+        overviewTitleHighlight: 'Hazırlık Sistemleri',
+        overviewDesc: [
+            'Çikolata ve compound kaplama üretimi için gerekli tüm ekipmanlar.',
+            'Farklı kapasite ve ürün tiplerine uygun modüler sistemler.'
+        ],
+        features: [
+            { icon: 'fas fa-fire', title: 'Yağ Eritme Tankı', desc: 'Kakao yağı eritme. Su banyolu ısıtma.' },
+            { icon: 'fas fa-blender', title: 'Ön Karıştırma Mikseri', desc: 'Çikolata hammaddelerinin ön karıştırması.' },
+            { icon: 'fas fa-circle-notch', title: 'Bilyalı Değirmen', desc: 'İnce öğütme. 20-25 mikron.' },
+            { icon: 'fas fa-database', title: 'Stok Tankı', desc: 'Hazır çikolatanın depolanması.' },
+            { icon: 'fas fa-cookie-bite', title: 'Pudra Şekeri Değirmeni', desc: 'Kristal şekeri pudra haline getirme.' },
+            { icon: 'fas fa-thermometer-half', title: 'Temperleme Makinası', desc: 'Çikolata kristalizasyonu için temperleme.' }
+        ],
+        specsHeaders: ['Ekipman', 'Model', 'Kapasite', 'Güç'],
+        specs: [
+            { cells: ['Yağ Eritme Tankı', 'FMT-500', '500 L', '12 kW'] },
+            { cells: ['Ön Karıştırma Mikseri', 'PMX-300', '300 L', '15 kW'] },
+            { cells: ['Bilyalı Değirmen', 'BM-200', '200 kg/saat', '22 kW'] },
+            { cells: ['Stok Tankı', 'ST-1000', '1000 L', '8 kW'] },
+            { cells: ['Temperleme Makinası', 'TM-500', '500 kg/saat', '18 kW'] }
+        ],
+        whatsappText: 'Çikolata hazırlama mutfağı hakkında detaylı bilgi almak istiyorum',
+        relatedProducts: ['chocolate-coating', 'chocolate-cooling', 'sugar-mill']
+    },
+
+    'flow-pack': {
+        tag: 'Paketleme Makineleri',
+        title: 'Yatay Flowpack',
+        titleHighlight: 'Paketleme Makineleri',
+        description: 'FLM Serisi: Döner Çene, Gezer Çene, High Speed ve Özel Çözümler.',
+        heroImages: ['images/FLM 1000.jpg'],
+        isCategory: true,
+        whatsappText: 'Flowpack makinesi seçimi için yardım istiyorum'
+    },
+
+    'overwrapping': {
+        tag: 'Paketleme Makineleri',
+        title: 'Overwrapping',
+        titleHighlight: 'Makineleri',
+        description: 'Zarf tipi sarma makineleri. Pirinç keki, bisküvi, sabun, kutu ürünler için profesyonel paketleme.',
+        heroImages: ['images/pexels-can-packaging.jpg'],
+        overviewTitle: 'Zarf Tipi',
+        overviewTitleHighlight: 'Paketleme',
+        overviewDesc: [
+            'Overwrapping makineleri, ürünleri zarf şeklinde sararak sıkı ve şık bir paketleme sağlar.',
+            'Hem flow pack hem de X-fold overwrap kombinasyonları sunulabilir.'
+        ],
+        features: [
+            { icon: 'fas fa-gift', title: 'Zarf Sarma', desc: 'X-fold veya envelope wrap ile şık paketleme.' },
+            { icon: 'fas fa-tachometer-alt', title: 'Yüksek Hız', desc: '150 paket/dakikaya kadar.' },
+            { icon: 'fas fa-film', title: 'Film Uyumu', desc: 'OPP, selofan, polipropilen film desteği.' },
+            { icon: 'fas fa-cogs', title: 'Servo Motor', desc: 'Hassas kontrol. Kolay format değişimi.' }
+        ],
+        whatsappText: 'Overwrapping makinesi hakkında bilgi almak istiyorum',
+        videos: [
+            { title: 'Pirinç Keki Paketleme', videoId: 'RdnibYpZZG4' },
+            { title: 'Otomatik Paketleme', videoId: '3VxNVW-oDeg' },
+            { title: 'Otomatik Besleme', videoId: 'tRyXUPdj7jY' }
+        ],
+        relatedProducts: ['flow-pack', 'thermoform', 'halvah']
+    },
+
+    'thermoform': {
+        tag: 'Paketleme Makineleri',
+        title: 'Thermoform',
+        titleHighlight: 'Paketleme',
+        description: 'Termoform paketleme makineleri. Peynir, et, sebze için vakum ve MAP paketleme.',
+        heroImages: ['images/pexels-filling-line.jpg'],
+        overviewTitle: 'Thermoform',
+        overviewTitleHighlight: 'Paketleme Çözümleri',
+        overviewDesc: [
+            'Thermoform makineleri, ısı ile şekillendirilen alt film üzerine ürünü yerleştirip üst film ile kapatarak paketleme yapar.',
+            'Peynir, et, sebze, meyve, hazır gıda ve medikal ürünler için idealdir.'
+        ],
+        features: [
+            { icon: 'fas fa-shapes', title: 'Alt Film Şekillendirme', desc: 'Isı ile özel kalıpla şekillendirme.' },
+            { icon: 'fas fa-wind', title: 'Vakum Paketleme', desc: 'Uzun raf ömrü için vakum.' },
+            { icon: 'fas fa-gas-pump', title: 'MAP Paketleme', desc: 'Modifiye atmosfer ile gaz dolum.' },
+            { icon: 'fas fa-cut', title: 'Kesim Sistemi', desc: 'Otomatik kesim ve ayırma.' }
+        ],
+        whatsappText: 'Thermoform paketleme makinesi hakkında bilgi almak istiyorum',
+        videos: [{ title: 'Peynir Paketleme', videoId: 'mwbvdvsITRA' }],
+        relatedProducts: ['overwrapping', 'vffs', 'filling-machines']
+    },
+
+    'vffs': {
+        tag: 'Paketleme Makineleri',
+        title: 'VFFS',
+        titleHighlight: 'Dikey Dolum',
+        description: 'Dikey Form-Doldur-Yapıştır makineleri. Cips, kuruyemiş, kahve, şeker için yüksek hızlı paketleme.',
+        heroImages: ['images/pexels-bottling-line.jpg'],
+        overviewTitle: 'Dikey Dolum',
+        overviewTitleHighlight: 'Çözümleri',
+        overviewDesc: [
+            'VFFS makineleri, granül, toz ve küçük parçalı ürünlerin hızlı paketlenmesi için idealdir.',
+            'Yastık, gusset, doypack ve stick pack formatları.'
+        ],
+        features: [
+            { icon: 'fas fa-weight', title: 'Multihead Tartı', desc: '10-14-16 başlıklı kombinasyon tartı.' },
+            { icon: 'fas fa-layer-group', title: 'Paket Formatları', desc: 'Yastık, gusset, doypack, stick pack.' },
+            { icon: 'fas fa-gas-pump', title: 'Gaz Dolum', desc: 'Azot gazı ile MAP paketleme.' },
+            { icon: 'fas fa-tachometer-alt', title: 'Yüksek Hız', desc: '120 paket/dakikaya kadar.' },
+            { icon: 'fas fa-qrcode', title: 'Kodlama', desc: 'Tarih kodlama ve lot numarası entegrasyonu.' },
+            { icon: 'fas fa-cogs', title: 'Servo Motor', desc: 'Hassas kontrol. Hızlı format değişimi.' }
+        ],
+        whatsappText: 'VFFS dikey dolum makinesi hakkında bilgi almak istiyorum',
+        videos: [
+            { title: 'Cips Paketleme', videoId: 'GlzQlLBKF-U' },
+            { title: 'Stick Pack Kahve', videoId: '_I4TDHGX-zE' },
+            { title: 'Şeker Paketleme', videoId: '90eDjQN_H28' }
+        ]
+    },
+
+    'filling-machines': {
+        tag: 'Paketleme Makinaları',
+        title: 'Dolum',
+        titleHighlight: 'Makinaları',
+        description: 'Gıda ürünleri için otomatik dolum ve paketleme sistemleri.',
+        heroImages: ['images/pexels-filling-line.jpg'],
+        overviewTitle: 'Hassas',
+        overviewTitleHighlight: 'Dolum Sistemleri',
+        overviewDesc: [
+            'Gıda endüstrisi için tasarlanmış otomatik dolum makinaları.',
+            'Farklı ürün özellikleri ve kapasite gereksinimlerine uygun modeller.'
+        ],
+        features: [
+            { icon: 'fas fa-arrows-spin', title: 'Vidalı Dolum', desc: 'Toz ürünler için vidalı tartım.' },
+            { icon: 'fas fa-balance-scale', title: 'Lineer Tartım', desc: '2-4 kafalı lineer tartım sistemleri.' },
+            { icon: 'fas fa-circle-notch', title: 'Multihead Tartım', desc: '10-16 kafalı multihead sistemler.' },
+            { icon: 'fas fa-cube', title: 'Hacimsel Dolum', desc: 'Sabit hacimli ürünler için bardak sistem.' },
+            { icon: 'fas fa-cogs', title: 'PLC Kontrol', desc: 'Dokunmatik ekranlı kontrol.' },
+            { icon: 'fas fa-plug', title: 'VFFS Entegrasyonu', desc: 'Dikey paketleme ile tam entegrasyon.' }
+        ],
+        specsHeaders: ['Model', 'Tip', 'Kapasite', 'Tartım Aralığı', 'Hassasiyet'],
+        specs: [
+            { cells: ['AWF-1000', 'Vidalı', '35 paket/dk', '50-2000g', '±1%'] },
+            { cells: ['LWF-2', 'Lineer 2 Kafa', '25 paket/dk', '100-3000g', '±0.5%'] },
+            { cells: ['LWF-4', 'Lineer 4 Kafa', '45 paket/dk', '100-3000g', '±0.5%'] },
+            { cells: ['MHW-10', 'Multihead 10', '70 paket/dk', '10-1500g', '±0.3%'] },
+            { cells: ['MHW-14', 'Multihead 14', '120 paket/dk', '10-1500g', '±0.2%'] }
+        ],
+        whatsappText: 'Dolum makinası hakkında detaylı bilgi almak istiyorum',
+        relatedProducts: ['vffs', 'flow-pack', 'overwrapping']
+    },
+
+    'sugar-mill': {
+        tag: 'Üretim Makinaları',
+        title: 'Pudra Şekeri',
+        titleHighlight: 'Değirmeni',
+        description: 'Kristal şekeri pudra haline getiren endüstriyel öğütücüler.',
+        heroImages: ['images/pexels-machinery-closeup.jpg'],
+        overviewTitle: 'Endüstriyel',
+        overviewTitleHighlight: 'Şeker Öğütücüler',
+        overviewDesc: [
+            'Kristal şekeri pudra şekeri haline getirmek için tasarlanmış yüksek kapasiteli değirmenler.',
+            'Çekiçli veya pimli rotor sistemleri. Farklı incelik derecelerine ayarlanabilir.'
+        ],
+        features: [
+            { icon: 'fas fa-tachometer-alt', title: 'Yüksek Kapasite', desc: '900 kg/saat\'e kadar.' },
+            { icon: 'fas fa-compress-alt', title: 'İnce Öğütme', desc: '50-100 mikron.' },
+            { icon: 'fas fa-bolt', title: 'Düşük Enerji', desc: 'Optimize edilmiş rotor tasarımı.' },
+            { icon: 'fas fa-shield-alt', title: 'Paslanmaz Çelik', desc: 'Gıdaya temas eden tüm parçalar.' },
+            { icon: 'fas fa-fan', title: 'Soğutma Sistemi', desc: 'Öğütme sırasında sıcaklık kontrolü.' },
+            { icon: 'fas fa-tools', title: 'Kolay Bakım', desc: 'Hızlı temizlik ve parça değişimi.' }
+        ],
+        specsHeaders: ['Model', 'Kapasite', 'İncelik', 'Motor Gücü', 'Ağırlık'],
+        specs: [
+            { cells: ['PSM-300', '300 kg/saat', '50-100 mikron', '15 kW', '450 kg'] },
+            { cells: ['PSM-500', '500 kg/saat', '50-100 mikron', '22 kW', '650 kg'] },
+            { cells: ['PSM-900', '900 kg/saat', '50-100 mikron', '37 kW', '950 kg'] }
+        ],
+        whatsappText: 'Pudra şekeri değirmeni hakkında detaylı bilgi almak istiyorum',
+        relatedProducts: ['chocolate-preparation', 'biscuit-sandwiching', 'wafer']
+    },
+
+    // ==================== FLOWPACK SUB-PRODUCTS ====================
+    'flm-1000': {
+        tag: 'Döner Çene Sistemi (Rotary Jaw)',
+        title: 'FLM 1000',
+        titleHighlight: 'Flowpack Makinesi',
+        description: 'Standart yatay flowpack paketleme makinesi. Döner çene sistemi ile 300 paket/dakika hız.',
+        heroImages: ['images/FLM-1000-nobg.png', 'images/FLM 1000.jpg', 'images/FLM 1000-1.jpg'],
+        keyFeatures: [
+            { icon: 'fas fa-tachometer-alt', value: '300', label: 'paket/dakika' },
+            { icon: 'fas fa-sync-alt', value: 'Döner Çene', label: 'Rotary Jaw' },
+            { icon: 'fas fa-film', value: 'Max. 450 mm', label: 'Film Genişliği' },
+            { icon: 'fas fa-bolt', value: '3.5 kW', label: 'Güç Tüketimi' }
+        ],
+        overviewTitle: 'FLM 1000',
+        overviewTitleHighlight: 'Flowpack Makinesi',
+        overviewDesc: [
+            'FLM 1000, Girişim Makina\'nın en popüler flowpack modelidir. Döner çene sistemi sayesinde yüksek hızda sürekli paketleme yapar.',
+            'Servo motor teknolojisi, hassas film kontrolü ve kolay kullanım özellikleri ile uygundur.'
+        ],
+        featuresList: [
+            'Rotary jaw teknolojisi ile kesintisiz yüksek hızlı paketleme.',
+            '7" renkli dokunmatik ekran. 100+ reçete kaydetme.',
+            'Tool-less (aletsiz) hızlı format değişikliği.',
+            'Gıda temas yüzeylerinde AISI 304 paslanmaz çelik.',
+            'Standart üst film beslemeli tasarım. Kolay bobin değişimi.'
+        ],
+        specs: [
+            { label: 'Paketleme Hızı', value: '50 - 300 paket/dakika' },
+            { label: 'Ürün Uzunluğu (L)', value: '30 - 300 mm' },
+            { label: 'Ürün Genişliği (W)', value: '20 - 150 mm' },
+            { label: 'Ürün Yüksekliği (H)', value: '5 - 80 mm' },
+            { label: 'Film Genişliği', value: 'Max. 450 mm' },
+            { label: 'Film Tipi', value: 'OPP, BOPP, CPP, Lamine, Kağıt' },
+            { label: 'Güç Tüketimi', value: '3.5 kW' },
+            { label: 'Hava Tüketimi', value: '50 L/dak @ 6 bar' },
+            { label: 'Makine Boyutları', value: '4200 x 1100 x 1650 mm' },
+            { label: 'Ağırlık', value: '~800 kg' }
+        ],
+        applications: [
+            { icon: 'fas fa-cookie', label: 'Bisküvi' },
+            { icon: 'fas fa-candy-cane', label: 'Çikolata Bar' },
+            { icon: 'fas fa-bread-slice', label: 'Ekmek & Kek' },
+            { icon: 'fas fa-ice-cream', label: 'Dondurma' },
+            { icon: 'fas fa-soap', label: 'Sabun' },
+            { icon: 'fas fa-box', label: 'Tekli Ürünler' }
+        ],
+        whatsappText: 'FLM 1000 flowpack makinesi için teklif almak istiyorum',
+        relatedProducts: ['flm-1000-cw', 'flm-2000', 'flm-1000-bms']
+    },
+
+    'flm-1000-bms': {
+        tag: 'Gezer Çene Sistemi (Box Motion)',
+        title: 'FLM 1000-BMS',
+        titleHighlight: 'Box Motion Flowpack',
+        description: 'Gezer çene sistemi ile premium kaynak kalitesi. Hassas ürünler için ideal.',
+        heroImages: ['images/FLM 1000-BM Upper Bobbin Feeding Box Motion Jaw System Horizontal Flowpack Packaging Machine.jpg'],
+        keyFeatures: [
+            { icon: 'fas fa-tachometer-alt', value: '200', label: 'paket/dakika' },
+            { icon: 'fas fa-arrows-alt-h', value: 'Gezer Çene', label: 'Box Motion' },
+            { icon: 'fas fa-film', value: 'Max. 430 mm', label: 'Film Genişliği' },
+            { icon: 'fas fa-bolt', value: '4.0 kW', label: 'Güç Tüketimi' }
+        ],
+        overviewTitle: 'Box Motion',
+        overviewTitleHighlight: 'Teknolojisi',
+        overviewDesc: [
+            'Gezer çene sistemi kullanan premium flowpack modeli. Daha uzun kaynak süresi ve daha yüksek kaynak kalitesi.',
+            'MAP uygulamaları ve yüksek kaliteli paketleme için tercih edilir.'
+        ],
+        featuresList: [
+            'Gezer çene teknolojisi. Mükemmel kaynak kalitesi.',
+            'Daha uzun kaynak süresi ile güçlü ve estetik kaynaklar.',
+            'Modified Atmosphere Packaging için gaz flush entegrasyonu.',
+            'Kırılgan ve hassas ürünler için nazik paketleme.',
+            'AISI 304 paslanmaz çelik.'
+        ],
+        specs: [
+            { label: 'Paketleme Hızı', value: '40 - 200 paket/dakika' },
+            { label: 'Ürün Uzunluğu (L)', value: '35 - 280 mm' },
+            { label: 'Ürün Genişliği (W)', value: '20 - 140 mm' },
+            { label: 'Ürün Yüksekliği (H)', value: '5 - 75 mm' },
+            { label: 'Film Genişliği', value: 'Max. 430 mm' },
+            { label: 'Çene Sistemi', value: 'Gezer Çene (Box Motion)' },
+            { label: 'MAP Entegrasyonu', value: 'Opsiyonel' },
+            { label: 'Güç Tüketimi', value: '4.0 kW' },
+            { label: 'Makine Boyutları', value: '4500 x 1200 x 1750 mm' },
+            { label: 'Ağırlık', value: '~950 kg' }
+        ],
+        applications: [
+            { icon: 'fas fa-leaf', label: 'Taze Gıdalar' },
+            { icon: 'fas fa-cookie', label: 'Premium Bisküvi' },
+            { icon: 'fas fa-cheese', label: 'Peynir' },
+            { icon: 'fas fa-globe', label: 'Export Ürünler' }
+        ],
+        whatsappText: 'FLM 1000-BMS için teklif almak istiyorum',
+        relatedProducts: ['flm-5000-bms', 'flm-1000', 'flm-5000']
+    },
+
+    'flm-1000-cw': {
+        tag: 'Döner Çene Sistemi (Rotary Jaw)',
+        title: 'FLM 1000-CW',
+        titleHighlight: 'Cross-Web Besleme',
+        description: 'Cross-web film besleme sistemi ile özel flowpack. Kısa paket boyları ve geniş ürünler için.',
+        heroImages: ['images/FLM-1000-CW-nobg.png', 'images/FLM 1000-CW HORIZONTAL FLOWPACK PACKAGING MACHINE.png'],
+        keyFeatures: [
+            { icon: 'fas fa-tachometer-alt', value: '250', label: 'paket/dakika' },
+            { icon: 'fas fa-sync-alt', value: 'Döner Çene', label: 'Rotary Jaw' },
+            { icon: 'fas fa-film', value: 'Max. 600 mm', label: 'Film Genişliği' },
+            { icon: 'fas fa-bolt', value: '4.0 kW', label: 'Güç Tüketimi' }
+        ],
+        overviewTitle: 'Cross-Web',
+        overviewTitleHighlight: 'Film Besleme Teknolojisi',
+        overviewDesc: [
+            'Filmi çapraz yönde besler. Geniş ürünlerde film sarfiyatı azalır ve maliyet düşer.',
+            'Sandviç, gofret, büyük bisküvi için tercih edilir.'
+        ],
+        featuresList: [
+            'Çapraz film besleme ile ekonomik paketleme.',
+            '400mm\'ye kadar ürün genişliği.',
+            'Rotary jaw teknolojisi.',
+            '7" dokunmatik ekran. 100+ reçete.',
+            'AISI 304 paslanmaz çelik.'
+        ],
+        specs: [
+            { label: 'Paketleme Hızı', value: '40 - 250 paket/dakika' },
+            { label: 'Ürün Uzunluğu (L)', value: '50 - 400 mm' },
+            { label: 'Ürün Genişliği (W)', value: '30 - 200 mm' },
+            { label: 'Ürün Yüksekliği (H)', value: '5 - 100 mm' },
+            { label: 'Film Genişliği', value: 'Max. 600 mm' },
+            { label: 'Film Tipi', value: 'OPP, BOPP, CPP, Lamine' },
+            { label: 'Güç Tüketimi', value: '4.0 kW' },
+            { label: 'Makine Boyutları', value: '4500 x 1200 x 1700 mm' },
+            { label: 'Ağırlık', value: '~900 kg' }
+        ],
+        whatsappText: 'FLM 1000-CW için teklif almak istiyorum',
+        relatedProducts: ['flm-1000', 'flm-3000', 'flm-4000']
+    },
+
+    'flm-2000': {
+        tag: 'Döner Çene Sistemi (Rotary Jaw)',
+        title: 'FLM 2000',
+        titleHighlight: 'Otomatik Beslemeli Flowpack',
+        description: 'Sayma ve ayırma sistemli tam otomatik besleme ünitesi ile entegre flowpack.',
+        heroImages: ['images/FLM 2000 Roll Bread Automatic Feeding and Packaging Machine with Counting and Seperation System.jpg'],
+        keyFeatures: [
+            { icon: 'fas fa-tachometer-alt', value: '200', label: 'paket/dakika' },
+            { icon: 'fas fa-sync-alt', value: 'Döner Çene', label: 'Rotary Jaw' },
+            { icon: 'fas fa-film', value: 'Max. 400 mm', label: 'Film Genişliği' },
+            { icon: 'fas fa-bolt', value: '5.0 kW', label: 'Güç Tüketimi' }
+        ],
+        overviewTitle: 'Otomatik Sayma ve',
+        overviewTitleHighlight: 'Ayırma Sistemi',
+        overviewDesc: [
+            'Ürünleri otomatik olarak sayar, gruplar ve paketleme ünitesine besler.',
+            'Rulo ekmek, sandviç bisküvi için tasarlanmıştır.'
+        ],
+        featuresList: [
+            'Hassas sayma sensörü. 1-20 adet arası ayarlanabilir.',
+            'Otomatik gruplama ve aktarım.',
+            'Manuel müdahale gerektirmez.',
+            'Rotary jaw teknolojisi.',
+            'AISI 304 paslanmaz çelik.'
+        ],
+        specs: [
+            { label: 'Paketleme Hızı', value: '30 - 200 paket/dakika' },
+            { label: 'Ürün Adedi/Paket', value: '1 - 20 adet' },
+            { label: 'Ürün Uzunluğu (L)', value: '40 - 250 mm' },
+            { label: 'Ürün Genişliği (W)', value: '20 - 120 mm' },
+            { label: 'Ürün Yüksekliği (H)', value: '10 - 60 mm' },
+            { label: 'Film Genişliği', value: 'Max. 400 mm' },
+            { label: 'Güç Tüketimi', value: '5.0 kW' },
+            { label: 'Makine Boyutları', value: '6000 x 1400 x 1800 mm' },
+            { label: 'Ağırlık', value: '~1200 kg' }
+        ],
+        applications: [
+            { icon: 'fas fa-bread-slice', label: 'Rulo Ekmek' },
+            { icon: 'fas fa-cookie', label: 'Sandviç Bisküvi' },
+            { icon: 'fas fa-cookie-bite', label: 'Kraker' },
+            { icon: 'fas fa-cubes', label: 'Çoklu Ürünler' }
+        ],
+        whatsappText: 'FLM 2000 için teklif almak istiyorum',
+        relatedProducts: ['flm-1000', 'flm-hs-500', 'flm-4000']
+    },
+
+    'flm-3000': {
+        tag: 'Döner Çene Sistemi (Rotary Jaw)',
+        title: 'FLM 3000',
+        titleHighlight: 'Konveyör Beslemeli Flowpack',
+        description: 'Büyük, ağır veya düzensiz şekilli ürünler için konveyör beslemeli flowpack.',
+        heroImages: ['images/FLM 3000 Horizontal Flowpack Packaging Machine with semi automatic feeding through conveyor band.jpg'],
+        keyFeatures: [
+            { icon: 'fas fa-tachometer-alt', value: '150', label: 'paket/dakika' },
+            { icon: 'fas fa-sync-alt', value: 'Döner Çene', label: 'Rotary Jaw' },
+            { icon: 'fas fa-film', value: 'Max. 550 mm', label: 'Film Genişliği' },
+            { icon: 'fas fa-bolt', value: '4.5 kW', label: 'Güç Tüketimi' }
+        ],
+        overviewTitle: 'Büyük Ürünler İçin',
+        overviewTitleHighlight: 'Özel Çözüm',
+        overviewDesc: [
+            'Büyük ve ağır ürünler için tasarlanmıştır. Geniş konveyör bant sistemi.',
+            'Taze ekmek, pasta, kek, büyük sandviçler için idealdir.'
+        ],
+        featuresList: [
+            'Büyük ve ağır ürünleri nazikçe taşır.',
+            '500mm\'ye kadar ürün boyu.',
+            'Kırılgan ürünler için nazik taşıma.',
+            'Rotary jaw teknolojisi.',
+            'AISI 304 paslanmaz çelik.'
+        ],
+        specs: [
+            { label: 'Paketleme Hızı', value: '20 - 150 paket/dakika' },
+            { label: 'Ürün Uzunluğu (L)', value: '50 - 500 mm' },
+            { label: 'Ürün Genişliği (W)', value: '30 - 200 mm' },
+            { label: 'Ürün Yüksekliği (H)', value: '10 - 120 mm' },
+            { label: 'Film Genişliği', value: 'Max. 550 mm' },
+            { label: 'Güç Tüketimi', value: '4.5 kW' },
+            { label: 'Makine Boyutları', value: '5500 x 1300 x 1700 mm' },
+            { label: 'Ağırlık', value: '~1000 kg' }
+        ],
+        applications: [
+            { icon: 'fas fa-bread-slice', label: 'Taze Ekmek' },
+            { icon: 'fas fa-birthday-cake', label: 'Pasta & Kek' },
+            { icon: 'fas fa-hamburger', label: 'Büyük Sandviçler' },
+            { icon: 'fas fa-shapes', label: 'Düzensiz Ürünler' }
+        ],
+        whatsappText: 'FLM 3000 için teklif almak istiyorum',
+        relatedProducts: ['flm-1000-cw', 'flm-4000', 'flm-5000']
+    },
+
+    'flm-4000': {
+        tag: 'Döner Çene Sistemi (Rotary Jaw)',
+        title: 'FLM 4000',
+        titleHighlight: 'Pile Paketleme Flowpack',
+        description: 'Yığın halinde paketleme. İstifli bisküvi, kraker, dilimli ekmek için.',
+        heroImages: ['images/FLM 4000 Horizontal Flowpack Machin on pile.jpg'],
+        keyFeatures: [
+            { icon: 'fas fa-tachometer-alt', value: '120', label: 'paket/dakika' },
+            { icon: 'fas fa-sync-alt', value: 'Döner Çene', label: 'Rotary Jaw' },
+            { icon: 'fas fa-film', value: 'Max. 450 mm', label: 'Film Genişliği' },
+            { icon: 'fas fa-bolt', value: '4.0 kW', label: 'Güç Tüketimi' }
+        ],
+        overviewTitle: 'İstifli Ürünler İçin',
+        overviewTitleHighlight: 'Pile Paketleme',
+        overviewDesc: [
+            'Ürünleri üst üste istifleyerek paketler. Birden fazla ürün tek pakette.',
+            'İstifli bisküvi, kraker, dilimli ekmek için kullanılır.'
+        ],
+        featuresList: [
+            'Ürünleri üst üste istifler. 2-20 adet arası.',
+            'Düzgün ve stabil yığınlar.',
+            'Rotary jaw teknolojisi.',
+            'Ürün sayısı ve yığın yüksekliği ayarlanabilir.',
+            'AISI 304 paslanmaz çelik.'
+        ],
+        specs: [
+            { label: 'Paketleme Hızı', value: '20 - 120 paket/dakika' },
+            { label: 'Yığın Adedi', value: '2 - 20 adet/paket' },
+            { label: 'Tekli Ürün Boyu', value: '30 - 100 mm' },
+            { label: 'Yığın Yüksekliği', value: 'Max. 150 mm' },
+            { label: 'Ürün Genişliği (W)', value: '20 - 100 mm' },
+            { label: 'Film Genişliği', value: 'Max. 450 mm' },
+            { label: 'Güç Tüketimi', value: '4.0 kW' },
+            { label: 'Makine Boyutları', value: '5000 x 1200 x 1800 mm' },
+            { label: 'Ağırlık', value: '~950 kg' }
+        ],
+        applications: [
+            { icon: 'fas fa-cookie', label: 'İstifli Bisküvi' },
+            { icon: 'fas fa-cookie-bite', label: 'Kraker Paketi' },
+            { icon: 'fas fa-bread-slice', label: 'Dilimli Ekmek' },
+            { icon: 'fas fa-cheese', label: 'Dilimli Peynir' }
+        ],
+        whatsappText: 'FLM 4000 için teklif almak istiyorum',
+        relatedProducts: ['flm-2000', 'flm-3000', 'flm-5000']
+    },
+
+    'flm-5000': {
+        tag: 'Döner Çene Sistemi (Rotary Jaw)',
+        title: 'FLM 5000',
+        titleHighlight: 'Alttan Beslemeli Flowpack',
+        description: 'Alttan film besleme ile yapışan, yağlı veya nemli ürünler için üstün performans.',
+        heroImages: ['images/FLM 5000 Bottom Foil Feeding Rotary Jaw System  Horizontal Flowpack Packaging Machine.jpg'],
+        keyFeatures: [
+            { icon: 'fas fa-tachometer-alt', value: '180', label: 'paket/dakika' },
+            { icon: 'fas fa-sync-alt', value: 'Döner Çene', label: 'Rotary Jaw' },
+            { icon: 'fas fa-film', value: 'Max. 420 mm', label: 'Film Genişliği' },
+            { icon: 'fas fa-bolt', value: '3.8 kW', label: 'Güç Tüketimi' }
+        ],
+        overviewTitle: 'Alttan Film Besleme',
+        overviewTitleHighlight: 'Teknolojisi',
+        overviewDesc: [
+            'Filmi alttan besleyerek ürünü üstten sarar. Yapışan ve yağlı ürünler için avantaj sağlar.',
+            'Çikolata kaplı ürünler, yağlı bisküviler filmi kirletmeden temiz paketlenir.'
+        ],
+        featuresList: [
+            'Bottom foil feeding sistemi.',
+            'Yağlı, nemli ve yapışan ürünler için özel tasarım.',
+            'Rotary jaw teknolojisi.',
+            'Temiz ve profesyonel görünüm.',
+            'AISI 304 paslanmaz çelik.'
+        ],
+        specs: [
+            { label: 'Paketleme Hızı', value: '40 - 180 paket/dakika' },
+            { label: 'Ürün Uzunluğu (L)', value: '40 - 280 mm' },
+            { label: 'Ürün Genişliği (W)', value: '25 - 140 mm' },
+            { label: 'Ürün Yüksekliği (H)', value: '5 - 70 mm' },
+            { label: 'Film Genişliği', value: 'Max. 420 mm' },
+            { label: 'Film Besleme', value: 'Alttan (Bottom Foil)' },
+            { label: 'Güç Tüketimi', value: '3.8 kW' },
+            { label: 'Makine Boyutları', value: '4400 x 1150 x 1700 mm' },
+            { label: 'Ağırlık', value: '~850 kg' }
+        ],
+        applications: [
+            { icon: 'fas fa-candy-cane', label: 'Çikolata Kaplı' },
+            { icon: 'fas fa-cookie', label: 'Yağlı Bisküvi' },
+            { icon: 'fas fa-cheese', label: 'Peynir' },
+            { icon: 'fas fa-tint', label: 'Nemli Ürünler' }
+        ],
+        whatsappText: 'FLM 5000 için teklif almak istiyorum',
+        relatedProducts: ['flm-5000-bms', 'flm-1000', 'flm-1000-bms']
+    },
+
+    'flm-5000-bms': {
+        tag: 'Gezer Çene Sistemi (Box Motion)',
+        title: 'FLM 5000-BMS',
+        titleHighlight: 'Box Motion + Alttan Besleme',
+        description: 'Box motion çene sistemi ve alttan film besleme kombinasyonu.',
+        heroImages: ['images/FLM-BM 5000 Bottom Bobbin Feeding Box Motion Jaw System Horizontal Flowpack Packaging Machine.jpg'],
+        keyFeatures: [
+            { icon: 'fas fa-tachometer-alt', value: '150', label: 'paket/dakika' },
+            { icon: 'fas fa-arrows-alt-h', value: 'Gezer Çene', label: 'Box Motion' },
+            { icon: 'fas fa-film', value: 'Max. 400 mm', label: 'Film Genişliği' },
+            { icon: 'fas fa-bolt', value: '4.5 kW', label: 'Güç Tüketimi' }
+        ],
+        overviewTitle: 'En İyi İki Teknoloji',
+        overviewTitleHighlight: 'Bir Arada',
+        overviewDesc: [
+            'Box motion çene sistemi ve alttan film beslemeyi birleştiren premium model.',
+            'MAP uyumlu yapısıyla uzun raf ömrü gerektiren ürünlerde tercih edilir.'
+        ],
+        featuresList: [
+            'Gezer çene teknolojisi. Mükemmel kaynak kalitesi.',
+            'Bottom foil feeding sistemi.',
+            'MAP için gaz flush entegrasyonu.',
+            'Güçlü ve estetik kaynaklar.',
+            'AISI 304 paslanmaz çelik.'
+        ],
+        specs: [
+            { label: 'Paketleme Hızı', value: '30 - 150 paket/dakika' },
+            { label: 'Ürün Uzunluğu (L)', value: '40 - 260 mm' },
+            { label: 'Ürün Genişliği (W)', value: '25 - 130 mm' },
+            { label: 'Ürün Yüksekliği (H)', value: '5 - 65 mm' },
+            { label: 'Film Genişliği', value: 'Max. 400 mm' },
+            { label: 'Film Besleme', value: 'Alttan Bobin (Bottom Bobbin)' },
+            { label: 'Çene Sistemi', value: 'Gezer Çene (Box Motion)' },
+            { label: 'MAP Entegrasyonu', value: 'Opsiyonel' },
+            { label: 'Güç Tüketimi', value: '4.5 kW' },
+            { label: 'Makine Boyutları', value: '4600 x 1250 x 1800 mm' },
+            { label: 'Ağırlık', value: '~1000 kg' }
+        ],
+        applications: [
+            { icon: 'fas fa-candy-cane', label: 'Çikolata Kaplı' },
+            { icon: 'fas fa-cheese', label: 'Peynir' },
+            { icon: 'fas fa-leaf', label: 'Taze Gıdalar' },
+            { icon: 'fas fa-globe', label: 'Export Ürünler' }
+        ],
+        whatsappText: 'FLM 5000-BMS için teklif almak istiyorum',
+        relatedProducts: ['flm-1000-bms', 'flm-5000', 'flm-hs-500']
+    },
+
+    'flm-hs-500': {
+        tag: 'Yüksek Hız Otomatik (High Speed)',
+        title: 'FLM-HS 500',
+        titleHighlight: 'High Speed Flowpack',
+        description: 'Tam otomatik ürün besleme ile 500+ paket/dakika kapasite.',
+        heroImages: ['images/FLM-HS-500-nobg.png', 'images/FLM-HS-500 High Speed Flowpack Packaging Machine with Automatic Product Feeding System.jpg'],
+        keyFeatures: [
+            { icon: 'fas fa-tachometer-alt', value: '500+', label: 'paket/dakika' },
+            { icon: 'fas fa-sync-alt', value: 'Döner Çene', label: 'Rotary Jaw' },
+            { icon: 'fas fa-film', value: 'Max. 350 mm', label: 'Film Genişliği' },
+            { icon: 'fas fa-bolt', value: '8.0 kW', label: 'Güç Tüketimi' }
+        ],
+        overviewTitle: 'Maksimum Hız,',
+        overviewTitleHighlight: 'Maksimum Verimlilik',
+        overviewDesc: [
+            'Yüksek hacimli üretim hatları için en hızlı flowpack modelimizdir.',
+            'Bisküvi, çikolata bar, şekerleme için idealdir.'
+        ],
+        featuresList: [
+            'Sınıfının en hızlı makinesi.',
+            'Otomatik ürün besleme sistemi.',
+            'Tam servo tahrik.',
+            '7/24 kesintisiz çalışma.',
+            'SCADA uyumlu.'
+        ],
+        specs: [
+            { label: 'Paketleme Hızı', value: '200 - 500+ paket/dakika' },
+            { label: 'Ürün Uzunluğu (L)', value: '20 - 150 mm' },
+            { label: 'Ürün Genişliği (W)', value: '15 - 80 mm' },
+            { label: 'Ürün Yüksekliği (H)', value: '3 - 40 mm' },
+            { label: 'Film Genişliği', value: 'Max. 350 mm' },
+            { label: 'Motor Tipi', value: 'Servo Motor (Tüm Eksenler)' },
+            { label: 'Güç Tüketimi', value: '8.0 kW' },
+            { label: 'Makine Boyutları', value: '7500 x 1600 x 2000 mm' },
+            { label: 'Ağırlık', value: '~2000 kg' }
+        ],
+        applications: [
+            { icon: 'fas fa-cookie', label: 'Bisküvi' },
+            { icon: 'fas fa-candy-cane', label: 'Çikolata Bar' },
+            { icon: 'fas fa-cube', label: 'Şekerleme' },
+            { icon: 'fas fa-box', label: 'Küçük Ürünler' }
+        ],
+        whatsappText: 'FLM-HS 500 için teklif almak istiyorum',
+        relatedProducts: ['flm-2000', 'flm-1000', 'flm-1000-bms']
+    },
+
+    'bpm-1000': {
+        tag: 'Özel Çözümler (Special Solutions)',
+        title: 'BPM 1000',
+        titleHighlight: 'On Edge Flowpack',
+        description: 'Dikey konumda paketleme. Sandviç, gofret, kremalı bisküvi için.',
+        heroImages: ['images/BPM 1000 Horizontal Flowpack Packaging Machine on Edge.jpg'],
+        keyFeatures: [
+            { icon: 'fas fa-tachometer-alt', value: '200', label: 'paket/dakika' },
+            { icon: 'fas fa-sync-alt', value: 'Döner Çene', label: 'Rotary Jaw' },
+            { icon: 'fas fa-film', value: 'Max. 380 mm', label: 'Film Genişliği' },
+            { icon: 'fas fa-bolt', value: '3.5 kW', label: 'Güç Tüketimi' }
+        ],
+        overviewTitle: 'Dikey Konumda',
+        overviewTitleHighlight: 'Paketleme',
+        overviewDesc: [
+            'Ürünleri dikey konumda (on edge) paketler. Kompakt ve göze çarpar sunum.',
+            'Sandviç bisküvi, kremalı gofret, çikolata kaplı barlar için idealdir.'
+        ],
+        featuresList: [
+            'Dikey konumda paketleme.',
+            'Sandviç, gofret, bar için özel tasarım.',
+            'Dik konumda sergileme.',
+            'Hassas ürünleri nazikçe pozisyonlar.',
+            'AISI 304 paslanmaz çelik.'
+        ],
+        specs: [
+            { label: 'Paketleme Hızı', value: '40 - 200 paket/dakika' },
+            { label: 'Ürün Uzunluğu (L)', value: '30 - 180 mm' },
+            { label: 'Ürün Genişliği (W)', value: '20 - 100 mm' },
+            { label: 'Ürün Yüksekliği (H)', value: '5 - 30 mm' },
+            { label: 'Film Genişliği', value: 'Max. 380 mm' },
+            { label: 'Paketleme Konumu', value: 'On Edge (Dikey)' },
+            { label: 'Güç Tüketimi', value: '3.5 kW' },
+            { label: 'Makine Boyutları', value: '4300 x 1100 x 1650 mm' },
+            { label: 'Ağırlık', value: '~800 kg' }
+        ],
+        applications: [
+            { icon: 'fas fa-cookie', label: 'Sandviç Bisküvi' },
+            { icon: 'fas fa-stroopwafel', label: 'Gofret' },
+            { icon: 'fas fa-candy-cane', label: 'Çikolata Bar' },
+            { icon: 'fas fa-cheese', label: 'Yassı Ürünler' }
+        ],
+        whatsappText: 'BPM 1000 için teklif almak istiyorum',
+        relatedProducts: ['flm-1000', 'flm-1000-cw', 'flm-4000']
+    }
+};

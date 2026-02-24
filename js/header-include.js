@@ -315,27 +315,52 @@
             </svg>`
         };
 
-        // Mega menü kategorileri - siteContent'ten veya fallback
+        // Mega menü kategorileri - siteContent'ten veya fallback (recursive tree yapısı)
         const adminCats = window.__siteContent?.machineCategories;
-        const megaCategories = (adminCats && adminCats.length) ? adminCats.map(cat => ({
-            svgKey: cat.id,
-            customIcon: cat.icon || '',
-            title: cat.title,
-            titleKey: cat.titleKey,
-            href: bp + cat.href
-        })) : [
-            { svgKey: 'production', title: 'Üretim Hatları', titleKey: 'megaMenu.productionLines', href: bp + 'machines/production-lines.html' },
-            { svgKey: 'biscuit', title: 'Bisküvi & Çikolata', titleKey: 'megaMenu.biscuitChocolate', href: bp + 'machines/biscuit-chocolate.html' },
-            { svgKey: 'horizontal', title: 'Yatay Paketleme', titleKey: 'megaMenu.horizontalPack', href: bp + 'machines/horizontal-packaging.html' },
-            { svgKey: 'vertical', title: 'Dikey Paketleme', titleKey: 'megaMenu.verticalPack', href: bp + 'machines/vertical-packaging.html' },
-            { svgKey: 'filling', title: 'Dolum & Yardımcı', titleKey: 'megaMenu.fillingAux', href: bp + 'machines/filling-auxiliary.html' }
+        const megaCategories = (adminCats && adminCats.length) ? adminCats : [
+            { id: 'production', title: 'Üretim Hatları', titleKey: 'megaMenu.productionLines', icon: '', image: '', type: 'category', href: 'machines/production-lines.html', children: [] },
+            { id: 'biscuit', title: 'Bisküvi & Çikolata', titleKey: 'megaMenu.biscuitChocolate', icon: '', image: '', type: 'category', href: 'machines/biscuit-chocolate.html', children: [] },
+            { id: 'horizontal', title: 'Yatay Paketleme', titleKey: 'megaMenu.horizontalPack', icon: '', image: '', type: 'category', href: 'machines/horizontal-packaging.html', children: [] },
+            { id: 'vertical', title: 'Dikey Paketleme', titleKey: 'megaMenu.verticalPack', icon: '', image: '', type: 'category', href: 'machines/vertical-packaging.html', children: [] },
+            { id: 'filling', title: 'Dolum & Yardımcı', titleKey: 'megaMenu.fillingAux', icon: '', image: '', type: 'category', href: 'machines/filling-auxiliary.html', children: [] }
         ];
 
-        const megaItemsHTML = megaCategories.map(cat => `
-            <a href="${cat.href}" class="mega-cat-item">
-                <div class="mega-cat-icon">${cat.customIcon ? '<img src="' + cat.customIcon + '" alt="' + cat.title + '" style="width:84px;height:68px;object-fit:contain">' : (megaSvgIcons[cat.svgKey] || '')}</div>
-                <div class="mega-cat-label" ${cat.titleKey ? 'data-translate="' + cat.titleKey + '"' : ''}>${cat.title}</div>
-            </a>`).join('');
+        // Recursive submenu builder
+        function buildSubmenuHTML(children, depth) {
+            if (!children || !children.length) return '';
+            var items = children.map(function(child) {
+                var childHref = child.href ? bp + child.href : '#';
+                var hasChildren = child.children && child.children.length > 0;
+                var translateAttr = child.titleKey ? ' data-translate="' + child.titleKey + '"' : '';
+                var subMenu = hasChildren ? buildSubmenuHTML(child.children, depth + 1) : '';
+                return '<li class="' + (hasChildren ? 'has-sub' : '') + '">' +
+                    '<a href="' + childHref + '"' + translateAttr + '>' + child.title +
+                    (hasChildren ? ' <i class="fas fa-chevron-right mega-sub-arrow"></i>' : '') +
+                    '</a>' +
+                    (hasChildren ? '<ul class="mega-submenu mega-submenu-depth-' + (depth + 1) + '">' + subMenu + '</ul>' : '') +
+                    '</li>';
+            }).join('');
+            return items;
+        }
+
+        const megaItemsHTML = megaCategories.map(function(cat) {
+            var catHref = cat.href ? bp + cat.href : '#';
+            var hasChildren = cat.children && cat.children.length > 0;
+            var iconHTML = cat.icon
+                ? '<img src="' + cat.icon + '" alt="' + cat.title + '" style="width:84px;height:68px;object-fit:contain">'
+                : (megaSvgIcons[cat.id] || '');
+            var translateAttr = cat.titleKey ? 'data-translate="' + cat.titleKey + '"' : '';
+            var submenuHTML = hasChildren
+                ? '<ul class="mega-submenu mega-submenu-depth-1">' + buildSubmenuHTML(cat.children, 1) + '</ul>'
+                : '';
+            return '<div class="mega-cat-item-wrap">' +
+                '<a href="' + catHref + '" class="mega-cat-item">' +
+                    '<div class="mega-cat-icon">' + iconHTML + '</div>' +
+                    '<div class="mega-cat-label" ' + translateAttr + '>' + cat.title + '</div>' +
+                '</a>' +
+                submenuHTML +
+            '</div>';
+        }).join('');
 
         return `
                     <li class="dropdown">
@@ -812,12 +837,53 @@
             navMenu.addEventListener('click', function(e) {
                 if (window.innerWidth > 768) return;
 
+                // Mega submenu toggle on mobile (category items with children)
+                var megaWrap = e.target.closest('.mega-cat-item-wrap');
+                if (megaWrap) {
+                    var subMenu = megaWrap.querySelector('.mega-submenu');
+                    if (subMenu && e.target.closest('.mega-cat-item')) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        // Close siblings
+                        megaWrap.parentElement.querySelectorAll('.mega-cat-item-wrap.active').forEach(function(s) {
+                            if (s !== megaWrap) s.classList.remove('active');
+                        });
+                        megaWrap.classList.toggle('active');
+                        return;
+                    }
+                }
+
+                // Nested submenu toggle (has-sub items)
+                var hasSub = e.target.closest('.has-sub');
+                if (hasSub) {
+                    var subLink = e.target.closest('.has-sub > a');
+                    if (subLink) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        hasSub.parentElement.querySelectorAll('.has-sub.active').forEach(function(s) {
+                            if (s !== hasSub) s.classList.remove('active');
+                        });
+                        hasSub.classList.toggle('active');
+                        return;
+                    }
+                }
+
                 // Mega dropdown veya normal dropdown içindeki ürün linklerine tıklama - navigasyona izin ver
-                var megaLink = e.target.closest('.mega-cat-item, .mega-links a, .dropdown-menu a');
+                var megaLink = e.target.closest('.mega-submenu li:not(.has-sub) a, .mega-links a, .dropdown-menu a');
                 if (megaLink) {
                     // Ürün/sayfa linki - navigasyona izin ver, menüyü kapat
                     window.closeMobileMenu();
                     return; // preventDefault YAPMA - link çalışsın
+                }
+
+                // mega-cat-item without children - navigate directly
+                var directCatLink = e.target.closest('.mega-cat-item');
+                if (directCatLink) {
+                    var wrap = directCatLink.closest('.mega-cat-item-wrap');
+                    if (wrap && !wrap.querySelector('.mega-submenu')) {
+                        window.closeMobileMenu();
+                        return;
+                    }
                 }
 
                 // Dropdown toggle tıklaması (ana menü başlıkları)

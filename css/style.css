@@ -198,6 +198,52 @@ body > .nav-menu .mega-cat-item:hover .mega-cat-label {
     color: var(--primary-color) !important;
 }
 
+body > .nav-menu .mega-cat-item-wrap {
+    position: static !important;
+}
+
+body > .nav-menu .mega-cat-item-wrap > .mega-submenu {
+    position: static !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    transform: none !important;
+    box-shadow: none !important;
+    border-top: none !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    padding: 0 0 0 20px !important;
+    min-width: 0 !important;
+    display: none;
+}
+
+body > .nav-menu .mega-cat-item-wrap.active > .mega-submenu {
+    display: block !important;
+}
+
+body > .nav-menu .mega-submenu .mega-submenu {
+    position: static !important;
+    left: auto !important;
+    top: auto !important;
+    transform: none !important;
+    box-shadow: none !important;
+    border-top: none !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    padding: 0 0 0 16px !important;
+    min-width: 0 !important;
+    display: none;
+}
+
+body > .nav-menu .mega-submenu li.has-sub.active > .mega-submenu {
+    display: block !important;
+}
+
+body > .nav-menu .mega-submenu li a {
+    padding: 8px 14px !important;
+    font-size: 13px !important;
+}
+
 body > .nav-menu .mobile-lang-menu {
     margin-top: 20px;
     padding-top: 20px;
@@ -847,6 +893,81 @@ h4 { font-size: 1.25rem; }
 
 .mega-cat-item:hover .mega-cat-label {
     color: var(--primary-color);
+}
+
+/* Mega menu item wrapper (with submenu support) */
+.mega-cat-item-wrap {
+    position: relative;
+}
+
+.mega-cat-item-wrap:hover > .mega-submenu {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+
+/* Submenu dropdown */
+.mega-submenu {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(8px);
+    min-width: 220px;
+    background: #fff;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    border-radius: 8px;
+    border-top: 2px solid var(--primary-color);
+    padding: 8px 0;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
+    z-index: 10000;
+    list-style: none;
+    margin: 0;
+}
+
+/* Nested submenus (depth 2+) open to the right */
+.mega-submenu .mega-submenu {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    transform: translateX(4px) translateY(0);
+}
+
+.mega-submenu li {
+    position: relative;
+}
+
+.mega-submenu li:hover > .mega-submenu {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.mega-submenu li a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 9px 18px;
+    color: #444;
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background 0.15s ease, color 0.15s ease;
+    white-space: nowrap;
+}
+
+.mega-submenu li a:hover {
+    background: rgba(230,57,70,0.06);
+    color: var(--primary-color);
+}
+
+.mega-sub-arrow {
+    font-size: 9px;
+    margin-left: 10px;
+    opacity: 0.5;
 }
 
 /* Hamburger Menu */
@@ -3130,6 +3251,61 @@ h4 { font-size: 1.25rem; }
 
     .mega-cat-item:hover .mega-cat-label {
         color: var(--primary-color) !important;
+    }
+
+    /* Mobile submenu styles */
+    .mega-cat-item-wrap {
+        position: static !important;
+    }
+
+    .mega-cat-item-wrap > .mega-submenu {
+        position: static !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        pointer-events: auto !important;
+        transform: none !important;
+        box-shadow: none !important;
+        border-top: none !important;
+        border-radius: 0 !important;
+        background: transparent !important;
+        padding: 0 0 0 20px !important;
+        min-width: 0 !important;
+        display: none;
+    }
+
+    .mega-cat-item-wrap.active > .mega-submenu {
+        display: block !important;
+    }
+
+    .mega-submenu .mega-submenu {
+        position: static !important;
+        left: auto !important;
+        top: auto !important;
+        transform: none !important;
+        box-shadow: none !important;
+        border-top: none !important;
+        border-radius: 0 !important;
+        background: transparent !important;
+        padding: 0 0 0 16px !important;
+        min-width: 0 !important;
+        display: none;
+    }
+
+    .mega-submenu li.has-sub.active > .mega-submenu {
+        display: block !important;
+    }
+
+    .mega-submenu li a {
+        padding: 8px 14px !important;
+        font-size: 13px !important;
+    }
+
+    .mega-sub-arrow {
+        transition: transform 0.2s ease;
+    }
+
+    .mega-submenu li.has-sub.active > a .mega-sub-arrow {
+        transform: rotate(90deg);
     }
 
     .hamburger {

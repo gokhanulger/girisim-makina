@@ -424,7 +424,8 @@
 }
 
 /* Technical Specs */
-.product-specs {
+.product-specs,
+.tech-specs {
     padding: 100px 0;
     background: var(--white);
 }

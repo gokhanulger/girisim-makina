@@ -356,8 +356,8 @@
                 <!-- Machine Categories Section -->
                 <section id="section-machineCategories" class="admin-section">
                     <div class="section-card">
-                        <h2>Makine Kategorileri (Mega Menü & Kategori Sayfaları)</h2>
-                        <p style="color:#666;margin-bottom:20px">Mega menüdeki kategori ikonlarını ve kategori sayfalarındaki makine fotoğraflarını buradan yönetebilirsiniz.</p>
+                        <h2>Makine Kategorileri — Ağaç Yapısı <small style="color:#888;font-weight:400;font-size:13px">(Mega Menü & Kategori Sayfaları)</small></h2>
+                        <p style="color:#666;margin-bottom:20px;font-size:13px">Kategoriler ve ürünler esnek derinlikte ağaç yapısında yönetilir. Kategori altına alt kategori veya ürün ekleyebilirsiniz.</p>
                         <div id="machine-categories-editor">
                             <!-- Categories will be rendered by JS -->
                         </div>
@@ -666,6 +666,11 @@
                                 <span>Cereal Bar Hatları</span>
                                 <a href="products/cereal-bar.html" target="_blank" class="btn btn-sm btn-outline"><i class="fas fa-external-link-alt"></i></a>
                             </div>
+                            <div class="product-item" onclick="editProduct('protein-bar')">
+                                <i class="fas fa-dumbbell"></i>
+                                <span>Protein Bar Hatları</span>
+                                <a href="products/protein-bar.html" target="_blank" class="btn btn-sm btn-outline"><i class="fas fa-external-link-alt"></i></a>
+                            </div>
                             <div class="product-item" onclick="editProduct('coconut-bar')">
                                 <i class="fas fa-seedling"></i>
                                 <span>Hindistan Cevizi Bar</span>
@@ -729,6 +734,11 @@
                                 <i class="fas fa-fill-drip"></i>
                                 <span>Dolum Makinaları</span>
                                 <a href="products/filling-machines.html" target="_blank" class="btn btn-sm btn-outline"><i class="fas fa-external-link-alt"></i></a>
+                            </div>
+                            <div class="product-item" onclick="editProduct('halvah')">
+                                <i class="fas fa-bread-slice"></i>
+                                <span>Helva Paketleme</span>
+                                <a href="products/halvah.html" target="_blank" class="btn btn-sm btn-outline"><i class="fas fa-external-link-alt"></i></a>
                             </div>
                         </div>
 
@@ -1300,8 +1310,9 @@
 
     <!-- Supabase SDK -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="js/supabase-init.js?v=20260223a"></script>
+    <script src="js/supabase-init.js?v=20260224a"></script>
+    <script src="js/product-data.js?v=20260224a"></script>
     <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
-    <script src="js/admin.js?v=20260223a"></script>
+    <script src="js/admin.js?v=20260224a"></script>
 </body>
 </html>

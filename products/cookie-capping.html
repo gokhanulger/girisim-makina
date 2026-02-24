@@ -3,150 +3,143 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Girişim Makina - Cookie Capping (Chocopie) Üretim Hatları. Marshmallow dolgulu bisküvi üretimi için komple anahtar teslim çözümler.">
-    <meta name="keywords" content="chocopie makinesi, cookie capping, marshmallow bisküvi üretim hattı, marshmallow depositor">
-    <title>Cookie Capping (Chocopie) Üretim Hatları | Girişim Makina</title>
-    <link rel="stylesheet" href="../css/style.css?v=20260223a">
-    <link rel="stylesheet" href="../css/product.css?v=20260223a">
+    <meta name="description" content="Girişim Makina - Cookie Capping (Chocopie) Üretim Hatları. Marshmallow dolgulu bisküvi üretimi için komple çözümler.">
+    <title>Cookie Capping Üretim Hatları | Girişim Makina</title>
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <script src="../js/lang-detect.js?v=20260224a"></script>
+    <link rel="stylesheet" href="../css/style.css?v=20260224a">
+    <link rel="stylesheet" href="../css/product.css?v=20260224a">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/png" href="../favicon.png">
-    <script src="../js/lang-detect.js?v=20260223a"></script>
 </head>
 <body>
-    <!-- Header Placeholder -->
     <div id="header-placeholder"></div>
 
-    <!-- Hero -->
+    <!-- Breadcrumb -->
+    <div class="breadcrumb-bar">
+        <div class="container">
+            <nav class="breadcrumb-nav">
+                <a href="../index.html">Ana Sayfa</a>
+                <i class="fas fa-chevron-right"></i>
+                <a href="../machines/production-lines.html">Üretim Hatları</a>
+                <i class="fas fa-chevron-right"></i>
+                <span>Cookie Capping (Chocopie) Üretim Hatları</span>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Product Hero with Gallery -->
     <section class="product-hero">
-        <div class="product-hero-bg" style="background-image: url('../images/pexels-sandwich-cookies.jpg');"></div>
         <div class="container">
             <div class="product-hero-content">
-                <span class="product-tag">Üretim Hatları</span>
-                <h1>Cookie Capping <span class="highlight">(Chocopie) Hatları</span></h1>
-                <p>Marshmallow dolgulu bisküvi (Chocopie tipi) üretimi için komple anahtar teslim hatlar. Bisküvi besleme, marshmallow dolum, kapatma ve çikolata kaplama.</p>
+                <span class="product-tag"></span>
+                <h1></h1>
+                <p></p>
                 <div class="product-hero-buttons">
-                    <a href="https://wa.me/905468792927?text=Cookie%20capping%20üretim%20hattı%20hakkında%20bilgi%20almak%20istiyorum" target="_blank" class="btn btn-primary btn-lg"><i class="fab fa-whatsapp"></i> Teklif Al</a>
-                    <a href="https://www.youtube.com/@girisimpackagingmachinery" target="_blank" class="btn btn-outline btn-lg"><i class="fab fa-youtube"></i> Videoları İzle</a>
+                    <a href="https://wa.me/905468792927?text=" target="_blank" class="btn btn-primary btn-lg"><i class="fab fa-whatsapp"></i> <span data-translate="buttons.getQuote">Teklif Al</span></a>
+                    <a href="https://www.youtube.com/@girisimpackagingmachinery" target="_blank" class="btn btn-outline btn-lg"><i class="fab fa-youtube"></i> <span data-translate="buttons.watchVideo">Video İzle</span></a>
                 </div>
+            </div>
+            <div class="product-hero-gallery">
+                <div class="product-main-image">
+                    <img src="../images/pexels-factory-machinery.jpg" alt="">
+                </div>
+                <div class="product-thumbnails"></div>
             </div>
         </div>
     </section>
 
-    <!-- Product Overview -->
-    <section class="product-overview">
+    <!-- Product Description + Quote Form -->
+    <section class="product-description">
         <div class="container">
-            <div class="overview-grid">
-                <div class="overview-content">
-                    <h2>Komple Chocopie <span class="highlight">Üretim Çözümleri</span></h2>
-                    <p>Marshmallow dolgulu bisküvi (Chocopie tipi) üretimi için yüksek teknolojili üretim hatları sunuyoruz. Bisküvi besleme sisteminden çikolata kaplamaya kadar entegre çözümler.</p>
-                    <p>Farklı bisküvi boyutları ve dolgu miktarları için özelleştirilmiş hatlar mevcuttur. Tam otomatik sistemler ile yüksek verimlilik.</p>
+            <div class="description-grid">
+                <div class="description-content">
+                    <h2></h2>
+                    <p></p>
+                    <p></p>
+
+                    <div class="feature-list"></div>
                 </div>
-                <div class="overview-image">
-                    <img src="../images/pexels-production-line.jpg" alt="Cookie Capping Üretim Hattı">
+
+                <div class="product-quote-form">
+                    <div class="quote-form-card">
+                        <h3 data-translate="quoteForm.title">Teklif İsteyin</h3>
+                        <p data-translate="quoteForm.subtitle">Uzmanlarımız size en kısa sürede dönüş yapacaktır.</p>
+                        <form id="productQuoteForm" onsubmit="submitQuoteForm(event)">
+                            <input type="hidden" name="product" value="Cookie Capping (Chocopie) Üretim Hatları ">
+                            <div class="form-group">
+                                <input type="text" name="name" placeholder="Ad Soyad *" data-translate-placeholder="quoteForm.name" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" name="email" placeholder="E-posta *" data-translate-placeholder="quoteForm.email" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="tel" name="phone" placeholder="Telefon *" data-translate-placeholder="quoteForm.phone">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="company" placeholder="Firma Adı *" data-translate-placeholder="quoteForm.company">
+                            </div>
+                            <div class="form-group">
+                                <textarea name="message" rows="3" placeholder="Mesajınız (opsiyonel)" data-translate-placeholder="quoteForm.message"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block">
+                                <i class="fas fa-paper-plane"></i> <span data-translate="quoteForm.submit">Teklif Talebi Gönder</span>
+                            </button>
+                        </form>
+                        <div class="quote-form-footer">
+                            <span data-translate="quoteForm.or">veya</span>
+                            <a href="https://wa.me/905468792927?text=" target="_blank">
+                                <i class="fab fa-whatsapp"></i> WhatsApp
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Product Features -->
+    <!-- Product Features (cards format) -->
     <section class="product-features">
         <div class="container">
             <div class="section-header text-center">
-                <span class="section-tag">Özellikler</span>
-                <h2>Hat <span class="highlight">Bileşenleri</span></h2>
+                <span class="section-tag" data-translate="sections.features">Özellikler</span>
+                <h2>Hat <span class="highlight" data-translate="sections.components">Bileşenleri</span></h2>
             </div>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-cookie"></i></div>
-                    <h3>Bisküvi Besleme Sistemi</h3>
-                    <p>Otomatik bisküvi besleme ve sıralama. Farklı boyutlara uyum sağlar.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-blender"></i></div>
-                    <h3>Marshmallow Hazırlama</h3>
-                    <p>Marshmallow hazırlama ve pişirme ekipmanları. Kıvam kontrolü.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-fill-drip"></i></div>
-                    <h3>Depositor</h3>
-                    <p>Hassas marshmallow dozajlama. Ayarlanabilir dolgu miktarı.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-layer-group"></i></div>
-                    <h3>Kapatma Sistemi</h3>
-                    <p>Üst bisküviyi otomatik yerleştirme. Hızlı ve hassas.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-cookie-bite"></i></div>
-                    <h3>Çikolata Kaplama</h3>
-                    <p>Tam kaplama sistemi. Çeşitli kaplama seçenekleri.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-box"></i></div>
-                    <h3>Paketleme</h3>
-                    <p>Flow pack paketleme entegrasyonu. Tek veya çoklu paketleme.</p>
-                </div>
-            </div>
+            <div class="features-grid"></div>
         </div>
     </section>
 
     <!-- Technical Specs -->
-    <section class="product-specs">
+    <section class="tech-specs">
         <div class="container">
             <div class="section-header text-center">
-                <span class="section-tag">Teknik Özellikler</span>
-                <h2>Kapasite <span class="highlight">Seçenekleri</span></h2>
+                <span class="section-tag" data-translate="sections.techData">Teknik Veriler</span>
+                <h2 data-translate="sections.specifications">Teknik <span class="highlight">Spesifikasyonlar</span></h2>
             </div>
-            <div class="specs-table-wrapper">
-                <table class="specs-table">
-                    <thead>
-                        <tr>
-                            <th>Model</th>
-                            <th>Kapasite</th>
-                            <th>Bisküvi Çapı</th>
-                            <th>Dolgu Miktarı</th>
-                            <th>Güç</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>CCP-300</td>
-                            <td>300 adet/dk</td>
-                            <td>40-80 mm</td>
-                            <td>5-20g</td>
-                            <td>35 kW</td>
-                        </tr>
-                        <tr>
-                            <td>CCP-500</td>
-                            <td>500 adet/dk</td>
-                            <td>40-80 mm</td>
-                            <td>5-20g</td>
-                            <td>55 kW</td>
-                        </tr>
-                        <tr>
-                            <td>CCP-800</td>
-                            <td>800 adet/dk</td>
-                            <td>40-80 mm</td>
-                            <td>5-20g</td>
-                            <td>75 kW</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <p class="specs-note">* Kapasite değerleri ürün tipine ve boyutuna göre değişiklik gösterebilir.</p>
+            <div class="specs-table-wrapper"></div>
         </div>
     </section>
 
-    <!-- CTA Section -->
+    <!-- Product Videos -->
+    <section class="product-videos">
+        <div class="container">
+            <div class="section-header text-center">
+                <span class="section-tag" data-translate="sections.videos">Videolar</span>
+                <h2 data-translate="sections.productVideos">Ürün <span class="highlight">Videoları</span></h2>
+            </div>
+            <div class="videos-grid"></div>
+        </div>
+    </section>
+
+    <!-- CTA -->
     <section class="product-cta">
         <div class="container">
             <div class="cta-content">
-                <h2>Cookie Capping Hattı İçin Teklif Alın</h2>
-                <p>Uzman ekibimiz projeniz için en uygun çözümü sunmak üzere hazır</p>
+                <h2></h2>
+                <p data-translate="cta.contactExperts">Projeniz için en uygun çözümü birlikte belirleyelim</p>
                 <div class="cta-buttons">
-                    <a href="https://wa.me/905468792927?text=Cookie%20capping%20hattı%20hakkında%20detaylı%20bilgi%20almak%20istiyorum" target="_blank" class="btn btn-white btn-lg"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-                    <a href="mailto:export@girisimmak.com?subject=Cookie%20Capping%20Hattı%20Teklif%20Talebi" class="btn btn-outline-white btn-lg"><i class="fas fa-envelope"></i> E-posta</a>
+                    <a href="https://wa.me/905468792927?text=" target="_blank" class="btn btn-white btn-lg"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                    <a href="mailto:info@girisimmak.com" class="btn btn-outline-white btn-lg"><i class="fas fa-envelope"></i> E-posta</a>
                 </div>
             </div>
         </div>
@@ -156,39 +149,65 @@
     <section class="related-products">
         <div class="container">
             <div class="section-header text-center">
-                <span class="section-tag">İlgili Ürünler</span>
-                <h2>Diğer <span class="highlight">Makinelerimiz</span></h2>
+                <span class="section-tag" data-translate="sections.relatedProducts">İlgili Ürünler</span>
+                <h2 data-translate="sections.otherMachines">Diğer <span class="highlight">Makinelerimiz</span></h2>
             </div>
-            <div class="related-grid">
-                <a href="biscuit-sandwiching.html" class="related-card">
-                    <div class="related-image"><img src="../images/pexels-sandwich-cookies.jpg" alt="Bisküvi Kremalama"></div>
-                    <h4>Bisküvi Kremalama</h4>
-                </a>
-                <a href="chocolate-coating.html" class="related-card">
-                    <div class="related-image"><img src="../images/pexels-stainless-machinery.jpg" alt="Çikolata Kaplama"></div>
-                    <h4>Çikolata Kaplama</h4>
-                </a>
-                <a href="flow-pack.html" class="related-card">
-                    <div class="related-image"><img src="../images/pexels-sealing-machine.jpg" alt="Flow Pack"></div>
-                    <h4>Flow Pack Paketleme</h4>
-                </a>
-            </div>
+            <div class="related-grid"></div>
         </div>
     </section>
 
-    <!-- Footer Placeholder -->
     <div id="footer-placeholder"></div>
 
     <!-- Scripts -->
-    <script src="../js/main.js?v=20260223a"></script>
-    <script src="../js/translations.js?v=20260223a"></script>
-    <script src="../js/product-translations.js?v=20260223a"></script>
+    <script src="../js/main.js?v=20260224a"></script>
+    <script src="../js/translations.js?v=20260224a"></script>
+    <script src="../js/product-translations.js?v=20260224a"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="../js/supabase-init.js?v=20260223a"></script>
-    <script src="../js/site-loader.js?v=20260223a"></script>
-    <script src="../js/seo-loader.js?v=20260223a"></script>
-    <script src="../js/header-include.js?v=20260223a"></script>
+    <script src="../js/supabase-init.js?v=20260224a"></script>
+    <script src="../js/site-loader.js?v=20260224a"></script>
+    <script src="../js/seo-loader.js?v=20260224a"></script>
+    <script src="../js/header-include.js?v=20260224a"></script>
+    <script src="../js/product-gallery.js?v=20260224a"></script>
+    <script src="../js/product-data.js?v=20260224a"></script>
+    <script src="../js/product-loader.js?v=20260224a"></script>
 
-    <script src="../js/product-loader.js?v=20260223a"></script>
+    <script>
+    function submitQuoteForm(e) {
+        e.preventDefault();
+        var form = e.target;
+        var data = new FormData(form);
+        var product = data.get('product');
+        var name = data.get('name');
+        var email = data.get('email');
+        var phone = data.get('phone') || '-';
+        var company = data.get('company') || '-';
+        var message = data.get('message') || '';
+
+        var whatsappMsg = encodeURIComponent(
+            'Merhaba, ' + product + ' için teklif almak istiyorum.\n\nAd: ' + name + '\nE-posta: ' + email + '\nTelefon: ' + phone + '\nFirma: ' + company + (message ? '\nMesaj: ' + message : '')
+        );
+
+        if (typeof window.supabase !== 'undefined') {
+            window.supabase.from('quote_requests').insert({
+                product: product,
+                name: name,
+                email: email,
+                phone: phone,
+                company: company,
+                message: message,
+                source: window.location.href,
+                created_at: new Date().toISOString()
+            }).then(function(res) {
+                if (res.error) {
+                    window.open('https://wa.me/905468792927?text=' + whatsappMsg, '_blank');
+                } else {
+                    form.innerHTML = '<div class="quote-success"><i class="fas fa-check-circle"></i><h4>Talebiniz Alındı!</h4><p>En kısa sürede size dönüş yapacağız.</p></div>';
+                }
+            });
+        } else {
+            window.open('https://wa.me/905468792927?text=' + whatsappMsg, '_blank');
+        }
+    }
+    </script>
 </body>
 </html>

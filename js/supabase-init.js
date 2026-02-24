@@ -132,20 +132,23 @@ const defaultSiteContent = {
         ]
     },
 
-    // Machine Categories (mega menü + kategori sayfaları)
+    // Machine Categories - Recursive tree structure (esnek derinlik)
+    // type: 'category' = alt kategoriler içerir, 'product' = yaprak düğüm (ürün sayfası)
     machineCategories: [
         {
             id: 'production',
             title: 'Üretim Hatları',
             titleKey: 'megaMenu.productionLines',
             icon: '',
+            image: '',
+            type: 'category',
             href: 'machines/production-lines.html',
-            machines: [
-                { title: 'Gofret Üretim Hatları', titleKey: 'dropdown.wafer', image: '', href: 'products/wafer.html' },
-                { title: 'Tahıl Bar Üretim Hatları', titleKey: 'dropdown.cerealBar', image: '', href: 'products/cereal-bar.html' },
-                { title: 'Protein Bar Üretim Hatları', titleKey: 'dropdown.protein', image: '', href: 'products/protein-bar.html' },
-                { title: 'Hindistan Cevizi Dolgulu Bar', titleKey: 'dropdown.coconutBar', image: '', href: 'products/coconut-bar.html' },
-                { title: 'Helva Üretim Hatları', titleKey: 'dropdown.halvah', image: '', href: 'products/halvah.html' }
+            children: [
+                { id: 'wafer', title: 'Gofret Üretim Hatları', titleKey: 'dropdown.wafer', icon: '', image: '', type: 'product', href: 'products/wafer.html', children: [] },
+                { id: 'cereal-bar', title: 'Tahıl Bar Üretim Hatları', titleKey: 'dropdown.cerealBar', icon: '', image: '', type: 'product', href: 'products/cereal-bar.html', children: [] },
+                { id: 'protein-bar', title: 'Protein Bar Üretim Hatları', titleKey: 'dropdown.protein', icon: '', image: '', type: 'product', href: 'products/protein-bar.html', children: [] },
+                { id: 'coconut-bar', title: 'Hindistan Cevizi Dolgulu Bar', titleKey: 'dropdown.coconutBar', icon: '', image: '', type: 'product', href: 'products/coconut-bar.html', children: [] },
+                { id: 'halvah', title: 'Helva Üretim Hatları', titleKey: 'dropdown.halvah', icon: '', image: '', type: 'product', href: 'products/halvah.html', children: [] }
             ]
         },
         {
@@ -153,13 +156,15 @@ const defaultSiteContent = {
             title: 'Bisküvi & Çikolata',
             titleKey: 'megaMenu.biscuitChocolate',
             icon: '',
+            image: '',
+            type: 'category',
             href: 'machines/biscuit-chocolate.html',
-            machines: [
-                { title: 'Bisküvi Kremalama Makinaları', titleKey: 'dropdown.biscuit', image: '', href: 'products/biscuit-sandwiching.html' },
-                { title: 'Cookie Capping (Chocopie)', titleKey: 'dropdown.cookieCapping', image: '', href: 'products/cookie-capping.html' },
-                { title: 'Çikolata Kaplama Makinası', titleKey: 'dropdown.chocolate', image: '', href: 'products/chocolate-coating.html' },
-                { title: 'Çikolata Soğutma Tüneli', titleKey: 'dropdown.chocolateCooling', image: '', href: 'products/chocolate-cooling.html' },
-                { title: 'Çikolata Hazırlama Mutfağı', titleKey: 'dropdown.chocolatePrep', image: '', href: 'products/chocolate-preparation.html' }
+            children: [
+                { id: 'biscuit-sandwiching', title: 'Bisküvi Kremalama Makinaları', titleKey: 'dropdown.biscuit', icon: '', image: '', type: 'product', href: 'products/biscuit-sandwiching.html', children: [] },
+                { id: 'cookie-capping', title: 'Cookie Capping (Chocopie)', titleKey: 'dropdown.cookieCapping', icon: '', image: '', type: 'product', href: 'products/cookie-capping.html', children: [] },
+                { id: 'chocolate-coating', title: 'Çikolata Kaplama Makinası', titleKey: 'dropdown.chocolate', icon: '', image: '', type: 'product', href: 'products/chocolate-coating.html', children: [] },
+                { id: 'chocolate-cooling', title: 'Çikolata Soğutma Tüneli', titleKey: 'dropdown.chocolateCooling', icon: '', image: '', type: 'product', href: 'products/chocolate-cooling.html', children: [] },
+                { id: 'chocolate-preparation', title: 'Çikolata Hazırlama Mutfağı', titleKey: 'dropdown.chocolatePrep', icon: '', image: '', type: 'product', href: 'products/chocolate-preparation.html', children: [] }
             ]
         },
         {
@@ -167,10 +172,12 @@ const defaultSiteContent = {
             title: 'Yatay Paketleme',
             titleKey: 'megaMenu.horizontalPack',
             icon: '',
+            image: '',
+            type: 'category',
             href: 'machines/horizontal-packaging.html',
-            machines: [
-                { title: 'Yatay Flowpack Paketleme', titleKey: 'dropdown.flowpack', image: '', href: 'products/flow-pack.html' },
-                { title: 'Zarf Tipi Paketleme (Overwrapping)', titleKey: 'dropdown.overwrap', image: '', href: 'products/overwrapping.html' }
+            children: [
+                { id: 'flow-pack', title: 'Yatay Flowpack Paketleme', titleKey: 'dropdown.flowpack', icon: '', image: '', type: 'product', href: 'products/flow-pack.html', children: [] },
+                { id: 'overwrapping', title: 'Zarf Tipi Paketleme (Overwrapping)', titleKey: 'dropdown.overwrap', icon: '', image: '', type: 'product', href: 'products/overwrapping.html', children: [] }
             ]
         },
         {
@@ -178,10 +185,12 @@ const defaultSiteContent = {
             title: 'Dikey Paketleme',
             titleKey: 'megaMenu.verticalPack',
             icon: '',
+            image: '',
+            type: 'category',
             href: 'machines/vertical-packaging.html',
-            machines: [
-                { title: 'Dikey Paketleme (VFFS)', titleKey: 'dropdown.vffs', image: '', href: 'products/vffs.html' },
-                { title: 'Thermoform Paketleme', titleKey: 'dropdown.thermoform', image: '', href: 'products/thermoform.html' }
+            children: [
+                { id: 'vffs', title: 'Dikey Paketleme (VFFS)', titleKey: 'dropdown.vffs', icon: '', image: '', type: 'product', href: 'products/vffs.html', children: [] },
+                { id: 'thermoform', title: 'Thermoform Paketleme', titleKey: 'dropdown.thermoform', icon: '', image: '', type: 'product', href: 'products/thermoform.html', children: [] }
             ]
         },
         {
@@ -189,10 +198,12 @@ const defaultSiteContent = {
             title: 'Dolum & Yardımcı',
             titleKey: 'megaMenu.fillingAux',
             icon: '',
+            image: '',
+            type: 'category',
             href: 'machines/filling-auxiliary.html',
-            machines: [
-                { title: 'Dolum Makinaları', titleKey: 'dropdown.filling', image: '', href: 'products/filling-machines.html' },
-                { title: 'Pudra Şekeri Değirmeni', titleKey: 'dropdown.sugarMill', image: '', href: 'products/sugar-mill.html' }
+            children: [
+                { id: 'filling-machines', title: 'Dolum Makinaları', titleKey: 'dropdown.filling', icon: '', image: '', type: 'product', href: 'products/filling-machines.html', children: [] },
+                { id: 'sugar-mill', title: 'Pudra Şekeri Değirmeni', titleKey: 'dropdown.sugarMill', icon: '', image: '', type: 'product', href: 'products/sugar-mill.html', children: [] }
             ]
         }
     ],
@@ -390,8 +401,12 @@ const defaultSiteContent = {
         ]
     },
 
-    // Products (ürün sayfası içerikleri)
+    // Products (ürün sayfası içerikleri - admin'den düzenlenen)
     products: {},
+
+    // Product Pages (varsayılan ürün sayfası verileri - product-data.js'den yüklenir)
+    // Admin'den düzenlenen veriler bunu override eder
+    productPages: {},
 
     // Translations (admin'den düzenlenen çeviriler)
     translations: {},
@@ -437,8 +452,8 @@ async function getCachedSiteContent() {
         if (cached) {
             const { data, timestamp } = JSON.parse(cached);
             if (Date.now() - timestamp < CACHE_TTL) {
-                window.__siteContent = data;
-                return data;
+                window.__siteContent = migrateMachineCategories(data);
+                return window.__siteContent;
             }
         }
     } catch (e) { /* ignore parse errors */ }
@@ -446,8 +461,9 @@ async function getCachedSiteContent() {
     // 3. Fetch from Supabase
     try {
         if (typeof supabase !== 'undefined') {
-            const content = await loadSiteContent();
+            let content = await loadSiteContent();
             if (content) {
+                content = migrateMachineCategories(content);
                 window.__siteContent = content;
                 sessionStorage.setItem(CACHE_KEY, JSON.stringify({
                     data: content, timestamp: Date.now()
@@ -463,7 +479,7 @@ async function getCachedSiteContent() {
     try {
         const localContent = localStorage.getItem('girisim_site_content');
         if (localContent) {
-            const content = JSON.parse(localContent);
+            const content = migrateMachineCategories(JSON.parse(localContent));
             window.__siteContent = content;
             return content;
         }
@@ -472,6 +488,39 @@ async function getCachedSiteContent() {
     // 5. Return defaults
     window.__siteContent = defaultSiteContent;
     return defaultSiteContent;
+}
+
+// Migrate old machineCategories format (machines[] → children[])
+function migrateMachineCategories(content) {
+    if (!content || !content.machineCategories || !content.machineCategories.length) return content;
+    var cats = content.machineCategories;
+    // Check if old format (has 'machines' key instead of 'children')
+    if (cats[0].machines && !cats[0].children) {
+        content.machineCategories = cats.map(function(cat) {
+            return {
+                id: cat.id || '',
+                title: cat.title || '',
+                titleKey: cat.titleKey || '',
+                icon: cat.icon || '',
+                image: cat.image || '',
+                type: 'category',
+                href: cat.href || '',
+                children: (cat.machines || []).map(function(m) {
+                    return {
+                        id: (m.href || '').split('/').pop().replace('.html', '') || '',
+                        title: m.title || '',
+                        titleKey: m.titleKey || '',
+                        icon: '',
+                        image: m.image || '',
+                        type: 'product',
+                        href: m.href || '',
+                        children: []
+                    };
+                })
+            };
+        });
+    }
+    return content;
 }
 
 // Clear cache (called from admin after save)
