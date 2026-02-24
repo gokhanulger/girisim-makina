@@ -4,6 +4,17 @@
  */
 
 (function() {
+    // XSS koruması: kullanıcı kaynaklı metinleri HTML'e güvenli şekilde eklemek için
+    function escapeHTML(str) {
+        if (typeof str !== 'string') return '';
+        return str
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
+    }
+
     // Sayfa derinliğini belirle (products/, products/flowpack/ vb.)
     const rawPath = window.location.pathname;
 
@@ -161,7 +172,7 @@
             .filter(item => item.visible !== false)
             .map(item => {
                 const href = item.href.startsWith('http') || item.href.startsWith('#') ? item.href : (item.href.startsWith(bp) ? item.href : bp + item.href);
-                return `<li><a href="${href}" ${item.translateKey ? 'data-translate="' + item.translateKey + '"' : ''}>${item.label}</a></li>`;
+                return `<li><a href="${href}" ${item.translateKey ? 'data-translate="' + escapeHTML(item.translateKey) + '"' : ''}>${escapeHTML(item.label)}</a></li>`;
             }).join('');
 
         // SVG icons for mega dropdown categories
@@ -331,10 +342,10 @@
             var items = children.map(function(child) {
                 var childHref = child.href ? bp + child.href : '#';
                 var hasChildren = child.children && child.children.length > 0;
-                var translateAttr = child.titleKey ? ' data-translate="' + child.titleKey + '"' : '';
+                var translateAttr = child.titleKey ? ' data-translate="' + escapeHTML(child.titleKey) + '"' : '';
                 var subMenu = hasChildren ? buildSubmenuHTML(child.children, depth + 1) : '';
                 return '<li class="' + (hasChildren ? 'has-sub' : '') + '">' +
-                    '<a href="' + childHref + '"' + translateAttr + '>' + child.title +
+                    '<a href="' + childHref + '"' + translateAttr + '>' + escapeHTML(child.title) +
                     (hasChildren ? ' <i class="fas fa-chevron-right mega-sub-arrow"></i>' : '') +
                     '</a>' +
                     (hasChildren ? '<ul class="mega-submenu mega-submenu-depth-' + (depth + 1) + '">' + subMenu + '</ul>' : '') +
@@ -347,16 +358,16 @@
             var catHref = cat.href ? bp + cat.href : '#';
             var hasChildren = cat.children && cat.children.length > 0;
             var iconHTML = cat.icon
-                ? '<img src="' + cat.icon + '" alt="' + cat.title + '" style="width:84px;height:68px;object-fit:contain">'
+                ? '<img src="' + escapeHTML(cat.icon) + '" alt="' + escapeHTML(cat.title) + '" style="width:84px;height:68px;object-fit:contain">'
                 : (megaSvgIcons[cat.id] || '');
-            var translateAttr = cat.titleKey ? 'data-translate="' + cat.titleKey + '"' : '';
+            var translateAttr = cat.titleKey ? 'data-translate="' + escapeHTML(cat.titleKey) + '"' : '';
             var submenuHTML = hasChildren
                 ? '<ul class="mega-submenu mega-submenu-depth-1">' + buildSubmenuHTML(cat.children, 1) + '</ul>'
                 : '';
             return '<div class="mega-cat-item-wrap">' +
                 '<a href="' + catHref + '" class="mega-cat-item">' +
                     '<div class="mega-cat-icon">' + iconHTML + '</div>' +
-                    '<div class="mega-cat-label" ' + translateAttr + '>' + cat.title + '</div>' +
+                    '<div class="mega-cat-label" ' + translateAttr + '>' + escapeHTML(cat.title) + '</div>' +
                 '</a>' +
                 submenuHTML +
             '</div>';
@@ -1002,6 +1013,13 @@
             const dropdown = document.getElementById('languageDropdown');
             if (dropdown) dropdown.classList.remove('show');
         }
+
+        // Desktop mega menü: dışına tıklayınca kapat
+        if (window.innerWidth > 768 && !e.target.closest('.has-mega-menu')) {
+            document.querySelectorAll('.has-mega-menu.active').forEach(function(item) {
+                item.classList.remove('active');
+            });
+        }
     });
 
     // ==========================================
@@ -1122,7 +1140,7 @@
             results.innerHTML = `
                 <div class="search-no-results">
                     <i class="fas fa-search"></i>
-                    <p>"${query}" için sonuç bulunamadı.</p>
+                    <p>"${escapeHTML(query)}" için sonuç bulunamadı.</p>
                     <span>Farklı kelimeler deneyebilirsiniz.</span>
                 </div>
             `;
@@ -1137,9 +1155,9 @@
 
         let html = '';
         for (const category in grouped) {
-            html += `<div class="search-category"><h4>${category}</h4><ul>`;
+            html += `<div class="search-category"><h4>${escapeHTML(category)}</h4><ul>`;
             grouped[category].forEach(item => {
-                html += `<li><a href="${item.url}" onclick="toggleSearchOverlay()"><i class="fas fa-chevron-right"></i><span>${item.title}</span></a></li>`;
+                html += `<li><a href="${escapeHTML(item.url)}" onclick="toggleSearchOverlay()"><i class="fas fa-chevron-right"></i><span>${escapeHTML(item.title)}</span></a></li>`;
             });
             html += `</ul></div>`;
         }

@@ -9,6 +9,12 @@ function escHtml(str) {
     return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 }
 
+// Sanitize a string for safe use inside inline JS single-quoted strings (onclick/onchange handlers)
+function escJsStr(str) {
+    if (str == null) return '';
+    return String(str).replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/"/g,'\\"').replace(/</g,'\\x3c').replace(/>/g,'\\x3e').replace(/\n/g,'\\n').replace(/\r/g,'\\r');
+}
+
 // Demo mode is disabled when Supabase is configured
 let DEMO_EMAIL = '';
 let DEMO_PASSWORD = '';
@@ -3585,13 +3591,13 @@ function editProduct(productId) {
     // === HERO ===
     html += '<h4 style="margin-top:0;border-bottom:2px solid var(--primary-color);padding-bottom:8px;"><i class="fas fa-image"></i> Hero Bölümü</h4>';
     html += '<div class="form-row"><div class="form-group" style="flex:1"><label>Etiket (Tag)</label>';
-    html += '<input type="text" value="' + escHtml(data.tag || '') + '" onchange="setProductField(\'' + productId + '\',\'tag\',this.value)"></div>';
+    html += '<input type="text" value="' + escHtml(data.tag || '') + '" onchange="setProductField(\'' + escJsStr(productId) + '\',\'tag\',this.value)"></div>';
     html += '<div class="form-group" style="flex:1"><label>Başlık</label>';
-    html += '<input type="text" value="' + escHtml(data.title || '') + '" onchange="setProductField(\'' + productId + '\',\'title\',this.value)"></div>';
+    html += '<input type="text" value="' + escHtml(data.title || '') + '" onchange="setProductField(\'' + escJsStr(productId) + '\',\'title\',this.value)"></div>';
     html += '<div class="form-group" style="flex:1"><label>Başlık Vurgu</label>';
-    html += '<input type="text" value="' + escHtml(data.titleHighlight || '') + '" onchange="setProductField(\'' + productId + '\',\'titleHighlight\',this.value)"></div></div>';
+    html += '<input type="text" value="' + escHtml(data.titleHighlight || '') + '" onchange="setProductField(\'' + escJsStr(productId) + '\',\'titleHighlight\',this.value)"></div></div>';
     html += '<div class="form-group"><label>Açıklama</label>';
-    html += '<textarea rows="2" onchange="setProductField(\'' + productId + '\',\'description\',this.value)">' + escHtml(data.description || '') + '</textarea></div>';
+    html += '<textarea rows="2" onchange="setProductField(\'' + escJsStr(productId) + '\',\'description\',this.value)">' + escHtml(data.description || '') + '</textarea></div>';
 
     // Hero Images
     var heroImgs = data.heroImages || [];
@@ -3599,25 +3605,25 @@ function editProduct(productId) {
     html += '<div id="pe-hero-images">';
     heroImgs.forEach(function(img, i) {
         html += '<div style="display:flex;gap:8px;align-items:center;margin-bottom:4px;">';
-        html += '<input type="text" value="' + escHtml(img) + '" style="flex:1" onchange="updateProductHeroImage(\'' + productId + '\',' + i + ',this.value)">';
-        html += '<button class="btn-icon delete" onclick="removeProductHeroImage(\'' + productId + '\',' + i + ')"><i class="fas fa-trash"></i></button></div>';
+        html += '<input type="text" value="' + escHtml(img) + '" style="flex:1" onchange="updateProductHeroImage(\'' + escJsStr(productId) + '\',' + i + ',this.value)">';
+        html += '<button class="btn-icon delete" onclick="removeProductHeroImage(\'' + escJsStr(productId) + '\',' + i + ')"><i class="fas fa-trash"></i></button></div>';
     });
     html += '</div>';
-    html += '<button class="btn btn-sm btn-outline" onclick="addProductHeroImage(\'' + productId + '\')"><i class="fas fa-plus"></i> Görsel Ekle</button></div>';
+    html += '<button class="btn btn-sm btn-outline" onclick="addProductHeroImage(\'' + escJsStr(productId) + '\')"><i class="fas fa-plus"></i> Görsel Ekle</button></div>';
 
     // === OVERVIEW ===
     html += '<h4 style="border-bottom:2px solid var(--primary-color);padding-bottom:8px;"><i class="fas fa-align-left"></i> Açıklama Bölümü</h4>';
     html += '<div class="form-row"><div class="form-group" style="flex:1"><label>Genel Bakış Başlık</label>';
-    html += '<input type="text" value="' + escHtml(data.overviewTitle || '') + '" onchange="setProductField(\'' + productId + '\',\'overviewTitle\',this.value)"></div>';
+    html += '<input type="text" value="' + escHtml(data.overviewTitle || '') + '" onchange="setProductField(\'' + escJsStr(productId) + '\',\'overviewTitle\',this.value)"></div>';
     html += '<div class="form-group" style="flex:1"><label>Başlık Vurgu</label>';
-    html += '<input type="text" value="' + escHtml(data.overviewTitleHighlight || '') + '" onchange="setProductField(\'' + productId + '\',\'overviewTitleHighlight\',this.value)"></div></div>';
+    html += '<input type="text" value="' + escHtml(data.overviewTitleHighlight || '') + '" onchange="setProductField(\'' + escJsStr(productId) + '\',\'overviewTitleHighlight\',this.value)"></div></div>';
 
     var descParagraphs = data.overviewDesc || [];
     html += '<div class="form-group"><label>Açıklama Paragrafları</label>';
     descParagraphs.forEach(function(p, i) {
-        html += '<textarea rows="2" style="margin-bottom:4px;" onchange="updateProductOverviewDesc(\'' + productId + '\',' + i + ',this.value)">' + escHtml(p) + '</textarea>';
+        html += '<textarea rows="2" style="margin-bottom:4px;" onchange="updateProductOverviewDesc(\'' + escJsStr(productId) + '\',' + i + ',this.value)">' + escHtml(p) + '</textarea>';
     });
-    html += '<button class="btn btn-sm btn-outline" onclick="addProductOverviewDesc(\'' + productId + '\')"><i class="fas fa-plus"></i> Paragraf Ekle</button></div>';
+    html += '<button class="btn btn-sm btn-outline" onclick="addProductOverviewDesc(\'' + escJsStr(productId) + '\')"><i class="fas fa-plus"></i> Paragraf Ekle</button></div>';
 
     // === KEY FEATURES (flowpack) ===
     if (isFlowpack) {
@@ -3626,12 +3632,12 @@ function editProduct(productId) {
         html += '<div id="pe-key-features">';
         keyFeats.forEach(function(kf, i) {
             html += '<div style="display:flex;gap:8px;margin-bottom:4px;align-items:center;">';
-            html += '<input type="text" value="' + escHtml(kf.icon || '') + '" placeholder="icon" style="width:120px" onchange="updateProductKeyFeature(\'' + productId + '\',' + i + ',\'icon\',this.value)">';
-            html += '<input type="text" value="' + escHtml(kf.value || '') + '" placeholder="değer" style="width:100px" onchange="updateProductKeyFeature(\'' + productId + '\',' + i + ',\'value\',this.value)">';
-            html += '<input type="text" value="' + escHtml(kf.label || '') + '" placeholder="etiket" style="flex:1" onchange="updateProductKeyFeature(\'' + productId + '\',' + i + ',\'label\',this.value)">';
-            html += '<button class="btn-icon delete" onclick="removeProductKeyFeature(\'' + productId + '\',' + i + ')"><i class="fas fa-trash"></i></button></div>';
+            html += '<input type="text" value="' + escHtml(kf.icon || '') + '" placeholder="icon" style="width:120px" onchange="updateProductKeyFeature(\'' + escJsStr(productId) + '\',' + i + ',\'icon\',this.value)">';
+            html += '<input type="text" value="' + escHtml(kf.value || '') + '" placeholder="değer" style="width:100px" onchange="updateProductKeyFeature(\'' + escJsStr(productId) + '\',' + i + ',\'value\',this.value)">';
+            html += '<input type="text" value="' + escHtml(kf.label || '') + '" placeholder="etiket" style="flex:1" onchange="updateProductKeyFeature(\'' + escJsStr(productId) + '\',' + i + ',\'label\',this.value)">';
+            html += '<button class="btn-icon delete" onclick="removeProductKeyFeature(\'' + escJsStr(productId) + '\',' + i + ')"><i class="fas fa-trash"></i></button></div>';
         });
-        html += '</div><button class="btn btn-sm btn-outline" onclick="addProductKeyFeature(\'' + productId + '\')"><i class="fas fa-plus"></i> Özellik Ekle</button>';
+        html += '</div><button class="btn btn-sm btn-outline" onclick="addProductKeyFeature(\'' + escJsStr(productId) + '\')"><i class="fas fa-plus"></i> Özellik Ekle</button>';
     }
 
     // === FEATURES (cards - main format) ===
@@ -3641,12 +3647,12 @@ function editProduct(productId) {
         html += '<div id="pe-features">';
         feats.forEach(function(f, i) {
             html += '<div style="display:flex;gap:8px;margin-bottom:6px;align-items:center;background:#f9f9f9;padding:8px;border-radius:6px;">';
-            html += '<input type="text" value="' + escHtml(f.icon || '') + '" placeholder="icon" style="width:120px" onchange="updateProductFeature(\'' + productId + '\',' + i + ',\'icon\',this.value)">';
-            html += '<input type="text" value="' + escHtml(f.title || '') + '" placeholder="başlık" style="width:150px" onchange="updateProductFeature(\'' + productId + '\',' + i + ',\'title\',this.value)">';
-            html += '<input type="text" value="' + escHtml(f.desc || '') + '" placeholder="açıklama" style="flex:1" onchange="updateProductFeature(\'' + productId + '\',' + i + ',\'desc\',this.value)">';
-            html += '<button class="btn-icon delete" onclick="removeProductFeature(\'' + productId + '\',' + i + ')"><i class="fas fa-trash"></i></button></div>';
+            html += '<input type="text" value="' + escHtml(f.icon || '') + '" placeholder="icon" style="width:120px" onchange="updateProductFeature(\'' + escJsStr(productId) + '\',' + i + ',\'icon\',this.value)">';
+            html += '<input type="text" value="' + escHtml(f.title || '') + '" placeholder="başlık" style="width:150px" onchange="updateProductFeature(\'' + escJsStr(productId) + '\',' + i + ',\'title\',this.value)">';
+            html += '<input type="text" value="' + escHtml(f.desc || '') + '" placeholder="açıklama" style="flex:1" onchange="updateProductFeature(\'' + escJsStr(productId) + '\',' + i + ',\'desc\',this.value)">';
+            html += '<button class="btn-icon delete" onclick="removeProductFeature(\'' + escJsStr(productId) + '\',' + i + ')"><i class="fas fa-trash"></i></button></div>';
         });
-        html += '</div><button class="btn btn-sm btn-outline" onclick="addProductFeature(\'' + productId + '\')"><i class="fas fa-plus"></i> Kart Ekle</button>';
+        html += '</div><button class="btn btn-sm btn-outline" onclick="addProductFeature(\'' + escJsStr(productId) + '\')"><i class="fas fa-plus"></i> Kart Ekle</button>';
     }
 
     // === FEATURES LIST (flowpack) ===
@@ -3656,10 +3662,10 @@ function editProduct(productId) {
         html += '<div id="pe-features-list">';
         featList.forEach(function(text, i) {
             html += '<div style="display:flex;gap:8px;margin-bottom:4px;align-items:center;">';
-            html += '<input type="text" value="' + escHtml(text) + '" style="flex:1" onchange="updateProductFeatureList(\'' + productId + '\',' + i + ',this.value)">';
-            html += '<button class="btn-icon delete" onclick="removeProductFeatureList(\'' + productId + '\',' + i + ')"><i class="fas fa-trash"></i></button></div>';
+            html += '<input type="text" value="' + escHtml(text) + '" style="flex:1" onchange="updateProductFeatureList(\'' + escJsStr(productId) + '\',' + i + ',this.value)">';
+            html += '<button class="btn-icon delete" onclick="removeProductFeatureList(\'' + escJsStr(productId) + '\',' + i + ')"><i class="fas fa-trash"></i></button></div>';
         });
-        html += '</div><button class="btn btn-sm btn-outline" onclick="addProductFeatureList(\'' + productId + '\')"><i class="fas fa-plus"></i> Madde Ekle</button>';
+        html += '</div><button class="btn btn-sm btn-outline" onclick="addProductFeatureList(\'' + escJsStr(productId) + '\')"><i class="fas fa-plus"></i> Madde Ekle</button>';
     }
 
     // === SPECS ===
@@ -3670,24 +3676,24 @@ function editProduct(productId) {
         html += '<div id="pe-specs">';
         specs.forEach(function(s, i) {
             html += '<div style="display:flex;gap:8px;margin-bottom:4px;align-items:center;">';
-            html += '<input type="text" value="' + escHtml(s.label || '') + '" placeholder="Özellik" style="width:200px" onchange="updateProductSpec2Col(\'' + productId + '\',' + i + ',\'label\',this.value)">';
-            html += '<input type="text" value="' + escHtml(s.value || '') + '" placeholder="Değer" style="flex:1" onchange="updateProductSpec2Col(\'' + productId + '\',' + i + ',\'value\',this.value)">';
-            html += '<button class="btn-icon delete" onclick="removeProductSpec(\'' + productId + '\',' + i + ')"><i class="fas fa-trash"></i></button></div>';
+            html += '<input type="text" value="' + escHtml(s.label || '') + '" placeholder="Özellik" style="width:200px" onchange="updateProductSpec2Col(\'' + escJsStr(productId) + '\',' + i + ',\'label\',this.value)">';
+            html += '<input type="text" value="' + escHtml(s.value || '') + '" placeholder="Değer" style="flex:1" onchange="updateProductSpec2Col(\'' + escJsStr(productId) + '\',' + i + ',\'value\',this.value)">';
+            html += '<button class="btn-icon delete" onclick="removeProductSpec(\'' + escJsStr(productId) + '\',' + i + ')"><i class="fas fa-trash"></i></button></div>';
         });
-        html += '</div><button class="btn btn-sm btn-outline" onclick="addProductSpec2Col(\'' + productId + '\')"><i class="fas fa-plus"></i> Satır Ekle</button>';
+        html += '</div><button class="btn btn-sm btn-outline" onclick="addProductSpec2Col(\'' + escJsStr(productId) + '\')"><i class="fas fa-plus"></i> Satır Ekle</button>';
     } else if (data.specsHeaders) {
         // Multi-col format
         var headers = data.specsHeaders || [];
         html += '<div class="form-group"><label>Tablo Başlıkları (virgülle ayır)</label>';
-        html += '<input type="text" value="' + escHtml(headers.join(', ')) + '" onchange="updateProductSpecHeaders(\'' + productId + '\',this.value)"></div>';
+        html += '<input type="text" value="' + escHtml(headers.join(', ')) + '" onchange="updateProductSpecHeaders(\'' + escJsStr(productId) + '\',this.value)"></div>';
         html += '<div id="pe-specs">';
         specs.forEach(function(s, i) {
             var cells = s.cells || [];
             html += '<div style="display:flex;gap:8px;margin-bottom:4px;align-items:center;">';
-            html += '<input type="text" value="' + escHtml(cells.join(' | ')) + '" placeholder="Hücre1 | Hücre2 | ..." style="flex:1" onchange="updateProductSpecRow(\'' + productId + '\',' + i + ',this.value)">';
-            html += '<button class="btn-icon delete" onclick="removeProductSpec(\'' + productId + '\',' + i + ')"><i class="fas fa-trash"></i></button></div>';
+            html += '<input type="text" value="' + escHtml(cells.join(' | ')) + '" placeholder="Hücre1 | Hücre2 | ..." style="flex:1" onchange="updateProductSpecRow(\'' + escJsStr(productId) + '\',' + i + ',this.value)">';
+            html += '<button class="btn-icon delete" onclick="removeProductSpec(\'' + escJsStr(productId) + '\',' + i + ')"><i class="fas fa-trash"></i></button></div>';
         });
-        html += '</div><button class="btn btn-sm btn-outline" onclick="addProductSpecRow(\'' + productId + '\')"><i class="fas fa-plus"></i> Satır Ekle</button>';
+        html += '</div><button class="btn btn-sm btn-outline" onclick="addProductSpecRow(\'' + escJsStr(productId) + '\')"><i class="fas fa-plus"></i> Satır Ekle</button>';
     }
 
     // === APPLICATIONS ===
@@ -3697,11 +3703,11 @@ function editProduct(productId) {
         html += '<div id="pe-applications">';
         apps.forEach(function(a, i) {
             html += '<div style="display:flex;gap:8px;margin-bottom:4px;align-items:center;">';
-            html += '<input type="text" value="' + escHtml(a.icon || '') + '" placeholder="icon" style="width:120px" onchange="updateProductApplication(\'' + productId + '\',' + i + ',\'icon\',this.value)">';
-            html += '<input type="text" value="' + escHtml(a.label || '') + '" placeholder="etiket" style="flex:1" onchange="updateProductApplication(\'' + productId + '\',' + i + ',\'label\',this.value)">';
-            html += '<button class="btn-icon delete" onclick="removeProductApplication(\'' + productId + '\',' + i + ')"><i class="fas fa-trash"></i></button></div>';
+            html += '<input type="text" value="' + escHtml(a.icon || '') + '" placeholder="icon" style="width:120px" onchange="updateProductApplication(\'' + escJsStr(productId) + '\',' + i + ',\'icon\',this.value)">';
+            html += '<input type="text" value="' + escHtml(a.label || '') + '" placeholder="etiket" style="flex:1" onchange="updateProductApplication(\'' + escJsStr(productId) + '\',' + i + ',\'label\',this.value)">';
+            html += '<button class="btn-icon delete" onclick="removeProductApplication(\'' + escJsStr(productId) + '\',' + i + ')"><i class="fas fa-trash"></i></button></div>';
         });
-        html += '</div><button class="btn btn-sm btn-outline" onclick="addProductApplication(\'' + productId + '\')"><i class="fas fa-plus"></i> Uygulama Ekle</button>';
+        html += '</div><button class="btn btn-sm btn-outline" onclick="addProductApplication(\'' + escJsStr(productId) + '\')"><i class="fas fa-plus"></i> Uygulama Ekle</button>';
     }
 
     // === VIDEOS ===
@@ -3711,26 +3717,26 @@ function editProduct(productId) {
         html += '<div id="pe-videos">';
         vids.forEach(function(v, i) {
             html += '<div style="display:flex;gap:8px;margin-bottom:4px;align-items:center;">';
-            html += '<input type="text" value="' + escHtml(v.title || '') + '" placeholder="başlık" style="width:200px" onchange="updateProductVideo(\'' + productId + '\',' + i + ',\'title\',this.value)">';
-            html += '<input type="text" value="' + escHtml(v.videoId || '') + '" placeholder="YouTube ID" style="flex:1" onchange="updateProductVideo(\'' + productId + '\',' + i + ',\'videoId\',this.value)">';
-            html += '<button class="btn-icon delete" onclick="removeProductVideo(\'' + productId + '\',' + i + ')"><i class="fas fa-trash"></i></button></div>';
+            html += '<input type="text" value="' + escHtml(v.title || '') + '" placeholder="başlık" style="width:200px" onchange="updateProductVideo(\'' + escJsStr(productId) + '\',' + i + ',\'title\',this.value)">';
+            html += '<input type="text" value="' + escHtml(v.videoId || '') + '" placeholder="YouTube ID" style="flex:1" onchange="updateProductVideo(\'' + escJsStr(productId) + '\',' + i + ',\'videoId\',this.value)">';
+            html += '<button class="btn-icon delete" onclick="removeProductVideo(\'' + escJsStr(productId) + '\',' + i + ')"><i class="fas fa-trash"></i></button></div>';
         });
-        html += '</div><button class="btn btn-sm btn-outline" onclick="addProductVideo(\'' + productId + '\')"><i class="fas fa-plus"></i> Video Ekle</button>';
+        html += '</div><button class="btn btn-sm btn-outline" onclick="addProductVideo(\'' + escJsStr(productId) + '\')"><i class="fas fa-plus"></i> Video Ekle</button>';
     }
 
     // === WHATSAPP ===
     html += '<h4 style="border-bottom:2px solid var(--primary-color);padding-bottom:8px;"><i class="fab fa-whatsapp"></i> İletişim</h4>';
     html += '<div class="form-group"><label>WhatsApp Mesajı</label>';
-    html += '<input type="text" value="' + escHtml(data.whatsappText || '') + '" onchange="setProductField(\'' + productId + '\',\'whatsappText\',this.value)"></div>';
+    html += '<input type="text" value="' + escHtml(data.whatsappText || '') + '" onchange="setProductField(\'' + escJsStr(productId) + '\',\'whatsappText\',this.value)"></div>';
 
     // === RELATED PRODUCTS ===
     var related = data.relatedProducts || [];
     html += '<div class="form-group"><label>İlgili Ürünler (virgülle ayır, ID)</label>';
-    html += '<input type="text" value="' + escHtml(related.join(', ')) + '" onchange="updateProductRelated(\'' + productId + '\',this.value)"></div>';
+    html += '<input type="text" value="' + escHtml(related.join(', ')) + '" onchange="updateProductRelated(\'' + escJsStr(productId) + '\',this.value)"></div>';
 
     html += '</div>'; // modal-body
     html += '<div class="modal-footer">';
-    html += '<button class="btn btn-outline" onclick="resetProductOverrides(\'' + productId + '\')"><i class="fas fa-undo"></i> Varsayılana Dön</button>';
+    html += '<button class="btn btn-outline" onclick="resetProductOverrides(\'' + escJsStr(productId) + '\')"><i class="fas fa-undo"></i> Varsayılana Dön</button>';
     html += '<button class="btn btn-outline" onclick="closeProductEditor()">Kapat</button></div>';
     html += '</div>'; // modal-content
 
@@ -3838,12 +3844,12 @@ function updateProductSpecHeaders(pid, val) {
     setProductField(pid, 'specsHeaders', headers);
 }
 function updateProductSpecRow(pid, i, val) {
-    var data = getProductData(pid); var specs = (data.specs || []).map(function(x){return {cells: (x.cells||[]).slice()};});
+    var data = getProductData(pid); var specs = (data.specs || []).map(function(x){return Object.assign({}, x, {cells: (x.cells||[]).slice()});});
     var cells = val.split('|').map(function(s){return s.trim();});
     if (specs[i]) { specs[i].cells = cells; setProductField(pid, 'specs', specs); }
 }
 function addProductSpecRow(pid) {
-    var data = getProductData(pid); var specs = (data.specs || []).map(function(x){return {cells: (x.cells||[]).slice()};});
+    var data = getProductData(pid); var specs = (data.specs || []).map(function(x){return Object.assign({}, x, {cells: (x.cells||[]).slice()});});
     var colCount = (data.specsHeaders || []).length || 3;
     var empty = []; for (var c = 0; c < colCount; c++) empty.push('');
     specs.push({cells: empty}); setProductField(pid, 'specs', specs); refreshProductEditor();

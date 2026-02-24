@@ -150,6 +150,12 @@ window.__defaultProductPages = {
             { icon: 'fas fa-box', title: 'Flow Pack Entegrasyonu', desc: 'Otomatik paketleme entegrasyonu.' },
             { icon: 'fas fa-cogs', title: 'PLC Kontrol', desc: 'Dokunmatik ekranlı otomatik kontrol.' }
         ],
+        specsHeaders: ['Model', 'Kapasite', 'Ürün Boyutu', 'Kesim Tipi', 'Güç'],
+        specs: [
+            { cells: ['HLV-200', '200 kg/saat', '50-500g', 'Ultrasonik', '15 kW'] },
+            { cells: ['HLV-400', '400 kg/saat', '50-1000g', 'Ultrasonik', '22 kW'] },
+            { cells: ['HLV-600', '600 kg/saat', '50-1000g', 'Ultrasonik', '30 kW'] }
+        ],
         whatsappText: 'Helva paketleme makinesi hakkında bilgi almak istiyorum',
         videos: [{ title: 'Briket Tip Paketleme', videoId: '71CGtazjx8Q' }],
         relatedProducts: ['overwrapping', 'flow-pack', 'thermoform']
@@ -172,6 +178,12 @@ window.__defaultProductPages = {
             { icon: 'fas fa-fill-drip', title: 'Krem Dozajlama', desc: 'Servo motorlu hassas krem dozajlama.' },
             { icon: 'fas fa-layer-group', title: 'Birleştirme', desc: 'Üst bisküviyi otomatik yerleştirme.' },
             { icon: 'fas fa-box', title: 'Paketleme', desc: 'Flow pack paketleme entegrasyonu.' }
+        ],
+        specsHeaders: ['Model', 'Kapasite', 'Bisküvi Çapı', 'Krem Miktarı', 'Güç'],
+        specs: [
+            { cells: ['BSM-300', '300 adet/dk', '30-70 mm', '3-15g', '12 kW'] },
+            { cells: ['BSM-500', '500 adet/dk', '30-70 mm', '3-15g', '18 kW'] },
+            { cells: ['BSM-800', '800 adet/dk', '30-80 mm', '3-20g', '25 kW'] }
         ],
         whatsappText: 'Bisküvi kremalama makinesi hakkında bilgi almak istiyorum',
         videos: [{ title: 'Bisküvi Üretim Hattı', videoId: 'gfMiy8vIisY' }],
@@ -314,7 +326,8 @@ window.__defaultProductPages = {
         description: 'FLM Serisi: Döner Çene, Gezer Çene, High Speed ve Özel Çözümler.',
         heroImages: ['images/FLM 1000.jpg'],
         isCategory: true,
-        whatsappText: 'Flowpack makinesi seçimi için yardım istiyorum'
+        whatsappText: 'Flowpack makinesi seçimi için yardım istiyorum',
+        relatedProducts: ['overwrapping', 'vffs', 'thermoform']
     },
 
     'overwrapping': {
@@ -392,7 +405,8 @@ window.__defaultProductPages = {
             { title: 'Cips Paketleme', videoId: 'GlzQlLBKF-U' },
             { title: 'Stick Pack Kahve', videoId: '_I4TDHGX-zE' },
             { title: 'Şeker Paketleme', videoId: '90eDjQN_H28' }
-        ]
+        ],
+        relatedProducts: ['flowpack-packaging', 'thermoform', 'overwrapping']
     },
 
     'filling-machines': {
