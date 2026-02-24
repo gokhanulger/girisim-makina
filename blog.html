@@ -492,7 +492,7 @@
                         '</div>' +
                         '<h3>' + title + '</h3>' +
                         '<p>' + (excerpt ? excerpt.replace(/<[^>]*>/g, '') : (content ? content.replace(/<[^>]*>/g, '').substring(0, 150) + '...' : '')) + '</p>' +
-                        '<a href="javascript:void(0)" onclick="openBlogDetail(' + index + ')" class="read-more">' +
+                        '<a href="#blog-' + index + '" onclick="openBlogDetail(' + index + '); return false;" class="read-more">' +
                             '<span data-translate="blog.readMore">Devamını Oku</span> <i class="fas fa-arrow-right"></i>' +
                         '</a>' +
                         (post.tags && post.tags.length > 0 ?

@@ -90,11 +90,11 @@
                         <a href="#" data-lang="es" class="${savedLang === 'es' ? 'active' : ''}">ES</a>
                     </div>
                     <div class="languages-mobile" id="languageSelectorMobile">
-                        <a href="javascript:void(0);" class="lang-mobile-btn" id="langMobileBtn">
+                        <button type="button" class="lang-mobile-btn" id="langMobileBtn">
                             <i class="fas fa-globe"></i>
                             <span id="currentLangMobile">${savedLang.toUpperCase()}</span>
                             <i class="fas fa-chevron-down"></i>
-                        </a>
+                        </button>
                         <div class="lang-mobile-dropdown" id="langMobileDropdown">
                             <a href="#" data-lang="tr" class="${savedLang === 'tr' ? 'active' : ''}">TR</a>
                             <a href="#" data-lang="en" class="${savedLang === 'en' ? 'active' : ''}">EN</a>
