@@ -438,7 +438,7 @@
                 <div class="footer-about">
                     <a href="${basePath}index.html" class="footer-logo">
                         <span class="logo-text">GİRİŞİM MAKİNA</span>
-                        <span class="logo-sub footer-lang-cycle" id="footerLangCycle">PAKETLEME MAKİNALARI</span>
+                        <span class="logo-sub">PAKETLEME MAKİNALARI</span>
                     </a>
                     <p data-translate="footer.desc">${description}</p>
                     <div class="footer-social">
@@ -662,7 +662,6 @@
         initLanguageSelectors();
         initFloatingElements();
         initHamburgerMenu();
-        initFooterLangCycle();
         // Mega menü artık sadece kategori linkleri - tab etkileşimi yok
 
         // Remove placeholder min-height after header is loaded
@@ -686,32 +685,6 @@
                 }
             }).catch(function() { /* ignore - already showing cached/default */ });
         }
-    }
-
-    // Footer language cycle animation
-    function initFooterLangCycle() {
-        var el = document.getElementById('footerLangCycle');
-        if (!el) return;
-
-        var texts = [
-            'PAKETLEME MAKİNALARI',
-            'PACKAGING MACHINERY',
-            'УПАКОВОЧНОЕ ОБОРУДОВАНИЕ',
-            'آلات التعبئة والتغليف',
-            'MACHINES D\'EMBALLAGE',
-            'MÁQUINAS DE EMBALAGEM',
-            'MÁQUINAS DE ENVASADO'
-        ];
-        var idx = 0;
-
-        setInterval(function() {
-            el.style.opacity = '0';
-            setTimeout(function() {
-                idx = (idx + 1) % texts.length;
-                el.textContent = texts[idx];
-                el.style.opacity = '1';
-            }, 400);
-        }, 3000);
     }
 
     // Update header elements with fresh Supabase data (without full re-render)
