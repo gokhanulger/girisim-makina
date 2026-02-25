@@ -307,6 +307,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Reveal page after all dynamic content is loaded
     document.body.classList.add('site-ready');
+
+    // Hide page loader after all content + translations are applied
+    if (typeof window._hidePageLoader === 'function') {
+        window._hidePageLoader();
+    }
 });
 
 function applySiteContent(content) {

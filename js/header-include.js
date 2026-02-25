@@ -677,10 +677,8 @@
             document.body.classList.add('site-ready');
         }, 2000);
 
-        // Hide page loader after header is built
-        if (typeof window._hidePageLoader === 'function') {
-            window._hidePageLoader();
-        }
+        // Mark header as ready (loader will be hidden by site-loader after all content loads)
+        window._headerReady = true;
 
         // Supabase'den güncel veri geldiğinde header'ı güncelle
         if (!window.__siteContent && typeof getCachedSiteContent === 'function') {
