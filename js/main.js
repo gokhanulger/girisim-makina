@@ -10,17 +10,21 @@
 (function() {
     function hideLoader() {
         var el = document.getElementById('pageLoader');
-        if (el) {
+        if (el && !el._hidden) {
+            el._hidden = true;
             el.classList.add('fade-out');
             setTimeout(function() { el.remove(); }, 500);
         }
     }
 
-    if (document.readyState === 'complete') {
+    // Hide as soon as DOM is ready (don't wait for all images)
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
         hideLoader();
     } else {
-        window.addEventListener('load', hideLoader);
+        document.addEventListener('DOMContentLoaded', hideLoader);
     }
+    // Safety fallback
+    setTimeout(hideLoader, 3000);
 
     // Intercept internal link clicks to show loader
     document.addEventListener('click', function(e) {
