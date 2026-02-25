@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Girişim Makina Blog - Gıda işleme ve paketleme makineleri hakkında bilgiler">
     <title>Blog | Girişim Makina</title>
-    <link rel="stylesheet" href="css/min/style.min.css?v=20260224m">
+    <link rel="stylesheet" href="css/min/style.min.css?v=20260225e">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="favicon.png">
@@ -263,7 +263,12 @@
     </style>
 </head>
 <body>
-<div class="page-loader" id="pageLoader"><style>.page-loader{position:fixed;top:0;left:0;width:100%;height:100%;background:#fff;z-index:999999;display:flex;align-items:center;justify-content:center;flex-direction:column;opacity:1;transition:opacity .4s ease}.page-loader.fade-out{opacity:0;pointer-events:none}.page-loader-text{font-size:28px;font-weight:800;color:#e63946;letter-spacing:3px;animation:lp 1.2s ease-in-out infinite}.page-loader-sub{font-size:11px;font-weight:600;color:#555;letter-spacing:4px;margin-top:6px;transition:opacity .3s ease}@keyframes lp{0%,100%{opacity:.3}50%{opacity:1}}</style><div class="page-loader-text">GİRİŞİM MAKİNA</div><div class="page-loader-sub" id="loaderSub">PAKETLEME MAKİNALARI</div></div><script>!function(){var m={tr:"PAKETLEME MAKİNALARI",en:"PACKAGING MACHINERY",ru:"УПАКОВОЧНОЕ ОБОРУДОВАНИЕ",ar:"آلات التعبئة والتغليف",fr:"MACHINES D'EMBALLAGE",pt:"MÁQUINAS DE EMBALAGEM",es:"MÁQUINAS DE ENVASADO"},l;try{l=localStorage.getItem("girisim_lang")}catch(e){}l=l||"tr";var e=document.getElementById("loaderSub");if(e&&m[l])e.textContent=m[l]}();</script><script>!function(){var h=function(){var e=document.getElementById('pageLoader');if(e&&!e._h){e._h=1;e.classList.add('fade-out');setTimeout(function(){e.remove()},500)}};if(document.readyState==='complete'||document.readyState==='interactive'){h()}else{document.addEventListener('DOMContentLoaded',h)}setTimeout(h,3000)}();</script>
+<div class="page-loader" id="pageLoader"><style>.page-loader{position:fixed;top:0;left:0;width:100%;height:100%;background:#fff;z-index:999999;display:flex;align-items:center;justify-content:center;flex-direction:column;opacity:1;transition:opacity .4s ease}.page-loader.fade-out{opacity:0;pointer-events:none}.page-loader-text{font-size:28px;font-weight:800;color:#e63946;letter-spacing:3px;animation:lp 1.2s ease-in-out infinite}.page-loader-sub{font-size:11px;font-weight:600;color:#555;letter-spacing:4px;margin-top:6px;transition:opacity .3s ease}@keyframes lp{0%,100%{opacity:.3}50%{opacity:1}}</style><div class="page-loader-text">GİRİŞİM MAKİNA</div><div class="page-loader-sub" id="loaderSub">PAKETLEME MAKİNALARI</div></div><script>!function(){var m={tr:"PAKETLEME MAKİNALARI",en:"PACKAGING MACHINERY",ru:"УПАКОВОЧНОЕ ОБОРУДОВАНИЕ",ar:"آلات التعبئة والتغليف",fr:"MACHINES D'EMBALLAGE",pt:"MÁQUINAS DE EMBALAGEM",es:"MÁQUINAS DE ENVASADO"},l;try{l=localStorage.getItem("girisim_lang")}catch(e){}l=l||"tr";var e=document.getElementById("loaderSub");if(e&&m[l])e.textContent=m[l]}();</script><script>
+// Blog: loader stays until content loads. hideLoader called from blog JS.
+window._hidePageLoader=function(){var e=document.getElementById('pageLoader');if(e&&!e._h){e._h=1;e.classList.add('fade-out');setTimeout(function(){e.remove()},500)}};
+// Safety: max 8 seconds
+setTimeout(window._hidePageLoader,8000);
+</script>
     <!-- Header Placeholder -->
     <div id="header-placeholder"></div>
 
@@ -335,7 +340,7 @@
     <script defer src="js/min/supabase-init.min.js?v=20260224m"></script>
     <script defer src="js/min/site-loader.min.js?v=20260224m"></script>
     <script defer src="js/min/seo-loader.min.js?v=20260224m"></script>
-    <script defer src="js/min/header-include.min.js?v=20260225a"></script>
+    <script defer src="js/min/header-include.min.js?v=20260225c"></script>
 
     <script>
         // Store loaded posts globally for detail view and language switch
@@ -356,10 +361,12 @@
                     document.addEventListener('DOMContentLoaded', function() {
                         renderBlogCards(posts);
                         initCategoryFilter();
+                        if (window._hidePageLoader) window._hidePageLoader();
                     });
                 } else {
                     renderBlogCards(posts);
                     initCategoryFilter();
+                    if (window._hidePageLoader) window._hidePageLoader();
                 }
                 // Still fetch fresh in background
                 backgroundRefresh();
@@ -468,11 +475,13 @@
 
             if (posts.length === 0) {
                 blogGrid.innerHTML = '<div class="empty-state" style="grid-column: 1 / -1;"><i class="fas fa-blog"></i><h3 data-translate="blog.noPosts">Henüz blog yazısı yok</h3><p data-translate="blog.noPostsDesc">Yakında yeni içerikler eklenecek. Takipte kalın!</p></div>';
+                if (window._hidePageLoader) window._hidePageLoader();
                 return;
             }
 
             window._blogPosts = posts;
             renderBlogCards(posts);
+            if (window._hidePageLoader) window._hidePageLoader();
         }
 
         function renderBlogCards(posts) {
