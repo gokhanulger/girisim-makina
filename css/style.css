@@ -42,7 +42,10 @@
 
 html {
     scroll-behavior: smooth;
-    overflow-x: clip;
+}
+
+html, body {
+    overflow-x: hidden;
 }
 
 body {
@@ -3062,15 +3065,22 @@ h4 { font-size: 1.25rem; }
 
 /* Mobile Landscape */
 @media (max-width: 768px) {
-    /* Mobile: remove backdrop-filter (breaks fixed children) */
+    /* Mobile: fixed header - always on top */
     .header {
         -webkit-backdrop-filter: none !important;
         backdrop-filter: none !important;
         background: #ffffff !important;
+        position: fixed !important;
+        top: 0 !important;
+        left: 0;
+        right: 0;
+        width: 100%;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     }
 
-    /* Top bar compact on mobile */
+    /* Push page content below fixed header */
     .top-bar {
+        margin-top: 56px;
         font-size: 11px;
         padding: 6px 0;
     }
