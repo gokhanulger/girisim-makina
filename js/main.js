@@ -2,6 +2,61 @@
 // GIRIŞIM MAKİNA - Main JavaScript
 // =============================================
 
+// =============================================
+// Page Transition Loader
+// =============================================
+(function() {
+    // Create loader element
+    var loader = document.createElement('div');
+    loader.className = 'page-loader';
+    loader.id = 'pageLoader';
+    loader.innerHTML = '<div class="page-loader-text">GİRİŞİM MAKİNA</div><div class="page-loader-sub">PAKETLEME MAKİNALARI</div>';
+    document.documentElement.appendChild(loader);
+
+    // Fade out loader when page is ready
+    function hideLoader() {
+        var el = document.getElementById('pageLoader');
+        if (el) {
+            el.classList.add('fade-out');
+            setTimeout(function() { el.remove(); }, 500);
+        }
+    }
+
+    if (document.readyState === 'complete') {
+        hideLoader();
+    } else {
+        window.addEventListener('load', hideLoader);
+    }
+
+    // Intercept internal link clicks to show loader
+    document.addEventListener('click', function(e) {
+        var link = e.target.closest('a[href]');
+        if (!link) return;
+
+        var href = link.getAttribute('href');
+        if (!href) return;
+
+        // Skip non-navigating links
+        if (href.startsWith('#') || href.startsWith('tel:') || href.startsWith('mailto:') ||
+            href.startsWith('javascript:') || href.startsWith('https://wa.me') ||
+            link.getAttribute('target') === '_blank' || link.hasAttribute('download')) return;
+
+        // Skip external links
+        if (href.startsWith('http') && !href.includes(window.location.hostname)) return;
+
+        // Show loader
+        e.preventDefault();
+        var newLoader = document.createElement('div');
+        newLoader.className = 'page-loader';
+        newLoader.innerHTML = '<div class="page-loader-text">GİRİŞİM MAKİNA</div><div class="page-loader-sub">PAKETLEME MAKİNALARI</div>';
+        document.body.appendChild(newLoader);
+
+        setTimeout(function() {
+            window.location.href = href;
+        }, 200);
+    });
+})();
+
 // Video Modal - available on all pages
 function openVideo(videoId) {
     var modal = document.getElementById('videoModal');
