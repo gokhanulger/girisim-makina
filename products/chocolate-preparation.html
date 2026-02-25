@@ -6,14 +6,31 @@
     <meta name="description" content="Girişim Makina - Çikolata Hazırlama Mutfağı. Çikolata eritme, temperleme ve depolama sistemleri.">
     <title>Çikolata Hazırlama Mutfağı | Girişim Makina</title>
     <link rel="icon" type="image/png" href="../favicon.png">
-    <script defer src="../js/min/lang-detect.min.js?v=20260224m"></script>
-    <link rel="stylesheet" href="../css/min/style.min.css?v=20260224m">
-    <link rel="stylesheet" href="../css/min/product.min.css?v=20260224m">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <script defer src="../js/min/lang-detect.min.js?v=20260225f"></script>
+    <!-- Preconnect for faster resource loading -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <!-- Critical CSS inline -->
+    <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--primary-color:#e63946;--dark:#1a1a2e;--white:#ffffff;--text-dark:#1a1a2e;--text-light:#666}
+    body{font-family:'Poppins',sans-serif;color:#333}
+    .container{max-width:1200px;margin:0 auto;padding:0 20px}
+    #header-placeholder{min-height:80px;background:var(--white)}
+    </style>
+    <!-- Non-render-blocking CSS -->
+    <link rel="stylesheet" href="../css/min/style.min.css?v=20260225f" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="../css/min/style.min.css?v=20260225f"></noscript>
+    <link rel="stylesheet" href="../css/min/product.min.css?v=20260225f" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="../css/min/product.min.css?v=20260225f"></noscript>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet"></noscript>
 </head>
 <body>
-<div class="page-loader" id="pageLoader"><style>.page-loader{position:fixed;top:0;left:0;width:100%;height:100%;background:#fff;z-index:999999;display:flex;align-items:center;justify-content:center;flex-direction:column;opacity:1;transition:opacity .4s ease}.page-loader.fade-out{opacity:0;pointer-events:none}.page-loader-text{font-size:28px;font-weight:800;color:#e63946;letter-spacing:3px;animation:lp 1.2s ease-in-out infinite}.page-loader-sub{font-size:11px;font-weight:600;color:#555;letter-spacing:4px;margin-top:6px;transition:opacity .3s ease}@keyframes lp{0%,100%{opacity:.3}50%{opacity:1}}</style><div class="page-loader-text">GİRİŞİM MAKİNA</div><div class="page-loader-sub" id="loaderSub">PAKETLEME MAKİNALARI</div></div><script>!function(){var m={tr:"PAKETLEME MAKİNALARI",en:"PACKAGING MACHINERY",ru:"УПАКОВОЧНОЕ ОБОРУДОВАНИЕ",ar:"آلات التعبئة والتغليف",fr:"MACHINES D'EMBALLAGE",pt:"MÁQUINAS DE EMBALAGEM",es:"MÁQUINAS DE ENVASADO"},l;try{l=localStorage.getItem("girisim_lang")}catch(e){}l=l||"tr";var e=document.getElementById("loaderSub");if(e&&m[l])e.textContent=m[l]}();</script><script>!function(){var h=function(){var e=document.getElementById('pageLoader');if(e&&!e._h){e._h=1;e.classList.add('fade-out');setTimeout(function(){e.remove()},500)}};if(document.readyState==='complete'||document.readyState==='interactive'){h()}else{document.addEventListener('DOMContentLoaded',h)}setTimeout(h,3000)}();</script>
+<div class="page-loader" id="pageLoader"><style>.page-loader{position:fixed;top:0;left:0;width:100%;height:100%;background:#fff;z-index:999999;display:flex;align-items:center;justify-content:center;flex-direction:column;opacity:1;transition:opacity .4s ease}.page-loader.fade-out{opacity:0;pointer-events:none}.page-loader-text{font-size:28px;font-weight:800;color:#e63946;letter-spacing:3px;animation:lp 1.2s ease-in-out infinite}.page-loader-sub{font-size:11px;font-weight:600;color:#555;letter-spacing:4px;margin-top:6px;transition:opacity .3s ease}@keyframes lp{0%,100%{opacity:.3}50%{opacity:1}}</style><div class="page-loader-text">GİRİŞİM MAKİNA</div><div class="page-loader-sub" id="loaderSub">PAKETLEME MAKİNALARI</div></div><script>!function(){var m={tr:"PAKETLEME MAKİNALARI",en:"PACKAGING MACHINERY",ru:"УПАКОВОЧНОЕ ОБОРУДОВАНИЕ",ar:"آلات التعبئة والتغليف",fr:"MACHINES D'EMBALLAGE",pt:"MÁQUINAS DE EMBALAGEM",es:"MÁQUINAS DE ENVASADO"},l;try{l=localStorage.getItem("girisim_lang")}catch(e){}l=l||"tr";var e=document.getElementById("loaderSub");if(e&&m[l])e.textContent=m[l]}();</script><script>window._hidePageLoader=function(){var e=document.getElementById("pageLoader");if(e&&!e._h){e._h=1;e.classList.add("fade-out");setTimeout(function(){e.remove()},500)}};setTimeout(window._hidePageLoader,5000);</script>
     <div id="header-placeholder"></div>
 
     <!-- Breadcrumb -->
@@ -160,17 +177,17 @@
     <div id="footer-placeholder"></div>
 
     <!-- Scripts -->
-    <script defer src="../js/min/main.min.js?v=20260225c"></script>
-    <script defer src="../js/min/translations.min.js?v=20260224m"></script>
-    <script defer src="../js/min/product-translations.min.js?v=20260224m"></script>
+    <script defer src="../js/min/main.min.js?v=20260225f"></script>
+    <script defer src="../js/min/translations.min.js?v=20260225f"></script>
+    <script defer src="../js/min/product-translations.min.js?v=20260225f"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script defer src="../js/min/supabase-init.min.js?v=20260224m"></script>
-    <script defer src="../js/min/site-loader.min.js?v=20260224m"></script>
-    <script defer src="../js/min/seo-loader.min.js?v=20260224m"></script>
-    <script defer src="../js/min/header-include.min.js?v=20260225a"></script>
-    <script defer src="../js/min/product-gallery.min.js?v=20260224m"></script>
-    <script defer src="../js/min/product-data.min.js?v=20260224m"></script>
-    <script defer src="../js/min/product-loader.min.js?v=20260224m"></script>
+    <script defer src="../js/min/supabase-init.min.js?v=20260225f"></script>
+    <script defer src="../js/min/site-loader.min.js?v=20260225f"></script>
+    <script defer src="../js/min/seo-loader.min.js?v=20260225f"></script>
+    <script defer src="../js/min/header-include.min.js?v=20260225f"></script>
+    <script defer src="../js/min/product-gallery.min.js?v=20260225f"></script>
+    <script defer src="../js/min/product-data.min.js?v=20260225f"></script>
+    <script defer src="../js/min/product-loader.min.js?v=20260225f"></script>
 
     <script>
     function submitQuoteForm(e) {

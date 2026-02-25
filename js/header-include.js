@@ -677,6 +677,11 @@
             document.body.classList.add('site-ready');
         }, 2000);
 
+        // Hide page loader after header is built
+        if (typeof window._hidePageLoader === 'function') {
+            window._hidePageLoader();
+        }
+
         // Supabase'den güncel veri geldiğinde header'ı güncelle
         if (!window.__siteContent && typeof getCachedSiteContent === 'function') {
             getCachedSiteContent().then(function(freshData) {

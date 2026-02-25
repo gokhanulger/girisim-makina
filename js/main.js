@@ -10,21 +10,23 @@
 (function() {
     function hideLoader() {
         var el = document.getElementById('pageLoader');
-        if (el && !el._hidden) {
+        if (el && !el._hidden && !el._h) {
             el._hidden = true;
             el.classList.add('fade-out');
             setTimeout(function() { el.remove(); }, 500);
         }
     }
 
-    // Hide as soon as DOM is ready (don't wait for all images)
-    if (document.readyState === 'complete' || document.readyState === 'interactive') {
-        hideLoader();
-    } else {
-        document.addEventListener('DOMContentLoaded', hideLoader);
+    // If page uses _hidePageLoader (product/blog pages), don't auto-hide here
+    // Let header-include.js call _hidePageLoader when header is built
+    if (typeof window._hidePageLoader !== 'function') {
+        if (document.readyState === 'complete' || document.readyState === 'interactive') {
+            hideLoader();
+        } else {
+            document.addEventListener('DOMContentLoaded', hideLoader);
+        }
+        setTimeout(hideLoader, 3000);
     }
-    // Safety fallback
-    setTimeout(hideLoader, 3000);
 
     // Intercept internal link clicks to show loader
     document.addEventListener('click', function(e) {
