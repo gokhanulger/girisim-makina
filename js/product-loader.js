@@ -427,6 +427,10 @@
         if (window.__siteContent || attempts > 50) {
             clearInterval(interval);
             initProductLoader();
+            // Hide loader after product content is fully applied
+            if (typeof window._hidePageLoader === 'function') {
+                window._hidePageLoader();
+            }
         }
     }, 100);
 })();

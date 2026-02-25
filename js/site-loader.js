@@ -308,8 +308,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Reveal page after all dynamic content is loaded
     document.body.classList.add('site-ready');
 
-    // Hide page loader after all content + translations are applied
-    if (typeof window._hidePageLoader === 'function') {
+    // Hide page loader - on product pages, product-loader.js handles this
+    // On non-product pages, hide it here after content + translations are applied
+    if (typeof window._hidePageLoader === 'function' && !document.querySelector('.product-hero, .product-categories')) {
         window._hidePageLoader();
     }
 });
