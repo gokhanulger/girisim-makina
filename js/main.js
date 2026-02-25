@@ -38,155 +38,16 @@ document.addEventListener('keydown', function(e) {
 
 document.addEventListener('DOMContentLoaded', function() {
 
-    // =============================================
-    // Mobile Navigation - Bulletproof approach
-    // Move nav-menu to body on mobile to avoid
-    // stacking context issues (backdrop-filter,
-    // sticky positioning, etc.)
-    // =============================================
-    var hamburger = document.querySelector('.hamburger');
-    var navMenu = document.querySelector('.nav-menu');
-    var navbar = document.querySelector('.navbar');
+    // Mobile Navigation is handled by header-include.js
+    // (hamburger menu, overlay, dropdown toggles)
 
-    // Create mobile menu overlay
-    var mobileOverlay = document.createElement('div');
-    mobileOverlay.className = 'mobile-menu-overlay';
-    document.body.appendChild(mobileOverlay);
-
-    // On mobile, move nav-menu to body so position:fixed works properly
-    var navMenuMovedToBody = false;
-    var navMenuOriginalParent = navMenu ? navMenu.parentElement : null;
-    var navMenuNextSibling = navMenu ? navMenu.nextElementSibling : null;
-
-    function ensureNavMenuInBody() {
-        if (navMenu && !navMenuMovedToBody && window.innerWidth <= 768) {
-            document.body.appendChild(navMenu);
-            navMenuMovedToBody = true;
-        }
-    }
-
-    function ensureNavMenuInHeader() {
-        if (navMenu && navMenuMovedToBody && window.innerWidth > 768) {
-            if (navMenuOriginalParent) {
-                if (navMenuNextSibling) {
-                    navMenuOriginalParent.insertBefore(navMenu, navMenuNextSibling);
-                } else {
-                    navMenuOriginalParent.appendChild(navMenu);
-                }
-            }
-            navMenuMovedToBody = false;
-            navMenu.classList.remove('active');
-            hamburger && hamburger.classList.remove('active');
-            mobileOverlay.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-    }
-
-    // Move on load if mobile
-    ensureNavMenuInBody();
-
-    // Handle resize
-    window.addEventListener('resize', function() {
-        if (window.innerWidth <= 768) {
-            ensureNavMenuInBody();
-        } else {
-            ensureNavMenuInHeader();
-        }
-    });
-
-    function openMobileMenu() {
-        if (!hamburger || !navMenu) return;
-        ensureNavMenuInBody();
-        hamburger.classList.add('active');
-        navMenu.classList.add('active');
-        mobileOverlay.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    }
-
-    function closeMobileMenu() {
-        if (!hamburger || !navMenu) return;
-        hamburger.classList.remove('active');
-        navMenu.classList.remove('active');
-        mobileOverlay.classList.remove('active');
-        document.body.style.overflow = '';
-        // Close all open dropdowns
-        navMenu.querySelectorAll('.dropdown.active, .has-mega-menu.active').forEach(function(d) {
-            d.classList.remove('active');
-        });
-    }
-
-    // Hamburger click - toggle menu
-    if (hamburger) {
-        hamburger.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            if (navMenu && navMenu.classList.contains('active')) {
-                closeMobileMenu();
-            } else {
-                openMobileMenu();
-            }
-        });
-
-        // Also handle touch
-        hamburger.addEventListener('touchend', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            if (navMenu && navMenu.classList.contains('active')) {
-                closeMobileMenu();
-            } else {
-                openMobileMenu();
-            }
-        });
-    }
-
-    // Overlay click - close menu
-    mobileOverlay.addEventListener('click', closeMobileMenu);
-    mobileOverlay.addEventListener('touchend', function(e) {
-        e.preventDefault();
-        closeMobileMenu();
-    });
-
-    // Dropdown toggles in mobile menu (event delegation)
-    if (navMenu) {
-        navMenu.addEventListener('click', function(e) {
-            if (window.innerWidth > 768) return;
-
-            // Check if clicked a link inside mega-dropdown sub-links - let it navigate
-            var megaLink = e.target.closest('.mega-links a, .dropdown-menu a');
-            if (megaLink) {
-                // This is a product/page link - allow navigation, just close menu
-                closeMobileMenu();
-                return; // Don't prevent default - let the link work
-            }
-
-            var toggleLink = e.target.closest('.dropdown > a, .has-mega-menu > a');
-            if (toggleLink) {
-                e.preventDefault();
-                e.stopPropagation();
-                var parentLi = toggleLink.parentElement;
-                var wasActive = parentLi.classList.contains('active');
-
-                // Close other open dropdowns
-                navMenu.querySelectorAll('.dropdown.active, .has-mega-menu.active').forEach(function(d) {
-                    if (d !== parentLi) d.classList.remove('active');
-                });
-
-                parentLi.classList.toggle('active', !wasActive);
-                return;
-            }
-
-            // If clicked a regular link (not a dropdown toggle), close menu
-            var regularLink = e.target.closest('a[href]');
-            if (regularLink) {
-                closeMobileMenu();
-            }
-        });
-    }
-
-    // Close menu on escape key
+    // Close mobile menu on escape key (uses global function from header-include.js)
     document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && navMenu && navMenu.classList.contains('active')) {
-            closeMobileMenu();
+        if (e.key === 'Escape' && typeof window.closeMobileMenu === 'function') {
+            var navMenu = document.querySelector('.nav-menu');
+            if (navMenu && navMenu.classList.contains('active')) {
+                window.closeMobileMenu();
+            }
         }
     });
 
