@@ -746,7 +746,13 @@
         }
     }
 
+    var _lastToggleTime = 0;
     window.toggleMobileMenu = function() {
+        // Prevent double-fire from touchend + click on mobile
+        var now = Date.now();
+        if (now - _lastToggleTime < 300) return;
+        _lastToggleTime = now;
+
         var hamburger = document.querySelector('.hamburger');
         var navMenu = document.querySelector('.nav-menu');
         var overlay = document.querySelector('.mobile-menu-overlay');
