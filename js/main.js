@@ -122,8 +122,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     });
 
                     // Close mobile menu if open
-                    if (navMenu && navMenu.classList.contains('active')) {
-                        closeMobileMenu();
+                    if (typeof window.closeMobileMenu === 'function') {
+                        var mNav = document.querySelector('.nav-menu');
+                        if (mNav && mNav.classList.contains('active')) {
+                            window.closeMobileMenu();
+                        }
                     }
                 }
             } catch (error) {
