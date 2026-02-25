@@ -4,16 +4,10 @@
 
 // =============================================
 // Page Transition Loader
+// Loader HTML is inline in <body> for instant display.
+// This code hides it on load + shows it on link clicks.
 // =============================================
 (function() {
-    // Create loader element
-    var loader = document.createElement('div');
-    loader.className = 'page-loader';
-    loader.id = 'pageLoader';
-    loader.innerHTML = '<div class="page-loader-text">GİRİŞİM MAKİNA</div><div class="page-loader-sub">PAKETLEME MAKİNALARI</div>';
-    document.documentElement.appendChild(loader);
-
-    // Fade out loader when page is ready
     function hideLoader() {
         var el = document.getElementById('pageLoader');
         if (el) {
@@ -44,16 +38,22 @@
         // Skip external links
         if (href.startsWith('http') && !href.includes(window.location.hostname)) return;
 
-        // Show loader
+        // Show loader for page transition
         e.preventDefault();
-        var newLoader = document.createElement('div');
-        newLoader.className = 'page-loader';
-        newLoader.innerHTML = '<div class="page-loader-text">GİRİŞİM MAKİNA</div><div class="page-loader-sub">PAKETLEME MAKİNALARI</div>';
-        document.body.appendChild(newLoader);
+        var loader = document.getElementById('pageLoader');
+        if (loader) {
+            loader.classList.remove('fade-out');
+        } else {
+            loader = document.createElement('div');
+            loader.className = 'page-loader';
+            loader.id = 'pageLoader';
+            loader.innerHTML = '<div class="page-loader-text">GİRİŞİM MAKİNA</div><div class="page-loader-sub">PAKETLEME MAKİNALARI</div>';
+            document.body.appendChild(loader);
+        }
 
         setTimeout(function() {
             window.location.href = href;
-        }, 200);
+        }, 150);
     });
 })();
 
