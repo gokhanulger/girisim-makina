@@ -33,6 +33,14 @@ const sidebar = document.querySelector('.sidebar');
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
+    // CRITICAL: attach form listener FIRST to prevent page refresh
+    if (loginForm) {
+        loginForm.addEventListener('submit', handleLogin);
+    }
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', handleLogout);
+    }
+
     initAuth();
     initNavigation();
     initSidebar();
@@ -93,8 +101,6 @@ function initAuth() {
         }
     }
 
-    loginForm.addEventListener('submit', handleLogin);
-    logoutBtn.addEventListener('click', handleLogout);
 }
 
 async function handleLogin(e) {
