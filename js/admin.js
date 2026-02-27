@@ -1,4 +1,8 @@
 // Admin Panel JavaScript - Powered by Supabase
+// Ensure supabase client is accessible (cross-script compatibility)
+if (typeof supabase === 'undefined' && window._supabaseClient) {
+    var supabase = window._supabaseClient;
+}
 let siteContent = null;
 let currentUser = null;
 let DEMO_MODE = false;

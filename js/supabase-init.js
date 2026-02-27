@@ -14,15 +14,17 @@
 const SUPABASE_URL = 'https://yvptjiowxqllxfzlkosy.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl2cHRqaW93eHFsbHhmemxrb3N5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njk0NTQxMTksImV4cCI6MjA4NTAzMDExOX0.9soLQNOJZEpQx__vhJEQzB9SBImPi-ccceB-23WNWAQ';
 
-// Initialize Supabase client - check multiple possible global names
-let supabase;
-if (typeof window.supabase !== 'undefined' && window.supabase.createClient) {
-    supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-} else if (typeof window.Supabase !== 'undefined' && window.Supabase.createClient) {
-    supabase = window.Supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-} else {
-    console.error('Supabase SDK not loaded');
-}
+// Initialize Supabase client and store on window for cross-script access
+(function() {
+    var sdk = window.supabase || window.Supabase;
+    if (sdk && sdk.createClient) {
+        window._supabaseClient = sdk.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    } else {
+        console.error('Supabase SDK not loaded');
+        window._supabaseClient = null;
+    }
+})();
+var supabase = window._supabaseClient;
 
 // Default site content structure
 const defaultSiteContent = {
