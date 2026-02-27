@@ -3976,6 +3976,87 @@ function getTreeParentAndIndex(path) {
     return { parent: parentNode, arr: parentNode.children, index: path[path.length - 1] };
 }
 
+// Available page links for href dropdown
+var availablePages = {
+    categories: [
+        { href: 'machines/production-lines.html', label: 'Üretim Hatları' },
+        { href: 'machines/biscuit-chocolate.html', label: 'Bisküvi & Çikolata' },
+        { href: 'machines/horizontal-packaging.html', label: 'Yatay Paketleme' },
+        { href: 'machines/vertical-packaging.html', label: 'Dikey Paketleme' },
+        { href: 'machines/filling-auxiliary.html', label: 'Dolum & Yardımcı' }
+    ],
+    products: [
+        { href: 'products/wafer.html', label: 'Gofret Üretim Hatları' },
+        { href: 'products/cereal-bar.html', label: 'Tahıl Bar Üretim Hatları' },
+        { href: 'products/protein-bar.html', label: 'Protein Bar Üretim Hatları' },
+        { href: 'products/coconut-bar.html', label: 'Hindistan Cevizi Bar' },
+        { href: 'products/halvah.html', label: 'Helva Üretim Hatları' },
+        { href: 'products/biscuit-sandwiching.html', label: 'Bisküvi Kremalama' },
+        { href: 'products/cookie-capping.html', label: 'Cookie Capping (Chocopie)' },
+        { href: 'products/chocolate-coating.html', label: 'Çikolata Kaplama' },
+        { href: 'products/chocolate-cooling.html', label: 'Çikolata Soğutma Tüneli' },
+        { href: 'products/chocolate-preparation.html', label: 'Çikolata Hazırlama Mutfağı' },
+        { href: 'products/flow-pack.html', label: 'Yatay Flowpack Paketleme' },
+        { href: 'products/overwrapping.html', label: 'Zarf Tipi Paketleme (Overwrapping)' },
+        { href: 'products/vffs.html', label: 'Dikey Paketleme (VFFS)' },
+        { href: 'products/thermoform.html', label: 'Thermoform Paketleme' },
+        { href: 'products/filling-machines.html', label: 'Dolum Makinaları' },
+        { href: 'products/sugar-mill.html', label: 'Pudra Şekeri Değirmeni' }
+    ]
+};
+
+function buildHrefSelect(currentHref, pathStr, isCategory) {
+    var pages = isCategory ? availablePages.categories : availablePages.products;
+    var allPages = availablePages.categories.concat(availablePages.products);
+    var isCustom = currentHref && !allPages.some(function(p) { return p.href === currentHref; });
+
+    var html = '<select onchange="handleHrefSelect(this,' + pathStr + ')" style="width:100%;padding:4px 8px;border:1px solid #ddd;border-radius:4px;font-size:12px">';
+    html += '<option value="">-- Sayfa Seçin --</option>';
+
+    if (isCategory) {
+        html += '<optgroup label="Kategori Sayfaları">';
+        availablePages.categories.forEach(function(p) {
+            html += '<option value="' + p.href + '"' + (currentHref === p.href ? ' selected' : '') + '>' + p.label + '</option>';
+        });
+        html += '</optgroup>';
+    }
+
+    html += '<optgroup label="Ürün Sayfaları">';
+    availablePages.products.forEach(function(p) {
+        html += '<option value="' + p.href + '"' + (currentHref === p.href ? ' selected' : '') + '>' + p.label + '</option>';
+    });
+    html += '</optgroup>';
+
+    if (!isCategory) {
+        html += '<optgroup label="Kategori Sayfaları">';
+        availablePages.categories.forEach(function(p) {
+            html += '<option value="' + p.href + '"' + (currentHref === p.href ? ' selected' : '') + '>' + p.label + '</option>';
+        });
+        html += '</optgroup>';
+    }
+
+    if (isCustom) {
+        html += '<option value="' + escHtml(currentHref) + '" selected>' + escHtml(currentHref) + ' (özel)</option>';
+    }
+    html += '<option value="__custom__">Özel link gir...</option>';
+    html += '</select>';
+
+    return html;
+}
+
+function handleHrefSelect(select, path) {
+    if (select.value === '__custom__') {
+        var custom = prompt('Sayfa linkini girin (örn: products/yeni-urun.html):', '');
+        if (custom) {
+            updateTreeNode(path, 'href', custom);
+        } else {
+            loadMachineCategories();
+        }
+    } else {
+        updateTreeNode(path, 'href', select.value);
+    }
+}
+
 function loadMachineCategories() {
     var editor = document.getElementById('machine-categories-editor');
     if (!editor) return;
@@ -4038,10 +4119,10 @@ function renderCategoryTree(nodes, parentPath) {
                     '</div>' +
                     '<input type="text" value="' + (node.title || '').replace(/"/g, '&quot;') + '" onchange="updateTreeNode(' + pathStr + ',\'title\',this.value)" style="width:100%;padding:5px 8px;border:1px solid #ddd;border-radius:5px;font-size:14px;font-weight:600" placeholder="Başlık">' +
                 '</div>' +
-                // Href
-                '<div style="min-width:180px">' +
+                // Href - dropdown with available pages
+                '<div style="min-width:200px">' +
                     '<label style="font-size:10px;color:#888;display:block;margin-bottom:2px">Link (href)</label>' +
-                    '<input type="text" value="' + (node.href || '').replace(/"/g, '&quot;') + '" onchange="updateTreeNode(' + pathStr + ',\'href\',this.value)" style="width:100%;padding:4px 8px;border:1px solid #ddd;border-radius:4px;font-size:12px" placeholder="products/xxx.html">' +
+                    buildHrefSelect(node.href || '', pathStr, isCategory) +
                 '</div>' +
                 // Actions
                 '<div style="display:flex;gap:4px;align-items:center;flex-wrap:wrap">' +
