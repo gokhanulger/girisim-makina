@@ -304,12 +304,23 @@ function populateAllForms() {
     renderFeaturedVideo();
     renderVideoItems();
     renderFuarItems();
+    renderHRPositions();
+    renderCatalogItems();
     renderContactPhones();
     renderContactEmails();
     renderContactInfo();
     renderBlogPosts();
     loadGoogleAdsSettings();
     loadTikTokPixelSettings();
+
+    // Update dashboard counters
+    const blogCount = document.getElementById('dashBlogCount');
+    if (blogCount) blogCount.textContent = (siteContent.blog?.posts?.length || 0) + ' yazı';
+    const productCount = document.getElementById('dashProductCount');
+    if (productCount) {
+        const pCount = Object.keys(siteContent.products || {}).length;
+        productCount.textContent = pCount + ' ürün';
+    }
 }
 
 // Contact Info (Office Phone, WhatsApp, Email)
@@ -370,6 +381,11 @@ function updateContactInfo() {
             siteContent.contactInfo[fieldKey] = input.value;
         }
     }
+
+    // Sync topBar with contactInfo for backward compatibility
+    if (!siteContent.topBar) siteContent.topBar = {};
+    siteContent.topBar.phone = siteContent.contactInfo.officePhone || '';
+    siteContent.topBar.email = siteContent.contactInfo.email || '';
 
     markAsChanged();
 }
@@ -1254,6 +1270,116 @@ function deleteCertificateItem(index) {
     }
 }
 
+// HR Positions
+function renderHRPositions() {
+    const container = document.getElementById('hr-positions-editor');
+    if (!container) return;
+
+    if (!siteContent.hr) {
+        siteContent.hr = { title: '', description: '', positions: [] };
+    }
+    if (!siteContent.hr.positions) siteContent.hr.positions = [];
+
+    container.innerHTML = siteContent.hr.positions.map((pos, index) => `
+        <div class="item-card" data-index="${index}">
+            <div class="item-header">
+                <h4><i class="fas fa-briefcase"></i> ${pos.title || 'Pozisyon'}</h4>
+                <button class="delete-item" onclick="deleteHRPosition(${index})"><i class="fas fa-trash"></i></button>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Pozisyon Adı</label>
+                    <input type="text" value="${escHtml(pos.title || '')}" onchange="updateHRPosition(${index}, 'title', this.value)">
+                </div>
+                <div class="form-group">
+                    <label>Departman</label>
+                    <input type="text" value="${escHtml(pos.department || '')}" onchange="updateHRPosition(${index}, 'department', this.value)">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Açıklama (Opsiyonel)</label>
+                <textarea onchange="updateHRPosition(${index}, 'description', this.value)" rows="2">${escHtml(pos.description || '')}</textarea>
+            </div>
+        </div>
+    `).join('');
+}
+
+function updateHRPosition(index, field, value) {
+    siteContent.hr.positions[index][field] = value;
+    markAsChanged();
+}
+
+function addHRPosition() {
+    if (!siteContent.hr) siteContent.hr = { positions: [] };
+    if (!siteContent.hr.positions) siteContent.hr.positions = [];
+    siteContent.hr.positions.push({
+        title: 'Yeni Pozisyon',
+        department: 'Departman'
+    });
+    renderHRPositions();
+    markAsChanged();
+}
+
+function deleteHRPosition(index) {
+    if (confirm('Bu pozisyonu silmek istediğinizden emin misiniz?')) {
+        siteContent.hr.positions.splice(index, 1);
+        renderHRPositions();
+        markAsChanged();
+    }
+}
+
+// Catalog Items
+function renderCatalogItems() {
+    const container = document.getElementById('catalogs-editor');
+    if (!container) return;
+
+    if (!siteContent.catalog) siteContent.catalog = { url: '', title: '', items: [] };
+    if (!siteContent.catalog.items) siteContent.catalog.items = [];
+
+    container.innerHTML = siteContent.catalog.items.map((item, index) => `
+        <div class="item-card" data-index="${index}">
+            <div class="item-header">
+                <h4><i class="fas fa-file-pdf"></i> ${item.title || 'Katalog'}</h4>
+                <button class="delete-item" onclick="deleteCatalog(${index})"><i class="fas fa-trash"></i></button>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Katalog Adı</label>
+                    <input type="text" value="${escHtml(item.title || '')}" onchange="updateCatalog(${index}, 'title', this.value)">
+                </div>
+                <div class="form-group">
+                    <label>PDF URL</label>
+                    <input type="url" value="${escHtml(item.url || '')}" onchange="updateCatalog(${index}, 'url', this.value)" placeholder="https://...">
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+function updateCatalog(index, field, value) {
+    siteContent.catalog.items[index][field] = value;
+    markAsChanged();
+}
+
+function addCatalog() {
+    if (!siteContent.catalog) siteContent.catalog = { items: [] };
+    if (!siteContent.catalog.items) siteContent.catalog.items = [];
+    siteContent.catalog.items.push({
+        title: 'Yeni Katalog',
+        url: ''
+    });
+    renderCatalogItems();
+    markAsChanged();
+}
+
+function deleteCatalog(index) {
+    if (confirm('Bu kataloğu silmek istediğinizden emin misiniz?')) {
+        siteContent.catalog.items.splice(index, 1);
+        renderCatalogItems();
+        markAsChanged();
+    }
+}
+
 // Featured Video
 function renderFeaturedVideo() {
     if (!siteContent.featuredVideo) {
@@ -1638,6 +1764,7 @@ async function saveAllContent() {
         updateLastUpdateTime();
         saveAllBtn.classList.remove('btn-warning');
         saveAllBtn.classList.add('btn-success');
+        hasUnsavedChanges = false;
         saveAllBtn.disabled = false;
         saveAllBtn.innerHTML = '<i class="fas fa-save"></i> Tümünü Kaydet';
         return;
@@ -1662,6 +1789,7 @@ async function saveAllContent() {
         updateLastUpdateTime();
         saveAllBtn.classList.remove('btn-warning');
         saveAllBtn.classList.add('btn-success');
+        hasUnsavedChanges = false;
     } catch (error) {
         console.error('Error saving content:', error);
         showToast('Kaydetme hatası: ' + error.message, 'error');
@@ -1671,10 +1799,21 @@ async function saveAllContent() {
     }
 }
 
+let hasUnsavedChanges = false;
+
 function markAsChanged() {
+    hasUnsavedChanges = true;
     saveAllBtn.classList.remove('btn-success');
     saveAllBtn.classList.add('btn-warning');
 }
+
+// Warn before leaving with unsaved changes
+window.addEventListener('beforeunload', function(e) {
+    if (hasUnsavedChanges) {
+        e.preventDefault();
+        e.returnValue = '';
+    }
+});
 
 function updateLastUpdateTime() {
     const now = new Date();

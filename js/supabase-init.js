@@ -272,6 +272,21 @@ const defaultSiteContent = {
         ]
     },
 
+    // Featured Video (banner)
+    featuredVideo: {
+        title: 'Girişim Makina - Fuar Röportajı',
+        videoId: '03u4_rZC1nA',
+        description: 'Girişim Makina fuar röportajı'
+    },
+
+    // Fuar (Exhibition) Videos
+    fuarlar: {
+        tag: 'Fuarlarımız',
+        title: 'Fuar',
+        titleHighlight: 'Videoları',
+        items: []
+    },
+
     // CTA Section
     cta: {
         title: "Projeniz İçin Teklif Alın",

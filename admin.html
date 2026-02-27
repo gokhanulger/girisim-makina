@@ -56,7 +56,7 @@
                         <a href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
                     </li>
                     <li data-section="topbar">
-                        <a href="#"><i class="fas fa-phone"></i> Üst Bar</a>
+                        <a href="#"><i class="fas fa-phone-alt"></i> İletişim Bilgileri</a>
                     </li>
                     <li data-section="hero">
                         <a href="#"><i class="fas fa-image"></i> Hero Bölümü</a>
@@ -197,6 +197,27 @@
                                 <p id="lastUpdate">-</p>
                             </div>
                         </div>
+                        <div class="dashboard-card">
+                            <div class="card-icon"><i class="fas fa-newspaper"></i></div>
+                            <div class="card-content">
+                                <h3>Blog Yazıları</h3>
+                                <p id="dashBlogCount">0</p>
+                            </div>
+                        </div>
+                        <div class="dashboard-card">
+                            <div class="card-icon"><i class="fas fa-box-open"></i></div>
+                            <div class="card-content">
+                                <h3>Ürün Sayfaları</h3>
+                                <p id="dashProductCount">0</p>
+                            </div>
+                        </div>
+                        <div class="dashboard-card">
+                            <div class="card-icon"><i class="fas fa-language"></i></div>
+                            <div class="card-content">
+                                <h3>Dil Desteği</h3>
+                                <p>7 Dil</p>
+                            </div>
+                        </div>
                     </div>
                     <div class="quick-actions">
                         <h3>Hızlı İşlemler</h3>
@@ -204,11 +225,17 @@
                             <button onclick="navigateToSection('hero')" class="action-btn">
                                 <i class="fas fa-image"></i> Hero Düzenle
                             </button>
-                            <button onclick="navigateToSection('contact')" class="action-btn">
-                                <i class="fas fa-envelope"></i> İletişim Bilgileri
+                            <button onclick="navigateToSection('topbar')" class="action-btn">
+                                <i class="fas fa-phone-alt"></i> İletişim Bilgileri
                             </button>
-                            <button onclick="navigateToSection('machines')" class="action-btn">
-                                <i class="fas fa-cogs"></i> Ürünler
+                            <button onclick="navigateToSection('products')" class="action-btn">
+                                <i class="fas fa-cogs"></i> Ürün Sayfaları
+                            </button>
+                            <button onclick="navigateToSection('blog')" class="action-btn">
+                                <i class="fas fa-blog"></i> Blog Yönetimi
+                            </button>
+                            <button onclick="navigateToSection('seo')" class="action-btn">
+                                <i class="fas fa-search"></i> SEO Ayarları
                             </button>
                             <button onclick="window.open('index.html', '_blank')" class="action-btn">
                                 <i class="fas fa-external-link-alt"></i> Siteyi Önizle
@@ -242,17 +269,56 @@
                     </div>
                 </section>
 
-                <!-- Top Bar Section -->
+                <!-- Top Bar & Contact Info Section -->
                 <section id="section-topbar" class="admin-section">
                     <div class="section-card">
-                        <h2>Üst Bar Bilgileri</h2>
-                        <div class="form-group">
-                            <label>Telefon Numarası</label>
-                            <input type="text" id="topbar-phone" data-path="topBar.phone">
+                        <h2><i class="fas fa-phone-alt"></i> İletişim Bilgileri</h2>
+                        <p style="color:#888;margin-bottom:16px;">Bu bilgiler üst bar, header, footer ve floating butonlarda kullanılır.</p>
+
+                        <h3><i class="fas fa-building"></i> Telefon Numaraları</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Ofis Telefonu</label>
+                                <input type="text" id="topbar-office-phone" placeholder="+90 212 879 29 27" onchange="updateContactInfo()">
+                            </div>
+                            <div class="form-group">
+                                <label>Ofis Telefonu 2 (Opsiyonel)</label>
+                                <input type="text" id="topbar-office-phone2" placeholder="" onchange="updateContactInfo()">
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label>E-posta Adresi</label>
-                            <input type="email" id="topbar-email" data-path="topBar.email">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Cep Telefonu</label>
+                                <input type="text" id="topbar-mobile-phone" placeholder="+90 546 879 29 27" onchange="updateContactInfo()">
+                            </div>
+                            <div class="form-group">
+                                <label>Faks (Opsiyonel)</label>
+                                <input type="text" id="topbar-fax" placeholder="" onchange="updateContactInfo()">
+                            </div>
+                        </div>
+
+                        <h3><i class="fab fa-whatsapp"></i> WhatsApp</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>WhatsApp Numarası</label>
+                                <input type="text" id="topbar-phone" placeholder="+90 546 879 29 27" onchange="updateContactInfo()">
+                            </div>
+                            <div class="form-group">
+                                <label>WhatsApp 2 (Opsiyonel)</label>
+                                <input type="text" id="topbar-phone2" placeholder="" onchange="updateContactInfo()">
+                            </div>
+                        </div>
+
+                        <h3><i class="fas fa-envelope"></i> E-posta Adresleri</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Genel E-posta</label>
+                                <input type="email" id="topbar-email" placeholder="info@girisimmak.com" onchange="updateContactInfo()">
+                            </div>
+                            <div class="form-group">
+                                <label>Satış E-postası (Opsiyonel)</label>
+                                <input type="email" id="topbar-email2" placeholder="sales@girisimmak.com" onchange="updateContactInfo()">
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -260,18 +326,39 @@
                 <!-- Hero Section -->
                 <section id="section-hero" class="admin-section">
                     <div class="section-card">
-                        <h2>Hero Bölümü</h2>
+                        <h2><i class="fas fa-desktop"></i> Hero Bölümü</h2>
+
+                        <!-- Hero Slides Editor -->
+                        <h3><i class="fas fa-images"></i> Hero Slider (Ana Banner)</h3>
+                        <p style="color:#888;margin-bottom:12px;">Ana sayfadaki kayan banner slide'larını yönetin.</p>
+                        <div class="slider-tabs-container" id="sliderTabs" style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;">
+                            <!-- Tabs rendered by JS -->
+                        </div>
+                        <div id="heroSlidesEditor">
+                            <!-- Slide editor rendered by JS -->
+                        </div>
+                        <button class="btn btn-primary btn-sm" onclick="addHeroSlide()" style="margin-top:12px;">
+                            <i class="fas fa-plus"></i> Yeni Slide Ekle
+                        </button>
+
+                        <hr style="margin:24px 0;border-color:#eee;">
+
+                        <!-- Legacy Hero Fields -->
+                        <h3><i class="fas fa-image"></i> Arka Plan & Genel Ayarlar</h3>
+                        <p style="color:#888;margin-bottom:12px;">Tüm slide'ların arkasındaki genel hero ayarları.</p>
                         <div class="form-group">
-                            <label>Başlık (Satır 1)</label>
+                            <label>Genel Başlık</label>
                             <input type="text" id="hero-title" data-path="hero.title">
                         </div>
-                        <div class="form-group">
-                            <label>Başlık Vurgulu Kısım</label>
-                            <input type="text" id="hero-titleHighlight" data-path="hero.titleHighlight">
-                        </div>
-                        <div class="form-group">
-                            <label>Başlık Sonu</label>
-                            <input type="text" id="hero-titleEnd" data-path="hero.titleEnd">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Vurgulu Kısım</label>
+                                <input type="text" id="hero-titleHighlight" data-path="hero.titleHighlight">
+                            </div>
+                            <div class="form-group">
+                                <label>Başlık Sonu</label>
+                                <input type="text" id="hero-titleEnd" data-path="hero.titleEnd">
+                            </div>
                         </div>
                         <div class="form-group">
                             <label>Açıklama</label>
@@ -925,6 +1012,25 @@
                                     <option value="product-vffs">VFFS Dikey Dolum</option>
                                     <option value="product-filling-machines">Dolum Makinaları</option>
                                     <option value="product-halvah">Helva Dilimleme</option>
+                                </optgroup>
+                                <optgroup label="Flow Pack Modelleri">
+                                    <option value="flowpack-flm-hs-500">FLM-HS-500</option>
+                                    <option value="flowpack-flm-1000">FLM-1000</option>
+                                    <option value="flowpack-flm-1000-cw">FLM-1000-CW</option>
+                                    <option value="flowpack-flm-1000-bms">FLM-1000-BMS</option>
+                                    <option value="flowpack-flm-2000">FLM-2000</option>
+                                    <option value="flowpack-flm-3000">FLM-3000</option>
+                                    <option value="flowpack-flm-4000">FLM-4000</option>
+                                    <option value="flowpack-flm-5000">FLM-5000</option>
+                                    <option value="flowpack-flm-5000-bms">FLM-5000-BMS</option>
+                                    <option value="flowpack-bpm-1000">BPM-1000</option>
+                                </optgroup>
+                                <optgroup label="Makine Kategorileri">
+                                    <option value="cat-production-lines">Üretim Hatları</option>
+                                    <option value="cat-biscuit-chocolate">Bisküvi & Çikolata</option>
+                                    <option value="cat-horizontal-packaging">Yatay Paketleme</option>
+                                    <option value="cat-vertical-packaging">Dikey Paketleme</option>
+                                    <option value="cat-filling-auxiliary">Dolum & Yardımcı</option>
                                 </optgroup>
                             </select>
                         </div>
