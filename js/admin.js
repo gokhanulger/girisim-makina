@@ -39,32 +39,43 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Authentication - Supabase
+let contentLoaded = false;
+
 function initAuth() {
     // Check if Supabase is configured
     const isSupabaseConfigured = typeof supabase !== 'undefined' && SUPABASE_URL;
 
     if (isSupabaseConfigured) {
-        // Check current session
-        supabase.auth.getSession().then(({ data: { session } }) => {
+        // Listen for auth changes (handles both initial session and login/logout)
+        supabase.auth.onAuthStateChange((event, session) => {
+            console.log('Auth event:', event);
             if (session?.user) {
                 currentUser = session.user;
                 showAdminPanel();
-                loadContent();
+                if (!contentLoaded) {
+                    contentLoaded = true;
+                    loadContent();
+                }
             } else {
+                currentUser = null;
+                contentLoaded = false;
                 showLoginScreen();
             }
         });
 
-        // Listen for auth changes
-        supabase.auth.onAuthStateChange((event, session) => {
-            if (session?.user) {
+        // Fallback: check session directly in case onAuthStateChange doesn't fire
+        supabase.auth.getSession().then(({ data: { session } }) => {
+            if (session?.user && !contentLoaded) {
                 currentUser = session.user;
                 showAdminPanel();
+                contentLoaded = true;
                 loadContent();
-            } else {
-                currentUser = null;
+            } else if (!session?.user && !currentUser) {
                 showLoginScreen();
             }
+        }).catch(err => {
+            console.error('getSession error:', err);
+            showLoginScreen();
         });
     } else {
         // Demo mode - Supabase not configured
@@ -88,36 +99,41 @@ function initAuth() {
 
 async function handleLogin(e) {
     e.preventDefault();
-    const email = document.getElementById('loginEmail').value;
-    const password = document.getElementById('loginPassword').value;
-
-    loginError.style.display = 'none';
-
-    // Demo mode login
-    if (DEMO_MODE) {
-        if (email === DEMO_EMAIL && password === DEMO_PASSWORD) {
-            currentUser = { email: DEMO_EMAIL };
-            // Save demo session to localStorage
-            localStorage.setItem('girisim_demo_session', JSON.stringify(currentUser));
-            showAdminPanel();
-            await loadContent();
-            showToast('Demo modunda giriş yapıldı', 'warning');
-        } else {
-            loginError.textContent = 'Geçersiz e-posta veya şifre';
-            loginError.style.display = 'block';
-        }
-        return;
-    }
 
     try {
+        const email = document.getElementById('loginEmail').value;
+        const password = document.getElementById('loginPassword').value;
+
+        loginError.style.display = 'none';
+
+        // Demo mode login
+        if (DEMO_MODE) {
+            if (email === DEMO_EMAIL && password === DEMO_PASSWORD) {
+                currentUser = { email: DEMO_EMAIL };
+                localStorage.setItem('girisim_demo_session', JSON.stringify(currentUser));
+                showAdminPanel();
+                await loadContent();
+                showToast('Demo modunda giriş yapıldı', 'warning');
+            } else {
+                loginError.textContent = 'Geçersiz e-posta veya şifre';
+                loginError.style.display = 'block';
+            }
+            return;
+        }
+
+        // Supabase login
         const { data, error } = await supabase.auth.signInWithPassword({
             email: email,
             password: password
         });
 
-        if (error) throw error;
+        if (error) {
+            loginError.textContent = getErrorMessage(error.message);
+            loginError.style.display = 'block';
+        }
     } catch (error) {
-        loginError.textContent = getErrorMessage(error.message);
+        console.error('Login error:', error);
+        loginError.textContent = getErrorMessage(error.message || 'Beklenmeyen hata oluştu');
         loginError.style.display = 'block';
     }
 }
