@@ -1530,7 +1530,13 @@ function navigateToSection(section) {
         seo: 'SEO Ayarları',
         analytics: 'Analitik & İzleme',
         machineCategories: 'Makine Kategorileri',
-        translations: 'Çeviriler',
+        translations: 'Çeviriler (Toplu)',
+        'lang-en': '🇬🇧 English Çevirileri',
+        'lang-ru': '🇷🇺 Русский Çevirileri',
+        'lang-ar': '🇸🇦 العربية Çevirileri',
+        'lang-fr': '🇫🇷 Français Çevirileri',
+        'lang-pt': '🇧🇷 Português Çevirileri',
+        'lang-es': '🇪🇸 Español Çevirileri',
         settings: 'Ayarlar'
     };
     pageTitle.textContent = titles[section] || section;
@@ -1541,6 +1547,11 @@ function navigateToSection(section) {
     }
     if (section === 'translations' || section === 'settings') {
         initTranslations();
+    }
+    if (section.startsWith('lang-')) {
+        var langCode = section.replace('lang-', '');
+        initTranslations();
+        renderLanguageEditor(langCode);
     }
     if (section === 'analytics') {
         initAnalytics();
@@ -2173,6 +2184,260 @@ function saveTranslation() {
     updateTranslationStatus();
 
     showToast('Çeviri kaydedildi! "Tümünü Kaydet" ile Supabase\'e aktarın.', 'success');
+}
+
+// ============================================
+// Per-Language Full Editor
+// ============================================
+
+var langSectionLabels = {
+    nav: 'Navigasyon Menüsü',
+    hero: 'Hero Bölümü',
+    about: 'Hakkımızda',
+    production: 'Üretim Hatları',
+    packaging: 'Paketleme',
+    sectors: 'Sektörler',
+    whyUs: 'Neden Biz',
+    videos: 'Videolar',
+    cta: 'CTA Bölümü',
+    contact: 'İletişim',
+    footer: 'Footer',
+    testimonials: 'Referanslar',
+    fuarlar: 'Fuarlar',
+    certificates: 'Sertifikalar',
+    hr: 'İnsan Kaynakları',
+    products: 'Ürün Sayfaları'
+};
+
+function renderLanguageEditor(lang) {
+    var container = document.getElementById('lang-editor-' + lang);
+    if (!container) return;
+
+    var langName = { en: 'English', ru: 'Русский', ar: 'العربية', fr: 'Français', pt: 'Português', es: 'Español' }[lang] || lang;
+    var langFlag = { en: '🇬🇧', ru: '🇷🇺', ar: '🇸🇦', fr: '🇫🇷', pt: '🇧🇷', es: '🇪🇸' }[lang] || '';
+
+    var content = getTurkishContent();
+    var sections = Object.keys(content);
+
+    var html = '<div class="section-card">';
+    html += '<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:20px">';
+    html += '<h2><span style="font-size:28px;margin-right:8px">' + langFlag + '</span> ' + langName + ' Çevirileri</h2>';
+    html += '<div style="display:flex;gap:8px;flex-wrap:wrap">';
+    html += '<button class="btn btn-primary" onclick="autoTranslateLangAll(\'' + lang + '\')"><i class="fas fa-robot"></i> Tümünü ChatGPT ile Çevir</button>';
+    html += '<button class="btn btn-success" onclick="saveLangEditor(\'' + lang + '\')"><i class="fas fa-save"></i> Bu Dili Kaydet</button>';
+    html += '</div>';
+    html += '</div>';
+
+    sections.forEach(function(sectionKey) {
+        var sectionData = content[sectionKey];
+        if (!sectionData) return;
+
+        var sectionLabel = langSectionLabels[sectionKey] || sectionKey;
+
+        html += '<div class="lang-section-group" style="margin-bottom:16px;border:1px solid #e8e8e8;border-radius:10px;overflow:hidden">';
+        html += '<div class="lang-section-header" onclick="toggleLangSection(this)" style="padding:12px 16px;background:#f8f9fa;cursor:pointer;display:flex;justify-content:space-between;align-items:center;user-select:none">';
+        html += '<h3 style="margin:0;font-size:15px"><i class="fas fa-chevron-right" style="margin-right:8px;transition:transform 0.2s;font-size:12px"></i>' + sectionLabel + '</h3>';
+        html += '<span style="font-size:12px;color:#888">' + Object.keys(typeof sectionData === 'object' ? sectionData : {}).length + ' alan</span>';
+        html += '</div>';
+        html += '<div class="lang-section-body" style="display:none;padding:16px">';
+
+        if (typeof sectionData === 'object') {
+            Object.keys(sectionData).forEach(function(key) {
+                var value = sectionData[key];
+                if (typeof value === 'object' && value !== null) {
+                    // Nested (e.g. products.wafer.title)
+                    Object.keys(value).forEach(function(subKey) {
+                        var fullKey = sectionKey + '.' + key + '.' + subKey;
+                        var existing = customTranslations[lang]?.[sectionKey]?.[key]?.[subKey] || '';
+                        html += buildLangField(fullKey, key + '.' + subKey, value[subKey], existing);
+                    });
+                } else {
+                    var fullKey = sectionKey + '.' + key;
+                    var existing = customTranslations[lang]?.[sectionKey]?.[key] || '';
+                    html += buildLangField(fullKey, key, value, existing);
+                }
+            });
+        }
+
+        html += '</div></div>';
+    });
+
+    html += '</div>';
+    container.innerHTML = html;
+}
+
+function buildLangField(fullKey, label, sourceText, existingTranslation) {
+    var isLong = String(sourceText).length > 80;
+    var inputHtml;
+    if (isLong) {
+        inputHtml = '<textarea data-lang-key="' + escHtml(fullKey) + '" rows="2" style="width:100%;padding:6px 10px;border:1px solid #ddd;border-radius:6px;font-size:13px;resize:vertical" placeholder="Çeviri girin...">' + escHtml(existingTranslation) + '</textarea>';
+    } else {
+        inputHtml = '<input type="text" data-lang-key="' + escHtml(fullKey) + '" value="' + escHtml(existingTranslation) + '" style="width:100%;padding:6px 10px;border:1px solid #ddd;border-radius:6px;font-size:13px" placeholder="Çeviri girin...">';
+    }
+
+    return '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px;align-items:start">' +
+        '<div>' +
+            '<label style="font-size:11px;color:#888;display:block;margin-bottom:3px">🇹🇷 ' + escHtml(label) + '</label>' +
+            '<div style="padding:6px 10px;background:#f8f9fa;border-radius:6px;font-size:13px;color:#555;min-height:32px;word-break:break-word">' + escHtml(String(sourceText)) + '</div>' +
+        '</div>' +
+        '<div>' +
+            '<label style="font-size:11px;color:#888;display:block;margin-bottom:3px">Çeviri</label>' +
+            inputHtml +
+        '</div>' +
+    '</div>';
+}
+
+function toggleLangSection(header) {
+    var body = header.nextElementSibling;
+    var icon = header.querySelector('i');
+    if (body.style.display === 'none') {
+        body.style.display = 'block';
+        if (icon) icon.style.transform = 'rotate(90deg)';
+    } else {
+        body.style.display = 'none';
+        if (icon) icon.style.transform = '';
+    }
+}
+
+function saveLangEditor(lang) {
+    var container = document.getElementById('lang-editor-' + lang);
+    if (!container) return;
+
+    if (!customTranslations[lang]) customTranslations[lang] = {};
+
+    var inputs = container.querySelectorAll('[data-lang-key]');
+    inputs.forEach(function(input) {
+        var keyPath = input.getAttribute('data-lang-key');
+        var value = (input.value || input.textContent || '').trim();
+        if (!value) return;
+
+        var keys = keyPath.split('.');
+        var target = customTranslations[lang];
+        for (var i = 0; i < keys.length - 1; i++) {
+            if (!target[keys[i]]) target[keys[i]] = {};
+            target = target[keys[i]];
+        }
+        target[keys[keys.length - 1]] = value;
+    });
+
+    if (siteContent) {
+        siteContent.translations = customTranslations;
+        markAsChanged();
+    }
+    localStorage.setItem('girisim_custom_translations', JSON.stringify(customTranslations));
+    updateTranslationStatus();
+    showToast(lang.toUpperCase() + ' çevirileri kaydedildi! "Tümünü Kaydet" ile Supabase\'e aktarın.', 'success');
+}
+
+async function autoTranslateLangAll(lang) {
+    var apiKey = localStorage.getItem('openai_api_key');
+    if (!apiKey) {
+        showToast('Lütfen önce Ayarlar bölümünden OpenAI API anahtarınızı girin.', 'error');
+        navigateToSection('settings');
+        return;
+    }
+
+    var model = localStorage.getItem('openai_model') || 'gpt-4o-mini';
+    var langNames = { en: 'English', ru: 'Russian', ar: 'Arabic', fr: 'French', pt: 'Portuguese', es: 'Spanish' };
+    var content = getTurkishContent();
+    var sections = Object.keys(content);
+
+    // Collect all texts
+    var allTexts = [];
+    var allKeys = [];
+    sections.forEach(function(sectionKey) {
+        var sectionData = content[sectionKey];
+        if (!sectionData || typeof sectionData !== 'object') return;
+        Object.keys(sectionData).forEach(function(key) {
+            var value = sectionData[key];
+            if (typeof value === 'object' && value !== null) {
+                Object.keys(value).forEach(function(subKey) {
+                    allTexts.push(String(value[subKey]));
+                    allKeys.push(sectionKey + '.' + key + '.' + subKey);
+                });
+            } else {
+                allTexts.push(String(value));
+                allKeys.push(sectionKey + '.' + key);
+            }
+        });
+    });
+
+    // Filter out empty texts
+    var filteredTexts = [];
+    var filteredKeys = [];
+    allTexts.forEach(function(txt, i) {
+        if (txt.trim()) {
+            filteredTexts.push(txt);
+            filteredKeys.push(allKeys[i]);
+        }
+    });
+
+    if (!filteredTexts.length) {
+        showToast('Çevrilecek içerik bulunamadı.', 'error');
+        return;
+    }
+
+    showToast(langNames[lang] + ' çevirisi başlatıldı... (' + filteredTexts.length + ' alan)', 'info');
+
+    // Split into chunks of 40 to avoid token limits
+    var chunkSize = 40;
+    var chunks = [];
+    for (var i = 0; i < filteredTexts.length; i += chunkSize) {
+        chunks.push({ texts: filteredTexts.slice(i, i + chunkSize), keys: filteredKeys.slice(i, i + chunkSize) });
+    }
+
+    if (!customTranslations[lang]) customTranslations[lang] = {};
+    var errorCount = 0;
+
+    for (var c = 0; c < chunks.length; c++) {
+        try {
+            var response = await fetch('https://api.openai.com/v1/chat/completions', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + apiKey },
+                body: JSON.stringify({
+                    model: model,
+                    messages: [
+                        { role: 'system', content: 'You are a professional translator specializing in industrial machinery and food processing equipment. Translate the following Turkish texts to ' + langNames[lang] + '. Maintain technical accuracy and professional tone. Return ONLY a JSON array of translated strings in the same order as input, no explanations.' },
+                        { role: 'user', content: JSON.stringify(chunks[c].texts) }
+                    ],
+                    temperature: 0.3
+                })
+            });
+
+            var data = await response.json();
+            var translated = JSON.parse(data.choices[0].message.content);
+
+            translated.forEach(function(txt, idx) {
+                var keys = chunks[c].keys[idx].split('.');
+                var target = customTranslations[lang];
+                for (var k = 0; k < keys.length - 1; k++) {
+                    if (!target[keys[k]]) target[keys[k]] = {};
+                    target = target[keys[k]];
+                }
+                target[keys[keys.length - 1]] = txt;
+            });
+        } catch (err) {
+            console.error('Chunk ' + c + ' translation error:', err);
+            errorCount++;
+        }
+    }
+
+    // Save
+    if (siteContent) {
+        siteContent.translations = customTranslations;
+        markAsChanged();
+    }
+    localStorage.setItem('girisim_custom_translations', JSON.stringify(customTranslations));
+    updateTranslationStatus();
+
+    // Re-render editor with new translations
+    renderLanguageEditor(lang);
+
+    if (errorCount > 0) {
+        showToast(langNames[lang] + ' çevirisi tamamlandı (' + errorCount + ' hata). "Tümünü Kaydet" ile yayınlayın.', 'warning');
+    } else {
+        showToast(langNames[lang] + ' çevirisi tamamlandı! "Tümünü Kaydet" ile yayınlayın.', 'success');
+    }
 }
 
 // Publish translations to translation files
