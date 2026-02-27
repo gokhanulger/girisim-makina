@@ -1635,6 +1635,10 @@ const turkishContentDefaults = {
     cta: { title: "Projeniz İçin Ücretsiz Teklif Alın", subtitle: "" },
     contact: { tag: "İletişim", title1: "Bizimle", title2: "İletişime Geçin", address: "Adres", whatsapp: "WhatsApp", email: "E-Posta", hours: "Çalışma Saatleri", formTitle: "Teklif Formu", formSubmit: "Teklif İste" },
     footer: { desc: "", production: "Üretim Hatları", packaging: "Paketleme", corporate: "Kurumsal", copyright: "" },
+    testimonials: { tag: "Referanslarımız", title1: "Müşterilerimiz", title2: "Ne Diyor?" },
+    fuarlar: { tag: "Fuarlar", title1: "Fuar", title2: "Katılımlarımız", subtitle: "Uluslararası fuarlarda Türkiye'yi temsil ediyoruz" },
+    certificates: { tag: "Sertifikalarımız", title: "CE", highlight: "Sertifikaları", subtitle: "Makinelerimiz Avrupa CE standartlarına uygun olarak üretilmektedir", download: "İndir" },
+    hr: { heroTitle: "İnsan Kaynakları", heroDesc: "Girişim Makina ailesine katılın. Gıda makineleri sektöründe kariyer fırsatlarını keşfedin.", whyTitle: "Neden Girişim Makina?", benefit1: "Sürekli Eğitim", benefit2: "Kariyer Gelişimi", benefit3: "Uluslararası İş Ortamı", benefit4: "Dinamik Ekip", benefit5: "Sosyal Haklar", benefit6: "Başarı Primleri", formTitle: "İş Başvuru Formu", submitBtn: "Başvuruyu Gönder" },
     products: { wafer: { title: "Wafer Üretim Hatları", desc: "" }, cereal: { title: "Cereal Bar Hatları", desc: "" }, protein: { title: "Protein Bar Hatları", desc: "" }, chocolate: { title: "Çikolata Kaplama", desc: "" }, biscuit: { title: "Bisküvi Kremalama", desc: "" }, flowpack: { title: "Flow Pack", desc: "" }, overwrap: { title: "Overwrapping", desc: "" }, thermoform: { title: "Thermoform", desc: "" }, vffs: { title: "VFFS Dikey Dolum", desc: "" }, halvah: { title: "Helva Paketleme", desc: "" } }
 };
 
@@ -1718,6 +1722,37 @@ function getTurkishContent() {
             packaging: turkishContentDefaults.footer.packaging,
             corporate: turkishContentDefaults.footer.corporate,
             copyright: sc.footer?.copyright || turkishContentDefaults.footer.copyright
+        },
+        testimonials: {
+            tag: sc.testimonials?.tag || turkishContentDefaults.testimonials.tag,
+            title1: sc.testimonials?.title || turkishContentDefaults.testimonials.title1,
+            title2: sc.testimonials?.titleHighlight || turkishContentDefaults.testimonials.title2
+        },
+        fuarlar: {
+            tag: turkishContentDefaults.fuarlar.tag,
+            title1: turkishContentDefaults.fuarlar.title1,
+            title2: turkishContentDefaults.fuarlar.title2,
+            subtitle: turkishContentDefaults.fuarlar.subtitle
+        },
+        certificates: {
+            tag: sc.certificates?.tag || turkishContentDefaults.certificates.tag,
+            title: turkishContentDefaults.certificates.title,
+            highlight: turkishContentDefaults.certificates.highlight,
+            subtitle: turkishContentDefaults.certificates.subtitle,
+            download: turkishContentDefaults.certificates.download
+        },
+        hr: {
+            heroTitle: sc.hr?.title || turkishContentDefaults.hr.heroTitle,
+            heroDesc: sc.hr?.description || turkishContentDefaults.hr.heroDesc,
+            whyTitle: turkishContentDefaults.hr.whyTitle,
+            benefit1: turkishContentDefaults.hr.benefit1,
+            benefit2: turkishContentDefaults.hr.benefit2,
+            benefit3: turkishContentDefaults.hr.benefit3,
+            benefit4: turkishContentDefaults.hr.benefit4,
+            benefit5: turkishContentDefaults.hr.benefit5,
+            benefit6: turkishContentDefaults.hr.benefit6,
+            formTitle: turkishContentDefaults.hr.formTitle,
+            submitBtn: turkishContentDefaults.hr.submitBtn
         },
         products: turkishContentDefaults.products
     };
