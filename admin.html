@@ -89,7 +89,7 @@
                         <a href="#"><i class="fas fa-bullhorn"></i> CTA Bölümü</a>
                     </li>
                     <li data-section="contact">
-                        <a href="#"><i class="fas fa-envelope"></i> İletişim</a>
+                        <a href="#"><i class="fas fa-map-marker-alt"></i> İletişim Sayfası</a>
                     </li>
                     <li data-section="footer">
                         <a href="#"><i class="fas fa-stream"></i> Footer</a>
@@ -616,12 +616,49 @@
                             <label>YouTube Kanal Linki</label>
                             <input type="url" id="videos-youtubeChannel" data-path="videos.youtubeChannel">
                         </div>
-                        <h3>Videolar</h3>
+                        <h3><i class="fas fa-star"></i> Öne Çıkan Video</h3>
+                        <div id="featured-video-editor">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Video Başlığı</label>
+                                    <input type="text" id="featured-video-title" onchange="updateFeaturedVideo()" placeholder="Girişim Makina - Fuar Röportajı">
+                                </div>
+                                <div class="form-group">
+                                    <label>YouTube Video ID</label>
+                                    <input type="text" id="featured-video-id" onchange="updateFeaturedVideo()" placeholder="03u4_rZC1nA">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Alt Başlık</label>
+                                    <input type="text" id="featured-video-subtitle" onchange="updateFeaturedVideo()" placeholder="Kurucumuz ile özel röportaj">
+                                </div>
+                                <div class="form-group">
+                                    <label>Rozet Metni</label>
+                                    <input type="text" id="featured-video-badge" onchange="updateFeaturedVideo()" placeholder="Öne Çıkan">
+                                </div>
+                            </div>
+                            <div id="featured-video-preview" style="margin-top:10px;display:flex;align-items:center;"></div>
+                        </div>
+
+                        <hr style="margin:20px 0;border-color:#eee;">
+
+                        <h3><i class="fas fa-video"></i> Video Galerisi</h3>
                         <div class="items-editor" id="videos-items-editor">
                             <!-- Video items will be rendered here -->
                         </div>
                         <button class="btn btn-primary btn-sm" onclick="addVideoItem()">
                             <i class="fas fa-plus"></i> Yeni Video Ekle
+                        </button>
+
+                        <hr style="margin:20px 0;border-color:#eee;">
+
+                        <h3><i class="fas fa-flag"></i> Fuar Videoları</h3>
+                        <div class="items-editor" id="fuarlar-items-editor">
+                            <!-- Fuar items rendered by JS -->
+                        </div>
+                        <button class="btn btn-primary btn-sm" onclick="addFuarItem()">
+                            <i class="fas fa-plus"></i> Yeni Fuar Videosu Ekle
                         </button>
                     </div>
                 </section>
@@ -1373,6 +1410,17 @@
                         </div>
 
                         <div class="settings-group">
+                            <h3><i class="fas fa-search"></i> Arama Öne Çıkanlar</h3>
+                            <p class="settings-desc">Header arama kutusunda öne çıkan makineler. Kullanıcılar arama açtığında bu öneriler görünür.</p>
+                            <div class="items-editor" id="featured-search-editor">
+                                <!-- Rendered by JS -->
+                            </div>
+                            <button class="btn btn-primary btn-sm" onclick="addFeaturedSearchItem()" style="margin-top:8px;">
+                                <i class="fas fa-plus"></i> Yeni Öne Çıkan Ekle
+                            </button>
+                        </div>
+
+                        <div class="settings-group">
                             <h3><i class="fas fa-robot"></i> ChatGPT API Ayarları</h3>
                             <p class="settings-desc">Otomatik çeviri için OpenAI API anahtarınızı girin. Anahtar sadece tarayıcınızda saklanır.</p>
 
@@ -1434,7 +1482,7 @@
                                         <input type="checkbox" id="lang-fr-active" checked onchange="saveLanguageSettings()"> 🇫🇷 Fransızca
                                     </label>
                                     <label class="checkbox-item">
-                                        <input type="checkbox" id="lang-de-active" checked onchange="saveLanguageSettings()"> 🇩🇪 Almanca
+                                        <input type="checkbox" id="lang-pt-active" checked onchange="saveLanguageSettings()"> 🇧🇷 Portekizce
                                     </label>
                                     <label class="checkbox-item">
                                         <input type="checkbox" id="lang-es-active" checked onchange="saveLanguageSettings()"> 🇪🇸 İspanyolca
