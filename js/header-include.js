@@ -118,8 +118,8 @@
         <div class="container">
             <nav class="navbar">
                 <a href="${basePath}index.html" class="logo">
-                    <span class="logo-text">GİRİŞİM MAKİNA</span>
-                    <span class="logo-sub" data-translate="nav.logoSub">PAKETLEME MAKİNALARI</span>
+                    ${data.logo ? `<img src="${escapeHTML(data.logo)}" alt="Girişim Makina" style="height:48px;max-width:200px;object-fit:contain">` : `<span class="logo-text">GİRİŞİM MAKİNA</span>
+                    <span class="logo-sub" data-translate="nav.logoSub">PAKETLEME MAKİNALARI</span>`}
                 </a>
                 <ul class="nav-menu">
                     ${buildNavMenu(data, basePath)}
@@ -437,8 +437,8 @@
             <div class="footer-grid">
                 <div class="footer-about">
                     <a href="${basePath}index.html" class="footer-logo">
-                        <span class="logo-text">GİRİŞİM MAKİNA</span>
-                        <span class="logo-sub">PAKETLEME MAKİNALARI</span>
+                        ${data.logo ? `<img src="${escapeHTML(data.logo)}" alt="Girişim Makina" style="height:40px;max-width:180px;object-fit:contain">` : `<span class="logo-text">GİRİŞİM MAKİNA</span>
+                        <span class="logo-sub">PAKETLEME MAKİNALARI</span>`}
                     </a>
                     <p data-translate="footer.desc">${description}</p>
                     <div class="footer-social">

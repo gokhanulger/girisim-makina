@@ -460,7 +460,13 @@
                         </div>
                         <div class="form-group">
                             <label>Görsel URL</label>
-                            <input type="url" id="whyus-image" data-path="whyUs.image">
+                            <div style="display:flex;gap:8px;align-items:center">
+                                <input type="url" id="whyus-image" data-path="whyUs.image" style="flex:1">
+                                <label class="upload-btn" for="upload-whyus-img">
+                                    <i class="fas fa-upload"></i> Yükle
+                                </label>
+                                <input type="file" id="upload-whyus-img" accept="image/*" onchange="handleImageUpload(this, 'whyus-image')" hidden>
+                            </div>
                             <div class="image-preview" id="preview-whyus-img"></div>
                         </div>
                         <h3>Öğeler</h3>
@@ -944,7 +950,13 @@
                         <h3>Open Graph (Sosyal Medya)</h3>
                         <div class="form-group">
                             <label>OG Image URL</label>
-                            <input type="url" id="seo-ogImage" data-path="seo.homepage.ogImage" placeholder="https://...">
+                            <div style="display:flex;gap:8px;align-items:center">
+                                <input type="url" id="seo-ogImage" data-path="seo.homepage.ogImage" placeholder="https://..." style="flex:1">
+                                <label class="upload-btn" for="upload-seo-og">
+                                    <i class="fas fa-upload"></i> Yükle
+                                </label>
+                                <input type="file" id="upload-seo-og" accept="image/*" onchange="handleImageUpload(this, 'seo-ogImage')" hidden>
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -1239,6 +1251,22 @@
                         <h2><i class="fas fa-cog"></i> Ayarlar</h2>
 
                         <div class="settings-group">
+                            <h3><i class="fas fa-image"></i> Site Logosu</h3>
+                            <p class="settings-desc">Sitenin header bölümünde görünen logoyu değiştirin.</p>
+                            <div class="form-group">
+                                <label>Logo URL</label>
+                                <div style="display:flex;gap:8px;align-items:center">
+                                    <input type="url" id="site-logo" data-path="logo" placeholder="images/logo.png" style="flex:1">
+                                    <label class="upload-btn" for="upload-site-logo">
+                                        <i class="fas fa-upload"></i> Yükle
+                                    </label>
+                                    <input type="file" id="upload-site-logo" accept="image/*" onchange="handleImageUpload(this, 'site-logo')" hidden>
+                                </div>
+                                <div class="image-preview" id="preview-site-logo"></div>
+                            </div>
+                        </div>
+
+                        <div class="settings-group">
                             <h3><i class="fas fa-robot"></i> ChatGPT API Ayarları</h3>
                             <p class="settings-desc">Otomatik çeviri için OpenAI API anahtarınızı girin. Anahtar sadece tarayıcınızda saklanır.</p>
 
@@ -1340,9 +1368,9 @@
 
     <!-- Supabase SDK -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="js/supabase-init.js?v=20260227b"></script>
-    <script src="js/product-data.js?v=20260227b"></script>
+    <script src="js/supabase-init.js?v=20260227c"></script>
+    <script src="js/product-data.js?v=20260227c"></script>
     <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
-    <script src="js/admin.js?v=20260227b"></script>
+    <script src="js/admin.js?v=20260227c"></script>
 </body>
 </html>

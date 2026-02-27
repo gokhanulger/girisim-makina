@@ -671,9 +671,16 @@ function renderHeroSlides() {
                 <h4><i class="fas fa-image"></i> Görsel</h4>
                 <div class="form-group">
                     <label>Görsel URL</label>
-                    <input type="text" value="${escHtml(slide.image || '')}"
-                           onchange="updateHeroSlide(${currentHeroSlideIndex}, 'image', this.value)"
-                           placeholder="images/hero/slide.png">
+                    <div style="display:flex;gap:8px;align-items:center">
+                        <input type="text" id="hero-slide-img-${currentHeroSlideIndex}" value="${escHtml(slide.image || '')}"
+                               onchange="updateHeroSlide(${currentHeroSlideIndex}, 'image', this.value)"
+                               oninput="updateHeroSlide(${currentHeroSlideIndex}, 'image', this.value)"
+                               placeholder="images/hero/slide.png" style="flex:1">
+                        <label class="upload-btn" style="cursor:pointer;white-space:nowrap">
+                            <i class="fas fa-upload"></i> Yükle
+                            <input type="file" accept="image/*" onchange="handleImageUpload(this, 'hero-slide-img-${currentHeroSlideIndex}')" hidden>
+                        </label>
+                    </div>
                 </div>
                 ${slide.image ? `<div class="image-preview"><img src="${slide.image}" alt="Preview"></div>` : ''}
             </div>
@@ -865,7 +872,15 @@ function renderMachineItems() {
                 </div>
                 <div class="form-group">
                     <label>Görsel URL</label>
-                    <input type="url" value="${escHtml(item.image)}" onchange="updateMachineItem(${index}, 'image', this.value)">
+                    <div style="display:flex;gap:8px;align-items:center">
+                        <input type="url" id="machine-img-${index}" value="${escHtml(item.image)}"
+                               onchange="updateMachineItem(${index}, 'image', this.value)"
+                               oninput="updateMachineItem(${index}, 'image', this.value)" style="flex:1">
+                        <label class="upload-btn" style="cursor:pointer;white-space:nowrap">
+                            <i class="fas fa-upload"></i> Yükle
+                            <input type="file" accept="image/*" onchange="handleImageUpload(this, 'machine-img-${index}')" hidden>
+                        </label>
+                    </div>
                 </div>
             </div>
             <div class="form-group">
@@ -1117,7 +1132,16 @@ function renderTestimonialItems() {
             </div>
             <div class="form-group">
                 <label>Bayrak Görseli URL</label>
-                <input type="text" value="${escHtml(item.flag)}" onchange="updateTestimonialItem(${index}, 'flag', this.value)">
+                <div style="display:flex;gap:8px;align-items:center">
+                    <input type="text" id="testimonial-flag-${index}" value="${escHtml(item.flag)}"
+                           onchange="updateTestimonialItem(${index}, 'flag', this.value)"
+                           oninput="updateTestimonialItem(${index}, 'flag', this.value)" style="flex:1">
+                    <label class="upload-btn" style="cursor:pointer;white-space:nowrap">
+                        <i class="fas fa-upload"></i> Yükle
+                        <input type="file" accept="image/*" onchange="handleImageUpload(this, 'testimonial-flag-${index}')" hidden>
+                    </label>
+                </div>
+                ${item.flag ? `<div class="image-preview" style="max-width:60px"><img src="${item.flag}" alt="Flag"></div>` : ''}
             </div>
         </div>
     `).join('');
@@ -1181,6 +1205,20 @@ function renderCertificateItems() {
                     <label>PDF URL</label>
                     <input type="text" value="${escHtml(item.pdfUrl)}" onchange="updateCertificateItem(${index}, 'pdfUrl', this.value)" placeholder="sertifika/dosya.pdf">
                 </div>
+            </div>
+            <div class="form-group">
+                <label>Sertifika Görseli</label>
+                <div style="display:flex;gap:8px;align-items:center">
+                    <input type="url" id="cert-img-${index}" value="${escHtml(item.image || '')}"
+                           onchange="updateCertificateItem(${index}, 'image', this.value)"
+                           oninput="updateCertificateItem(${index}, 'image', this.value)"
+                           placeholder="Görsel URL (opsiyonel)" style="flex:1">
+                    <label class="upload-btn" style="cursor:pointer;white-space:nowrap">
+                        <i class="fas fa-upload"></i> Yükle
+                        <input type="file" accept="image/*" onchange="handleImageUpload(this, 'cert-img-${index}')" hidden>
+                    </label>
+                </div>
+                ${item.image ? `<div class="image-preview" style="max-width:120px"><img src="${item.image}" alt="Certificate"></div>` : ''}
             </div>
             <div class="form-group">
                 <label>Açıklama</label>
@@ -3930,8 +3968,10 @@ function editProduct(productId) {
     html += '<div class="form-group"><label>Hero Görselleri (' + heroImgs.length + ' adet)</label>';
     html += '<div id="pe-hero-images">';
     heroImgs.forEach(function(img, i) {
+        var inputId = 'pe-hero-img-' + i;
         html += '<div style="display:flex;gap:8px;align-items:center;margin-bottom:4px;">';
-        html += '<input type="text" value="' + escHtml(img) + '" style="flex:1" onchange="updateProductHeroImage(\'' + escJsStr(productId) + '\',' + i + ',this.value)">';
+        html += '<input type="text" id="' + inputId + '" value="' + escHtml(img) + '" style="flex:1" onchange="updateProductHeroImage(\'' + escJsStr(productId) + '\',' + i + ',this.value)" oninput="updateProductHeroImage(\'' + escJsStr(productId) + '\',' + i + ',this.value)">';
+        html += '<label class="upload-btn" style="cursor:pointer;white-space:nowrap"><i class="fas fa-upload"></i> <input type="file" accept="image/*" onchange="handleImageUpload(this,\'' + inputId + '\')" hidden></label>';
         html += '<button class="btn-icon delete" onclick="removeProductHeroImage(\'' + escJsStr(productId) + '\',' + i + ')"><i class="fas fa-trash"></i></button></div>';
     });
     html += '</div>';

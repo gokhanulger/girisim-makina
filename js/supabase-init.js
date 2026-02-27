@@ -28,6 +28,9 @@ var supabase = window._supabaseClient;
 
 // Default site content structure
 const defaultSiteContent = {
+    // Site Logo (boş ise text logo kullanılır)
+    logo: '',
+
     // Top Bar
     topBar: {
         phone: "+90 212 879 29 27",
