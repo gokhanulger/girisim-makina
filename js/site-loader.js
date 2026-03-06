@@ -292,6 +292,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                     applyTranslations();
                 }
             }
+
+            // Re-apply Supabase content AFTER translations
+            // so admin changes always take priority over hardcoded translations
+            applySiteContent(content);
         } else {
             console.log('Using static content');
         }

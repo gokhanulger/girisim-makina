@@ -2728,6 +2728,11 @@ function setLanguage(lang) {
         localStorage.setItem('girisim_lang', lang);
         applyTranslations();
 
+        // Re-apply Supabase content after translations so admin changes take priority
+        if (window.__siteContent && typeof applySiteContent === 'function') {
+            applySiteContent(window.__siteContent);
+        }
+
         // Handle RTL for Arabic
         if (translations[lang].dir === 'rtl') {
             document.documentElement.setAttribute('dir', 'rtl');

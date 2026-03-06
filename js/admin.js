@@ -1800,11 +1800,23 @@ async function saveAllContent() {
 }
 
 let hasUnsavedChanges = false;
+let _autoSaveTimer = null;
 
 function markAsChanged() {
     hasUnsavedChanges = true;
     saveAllBtn.classList.remove('btn-success');
     saveAllBtn.classList.add('btn-warning');
+
+    // Auto-save to Supabase after 5 seconds of inactivity
+    if (!DEMO_MODE) {
+        if (_autoSaveTimer) clearTimeout(_autoSaveTimer);
+        _autoSaveTimer = setTimeout(function() {
+            if (hasUnsavedChanges) {
+                console.log('Auto-saving to Supabase...');
+                saveAllContent();
+            }
+        }, 5000);
+    }
 }
 
 // Warn before leaving with unsaved changes
@@ -2776,7 +2788,15 @@ function saveLanguageSettings() {
     });
     localStorage.setItem('active_languages', JSON.stringify(activeLanguages));
 
-    showToast('Dil ayarları kaydedildi', 'success');
+    // Save to siteContent for Supabase persistence
+    if (siteContent) {
+        if (!siteContent.languageSettings) siteContent.languageSettings = {};
+        siteContent.languageSettings.defaultLanguage = defaultLang;
+        siteContent.languageSettings.activeLanguages = activeLanguages;
+        markAsChanged();
+    }
+
+    showToast('Dil ayarları kaydedildi! "Tümünü Kaydet" ile Supabase\'e aktarın.', 'success');
 }
 
 function exportTranslations() {
@@ -2808,6 +2828,10 @@ function handleImportFile(event) {
             const imported = JSON.parse(e.target.result);
             customTranslations = { ...customTranslations, ...imported };
             localStorage.setItem('girisim_custom_translations', JSON.stringify(customTranslations));
+            if (siteContent) {
+                siteContent.translations = customTranslations;
+                markAsChanged();
+            }
             updateTranslationStatus();
             loadTranslationContent();
             showToast('Çeviriler içe aktarıldı', 'success');
@@ -4074,7 +4098,7 @@ function setProductField(productId, field, value) {
     if (!siteContent.productPages) siteContent.productPages = {};
     if (!siteContent.productPages[productId]) siteContent.productPages[productId] = {};
     siteContent.productPages[productId][field] = value;
-    contentChanged = true;
+    markAsChanged();
 }
 
 function editProduct(productId) {
@@ -4257,7 +4281,7 @@ function resetProductOverrides(productId) {
     if (!confirm('Bu ürünün tüm admin düzenlemeleri silinecek ve varsayılan değerlere dönülecek. Emin misiniz?')) return;
     if (siteContent.productPages && siteContent.productPages[productId]) {
         delete siteContent.productPages[productId];
-        contentChanged = true;
+        markAsChanged();
         refreshProductEditor();
         showToast('Varsayılan değerlere dönüldü', 'success');
     }
@@ -4608,7 +4632,7 @@ function updateTreeNode(path, field, value) {
     if (field === 'type' && value === 'category') {
         if (!node.children) node.children = [];
     }
-    contentChanged = true;
+    markAsChanged();
     if (field === 'type') loadMachineCategories(); // Re-render for type change
 }
 
@@ -4636,7 +4660,7 @@ function addTreeNode(pathStr, type) {
         if (!parentNode.children) parentNode.children = [];
         parentNode.children.push(newNode);
     }
-    contentChanged = true;
+    markAsChanged();
     loadMachineCategories();
     showToast((type === 'category' ? 'Kategori' : 'Ürün') + ' eklendi', 'success');
 }
@@ -4648,7 +4672,7 @@ function removeTreeNode(path) {
     var label = node.title || (node.type === 'category' ? 'Kategori' : 'Ürün');
     if (!confirm('"' + label + '" silinsin mi?' + (node.children && node.children.length ? '\n(Alt öğeler de silinecek!)' : ''))) return;
     info.arr.splice(info.index, 1);
-    contentChanged = true;
+    markAsChanged();
     loadMachineCategories();
     showToast('"' + label + '" silindi', 'warning');
 }
@@ -4667,7 +4691,7 @@ function moveTreeNode(path, direction) {
         arr[idx + 1] = arr[idx];
         arr[idx] = temp2;
     }
-    contentChanged = true;
+    markAsChanged();
     loadMachineCategories();
 }
 
@@ -4698,14 +4722,14 @@ async function uploadTreeNodeImage(path, fileInput) {
                 } else {
                     node.image = e.target.result;
                 }
-                contentChanged = true;
+                markAsChanged();
                 loadMachineCategories();
                 showToast('Görsel yüklendi', 'success');
             };
             reader.readAsDataURL(file);
             return;
         }
-        contentChanged = true;
+        markAsChanged();
         loadMachineCategories();
         showToast('Görsel yüklendi!', 'success');
     } catch (err) {
@@ -4718,7 +4742,7 @@ function clearTreeNodeImage(path) {
     if (!node) return;
     node.icon = '';
     node.image = '';
-    contentChanged = true;
+    markAsChanged();
     loadMachineCategories();
     showToast('Görsel kaldırıldı', 'success');
 }
