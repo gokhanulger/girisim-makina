@@ -391,7 +391,11 @@ function applySiteContent(content) {
     }
 
     // Hero Banner Slider - Dynamic from admin heroSlides
-    if (content.heroSlides && Array.isArray(content.heroSlides) && content.heroSlides.length > 0) {
+    // Only replace static slides if admin has actually customized them
+    // (more than 1 slide, or first slide has a background image set)
+    const heroCustomized = content.heroSlides && Array.isArray(content.heroSlides) && content.heroSlides.length > 0 &&
+        (content.heroSlides.length > 1 || (content.heroSlides[0].backgroundImage && content.heroSlides[0].backgroundImage !== '') || (content.heroSlides[0].image && content.heroSlides[0].image !== ''));
+    if (heroCustomized) {
         const sliderContainer = document.querySelector('.banner-slider');
         if (sliderContainer) {
             // Build slides HTML
