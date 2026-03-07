@@ -422,23 +422,65 @@ function updateImagePreview(input) {
 }
 
 // Image Upload Handler - uses Supabase Storage when available, base64 fallback
+// Compress and resize image before upload
+function compressImage(file, maxWidth, maxHeight, quality) {
+    maxWidth = maxWidth || 1920;
+    maxHeight = maxHeight || 1080;
+    quality = quality || 0.82;
+    return new Promise(function(resolve) {
+        if (!file.type.match(/^image\/(jpeg|png|webp|bmp)/)) {
+            resolve(file);
+            return;
+        }
+        var img = new Image();
+        var url = URL.createObjectURL(file);
+        img.onload = function() {
+            URL.revokeObjectURL(url);
+            var w = img.width, h = img.height;
+            if (w > maxWidth || h > maxHeight) {
+                var ratio = Math.min(maxWidth / w, maxHeight / h);
+                w = Math.round(w * ratio);
+                h = Math.round(h * ratio);
+            }
+            var canvas = document.createElement('canvas');
+            canvas.width = w;
+            canvas.height = h;
+            canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+            canvas.toBlob(function(blob) {
+                if (!blob) { resolve(file); return; }
+                var ext = blob.type === 'image/webp' ? '.webp' : '.jpg';
+                var newFile = new File([blob], file.name.replace(/\.[^.]+$/, ext), { type: blob.type });
+                resolve(newFile.size < file.size ? newFile : file);
+            }, 'image/webp', quality);
+        };
+        img.onerror = function() { URL.revokeObjectURL(url); resolve(file); };
+        img.src = url;
+    });
+}
+
 async function handleImageUpload(fileInput, targetInputId) {
-    const file = fileInput.files[0];
+    var file = fileInput.files[0];
     if (!file) return;
 
-    // Check file size (max 5MB)
-    const maxSize = 5 * 1024 * 1024;
-    if (file.size > maxSize) {
-        showToast('Dosya boyutu çok büyük! Maksimum 5MB olmalı.', 'error');
-        fileInput.value = '';
-        return;
-    }
-
-    // Check file type
     if (!file.type.startsWith('image/')) {
         showToast('Sadece görsel dosyaları yüklenebilir!', 'error');
         fileInput.value = '';
         return;
+    }
+
+    if (file.size > 15 * 1024 * 1024) {
+        showToast('Dosya boyutu çok büyük! Maksimum 15MB olmalı.', 'error');
+        fileInput.value = '';
+        return;
+    }
+
+    var originalSize = file.size;
+    showToast('Görsel sıkıştırılıyor...', 'info');
+    file = await compressImage(file, 1920, 1080, 0.82);
+
+    var savedPct = Math.round((1 - file.size / originalSize) * 100);
+    if (savedPct > 5) {
+        showToast((originalSize/1024).toFixed(0) + 'KB → ' + (file.size/1024).toFixed(0) + 'KB (%' + savedPct + ' küçüldü)', 'success');
     }
 
     const targetInput = document.getElementById(targetInputId);
@@ -453,7 +495,7 @@ async function handleImageUpload(fileInput, targetInputId) {
             const event = new Event('input', { bubbles: true });
             targetInput.dispatchEvent(event);
             updateImagePreview(targetInput);
-            showToast('Görsel Supabase Storage\'a yüklendi!', 'success');
+            showToast('Görsel yüklendi! (' + (file.size/1024).toFixed(0) + 'KB)', 'success');
             return;
         } catch (error) {
             console.warn('Supabase Storage upload failed, falling back to base64:', error);
@@ -467,7 +509,7 @@ async function handleImageUpload(fileInput, targetInputId) {
         const event = new Event('input', { bubbles: true });
         targetInput.dispatchEvent(event);
         updateImagePreview(targetInput);
-        showToast('Görsel yüklendi (base64)', 'success');
+        showToast('Görsel yüklendi (base64, ' + (file.size/1024).toFixed(0) + 'KB)', 'success');
     };
     reader.onerror = function() {
         showToast('Görsel yüklenirken hata oluştu!', 'error');
@@ -4698,8 +4740,11 @@ function moveTreeNode(path, direction) {
 async function uploadTreeNodeImage(path, fileInput) {
     var file = fileInput.files[0];
     if (!file) return;
-    if (file.size > 5 * 1024 * 1024) { showToast('Dosya max 5MB olmalı', 'error'); return; }
+    if (file.size > 15 * 1024 * 1024) { showToast('Dosya max 15MB olmalı', 'error'); return; }
     if (!file.type.startsWith('image/')) { showToast('Sadece görsel yüklenebilir', 'error'); return; }
+
+    // Compress before upload
+    file = await compressImage(file, 1200, 800, 0.80);
 
     var node = getTreeNodeAtPath(path);
     if (!node) return;
