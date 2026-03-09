@@ -545,6 +545,56 @@ async function getCachedSiteContent() {
     return null;
 }
 
+// Known static category pages (have their own .html files - don't override their hrefs)
+var _staticCategoryPages = [
+    'machines/production-lines.html', 'machines/biscuit-chocolate.html',
+    'machines/horizontal-packaging.html', 'machines/vertical-packaging.html',
+    'machines/filling-auxiliary.html'
+];
+// Known static product pages (have their own .html files)
+var _staticProductPages = [
+    'products/wafer.html', 'products/cereal-bar.html', 'products/protein-bar.html',
+    'products/coconut-bar.html', 'products/halvah.html', 'products/biscuit-sandwiching.html',
+    'products/cookie-capping.html', 'products/chocolate-coating.html',
+    'products/chocolate-cooling.html', 'products/chocolate-preparation.html',
+    'products/flow-pack.html', 'products/overwrapping.html',
+    'products/vffs.html', 'products/thermoform.html',
+    'products/filling-machines.html', 'products/sugar-mill.html'
+];
+
+// Fix node hrefs: ensure ?id=slug parameter exists for dynamic pages
+function fixTreeNodeHrefs(nodes) {
+    if (!nodes || !nodes.length) return;
+    for (var i = 0; i < nodes.length; i++) {
+        var node = nodes[i];
+        var href = node.href || '';
+
+        // Category with children: if href is NOT a known static page, fix to category.html?id=
+        if (node.type === 'category' && node.children && node.children.length > 0) {
+            var isStaticCat = _staticCategoryPages.indexOf(href) > -1;
+            if (!isStaticCat) {
+                // Not a known static page - ensure it uses category.html?id=
+                if (href.indexOf('category.html?id=') === -1) {
+                    node.href = 'machines/category.html?id=' + (node.id || '');
+                }
+            }
+        }
+
+        // Product: if href is new-product.html without ?id=, fix it
+        if (node.type === 'product' && href) {
+            var isStaticProduct = _staticProductPages.indexOf(href) > -1;
+            if (!isStaticProduct && href.indexOf('new-product.html') > -1 && href.indexOf('?id=') === -1) {
+                node.href = 'products/new-product.html?id=' + (node.id || '');
+            }
+        }
+
+        // Recurse into children
+        if (node.children && node.children.length) {
+            fixTreeNodeHrefs(node.children);
+        }
+    }
+}
+
 // Migrate old machineCategories format (machines[] → children[])
 function migrateMachineCategories(content) {
     if (!content || !content.machineCategories || !content.machineCategories.length) return content;
@@ -575,6 +625,8 @@ function migrateMachineCategories(content) {
             };
         });
     }
+    // Fix hrefs for dynamic pages (ensure ?id=slug exists)
+    fixTreeNodeHrefs(content.machineCategories);
     return content;
 }
 
