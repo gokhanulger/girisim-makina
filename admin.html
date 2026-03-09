@@ -66,6 +66,9 @@
                     <li data-section="topbar">
                         <a href="#"><i class="fas fa-phone-alt"></i> İletişim Bilgileri</a>
                     </li>
+                    <li data-section="homepage-layout">
+                        <a href="#"><i class="fas fa-grip-vertical"></i> Sayfa Düzeni</a>
+                    </li>
                     <li data-section="hero">
                         <a href="#"><i class="fas fa-image"></i> Hero Bölümü</a>
                     </li>
@@ -335,6 +338,17 @@
                     </div>
                 </section>
 
+                <!-- Homepage Layout Section -->
+                <section id="section-homepage-layout" class="admin-section">
+                    <div class="section-card">
+                        <h2><i class="fas fa-grip-vertical"></i> Ana Sayfa Bölüm Sıralaması</h2>
+                        <p style="color:#888;margin-bottom:16px">Bölümleri sürükleyerek sıralayın. Göz ikonuyla gizleyip gösterebilirsiniz.</p>
+                        <div id="homepageLayoutEditor" class="homepage-layout-list">
+                            <!-- Rendered by JS -->
+                        </div>
+                    </div>
+                </section>
+
                 <!-- Hero Section -->
                 <section id="section-hero" class="admin-section">
                     <div class="section-card">
@@ -508,6 +522,13 @@
                             <h3 style="margin-top:0;font-size:15px;color:#1e293b"><i class="fas fa-check-circle" style="color:#e53935"></i> Öne Çıkan Özellikler</h3>
                             <div id="aboutPage-features-editor"></div>
                             <button class="btn btn-sm btn-outline" onclick="addAboutPageFeature()" style="margin-top:8px"><i class="fas fa-plus"></i> Özellik Ekle</button>
+                        </div>
+
+                        <!-- Rich Content (Quill Editor) -->
+                        <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:20px;margin-bottom:20px">
+                            <h3 style="margin-top:0;font-size:15px;color:#1e293b"><i class="fas fa-newspaper" style="color:#e53935"></i> Serbest İçerik Alanı</h3>
+                            <p style="color:#94a3b8;font-size:13px;margin-bottom:12px">Bu alan sayfada istatistiklerin altında gösterilir. Görsel, başlık, paragraf, liste ekleyebilirsiniz.</p>
+                            <div id="aboutPage-rich-editor" style="height:350px;background:#fff;border-radius:8px"></div>
                         </div>
 
                         <!-- SEO -->

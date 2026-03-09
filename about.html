@@ -14,6 +14,7 @@
     <meta name="description" content="Girişim Makina Hakkında - 1985'ten beri gıda işleme ve paketleme makineleri üretiminde lider">
     <title>Hakkımızda | Girişim Makina</title>
     <link rel="stylesheet" href="css/min/style.min.css?v=20260309b">
+    <link rel="stylesheet" href="css/min/product.min.css?v=20260309a">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="favicon.png">
@@ -295,6 +296,13 @@
         </div>
     </section>
 
+    <!-- Rich Content Area (from admin Quill editor) -->
+    <section class="product-rich-content" id="aboutRichContent" style="display:none">
+        <div class="container">
+            <div class="rich-content-body"></div>
+        </div>
+    </section>
+
     <!-- Why Us Section -->
     <section class="about-why-section">
         <div class="container">
@@ -323,10 +331,10 @@
     <script defer src="js/min/main.min.js?v=20260225f"></script>
     <script defer src="js/min/translations.min.js?v=20260309a"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script defer src="js/min/supabase-init.min.js?v=20260309c"></script>
-    <script defer src="js/min/site-loader.min.js?v=20260309b"></script>
+    <script defer src="js/min/supabase-init.min.js?v=20260310a"></script>
+    <script defer src="js/min/site-loader.min.js?v=20260310a"></script>
     <script defer src="js/min/seo-loader.min.js?v=20260224b"></script>
-    <script defer src="js/min/header-include.min.js?v=20260309b"></script>
+    <script defer src="js/min/header-include.min.js?v=20260310a"></script>
 
     <script>
     // Load about page content from Supabase
@@ -438,6 +446,15 @@
         // Extra content (deprecated, kept for backwards compat)
         var extra = document.getElementById('aboutPageExtra');
         if (extra && ap.extraContent) extra.innerHTML = ap.extraContent;
+
+        // Rich content (from Quill editor)
+        if (ap.richContent) {
+            var richArea = document.getElementById('aboutRichContent');
+            if (richArea) {
+                richArea.querySelector('.rich-content-body').innerHTML = ap.richContent;
+                richArea.style.display = '';
+            }
+        }
 
         // Why Us
         if (content.whyUs && content.whyUs.items) {

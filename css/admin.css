@@ -2454,6 +2454,120 @@ body {
    Blog Quill Editor Styles
    ============================================= */
 
+/* Homepage Layout Drag & Drop */
+.homepage-layout-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.hp-layout-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    background: #fff;
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+    cursor: grab;
+    transition: all 0.2s ease;
+    user-select: none;
+}
+
+.hp-layout-item:hover {
+    border-color: var(--primary);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+.hp-layout-item.fixed {
+    cursor: default;
+    background: var(--gray-50);
+    opacity: 0.7;
+}
+
+.hp-layout-item.hidden-section {
+    opacity: 0.4;
+}
+
+.hp-layout-item.hidden-section .hp-layout-label {
+    text-decoration: line-through;
+}
+
+.hp-layout-item.dragging {
+    opacity: 0.4;
+    border: 2px dashed var(--primary);
+}
+
+.hp-layout-item.drag-over {
+    border-color: var(--primary);
+    background: #fef2f2;
+    transform: scale(1.01);
+}
+
+.hp-layout-handle {
+    color: var(--gray-400);
+    font-size: 16px;
+    width: 20px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.hp-layout-icon {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--gray-100);
+    border-radius: 8px;
+    color: var(--primary);
+    font-size: 14px;
+    flex-shrink: 0;
+}
+
+.hp-layout-label {
+    flex: 1;
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--gray-800);
+}
+
+.hp-layout-actions {
+    flex-shrink: 0;
+}
+
+.hp-vis-btn {
+    background: none;
+    border: 1px solid var(--gray-200);
+    border-radius: 6px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--gray-500);
+    transition: all 0.2s;
+}
+
+.hp-vis-btn:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+    background: #fef2f2;
+}
+
+/* About Page Quill Editor */
+#aboutPage-rich-editor .ql-toolbar.ql-snow {
+    border-radius: 8px 8px 0 0;
+    border-color: var(--gray-300);
+    background: var(--gray-100);
+}
+
+#aboutPage-rich-editor + .ql-toolbar.ql-snow,
+#aboutPage-rich-editor .ql-toolbar.ql-snow {
+    border-radius: 8px 8px 0 0;
+}
+
 /* Product Rich Content Quill Editor */
 .pe-fullscreen .ql-toolbar.ql-snow {
     border-radius: 8px 8px 0 0;
