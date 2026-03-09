@@ -1,6 +1,5 @@
-// Product Quote Form - FormSubmit.co submission
-// Sends email to export@girisimmak.com with CC to customer
-// No registration required - just confirm email on first submission
+// Product Quote Form - Web3Forms submission
+// Sends email with CC to customer
 function submitQuoteForm(e) {
     e.preventDefault();
     var form = e.target;
@@ -17,36 +16,35 @@ function submitQuoteForm(e) {
     var company = data.get('company') || '-';
     var message = data.get('message') || '';
 
-    // FormSubmit.co payload
+    // Web3Forms payload (same key used in main page teklifForm)
     var payload = new FormData();
-    payload.append('name', name);
-    payload.append('email', email);
-    payload.append('phone', phone);
-    payload.append('company', company);
-    payload.append('product', product);
-    if (message) payload.append('message', message);
-    payload.append('_subject', 'Teklif Talebi: ' + product + ' - ' + company);
-    payload.append('_cc', email);
-    payload.append('_replyto', email);
-    payload.append('_template', 'table');
-    payload.append('_captcha', 'false');
-    payload.append('_source', window.location.href);
+    payload.append('access_key', 'a590c8e5-6cb3-452f-9bf6-f17d591d86f8');
+    payload.append('subject', 'Teklif Talebi: ' + product + ' - ' + company);
+    payload.append('from_name', 'Girişim Makina Web Sitesi');
+    payload.append('replyto', email);
+    payload.append('Ürün', product);
+    payload.append('Ad Soyad', name);
+    payload.append('E-posta', email);
+    payload.append('Telefon', phone);
+    payload.append('Firma', company);
+    if (message) payload.append('Mesaj', message);
+    payload.append('Kaynak Sayfa', window.location.href);
 
-    fetch('https://formsubmit.co/ajax/export@girisimmak.com', {
+    fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         body: payload
     })
     .then(function(response) { return response.json(); })
     .then(function(result) {
-        if (result.success === 'true' || result.success === true) {
+        if (result.success) {
             form.innerHTML = '<div class="quote-success"><i class="fas fa-check-circle"></i><h4>Talebiniz Alındı!</h4><p>En kısa sürede size dönüş yapacağız.</p></div>';
         } else {
-            alert('Bir hata oluştu. Lütfen tekrar deneyin.');
+            alert('Hata: ' + (result.message || 'Bilinmeyen hata. Lütfen tekrar deneyin.'));
             btn.innerHTML = originalHTML;
             btn.disabled = false;
         }
     })
-    .catch(function() {
+    .catch(function(err) {
         alert('Bağlantı hatası. Lütfen internet bağlantınızı kontrol edin.');
         btn.innerHTML = originalHTML;
         btn.disabled = false;
