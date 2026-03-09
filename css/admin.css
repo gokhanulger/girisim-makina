@@ -1986,6 +1986,120 @@ body {
     font-style: italic;
 }
 
+/* Icon Picker Modal */
+.icon-picker-modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 10000;
+    align-items: center;
+    justify-content: center;
+}
+.icon-picker-modal.active {
+    display: flex;
+}
+.icon-picker-content {
+    background: white;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 640px;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+.icon-picker-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--gray-200);
+    flex-wrap: wrap;
+}
+.icon-picker-header h3 {
+    margin: 0;
+    font-size: 16px;
+    white-space: nowrap;
+}
+.icon-picker-header input {
+    flex: 1;
+    min-width: 150px;
+    padding: 8px 12px;
+    border: 1px solid var(--gray-300);
+    border-radius: 8px;
+    font-size: 14px;
+}
+.icon-picker-close {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: var(--gray-500);
+    padding: 0 4px;
+    line-height: 1;
+}
+.icon-picker-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(52px, 1fr));
+    gap: 4px;
+    padding: 16px;
+    overflow-y: auto;
+    max-height: 60vh;
+}
+.icon-picker-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 20px;
+    color: var(--gray-600);
+    transition: all 0.15s;
+    border: 1px solid transparent;
+}
+.icon-picker-item:hover {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+    transform: scale(1.15);
+}
+
+/* Icon Select Button (inline in forms) */
+.icon-select-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.icon-select-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    border: 1px solid var(--gray-300);
+    border-radius: 8px;
+    background: white;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s;
+}
+.icon-select-btn:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+.icon-select-btn i {
+    font-size: 18px;
+}
+.icon-class-label {
+    font-size: 11px;
+    color: var(--gray-400);
+    background: var(--gray-100);
+    padding: 3px 8px;
+    border-radius: 4px;
+}
+
 /* Button Icon */
 .btn-icon {
     width: 36px;

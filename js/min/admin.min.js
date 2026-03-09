@@ -60,6 +60,119 @@ async function testSupabaseConnection() {
     console.log('Supabase debug:', results);
 }
 
+// ============================================
+// Icon Picker
+// ============================================
+var _iconPickerCallback = null;
+
+var ICON_LIST = [
+    // Genel
+    'fas fa-check', 'fas fa-check-circle', 'fas fa-star', 'fas fa-heart', 'fas fa-thumbs-up',
+    'fas fa-award', 'fas fa-trophy', 'fas fa-medal', 'fas fa-certificate', 'fas fa-crown',
+    'fas fa-gem', 'fas fa-bolt', 'fas fa-fire', 'fas fa-shield-alt', 'fas fa-lock',
+    // Endüstri & Üretim
+    'fas fa-industry', 'fas fa-cogs', 'fas fa-cog', 'fas fa-tools', 'fas fa-wrench',
+    'fas fa-hammer', 'fas fa-screwdriver', 'fas fa-hard-hat', 'fas fa-warehouse',
+    'fas fa-conveyor-belt', 'fas fa-robot', 'fas fa-microchip', 'fas fa-plug',
+    // Dünya & İletişim
+    'fas fa-globe', 'fas fa-globe-europe', 'fas fa-globe-americas', 'fas fa-globe-asia',
+    'fas fa-map-marker-alt', 'fas fa-phone', 'fas fa-envelope', 'fas fa-headset',
+    'fas fa-comments', 'fas fa-handshake', 'fas fa-users', 'fas fa-user-tie',
+    // Gıda
+    'fas fa-cookie', 'fas fa-stroopwafel', 'fas fa-candy-cane', 'fas fa-bread-slice',
+    'fas fa-cheese', 'fas fa-seedling', 'fas fa-ice-cream', 'fas fa-pizza-slice',
+    'fas fa-coffee', 'fas fa-mug-hot', 'fas fa-apple-alt', 'fas fa-lemon',
+    // Paketleme & Kutu
+    'fas fa-box', 'fas fa-box-open', 'fas fa-boxes', 'fas fa-gift', 'fas fa-archive',
+    'fas fa-layer-group', 'fas fa-cubes', 'fas fa-cube', 'fas fa-pallet',
+    // Taşıma & Lojistik
+    'fas fa-truck', 'fas fa-shipping-fast', 'fas fa-dolly', 'fas fa-plane',
+    'fas fa-ship', 'fas fa-route', 'fas fa-map', 'fas fa-compass',
+    // İş & Finans
+    'fas fa-chart-line', 'fas fa-chart-bar', 'fas fa-chart-pie', 'fas fa-chart-area',
+    'fas fa-percentage', 'fas fa-coins', 'fas fa-money-bill-wave', 'fas fa-briefcase',
+    'fas fa-building', 'fas fa-city', 'fas fa-store', 'fas fa-receipt',
+    // Zaman & Tarih
+    'fas fa-clock', 'fas fa-history', 'fas fa-hourglass-half', 'fas fa-calendar-alt',
+    'fas fa-stopwatch', 'fas fa-tachometer-alt',
+    // Bilim & Teknoloji
+    'fas fa-flask', 'fas fa-microscope', 'fas fa-atom', 'fas fa-dna',
+    'fas fa-laptop', 'fas fa-desktop', 'fas fa-server', 'fas fa-database',
+    // Doğa & Çevre
+    'fas fa-leaf', 'fas fa-tree', 'fas fa-recycle', 'fas fa-wind', 'fas fa-solar-panel',
+    'fas fa-water', 'fas fa-mountain', 'fas fa-sun',
+    // Ok & Yön
+    'fas fa-arrows-alt', 'fas fa-arrows-alt-v', 'fas fa-expand', 'fas fa-compress',
+    'fas fa-sync-alt', 'fas fa-redo', 'fas fa-exchange-alt', 'fas fa-random',
+    // Diğer
+    'fas fa-lightbulb', 'fas fa-rocket', 'fas fa-magic', 'fas fa-paint-brush',
+    'fas fa-palette', 'fas fa-camera', 'fas fa-video', 'fas fa-music',
+    'fas fa-file-pdf', 'fas fa-file-alt', 'fas fa-book', 'fas fa-graduation-cap',
+    'fas fa-bullhorn', 'fas fa-flag', 'fas fa-tags', 'fas fa-barcode',
+    'fas fa-qrcode', 'fas fa-fingerprint', 'fas fa-eye', 'fas fa-search',
+    'fas fa-info-circle', 'fas fa-question-circle', 'fas fa-exclamation-triangle',
+    'fas fa-ban', 'fas fa-times-circle', 'fas fa-plus-circle', 'fas fa-minus-circle',
+    // Hayvan
+    'fas fa-bone', 'fas fa-paw', 'fas fa-dove', 'fas fa-fish', 'fas fa-horse',
+    // Ev & Yaşam
+    'fas fa-home', 'fas fa-soap', 'fas fa-broom', 'fas fa-couch', 'fas fa-bed',
+    'fas fa-bath', 'fas fa-utensils', 'fas fa-glass-cheers'
+];
+
+function openIconPicker(callback) {
+    _iconPickerCallback = callback;
+    var modal = document.getElementById('iconPickerModal');
+    if (!modal) {
+        modal = document.createElement('div');
+        modal.id = 'iconPickerModal';
+        modal.className = 'icon-picker-modal';
+        modal.innerHTML = `
+            <div class="icon-picker-content">
+                <div class="icon-picker-header">
+                    <h3><i class="fas fa-icons"></i> İkon Seçin</h3>
+                    <input type="text" id="iconPickerSearch" placeholder="Ara... (ör: globe, box, industry)" oninput="filterIcons(this.value)">
+                    <button class="icon-picker-close" onclick="closeIconPicker()">&times;</button>
+                </div>
+                <div class="icon-picker-grid" id="iconPickerGrid"></div>
+            </div>
+        `;
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) closeIconPicker();
+        });
+        document.body.appendChild(modal);
+    }
+    renderIconGrid('');
+    modal.classList.add('active');
+    var searchInput = document.getElementById('iconPickerSearch');
+    if (searchInput) { searchInput.value = ''; searchInput.focus(); }
+}
+
+function renderIconGrid(filter) {
+    var grid = document.getElementById('iconPickerGrid');
+    if (!grid) return;
+    var icons = ICON_LIST;
+    if (filter) {
+        var f = filter.toLowerCase();
+        icons = icons.filter(function(ic) { return ic.toLowerCase().includes(f); });
+    }
+    grid.innerHTML = icons.map(function(ic) {
+        return '<div class="icon-picker-item" onclick="selectIcon(\'' + ic + '\')" title="' + ic + '"><i class="' + ic + '"></i></div>';
+    }).join('');
+}
+
+function filterIcons(val) { renderIconGrid(val); }
+
+function selectIcon(iconClass) {
+    if (_iconPickerCallback) _iconPickerCallback(iconClass);
+    closeIconPicker();
+}
+
+function closeIconPicker() {
+    var modal = document.getElementById('iconPickerModal');
+    if (modal) modal.classList.remove('active');
+    _iconPickerCallback = null;
+}
+
 // HTML escape utility to prevent XSS in template literals
 function escHtml(str) {
     if (str == null) return '';
@@ -987,8 +1100,13 @@ function renderAboutFeatures() {
     container.innerHTML = siteContent.about.features.map((feature, index) => `
         <div class="feature-item" data-index="${index}">
             <div class="form-group">
-                <label>İkon (Font Awesome)</label>
-                <input type="text" value="${escHtml(feature.icon)}" onchange="updateAboutFeature(${index}, 'icon', this.value)" placeholder="fas fa-icon">
+                <label>İkon</label>
+                <div class="icon-select-row">
+                    <button type="button" class="icon-select-btn" onclick="openIconPicker(function(ic){ updateAboutFeature(${index}, 'icon', ic); renderAboutFeatures(); })">
+                        <i class="${feature.icon}"></i> <span>Değiştir</span>
+                    </button>
+                    <code class="icon-class-label">${escHtml(feature.icon)}</code>
+                </div>
             </div>
             <div class="form-group">
                 <label>Metin</label>
@@ -1158,13 +1276,18 @@ function renderSectorItems() {
     container.innerHTML = siteContent.sectors.items.map((item, index) => `
         <div class="item-card" data-index="${index}">
             <div class="item-header">
-                <h4><i class="${item.icon}"></i> ${item.title}</h4>
+                <h4><i class="${item.icon}"></i> ${escHtml(item.title)}</h4>
                 <button class="delete-item" onclick="deleteSectorItem(${index})"><i class="fas fa-trash"></i></button>
             </div>
             <div class="form-row">
                 <div class="form-group">
-                    <label>İkon (Font Awesome)</label>
-                    <input type="text" value="${escHtml(item.icon)}" onchange="updateSectorItem(${index}, 'icon', this.value)" placeholder="fas fa-cookie">
+                    <label>İkon</label>
+                    <div class="icon-select-row">
+                        <button type="button" class="icon-select-btn" onclick="openIconPicker(function(ic){ updateSectorItem(${index}, 'icon', ic); renderSectorItems(); })">
+                            <i class="${item.icon}"></i> <span>Değiştir</span>
+                        </button>
+                        <code class="icon-class-label">${escHtml(item.icon)}</code>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label>Başlık</label>
@@ -1210,13 +1333,18 @@ function renderWhyUsItems() {
     container.innerHTML = siteContent.whyUs.items.map((item, index) => `
         <div class="item-card" data-index="${index}">
             <div class="item-header">
-                <h4><i class="${item.icon}"></i> ${item.title}</h4>
+                <h4><i class="${item.icon}"></i> ${escHtml(item.title)}</h4>
                 <button class="delete-item" onclick="deleteWhyUsItem(${index})"><i class="fas fa-trash"></i></button>
             </div>
             <div class="form-row">
                 <div class="form-group">
-                    <label>İkon (Font Awesome)</label>
-                    <input type="text" value="${escHtml(item.icon)}" onchange="updateWhyUsItem(${index}, 'icon', this.value)">
+                    <label>İkon</label>
+                    <div class="icon-select-row">
+                        <button type="button" class="icon-select-btn" onclick="openIconPicker(function(ic){ updateWhyUsItem(${index}, 'icon', ic); renderWhyUsItems(); })">
+                            <i class="${item.icon}"></i> <span>Değiştir</span>
+                        </button>
+                        <code class="icon-class-label">${escHtml(item.icon)}</code>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label>Başlık</label>
