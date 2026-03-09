@@ -963,4 +963,48 @@ function applySiteContent(content) {
             }
         }
     }
+
+    // Homepage Section Reordering
+    if (content.homepageLayout && content.homepageLayout.length) {
+        applyHomepageLayout(content.homepageLayout);
+    }
+}
+
+function applyHomepageLayout(layout) {
+    // Only apply on homepage
+    var isHomepage = window.location.pathname === '/' || window.location.pathname.endsWith('/index.html') || window.location.pathname.endsWith('/girisim-makina/') || window.location.pathname.endsWith('/girisim makina/');
+    if (!isHomepage) return;
+
+    var parent = null;
+    var sections = {};
+
+    // Collect all sections with data-section-id
+    document.querySelectorAll('[data-section-id]').forEach(function(el) {
+        sections[el.getAttribute('data-section-id')] = el;
+        if (!parent) parent = el.parentNode;
+    });
+
+    if (!parent || Object.keys(sections).length === 0) return;
+
+    // Find the footer placeholder as anchor point
+    var footer = document.getElementById('footer-placeholder');
+
+    // Reorder and handle visibility
+    layout.forEach(function(item) {
+        var el = sections[item.id];
+        if (!el) return;
+
+        if (item.visible === false) {
+            el.style.display = 'none';
+        } else {
+            el.style.display = '';
+        }
+
+        // Move element before footer (maintains order)
+        if (footer) {
+            parent.insertBefore(el, footer);
+        } else {
+            parent.appendChild(el);
+        }
+    });
 }

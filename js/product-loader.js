@@ -5,7 +5,13 @@
     'use strict';
 
     // Determine product ID from URL
+    // Supports: products/wafer.html (filename) or products/new-product.html?id=gofret-pisirme-firini (query param)
     function getProductId() {
+        // Check ?id= query parameter first (for generic new-product.html template)
+        var params = new URLSearchParams(window.location.search);
+        var idParam = params.get('id');
+        if (idParam) return idParam;
+
         var path = window.location.pathname;
         var filename = path.split('/').pop().replace('.html', '');
         return filename;
@@ -426,6 +432,21 @@
 
         if (productData) {
             applyProductContent(productData);
+
+            // Update page title and breadcrumb for generic template (new-product.html?id=xxx)
+            var fullTitle = (productData.title || '') + (productData.titleHighlight ? ' ' + productData.titleHighlight : '');
+            if (fullTitle) {
+                document.title = fullTitle + ' | Girişim Makina';
+                var breadcrumbProduct = document.getElementById('breadcrumbProduct');
+                if (breadcrumbProduct) breadcrumbProduct.textContent = fullTitle;
+                var quoteProductName = document.getElementById('quoteProductName');
+                if (quoteProductName) quoteProductName.value = fullTitle;
+                // Update meta description
+                var metaDesc = document.querySelector('meta[name="description"]');
+                if (metaDesc && productData.description) {
+                    metaDesc.content = productData.description;
+                }
+            }
         }
     }
 

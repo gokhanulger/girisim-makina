@@ -518,6 +518,7 @@ function populateAllForms() {
     renderContactInfo();
     renderBlogPosts();
     initAboutPageEditor();
+    initHomepageLayout();
     loadGoogleAdsSettings();
     loadTikTokPixelSettings();
 
@@ -762,6 +763,125 @@ function updateHeroStat(index, field, value) {
 // ========================================
 // HERO SLIDES MANAGEMENT
 // ========================================
+
+// =============================================
+// Homepage Layout - Drag & Drop Section Ordering
+// =============================================
+
+var homepageSectionsDefault = [
+    { id: 'hero-banner', label: 'Hero Slider', icon: 'fas fa-desktop', visible: true, fixed: true },
+    { id: 'about', label: 'Hakkımızda', icon: 'fas fa-info-circle', visible: true },
+    { id: 'production', label: 'Üretim Hatları', icon: 'fas fa-cogs', visible: true },
+    { id: 'packaging', label: 'Paketleme Makineleri', icon: 'fas fa-box', visible: true },
+    { id: 'sectors', label: 'Sektörler', icon: 'fas fa-industry', visible: true },
+    { id: 'why-us', label: 'Neden Biz', icon: 'fas fa-star', visible: true },
+    { id: 'testimonials', label: 'Referanslar', icon: 'fas fa-comments', visible: true },
+    { id: 'fuarlar', label: 'Fuarlar', icon: 'fas fa-calendar-alt', visible: true },
+    { id: 'videos', label: 'Videolar', icon: 'fas fa-video', visible: true }
+];
+
+function initHomepageLayout() {
+    if (!siteContent.homepageLayout) {
+        siteContent.homepageLayout = JSON.parse(JSON.stringify(homepageSectionsDefault));
+    }
+    // Ensure all default sections exist (in case new sections were added)
+    var existing = siteContent.homepageLayout.map(function(s) { return s.id; });
+    homepageSectionsDefault.forEach(function(def) {
+        if (existing.indexOf(def.id) === -1) {
+            siteContent.homepageLayout.push(JSON.parse(JSON.stringify(def)));
+        }
+    });
+    renderHomepageLayout();
+}
+
+function renderHomepageLayout() {
+    var container = document.getElementById('homepageLayoutEditor');
+    if (!container) return;
+    var sections = siteContent.homepageLayout || homepageSectionsDefault;
+
+    container.innerHTML = sections.map(function(s, i) {
+        var isFixed = s.fixed;
+        var isVisible = s.visible !== false;
+        return '<div class="hp-layout-item' + (isFixed ? ' fixed' : '') + (!isVisible ? ' hidden-section' : '') + '" draggable="' + (isFixed ? 'false' : 'true') + '" data-index="' + i + '">' +
+            '<div class="hp-layout-handle">' + (isFixed ? '<i class="fas fa-lock" style="color:#94a3b8"></i>' : '<i class="fas fa-grip-vertical"></i>') + '</div>' +
+            '<div class="hp-layout-icon"><i class="' + s.icon + '"></i></div>' +
+            '<div class="hp-layout-label">' + s.label + '</div>' +
+            '<div class="hp-layout-actions">' +
+            (isFixed ? '' : '<button class="hp-vis-btn" onclick="toggleHomepageSection(' + i + ')" title="' + (isVisible ? 'Gizle' : 'Göster') + '"><i class="fas ' + (isVisible ? 'fa-eye' : 'fa-eye-slash') + '"></i></button>') +
+            '</div>' +
+            '</div>';
+    }).join('');
+
+    // Add drag & drop listeners
+    var items = container.querySelectorAll('.hp-layout-item[draggable="true"]');
+    items.forEach(function(item) {
+        item.addEventListener('dragstart', handleLayoutDragStart);
+        item.addEventListener('dragover', handleLayoutDragOver);
+        item.addEventListener('dragenter', handleLayoutDragEnter);
+        item.addEventListener('dragleave', handleLayoutDragLeave);
+        item.addEventListener('drop', handleLayoutDrop);
+        item.addEventListener('dragend', handleLayoutDragEnd);
+    });
+    // Fixed items still need dragover/drop for inserting
+    container.querySelectorAll('.hp-layout-item').forEach(function(item) {
+        item.addEventListener('dragover', handleLayoutDragOver);
+        item.addEventListener('drop', handleLayoutDrop);
+        item.addEventListener('dragenter', handleLayoutDragEnter);
+        item.addEventListener('dragleave', handleLayoutDragLeave);
+    });
+}
+
+var _layoutDragIndex = null;
+
+function handleLayoutDragStart(e) {
+    _layoutDragIndex = parseInt(this.dataset.index);
+    this.classList.add('dragging');
+    e.dataTransfer.effectAllowed = 'move';
+}
+
+function handleLayoutDragOver(e) {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+}
+
+function handleLayoutDragEnter(e) {
+    e.preventDefault();
+    this.classList.add('drag-over');
+}
+
+function handleLayoutDragLeave() {
+    this.classList.remove('drag-over');
+}
+
+function handleLayoutDrop(e) {
+    e.preventDefault();
+    this.classList.remove('drag-over');
+    var targetIndex = parseInt(this.dataset.index);
+    if (_layoutDragIndex === null || _layoutDragIndex === targetIndex) return;
+    // Don't allow dropping before fixed item (index 0)
+    if (targetIndex === 0 && siteContent.homepageLayout[0].fixed) return;
+    var sections = siteContent.homepageLayout;
+    var moved = sections.splice(_layoutDragIndex, 1)[0];
+    sections.splice(targetIndex, 0, moved);
+    markAsChanged();
+    renderHomepageLayout();
+}
+
+function handleLayoutDragEnd() {
+    _layoutDragIndex = null;
+    document.querySelectorAll('.hp-layout-item').forEach(function(el) {
+        el.classList.remove('dragging', 'drag-over');
+    });
+}
+
+function toggleHomepageSection(index) {
+    var sections = siteContent.homepageLayout;
+    if (sections[index]) {
+        sections[index].visible = sections[index].visible === false ? true : false;
+        markAsChanged();
+        renderHomepageLayout();
+    }
+}
 
 let currentHeroSlideIndex = 0;
 
@@ -4217,6 +4337,34 @@ function initAboutPageEditor() {
             markAsChanged();
         });
     }
+
+    // Initialize Quill rich content editor for about page
+    var aboutEditorEl = document.getElementById('aboutPage-rich-editor');
+    if (aboutEditorEl && typeof Quill !== 'undefined') {
+        if (aboutPageQuill) aboutPageQuill = null;
+        aboutPageQuill = new Quill('#aboutPage-rich-editor', {
+            theme: 'snow',
+            modules: {
+                toolbar: [
+                    [{ 'header': [1, 2, 3, false] }],
+                    ['bold', 'italic', 'underline', 'strike'],
+                    [{ 'color': [] }, { 'background': [] }],
+                    [{ 'align': [] }],
+                    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                    ['blockquote', 'link', 'image', 'video'],
+                    ['clean']
+                ]
+            },
+            placeholder: 'Hakkımızda sayfası için serbest içerik ekleyin...'
+        });
+        aboutPageQuill.root.innerHTML = siteContent.aboutPage.richContent || '';
+        aboutPageQuill.on('text-change', function() {
+            var content = aboutPageQuill.root.innerHTML;
+            if (content === '<p><br></p>') content = '';
+            siteContent.aboutPage.richContent = content;
+            markAsChanged();
+        });
+    }
 }
 
 function renderAboutPageStats() {
@@ -5177,24 +5325,33 @@ function updateTreeNode(path, field, value) {
     if (!node) return;
     node[field] = value;
 
-    // Auto-update slug and href when title changes for new-product type products
-    if (field === 'title' && node.type === 'product' && node.href && node.href.indexOf('new-product.html') > -1) {
-        var oldSlug = node.id;
-        var newSlug = generateSlug(value);
-        if (newSlug) {
-            node.id = newSlug;
-            node.href = 'products/new-product.html?id=' + newSlug;
-            // Migrate product data if exists
-            if (siteContent.productPages && siteContent.productPages[oldSlug] && oldSlug !== newSlug) {
-                siteContent.productPages[newSlug] = siteContent.productPages[oldSlug];
-                delete siteContent.productPages[oldSlug];
-            }
-            // Auto-create product entry if not exists
-            if (!siteContent.productPages) siteContent.productPages = {};
-            if (!siteContent.productPages[newSlug]) {
-                siteContent.productPages[newSlug] = { title: value, titleHighlight: '', description: '', tag: '' };
-            } else {
-                siteContent.productPages[newSlug].title = value;
+    // Auto-update slug and href when title changes for dynamic pages (new-product or category)
+    if (field === 'title' && node.href) {
+        var isNewProduct = node.type === 'product' && node.href.indexOf('new-product.html') > -1;
+        var isNewCategory = node.type === 'category' && node.href.indexOf('category.html?id=') > -1;
+
+        if (isNewProduct || isNewCategory) {
+            var oldSlug = node.id;
+            var newSlug = generateSlug(value);
+            if (newSlug) {
+                node.id = newSlug;
+                if (isNewProduct) {
+                    node.href = 'products/new-product.html?id=' + newSlug;
+                    // Migrate product data if exists
+                    if (siteContent.productPages && siteContent.productPages[oldSlug] && oldSlug !== newSlug) {
+                        siteContent.productPages[newSlug] = siteContent.productPages[oldSlug];
+                        delete siteContent.productPages[oldSlug];
+                    }
+                    // Auto-create product entry if not exists
+                    if (!siteContent.productPages) siteContent.productPages = {};
+                    if (!siteContent.productPages[newSlug]) {
+                        siteContent.productPages[newSlug] = { title: value, titleHighlight: '', description: '', tag: '' };
+                    } else {
+                        siteContent.productPages[newSlug].title = value;
+                    }
+                } else {
+                    node.href = 'machines/category.html?id=' + newSlug;
+                }
             }
         }
     }
@@ -5228,7 +5385,7 @@ function addTreeNode(pathStr, type) {
         icon: '',
         image: '',
         type: type,
-        href: type === 'product' ? 'products/new-product.html?id=' + slug : '',
+        href: type === 'product' ? 'products/new-product.html?id=' + slug : 'machines/category.html?id=' + slug,
         children: []
     };
 

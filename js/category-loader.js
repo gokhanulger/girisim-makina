@@ -39,10 +39,6 @@
         var node = findNodeById(content.machineCategories, categoryId);
         if (!node || !node.children || !node.children.length) return;
 
-        // Check if any child has admin-uploaded image
-        var hasAdminContent = node.children.some(function(c) { return !!c.image; });
-        if (!hasAdminContent) return; // Keep static HTML if no admin images set
-
         loaded = true;
         var grid = section.querySelector('.machine-cat-grid');
         if (!grid) return;

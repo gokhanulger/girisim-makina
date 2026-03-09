@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-14P41FEGDQ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-14P41FEGDQ');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Girişim Makina - Gıda İşleme ve Paketleme Makineleri">
+    <title>Kategori | Girişim Makina</title>
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <script defer src="../js/min/lang-detect.min.js?v=20260310a"></script>
+    <link rel="stylesheet" href="../css/min/style.min.css?v=20260310a">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/machine-category.css?v=20260310a">
+</head>
+<body>
+<div class="page-loader" id="pageLoader"><style>.page-loader{position:fixed;top:0;left:0;width:100%;height:100%;background:#fff;z-index:999999;display:flex;align-items:center;justify-content:center;flex-direction:column;opacity:1;transition:opacity .4s ease}.page-loader.fade-out{opacity:0;pointer-events:none}.page-loader-text{font-size:28px;font-weight:800;color:#e63946;letter-spacing:3px;animation:lp 1.2s ease-in-out infinite}.page-loader-sub{font-size:11px;font-weight:600;color:#555;letter-spacing:4px;margin-top:6px;transition:opacity .3s ease}@keyframes lp{0%,100%{opacity:.3}50%{opacity:1}}</style><div class="page-loader-text">GİRİŞİM MAKİNA</div><div class="page-loader-sub" id="loaderSub">PAKETLEME MAKİNALARI</div></div><script>!function(){var m={tr:"PAKETLEME MAKİNALARI",en:"PACKAGING MACHINERY",ru:"УПАКОВОЧНОЕ ОБОРУДОВАНИЕ",ar:"آلات التعبئة والتغليف",fr:"MACHINES D'EMBALLAGE",pt:"MÁQUINAS DE EMBALAGEM",es:"MÁQUINAS DE ENVASADO"},l;try{l=localStorage.getItem("girisim_lang")}catch(e){}l=l||"tr";var e=document.getElementById("loaderSub");if(e&&m[l])e.textContent=m[l]}();</script><script>window._hidePageLoader=function(){var e=document.getElementById('pageLoader');if(e&&!e._h){e._h=1;e.classList.add('fade-out');setTimeout(function(){e.remove()},500)}};setTimeout(window._hidePageLoader,5000);</script>
+
+    <div id="header-placeholder" style="min-height:80px"></div>
+
+    <section class="page-hero">
+        <div class="container">
+            <h1 id="categoryTitle">Kategori</h1>
+            <p id="categoryDesc"></p>
+        </div>
+    </section>
+
+    <section class="machine-category-section">
+        <div class="container">
+            <div class="machine-cat-grid" id="categoryGrid">
+                <!-- Filled dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <div id="footer-placeholder"></div>
+
+    <script defer src="../js/min/main.min.js?v=20260310a"></script>
+    <script defer src="../js/min/translations.min.js?v=20260310a"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script defer src="../js/min/supabase-init.min.js?v=20260310a"></script>
+    <script defer src="../js/min/site-loader.min.js?v=20260310a"></script>
+    <script defer src="../js/min/seo-loader.min.js?v=20260310a"></script>
+    <script defer src="../js/min/header-include.min.js?v=20260310a"></script>
+
+    <script>
+    // Generic category page - loads content based on ?id= parameter
+    (function() {
+        var params = new URLSearchParams(window.location.search);
+        var categoryId = params.get('id');
+        if (!categoryId) return;
+
+        function findNodeById(nodes, targetId) {
+            for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].id === targetId) return nodes[i];
+                if (nodes[i].children && nodes[i].children.length) {
+                    var found = findNodeById(nodes[i].children, targetId);
+                    if (found) return found;
+                }
+            }
+            return null;
+        }
+
+        var attempts = 0;
+        var interval = setInterval(function() {
+            attempts++;
+            if (window.__siteContent || attempts > 50) {
+                clearInterval(interval);
+                loadCategory();
+                if (typeof window._hidePageLoader === 'function') window._hidePageLoader();
+            }
+        }, 100);
+
+        function loadCategory() {
+            var content = window.__siteContent;
+            if (!content || !content.machineCategories) return;
+
+            var node = findNodeById(content.machineCategories, categoryId);
+            if (!node) return;
+
+            // Update page title
+            document.title = node.title + ' | Girişim Makina';
+            var titleEl = document.getElementById('categoryTitle');
+            if (titleEl) titleEl.textContent = node.title;
+
+            // Update meta
+            var metaDesc = document.querySelector('meta[name="description"]');
+            if (metaDesc) metaDesc.content = node.title + ' - Girişim Makina';
+
+            if (!node.children || !node.children.length) return;
+
+            var bp = '../';
+            var grid = document.getElementById('categoryGrid');
+            if (!grid) return;
+
+            grid.innerHTML = node.children.map(function(child) {
+                var imgSrc = child.image || bp + 'images/pexels-factory-machinery.jpg';
+                var childHref = child.href ? bp + child.href : '#';
+                var isCategory = child.type === 'category' && child.children && child.children.length > 0;
+                var trAttr = child.titleKey ? ' data-translate="' + child.titleKey + '"' : '';
+
+                return '<a href="' + childHref + '" class="machine-cat-card' + (isCategory ? ' machine-cat-card--category' : '') + '">' +
+                    '<div class="machine-cat-img">' +
+                        (isCategory ? '<span class="machine-cat-type-badge"><i class="fas fa-folder-open"></i></span>' : '') +
+                        '<img src="' + imgSrc + '" alt="' + child.title + '" loading="lazy">' +
+                    '</div>' +
+                    '<div class="machine-cat-info">' +
+                        '<h3' + trAttr + '>' + child.title + '</h3>' +
+                        '<span class="machine-cat-btn">' +
+                            (isCategory ? 'Alt Kategoriler' : 'Detaylar') +
+                            ' <i class="fas fa-arrow-right"></i>' +
+                        '</span>' +
+                    '</div>' +
+                '</a>';
+            }).join('');
+
+            if (typeof applyTranslations === 'function') {
+                setTimeout(applyTranslations, 100);
+            }
+        }
+    })();
+    </script>
+</body>
+</html>

@@ -326,15 +326,24 @@
             </svg>`
         };
 
-        // Mega menü kategorileri - siteContent'ten veya fallback (recursive tree yapısı)
+        // Mega menü kategorileri - siteContent'ten (Supabase) veya sessionStorage cache'ten
+        // Hardcoded fallback KULLANILMAZ - rebuildMegaMenu Supabase verisi gelince güncelleyecek
         const adminCats = window.__siteContent?.machineCategories;
-        const megaCategories = (adminCats && adminCats.length) ? adminCats : [
-            { id: 'production', title: 'Üretim Hatları', titleKey: 'megaMenu.productionLines', icon: '', image: '', type: 'category', href: 'machines/production-lines.html', children: [] },
-            { id: 'biscuit', title: 'Bisküvi & Çikolata', titleKey: 'megaMenu.biscuitChocolate', icon: '', image: '', type: 'category', href: 'machines/biscuit-chocolate.html', children: [] },
-            { id: 'horizontal', title: 'Yatay Paketleme', titleKey: 'megaMenu.horizontalPack', icon: '', image: '', type: 'category', href: 'machines/horizontal-packaging.html', children: [] },
-            { id: 'vertical', title: 'Dikey Paketleme', titleKey: 'megaMenu.verticalPack', icon: '', image: '', type: 'category', href: 'machines/vertical-packaging.html', children: [] },
-            { id: 'filling', title: 'Dolum & Yardımcı', titleKey: 'megaMenu.fillingAux', icon: '', image: '', type: 'category', href: 'machines/filling-auxiliary.html', children: [] }
-        ];
+        var cachedCats = null;
+        if (!adminCats) {
+            try {
+                var cached = sessionStorage.getItem('girisim_site_cache');
+                if (cached) {
+                    var parsed = JSON.parse(cached);
+                    if (parsed && parsed.data && parsed.data.machineCategories) {
+                        cachedCats = parsed.data.machineCategories;
+                    }
+                }
+            } catch(e) {}
+        }
+        const megaCategories = (adminCats && adminCats.length) ? adminCats :
+            (cachedCats && cachedCats.length) ? cachedCats :
+            (typeof defaultSiteContent !== 'undefined' && defaultSiteContent.machineCategories) ? defaultSiteContent.machineCategories : [];
 
         // Recursive submenu builder
         function buildSubmenuHTML(children, depth) {
