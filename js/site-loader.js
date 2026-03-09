@@ -466,23 +466,9 @@ function applySiteContent(content) {
 
             sliderContainer.innerHTML = slidesHtml;
 
-            // Rebuild dots
-            const dotsContainer = document.querySelector('.banner-dots');
-            if (dotsContainer) {
-                dotsContainer.innerHTML = '';
-                content.heroSlides.forEach((_, i) => {
-                    const dot = document.createElement('div');
-                    dot.className = 'dot' + (i === 0 ? ' active' : '');
-                    dot.onclick = () => {
-                        if (typeof goToBannerSlide === 'function') goToBannerSlide(i);
-                    };
-                    dotsContainer.appendChild(dot);
-                });
-            }
-
-            // Reset slider state
-            if (typeof window.bannerCurrent !== 'undefined') {
-                window.bannerCurrent = 0;
+            // Reinit slider (rebuilds dots + auto-play) with new slides
+            if (typeof window.initBannerSlider === 'function') {
+                window.initBannerSlider();
             }
         }
     }

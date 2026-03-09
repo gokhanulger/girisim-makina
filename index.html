@@ -1272,17 +1272,33 @@
 
         // Banner Slider Functions
         let bannerCurrent = 0;
-        const bannerSlides = document.querySelectorAll('.banner-slide');
-        const bannerTotal = bannerSlides.length;
+        let bannerSlides = document.querySelectorAll('.banner-slide');
+        let bannerTotal = bannerSlides.length;
+        let bannerAutoInterval = null;
         const bannerDotsContainer = document.querySelector('.banner-dots');
 
-        // Create dots
-        if (bannerDotsContainer && bannerTotal > 1) {
-            for (let i = 0; i < bannerTotal; i++) {
-                const dot = document.createElement('div');
-                dot.className = 'dot' + (i === 0 ? ' active' : '');
-                dot.onclick = () => goToBannerSlide(i);
-                bannerDotsContainer.appendChild(dot);
+        function initBannerSlider() {
+            bannerCurrent = 0;
+            bannerSlides = document.querySelectorAll('.banner-slide');
+            bannerTotal = bannerSlides.length;
+
+            // Clear old dots and auto-play
+            if (bannerDotsContainer) bannerDotsContainer.innerHTML = '';
+            if (bannerAutoInterval) clearInterval(bannerAutoInterval);
+
+            // Create dots
+            if (bannerDotsContainer && bannerTotal > 1) {
+                for (let i = 0; i < bannerTotal; i++) {
+                    const dot = document.createElement('div');
+                    dot.className = 'dot' + (i === 0 ? ' active' : '');
+                    dot.onclick = () => goToBannerSlide(i);
+                    bannerDotsContainer.appendChild(dot);
+                }
+            }
+
+            // Auto slide every 6 seconds
+            if (bannerTotal > 1) {
+                bannerAutoInterval = setInterval(() => changeBannerSlide(1), 6000);
             }
         }
 
@@ -1299,6 +1315,7 @@
         }
 
         function updateBannerSlider() {
+            bannerSlides = document.querySelectorAll('.banner-slide');
             bannerSlides.forEach((slide, i) => {
                 slide.classList.toggle('active', i === bannerCurrent);
             });
@@ -1308,10 +1325,13 @@
             });
         }
 
-        // Auto slide every 6 seconds
-        if (bannerTotal > 1) {
-            setInterval(() => changeBannerSlide(1), 6000);
-        }
+        // Expose for site-loader.js to reinit after dynamic content load
+        window.initBannerSlider = initBannerSlider;
+        window.goToBannerSlide = goToBannerSlide;
+        window.changeBannerSlide = changeBannerSlide;
+
+        // Initial init
+        initBannerSlider();
     </script>
 
     <!-- Google Analytics + Ads (deferred) -->
