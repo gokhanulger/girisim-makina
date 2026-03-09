@@ -139,7 +139,7 @@
 
         // Default corporate menu (matches index.html)
         const corporateMenu = hc.corporateMenu || [
-            { label: 'Hakkımızda', href: bp + 'index.html#about', visible: true, translateKey: 'dropdown.about' },
+            { label: 'Hakkımızda', href: bp + 'about.html', visible: true, translateKey: 'dropdown.about' },
             { label: 'Neden Girişim Makina?', href: bp + 'index.html#why-us', visible: true, translateKey: 'dropdown.whyUs' },
             { label: 'Sertifikalarımız', href: bp + 'index.html#certificates', visible: true, translateKey: 'dropdown.certificates' },
             { label: 'İnsan Kaynakları', href: bp + 'hr.html', visible: true, translateKey: 'dropdown.hr' }
@@ -375,7 +375,7 @@
 
         return `
                     <li class="dropdown">
-                        <a href="${bp}index.html#about" data-translate="nav.about">Kurumsal</a>
+                        <a href="${bp}about.html" data-translate="nav.about">Kurumsal</a>
                         <ul class="dropdown-menu">
                             ${corporateItems}
                         </ul>
@@ -1109,7 +1109,7 @@
 
         // Sayfalar
         { title: 'Ana Sayfa', url: basePath + 'index.html', category: 'Sayfalar', keywords: 'ana sayfa home anasayfa' },
-        { title: 'Hakkımızda', url: basePath + 'index.html#about', category: 'Kurumsal', keywords: 'hakkımızda about kurumsal tarihçe' },
+        { title: 'Hakkımızda', url: basePath + 'about.html', category: 'Kurumsal', keywords: 'hakkımızda about kurumsal tarihçe' },
         { title: 'Neden Girişim Makina?', url: basePath + 'index.html#why-us', category: 'Kurumsal', keywords: 'neden biz why us avantaj' },
         { title: 'Misyonumuz & Vizyonumuz', url: basePath + 'index.html#mission', category: 'Kurumsal', keywords: 'misyon vizyon değerler' },
         { title: 'AR-GE', url: basePath + 'index.html#rnd', category: 'Kurumsal', keywords: 'ar-ge araştırma geliştirme r&d inovasyon' },
