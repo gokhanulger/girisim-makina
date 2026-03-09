@@ -932,6 +932,9 @@ function renderHeroSlides() {
 
             <div class="form-section">
                 <h4><i class="fas fa-image"></i> Görsel</h4>
+                <div class="form-hint" style="background:#fff3cd;border:1px solid #ffc107;border-radius:6px;padding:10px 14px;margin-bottom:12px;font-size:13px;color:#856404">
+                    <i class="fas fa-info-circle"></i> <strong>Önerilen boyut:</strong> 1920×800 px (en az 1600×700 px). Yatay (landscape) formatta, dosya boyutu max 500 KB. WebP veya JPG formatı önerilir.
+                </div>
                 <div class="form-group">
                     <label>Görsel URL</label>
                     <div style="display:flex;gap:8px;align-items:center">

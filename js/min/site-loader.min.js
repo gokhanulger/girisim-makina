@@ -344,6 +344,15 @@ function formatRichText(text) {
     return paragraphs.map(p => '<p>' + p.trim().replace(/\n/g, '<br>') + '</p>').join('\n');
 }
 
+// Fallback: show hero banner after 3s even if Supabase fails
+setTimeout(function() {
+    var hb = document.querySelector('.hero-banner');
+    if (hb && !hb.classList.contains('loaded')) {
+        hb.classList.add('loaded');
+        if (typeof window.initBannerSlider === 'function') window.initBannerSlider();
+    }
+}, 3000);
+
 function applySiteContent(content) {
     // Contact Info (Office Phone, WhatsApp, Email) - Header & Footer
     if (content.contactInfo) {
@@ -472,6 +481,10 @@ function applySiteContent(content) {
             }
         }
     }
+
+    // Show hero banner after content is applied (prevents flash of default content)
+    const heroBanner = document.querySelector('.hero-banner');
+    if (heroBanner) heroBanner.classList.add('loaded');
 
     // Hero Stats - apply from heroSlides[0].stats or hero.stats
     const heroStatsData = (content.heroSlides && content.heroSlides[0] && content.heroSlides[0].stats) || (content.hero && content.hero.stats);
