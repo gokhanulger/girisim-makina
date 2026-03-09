@@ -465,7 +465,7 @@ function applySiteContent(content) {
                         <div class="container">
                             <div class="banner-content">
                                 ${slide.tag ? `<span class="banner-tag">${slide.tag}</span>` : ''}
-                                <h1>${slide.title || ''}${slide.titleHighlight ? '<br>' + slide.titleHighlight : ''}</h1>
+                                <h1>${slide.title || ''}${slide.titleHighlight ? '<br><span class="highlight">' + slide.titleHighlight + '</span>' : ''}</h1>
                                 ${slide.description ? `<p>${slide.description}</p>` : ''}
                                 ${buttons ? `<div class="banner-buttons">${buttons}</div>` : ''}
                             </div>
