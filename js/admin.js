@@ -5176,6 +5176,29 @@ function updateTreeNode(path, field, value) {
     var node = getTreeNodeAtPath(path);
     if (!node) return;
     node[field] = value;
+
+    // Auto-update slug and href when title changes for new-product type products
+    if (field === 'title' && node.type === 'product' && node.href && node.href.indexOf('new-product.html') > -1) {
+        var oldSlug = node.id;
+        var newSlug = generateSlug(value);
+        if (newSlug) {
+            node.id = newSlug;
+            node.href = 'products/new-product.html?id=' + newSlug;
+            // Migrate product data if exists
+            if (siteContent.productPages && siteContent.productPages[oldSlug] && oldSlug !== newSlug) {
+                siteContent.productPages[newSlug] = siteContent.productPages[oldSlug];
+                delete siteContent.productPages[oldSlug];
+            }
+            // Auto-create product entry if not exists
+            if (!siteContent.productPages) siteContent.productPages = {};
+            if (!siteContent.productPages[newSlug]) {
+                siteContent.productPages[newSlug] = { title: value, titleHighlight: '', description: '', tag: '' };
+            } else {
+                siteContent.productPages[newSlug].title = value;
+            }
+        }
+    }
+
     // If type changed to product, ensure children is empty array
     if (field === 'type' && value === 'product') {
         node.children = [];
@@ -5185,19 +5208,27 @@ function updateTreeNode(path, field, value) {
         if (!node.children) node.children = [];
     }
     markAsChanged();
-    if (field === 'type') loadMachineCategories(); // Re-render for type change
+    if (field === 'type' || field === 'title') loadMachineCategories(); // Re-render for type/title change
+}
+
+// Generate URL-safe slug from Turkish text
+function generateSlug(text) {
+    var trMap = {'ç':'c','ğ':'g','ı':'i','ö':'o','ş':'s','ü':'u','Ç':'c','Ğ':'g','İ':'i','Ö':'o','Ş':'s','Ü':'u'};
+    return text.toLowerCase().replace(/[çğıöşüÇĞİÖŞÜ]/g, function(c) { return trMap[c] || c; })
+        .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
 }
 
 function addTreeNode(pathStr, type) {
     var path = JSON.parse(pathStr);
+    var slug = type + '-' + Date.now();
     var newNode = {
-        id: type + '-' + Date.now(),
+        id: slug,
         title: type === 'category' ? 'Yeni Kategori' : 'Yeni Ürün',
         titleKey: '',
         icon: '',
         image: '',
         type: type,
-        href: type === 'product' ? 'products/new-product.html' : '',
+        href: type === 'product' ? 'products/new-product.html?id=' + slug : '',
         children: []
     };
 
