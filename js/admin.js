@@ -779,7 +779,8 @@ var homepageSectionsDefault = [
     { id: 'fuarlar', label: 'Fuar Katılımlarımız', icon: 'fas fa-calendar-alt', visible: true },
     { id: 'videos', label: 'Video Galeri', icon: 'fas fa-video', visible: true },
     { id: 'cta', label: 'Ücretsiz Teklif Alın', icon: 'fas fa-bullhorn', visible: true },
-    { id: 'contact', label: 'İletişim Formu', icon: 'fas fa-envelope', visible: true }
+    { id: 'contact', label: 'İletişim Formu', icon: 'fas fa-envelope', visible: true },
+    { id: 'map', label: 'Harita', icon: 'fas fa-map-marker-alt', visible: true }
 ];
 
 function initHomepageLayout() {
