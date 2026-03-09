@@ -2729,7 +2729,8 @@ function setLanguage(lang) {
         applyTranslations();
 
         // Re-apply Supabase content after translations so admin changes take priority
-        if (window.__siteContent && typeof applySiteContent === 'function') {
+        // Only for Turkish (default language) - other languages use translations
+        if (lang === 'tr' && window.__siteContent && typeof applySiteContent === 'function') {
             applySiteContent(window.__siteContent);
         }
 
@@ -2786,111 +2787,137 @@ function applyTranslations() {
     const lang = translations[currentLang];
     if (!lang) return;
 
+    // Check if admin has customized content via Supabase (only for Turkish - default language)
+    // For other languages, translations always take priority
+    const sc = window.__siteContent;
+    const isTurkish = currentLang === 'tr';
+    const hasAdminHero = isTurkish && sc && sc.heroSlides && sc.heroSlides.length > 0 && sc.heroSlides[0].title;
+    const hasAdminAbout = isTurkish && sc && sc.about && sc.about.title;
+    const hasAdminMachines = isTurkish && sc && sc.machines && sc.machines.title;
+    const hasAdminPackaging = isTurkish && sc && sc.packaging && sc.packaging.title;
+    const hasAdminSectors = isTurkish && sc && sc.sectors && sc.sectors.title;
+
     // Navigation is handled entirely by data-translate attributes
     // (both index.html and header-include.js use data-translate)
 
-    // Hero Section - Support both old (.hero-content) and new banner (.banner-content) layouts
-    const heroTitle = document.querySelector('.hero-content h1') || document.querySelector('.banner-content h1');
-    if (heroTitle) {
-        heroTitle.innerHTML = `${lang.hero.title1}<br><span class="highlight">${lang.hero.title2}</span> ${lang.hero.title3}`;
+    // Hero Section - Skip if admin has customized hero in Turkish (applySiteContent handles it)
+    if (!hasAdminHero) {
+        const heroTitle = document.querySelector('.hero-content h1') || document.querySelector('.banner-content h1');
+        if (heroTitle) {
+            heroTitle.innerHTML = `${lang.hero.title1}<br><span class="highlight">${lang.hero.title2}</span> ${lang.hero.title3}`;
+        }
+
+        const heroDesc = document.querySelector('.hero-content > p') || document.querySelector('.banner-content > p');
+        if (heroDesc) heroDesc.textContent = lang.hero.description;
+
+        const heroStats = document.querySelectorAll('.hero-stats .stat');
+        if (heroStats[0]) heroStats[0].querySelector('.stat-text').textContent = lang.hero.stat1;
+        if (heroStats[1]) heroStats[1].querySelector('.stat-text').textContent = lang.hero.stat2;
+        if (heroStats[2]) heroStats[2].querySelector('.stat-text').textContent = lang.hero.stat3;
+
+        const heroButtons = document.querySelectorAll('.hero-buttons .btn') || document.querySelectorAll('.banner-buttons .btn');
+        if (heroButtons[0]) heroButtons[0].innerHTML = '<i class="fab fa-whatsapp"></i> ' + lang.hero.cta1;
+        if (heroButtons[1]) heroButtons[1].innerHTML = '<i class="fab fa-youtube"></i> ' + lang.hero.cta2;
     }
 
-    const heroDesc = document.querySelector('.hero-content > p') || document.querySelector('.banner-content > p');
-    if (heroDesc) heroDesc.textContent = lang.hero.description;
+    // About Section - Skip if admin has customized about in Turkish (applySiteContent handles it)
+    if (!hasAdminAbout) {
+        const aboutTag = document.querySelector('#about .section-tag');
+        if (aboutTag) aboutTag.textContent = lang.about.tag;
 
-    const heroStats = document.querySelectorAll('.hero-stats .stat');
-    if (heroStats[0]) heroStats[0].querySelector('.stat-text').textContent = lang.hero.stat1;
-    if (heroStats[1]) heroStats[1].querySelector('.stat-text').textContent = lang.hero.stat2;
-    if (heroStats[2]) heroStats[2].querySelector('.stat-text').textContent = lang.hero.stat3;
+        const aboutTitle = document.querySelector('#about .about-content h2');
+        if (aboutTitle) aboutTitle.innerHTML = `${lang.about.title1}<br><span class="highlight">${lang.about.title2}</span>`;
 
-    const heroButtons = document.querySelectorAll('.hero-buttons .btn') || document.querySelectorAll('.banner-buttons .btn');
-    if (heroButtons[0]) heroButtons[0].innerHTML = '<i class="fab fa-whatsapp"></i> ' + lang.hero.cta1;
-    if (heroButtons[1]) heroButtons[1].innerHTML = '<i class="fab fa-youtube"></i> ' + lang.hero.cta2;
+        const aboutParagraphs = document.querySelectorAll('#about .about-content > p');
+        if (aboutParagraphs[0]) aboutParagraphs[0].textContent = lang.about.p1;
+        if (aboutParagraphs[1]) aboutParagraphs[1].textContent = lang.about.p2;
 
-    // About Section
-    const aboutTag = document.querySelector('#about .section-tag');
-    if (aboutTag) aboutTag.textContent = lang.about.tag;
-
-    const aboutTitle = document.querySelector('#about .about-content h2');
-    if (aboutTitle) aboutTitle.innerHTML = `${lang.about.title1}<br><span class="highlight">${lang.about.title2}</span>`;
-
-    const aboutParagraphs = document.querySelectorAll('#about .about-content > p');
-    if (aboutParagraphs[0]) aboutParagraphs[0].textContent = lang.about.p1;
-    if (aboutParagraphs[1]) aboutParagraphs[1].textContent = lang.about.p2;
-
-    const aboutFeatures = document.querySelectorAll('#about .about-features .feature span');
-    if (aboutFeatures[0]) aboutFeatures[0].textContent = lang.about.feature1;
-    if (aboutFeatures[1]) aboutFeatures[1].textContent = lang.about.feature2;
-    if (aboutFeatures[2]) aboutFeatures[2].textContent = lang.about.feature3;
+        const aboutFeatures = document.querySelectorAll('#about .about-features .feature span');
+        if (aboutFeatures[0]) aboutFeatures[0].textContent = lang.about.feature1;
+        if (aboutFeatures[1]) aboutFeatures[1].textContent = lang.about.feature2;
+        if (aboutFeatures[2]) aboutFeatures[2].textContent = lang.about.feature3;
+    }
 
     const catalogBtn = document.querySelector('#about .btn-primary');
     if (catalogBtn) catalogBtn.innerHTML = '<i class="fas fa-file-pdf"></i> ' + lang.about.catalog;
 
-    // Production Section
-    const prodTag = document.querySelector('#production .section-tag');
-    if (prodTag) prodTag.textContent = lang.production.tag;
+    // Production Section - Skip if admin has customized in Turkish
+    if (!hasAdminMachines) {
+        const prodTag = document.querySelector('#production .section-tag');
+        if (prodTag) prodTag.textContent = lang.production.tag;
 
-    const prodTitle = document.querySelector('#production .section-header h2');
-    if (prodTitle) prodTitle.innerHTML = `${lang.production.title1} <span class="highlight">${lang.production.title2}</span>`;
+        const prodTitle = document.querySelector('#production .section-header h2');
+        if (prodTitle) prodTitle.innerHTML = `${lang.production.title1} <span class="highlight">${lang.production.title2}</span>`;
 
-    const prodSubtitle = document.querySelector('#production .section-header p');
-    if (prodSubtitle) prodSubtitle.textContent = lang.production.subtitle;
+        const prodSubtitle = document.querySelector('#production .section-header p');
+        if (prodSubtitle) prodSubtitle.textContent = lang.production.subtitle;
 
-    // Machine cards
-    const machineCards = document.querySelectorAll('#production .machine-card');
-    const machineTypes = ['wafer', 'cereal', 'chocolate', 'biscuit'];
-    machineCards.forEach((card, index) => {
-        const type = machineTypes[index];
-        if (lang.production.machines[type]) {
-            const titleEl = card.querySelector('.machine-info h3');
-            const descEl = card.querySelector('.machine-info > p');
-            const features = card.querySelectorAll('.machine-features li');
+        // Machine cards
+        const machineCards = document.querySelectorAll('#production .machine-card');
+        const machineTypes = ['wafer', 'cereal', 'chocolate', 'biscuit'];
+        machineCards.forEach((card, index) => {
+            const type = machineTypes[index];
+            if (lang.production.machines[type]) {
+                const titleEl = card.querySelector('.machine-info h3');
+                const descEl = card.querySelector('.machine-info > p');
+                const features = card.querySelectorAll('.machine-features li');
 
-            if (titleEl) titleEl.textContent = lang.production.machines[type].title;
-            if (descEl) descEl.textContent = lang.production.machines[type].desc;
-            if (features[0]) features[0].innerHTML = '<i class="fas fa-check"></i> ' + lang.production.machines[type].f1;
-            if (features[1]) features[1].innerHTML = '<i class="fas fa-check"></i> ' + lang.production.machines[type].f2;
-            if (features[2]) features[2].innerHTML = '<i class="fas fa-check"></i> ' + lang.production.machines[type].f3;
-        }
+                if (titleEl) titleEl.textContent = lang.production.machines[type].title;
+                if (descEl) descEl.textContent = lang.production.machines[type].desc;
+                if (features[0]) features[0].innerHTML = '<i class="fas fa-check"></i> ' + lang.production.machines[type].f1;
+                if (features[1]) features[1].innerHTML = '<i class="fas fa-check"></i> ' + lang.production.machines[type].f2;
+                if (features[2]) features[2].innerHTML = '<i class="fas fa-check"></i> ' + lang.production.machines[type].f3;
+            }
 
-        const quoteBtn = card.querySelector('.machine-overlay .btn');
-        if (quoteBtn) quoteBtn.textContent = lang.production.getQuote;
-    });
+            const quoteBtn = card.querySelector('.machine-overlay .btn');
+            if (quoteBtn) quoteBtn.textContent = lang.production.getQuote;
+        });
 
-    const watchVideosBtn = document.querySelector('#production .text-center .btn');
-    if (watchVideosBtn) watchVideosBtn.innerHTML = '<i class="fab fa-youtube"></i> ' + lang.production.watchVideos;
+        const watchVideosBtn = document.querySelector('#production .text-center .btn');
+        if (watchVideosBtn) watchVideosBtn.innerHTML = '<i class="fab fa-youtube"></i> ' + lang.production.watchVideos;
+    } else {
+        // Even with admin content, translate UI buttons
+        const quoteButtons = document.querySelectorAll('#production .machine-overlay .btn');
+        quoteButtons.forEach(btn => { btn.textContent = lang.production.getQuote; });
+        const watchVideosBtn = document.querySelector('#production .text-center .btn');
+        if (watchVideosBtn) watchVideosBtn.innerHTML = '<i class="fab fa-youtube"></i> ' + lang.production.watchVideos;
+    }
 
-    // Packaging Section
-    const packTag = document.querySelector('#packaging .section-tag');
-    if (packTag) packTag.textContent = lang.packaging.tag;
+    // Packaging Section - Skip if admin has customized in Turkish
+    if (!hasAdminPackaging) {
+        const packTag = document.querySelector('#packaging .section-tag');
+        if (packTag) packTag.textContent = lang.packaging.tag;
 
-    const packTitle = document.querySelector('#packaging .section-header h2');
-    if (packTitle) packTitle.innerHTML = `${lang.packaging.title1} <span class="highlight">${lang.packaging.title2}</span>`;
+        const packTitle = document.querySelector('#packaging .section-header h2');
+        if (packTitle) packTitle.innerHTML = `${lang.packaging.title1} <span class="highlight">${lang.packaging.title2}</span>`;
 
-    const packSubtitle = document.querySelector('#packaging .section-header p');
-    if (packSubtitle) packSubtitle.textContent = lang.packaging.subtitle;
+        const packSubtitle = document.querySelector('#packaging .section-header p');
+        if (packSubtitle) packSubtitle.textContent = lang.packaging.subtitle;
 
-    const packageCards = document.querySelectorAll('#packaging .package-card');
-    const packTypes = ['flowpack', 'overwrap', 'thermoform', 'vffs'];
-    packageCards.forEach((card, index) => {
-        const type = packTypes[index];
-        if (lang.packaging.types[type]) {
-            const titleEl = card.querySelector('h3');
-            const descEl = card.querySelector('p');
-            if (titleEl) titleEl.textContent = lang.packaging.types[type].title;
-            if (descEl) descEl.textContent = lang.packaging.types[type].desc;
-        }
-    });
+        const packageCards = document.querySelectorAll('#packaging .package-card');
+        const packTypes = ['flowpack', 'overwrap', 'thermoform', 'vffs'];
+        packageCards.forEach((card, index) => {
+            const type = packTypes[index];
+            if (lang.packaging.types[type]) {
+                const titleEl = card.querySelector('h3');
+                const descEl = card.querySelector('p');
+                if (titleEl) titleEl.textContent = lang.packaging.types[type].title;
+                if (descEl) descEl.textContent = lang.packaging.types[type].desc;
+            }
+        });
+    }
 
-    // Sectors Section
-    const secTag = document.querySelector('#sectors .section-tag');
-    if (secTag) secTag.textContent = lang.sectors.tag;
+    // Sectors Section - Skip if admin has customized in Turkish
+    if (!hasAdminSectors) {
+        const secTag = document.querySelector('#sectors .section-tag');
+        if (secTag) secTag.textContent = lang.sectors.tag;
 
-    const secTitle = document.querySelector('#sectors .section-header h2');
-    if (secTitle) secTitle.innerHTML = `${lang.sectors.title1} <span class="highlight">${lang.sectors.title2}</span>`;
+        const secTitle = document.querySelector('#sectors .section-header h2');
+        if (secTitle) secTitle.innerHTML = `${lang.sectors.title1} <span class="highlight">${lang.sectors.title2}</span>`;
 
-    const secSubtitle = document.querySelector('#sectors .section-header p');
-    if (secSubtitle) secSubtitle.textContent = lang.sectors.subtitle;
+        const secSubtitle = document.querySelector('#sectors .section-header p');
+        if (secSubtitle) secSubtitle.textContent = lang.sectors.subtitle;
+    }
 
     const sectorCards = document.querySelectorAll('#sectors .sector-card h4');
     sectorCards.forEach((h4, index) => {

@@ -293,9 +293,12 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }
             }
 
-            // Re-apply Supabase content AFTER translations
-            // so admin changes always take priority over hardcoded translations
-            applySiteContent(content);
+            // Re-apply Supabase content AFTER translations for Turkish (default language)
+            // Other languages use translations system
+            const siteLang = localStorage.getItem('girisim_lang') || 'tr';
+            if (siteLang === 'tr') {
+                applySiteContent(content);
+            }
         } else {
             console.log('Using static content');
         }
@@ -391,10 +394,14 @@ function applySiteContent(content) {
     }
 
     // Hero Banner Slider - Dynamic from admin heroSlides
-    // Only replace static slides if admin has actually customized them
-    // (more than 1 slide, or first slide has a background image set)
+    // Apply if admin has any customized content (title, description, image, or multiple slides)
     const heroCustomized = content.heroSlides && Array.isArray(content.heroSlides) && content.heroSlides.length > 0 &&
-        (content.heroSlides.length > 1 || (content.heroSlides[0].backgroundImage && content.heroSlides[0].backgroundImage !== '') || (content.heroSlides[0].image && content.heroSlides[0].image !== ''));
+        (content.heroSlides.length > 1 ||
+         (content.heroSlides[0].backgroundImage && content.heroSlides[0].backgroundImage !== '') ||
+         (content.heroSlides[0].image && content.heroSlides[0].image !== '') ||
+         (content.heroSlides[0].title && content.heroSlides[0].title !== '') ||
+         (content.heroSlides[0].description && content.heroSlides[0].description !== '') ||
+         (content.heroSlides[0].tag && content.heroSlides[0].tag !== ''));
     if (heroCustomized) {
         const sliderContainer = document.querySelector('.banner-slider');
         if (sliderContainer) {
@@ -456,6 +463,20 @@ function applySiteContent(content) {
                 window.bannerCurrent = 0;
             }
         }
+    }
+
+    // Hero Stats - apply from heroSlides[0].stats or hero.stats
+    const heroStatsData = (content.heroSlides && content.heroSlides[0] && content.heroSlides[0].stats) || (content.hero && content.hero.stats);
+    if (heroStatsData && Array.isArray(heroStatsData)) {
+        const statEls = document.querySelectorAll('.hero-stats .stat, .banner-stats .stat');
+        heroStatsData.forEach((stat, i) => {
+            if (statEls[i]) {
+                const numEl = statEls[i].querySelector('.stat-number');
+                const textEl = statEls[i].querySelector('.stat-text');
+                if (numEl && stat.number) numEl.textContent = stat.number;
+                if (textEl && stat.text) textEl.textContent = stat.text;
+            }
+        });
     }
 
     // About Section
