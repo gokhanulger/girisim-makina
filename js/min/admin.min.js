@@ -4928,14 +4928,21 @@ function renderCategoryTree(nodes, parentPath) {
                     '<label style="font-size:10px;color:#888;display:block;margin-bottom:2px">Link (href)</label>' +
                     buildHrefSelect(node.href || '', pathStr, isCategory) +
                 '</div>' +
+                // Icon/Image area
+                '<div style="min-width:180px">' +
+                    '<label style="font-size:10px;color:#888;display:block;margin-bottom:2px">İkon (URL veya yükle)</label>' +
+                    '<div style="display:flex;gap:4px;align-items:center">' +
+                        '<input type="text" value="' + ((node.icon || node.image || '')).replace(/"/g, '&quot;') + '" onchange="updateTreeNodeIcon(' + pathStr + ',this.value)" style="flex:1;padding:4px 6px;border:1px solid #ddd;border-radius:4px;font-size:11px" placeholder="URL veya yükle">' +
+                        '<label style="font-size:10px;color:#666;cursor:pointer;padding:4px 8px;background:#f5f5f5;border:1px solid #ddd;border-radius:4px;display:inline-flex;align-items:center;gap:3px;white-space:nowrap" title="Görsel yükle">' +
+                            '<i class="fas fa-upload" style="font-size:10px"></i>' +
+                            '<input type="file" accept="image/*" style="display:none" onchange="uploadTreeNodeImage(' + pathStr + ',this)">' +
+                        '</label>' +
+                        (node.image || node.icon ? '<button onclick="clearTreeNodeImage(' + pathStr + ')" style="font-size:10px;padding:4px 6px;background:#ffebee;border:1px solid #ffcdd2;border-radius:4px;cursor:pointer;color:#e53935" title="Görseli kaldır"><i class="fas fa-times"></i></button>' : '') +
+                    '</div>' +
+                '</div>' +
                 // Actions
                 '<div style="display:flex;gap:4px;align-items:center;flex-wrap:wrap">' +
                     moveUpBtn + moveDownBtn +
-                    '<label style="font-size:10px;color:#666;cursor:pointer;padding:3px 8px;background:#f5f5f5;border:1px solid #ddd;border-radius:4px;display:inline-flex;align-items:center;gap:3px" title="Görsel yükle">' +
-                        '<i class="fas fa-image" style="font-size:10px"></i>' +
-                        '<input type="file" accept="image/*" style="display:none" onchange="uploadTreeNodeImage(' + pathStr + ',this)">' +
-                    '</label>' +
-                    (node.image || node.icon ? '<button onclick="clearTreeNodeImage(' + pathStr + ')" style="font-size:10px;padding:3px 8px;background:#f5f5f5;border:1px solid #ddd;border-radius:4px;cursor:pointer;color:#e53935" title="Görseli kaldır"><i class="fas fa-times"></i></button>' : '') +
                     (isCategory ? '<button onclick="addTreeNode(\'' + pathStr.replace(/'/g, "\\'") + '\',\'category\')" style="font-size:10px;padding:3px 8px;background:#e3f2fd;border:1px solid #bbdefb;border-radius:4px;cursor:pointer;color:#1565c0" title="Alt kategori ekle"><i class="fas fa-folder-plus"></i></button>' : '') +
                     (isCategory ? '<button onclick="addTreeNode(\'' + pathStr.replace(/'/g, "\\'") + '\',\'product\')" style="font-size:10px;padding:3px 8px;background:#e8f5e9;border:1px solid #c8e6c9;border-radius:4px;cursor:pointer;color:#2e7d32" title="Ürün ekle"><i class="fas fa-plus-circle"></i></button>' : '') +
                     '<button onclick="removeTreeNode(' + pathStr + ')" style="font-size:10px;padding:3px 8px;background:#ffebee;border:1px solid #ffcdd2;border-radius:4px;cursor:pointer;color:#c62828" title="Sil"><i class="fas fa-trash"></i></button>' +
@@ -4954,6 +4961,15 @@ function toggleTreeChildren(pathKey) {
         el.style.display = isHidden ? '' : 'none';
         if (icon) icon.style.transform = isHidden ? '' : 'rotate(-90deg)';
     }
+}
+
+function updateTreeNodeIcon(path, value) {
+    var node = getTreeNodeAtPath(path);
+    if (!node) return;
+    node.icon = value;
+    node.image = '';
+    markAsChanged();
+    loadMachineCategories();
 }
 
 function updateTreeNode(path, field, value) {
