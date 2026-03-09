@@ -33,8 +33,10 @@
     .hero-banner{position:relative;width:100%;height:85vh;min-height:550px;max-height:850px;overflow:hidden;opacity:0;transition:opacity .5s ease}
     .hero-banner.loaded{opacity:1}
     .banner-slider{position:relative;width:100%;height:100%}
-    .banner-slide{position:absolute;top:0;left:0;width:100%;height:100%;background-size:cover;background-position:center;opacity:0;transition:opacity 1.2s ease;z-index:1}
-    .banner-slide.active{opacity:1;z-index:2;animation:kenBurns 8s ease forwards}
+    .banner-slide{position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;transition:opacity 1.2s ease;z-index:1;overflow:hidden}
+    .banner-slide::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background-size:cover;background-position:center;background-image:inherit;z-index:0}
+    .banner-slide.active{opacity:1;z-index:2}
+    .banner-slide.active::before{animation:kenBurns 8s ease forwards}
     @keyframes kenBurns{0%{transform:scale(1)}100%{transform:scale(1.06)}}
     .banner-overlay{position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg,rgba(26,26,46,.85) 0%,rgba(26,26,46,.4) 50%,transparent 100%),linear-gradient(to top,rgba(0,0,0,.4) 0%,transparent 40%);z-index:1}
     .banner-slide .container{position:relative;z-index:3;height:100%;display:flex;align-items:center;padding-top:80px}
