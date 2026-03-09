@@ -78,24 +78,28 @@ const defaultSiteContent = {
                 title: "Gofret Üretim Hatları",
                 description: "Komple gofret üretim hatları, hamur hazırlama, pişirme ve kesim sistemleri",
                 image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600",
+                link: "products/wafer.html",
                 features: ["Otomatik hamur besleme", "Yüksek kapasiteli fırınlar", "Hassas kesim sistemleri"]
             },
             {
                 title: "Tahıl & Enerji Bar Hatları",
                 description: "Granola, müsli ve enerji barı üretim hatları",
                 image: "https://images.unsplash.com/photo-1606312619070-d48b4c652a52?w=600",
+                link: "products/cereal-bar.html",
                 features: ["Karıştırma sistemleri", "Şekillendirme üniteleri", "Soğutma tünelleri"]
             },
             {
                 title: "Çikolata Kaplama Sistemleri",
                 description: "Enrobing makineleri ve çikolata soğutma tünelleri",
                 image: "https://images.unsplash.com/photo-1481391319762-47dff72954d9?w=600",
+                link: "machines/biscuit-chocolate.html",
                 features: ["Tam kaplama sistemi", "Sıcaklık kontrolü", "Dekorasyon üniteleri"]
             },
             {
                 title: "Flow Pack Makineleri",
                 description: "Yatay paketleme, vakum ve gaz enjeksiyon sistemleri",
                 image: "https://images.unsplash.com/photo-1567789884554-0b844b597180?w=600",
+                link: "products/flow-pack.html",
                 features: ["Yüksek hız", "Vakum/MAP seçeneği", "Servo motorlu"]
             }
         ]

@@ -1155,6 +1155,10 @@ function renderMachineItems() {
                 </div>
             </div>
             <div class="form-group">
+                <label>Link (Tıklanınca gidilecek sayfa)</label>
+                <input type="text" value="${escHtml(item.link || '')}" onchange="updateMachineItem(${index}, 'link', this.value)" placeholder="örn: products/wafer.html">
+            </div>
+            <div class="form-group">
                 <label>Açıklama</label>
                 <textarea onchange="updateMachineItem(${index}, 'description', this.value)" rows="2">${escHtml(item.description)}</textarea>
             </div>
@@ -1201,6 +1205,7 @@ function addMachineItem() {
         title: 'Yeni Makine',
         description: 'Makine açıklaması',
         image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600',
+        link: '',
         features: ['Özellik 1', 'Özellik 2', 'Özellik 3']
     });
     renderMachineItems();
@@ -4537,6 +4542,7 @@ function editProduct(productId) {
     var tabs = [
         { id: 'hero', icon: 'fa-image', label: 'Hero' },
         { id: 'overview', icon: 'fa-align-left', label: 'Açıklama' },
+        { id: 'content', icon: 'fa-newspaper', label: 'İçerik' },
         { id: 'features', icon: 'fa-th-large', label: 'Özellikler' },
         { id: 'specs', icon: 'fa-table', label: 'Teknik Bilgi' },
         { id: 'media', icon: 'fa-photo-video', label: 'Medya & Video' },
@@ -4587,6 +4593,13 @@ function editProduct(productId) {
     });
     h += '<button class="pe-add-btn" onclick="addProductOverviewDesc(\'' + pid + '\')"><i class="fas fa-plus"></i> Paragraf Ekle</button></div>';
     h += '</div></div>'; // end overview
+
+    // --- TAB: CONTENT (Rich HTML Editor) ---
+    h += '<div class="pe-panel" id="pe-tab-content">';
+    h += '<div class="pe-card"><div class="pe-card-title"><i class="fas fa-newspaper"></i> Sayfa İçeriği <span style="font-weight:400;color:var(--gray-400);font-size:12px;margin-left:6px">Görsel + yazı serbest düzen</span></div>';
+    h += '<p style="font-size:13px;color:var(--gray-400);margin-bottom:16px">Bu alan ürün sayfasında açıklama bölümünün altında gösterilir. Görsel, başlık, paragraf, liste vb. ekleyebilirsiniz.</p>';
+    h += '<div id="pe-rich-content-editor" style="height:400px;background:#fff;border-radius:8px"></div>';
+    h += '</div></div>'; // end content
 
     // --- TAB: FEATURES ---
     h += '<div class="pe-panel" id="pe-tab-features">';
@@ -4711,6 +4724,34 @@ function editProduct(productId) {
     el.innerHTML = h;
     document.body.appendChild(el);
     document.body.style.overflow = 'hidden';
+
+    // Initialize Quill rich content editor for product
+    setTimeout(function() {
+        var editorEl = document.getElementById('pe-rich-content-editor');
+        if (editorEl && typeof Quill !== 'undefined') {
+            window._productQuill = new Quill('#pe-rich-content-editor', {
+                theme: 'snow',
+                modules: {
+                    toolbar: [
+                        [{ 'header': [1, 2, 3, false] }],
+                        ['bold', 'italic', 'underline', 'strike'],
+                        [{ 'color': [] }, { 'background': [] }],
+                        [{ 'align': [] }],
+                        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                        ['blockquote', 'link', 'image', 'video'],
+                        ['clean']
+                    ]
+                },
+                placeholder: 'Ürün içeriğini buraya yazın... Görsel eklemek için toolbar\'daki resim butonunu kullanın.'
+            });
+            window._productQuill.root.innerHTML = data.richContent || '';
+            window._productQuill.on('text-change', function() {
+                var content = window._productQuill.root.innerHTML;
+                if (content === '<p><br></p>') content = '';
+                setProductField(pid, 'richContent', content);
+            });
+        }
+    }, 100);
 }
 
 function switchPeTab(tabId, tabEl) {
@@ -4722,6 +4763,9 @@ function switchPeTab(tabId, tabEl) {
 }
 
 function closeProductEditor() {
+    if (window._productQuill) {
+        window._productQuill = null;
+    }
     var m = document.getElementById('productEditModal');
     if (m) m.remove();
     document.body.style.overflow = '';

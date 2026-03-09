@@ -14,7 +14,7 @@
     <meta name="description" content="Girişim Makina - Bisküvi Kremalama ve Sandviç Bisküvi Makineleri. Yüksek hızlı krem sürme ve bisküvi birleştirme sistemleri.">
     <title>Bisküvi Kremalama Makineleri | Girişim Makina</title>
     <link rel="icon" type="image/png" href="../favicon.png">
-    <script defer src="../js/min/lang-detect.min.js?v=20260225f"></script>
+    <script defer src="../js/min/lang-detect.min.js?v=20260309a"></script>
     <!-- Preconnect for faster resource loading -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -29,10 +29,10 @@
     #header-placeholder{min-height:80px;background:var(--white)}
     </style>
     <!-- Non-render-blocking CSS -->
-    <link rel="stylesheet" href="../css/min/style.min.css?v=20260225f" media="print" onload="this.media='all'">
-    <noscript><link rel="stylesheet" href="../css/min/style.min.css?v=20260225f"></noscript>
-    <link rel="stylesheet" href="../css/min/product.min.css?v=20260225f" media="print" onload="this.media='all'">
-    <noscript><link rel="stylesheet" href="../css/min/product.min.css?v=20260225f"></noscript>
+    <link rel="stylesheet" href="../css/min/style.min.css?v=20260309a" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="../css/min/style.min.css?v=20260309a"></noscript>
+    <link rel="stylesheet" href="../css/min/product.min.css?v=20260309a" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="../css/min/product.min.css?v=20260309a"></noscript>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
@@ -136,6 +136,13 @@
         </div>
     </section>
 
+    <!-- Rich Content Area -->
+    <section class="product-rich-content" id="productRichContent" style="display:none">
+        <div class="container">
+            <div class="rich-content-body"></div>
+        </div>
+    </section>
+
     <!-- Technical Specs -->
     <section class="tech-specs">
         <div class="container">
@@ -186,55 +193,18 @@
     <div id="footer-placeholder"></div>
 
     <!-- Scripts -->
-    <script defer src="../js/min/main.min.js?v=20260225f"></script>
+    <script defer src="../js/min/main.min.js?v=20260309a"></script>
     <script defer src="../js/min/header-include.min.js?v=20260309b"></script>
     <script defer src="../js/min/translations.min.js?v=20260307b"></script>
     <script defer src="../js/min/product-translations.min.js?v=20260307b"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script defer src="../js/min/supabase-init.min.js?v=20260309c"></script>
     <script defer src="../js/min/site-loader.min.js?v=20260307b"></script>
-    <script defer src="../js/min/seo-loader.min.js?v=20260225f"></script>
-    <script defer src="../js/min/product-gallery.min.js?v=20260225f"></script>
-    <script defer src="../js/min/product-data.min.js?v=20260225f"></script>
+    <script defer src="../js/min/seo-loader.min.js?v=20260309a"></script>
+    <script defer src="../js/min/product-gallery.min.js?v=20260309a"></script>
+    <script defer src="../js/min/product-data.min.js?v=20260309a"></script>
     <script defer src="../js/min/product-loader.min.js?v=20260225h"></script>
 
-    <script>
-    function submitQuoteForm(e) {
-        e.preventDefault();
-        var form = e.target;
-        var data = new FormData(form);
-        var product = data.get('product');
-        var name = data.get('name');
-        var email = data.get('email');
-        var phone = data.get('phone') || '-';
-        var company = data.get('company') || '-';
-        var message = data.get('message') || '';
-
-        var whatsappMsg = encodeURIComponent(
-            'Merhaba, ' + product + ' için teklif almak istiyorum.\n\nAd: ' + name + '\nE-posta: ' + email + '\nTelefon: ' + phone + '\nFirma: ' + company + (message ? '\nMesaj: ' + message : '')
-        );
-
-        if (typeof window.supabase !== 'undefined') {
-            window.supabase.from('quote_requests').insert({
-                product: product,
-                name: name,
-                email: email,
-                phone: phone,
-                company: company,
-                message: message,
-                source: window.location.href,
-                created_at: new Date().toISOString()
-            }).then(function(res) {
-                if (res.error) {
-                    window.open('https://wa.me/905468792927?text=' + whatsappMsg, '_blank');
-                } else {
-                    form.innerHTML = '<div class="quote-success"><i class="fas fa-check-circle"></i><h4>Talebiniz Alındı!</h4><p>En kısa sürede size dönüş yapacağız.</p></div>';
-                }
-            });
-        } else {
-            window.open('https://wa.me/905468792927?text=' + whatsappMsg, '_blank');
-        }
-    }
-    </script>
+    <script src="../js/quote-form.js"></script>
 </body>
 </html>

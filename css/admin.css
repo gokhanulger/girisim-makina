@@ -2454,6 +2454,42 @@ body {
    Blog Quill Editor Styles
    ============================================= */
 
+/* Product Rich Content Quill Editor */
+.pe-fullscreen .ql-toolbar.ql-snow {
+    border-radius: 8px 8px 0 0;
+    border-color: var(--gray-300);
+    background: var(--gray-100);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.pe-fullscreen .ql-container.ql-snow {
+    border-radius: 0 0 8px 8px;
+    border-color: var(--gray-300);
+    font-size: 15px;
+    font-family: inherit;
+}
+
+.pe-fullscreen .ql-editor {
+    min-height: 350px;
+    line-height: 1.8;
+}
+
+.pe-fullscreen .ql-editor p {
+    margin-bottom: 10px;
+}
+
+.pe-fullscreen .ql-editor img {
+    max-width: 100%;
+    border-radius: 8px;
+    margin: 10px 0;
+}
+
+.pe-fullscreen .ql-tooltip {
+    z-index: 10002 !important;
+}
+
 .blog-editor-modal .ql-toolbar.ql-snow {
     border-radius: 8px 8px 0 0;
     border-color: var(--gray-300);

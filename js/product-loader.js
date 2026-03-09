@@ -123,6 +123,15 @@
             applyWhatsAppLinks(data.whatsappText);
         }
 
+        // === RICH CONTENT ===
+        if (data.richContent) {
+            var richArea = document.getElementById('productRichContent');
+            if (richArea) {
+                richArea.querySelector('.rich-content-body').innerHTML = data.richContent;
+                richArea.style.display = '';
+            }
+        }
+
         // === SEO CONTENT ===
         if (data.seoContent) {
             var seoArea = document.getElementById('seoContentArea');
