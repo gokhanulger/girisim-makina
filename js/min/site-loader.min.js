@@ -584,8 +584,11 @@ function applySiteContent(content) {
         if (content.machines.items) {
             const machinesGrid = document.querySelector('#production .machines-grid');
             if (machinesGrid) {
-                machinesGrid.innerHTML = content.machines.items.map(item => `
-                    <div class="machine-card">
+                machinesGrid.innerHTML = content.machines.items.map(item => {
+                    const hasLink = item.link && item.link.trim();
+                    const clickAttr = hasLink ? ` onclick="location.href='${item.link}'" style="cursor:pointer"` : '';
+                    return `
+                    <div class="machine-card"${clickAttr}>
                         <div class="machine-image">
                             <img loading="lazy" src="${item.image}" alt="${item.title}">
                             <div class="machine-overlay"></div>
@@ -597,8 +600,8 @@ function applySiteContent(content) {
                                 ${(item.features || []).map(f => `<li><i class="fas fa-check"></i> ${f}</li>`).join('')}
                             </ul>
                         </div>
-                    </div>
-                `).join('');
+                    </div>`;
+                }).join('');
             }
         }
     }

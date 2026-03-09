@@ -357,8 +357,9 @@
         const megaItemsHTML = megaCategories.map(function(cat) {
             var catHref = cat.href ? bp + cat.href : '#';
             var hasChildren = cat.children && cat.children.length > 0;
-            var iconHTML = cat.icon
-                ? '<img src="' + escapeHTML(cat.icon) + '" alt="' + escapeHTML(cat.title) + '" style="width:84px;height:68px;object-fit:contain">'
+            var iconSrc = cat.icon || cat.image || '';
+            var iconHTML = iconSrc
+                ? '<img src="' + escapeHTML(iconSrc) + '" alt="' + escapeHTML(cat.title) + '" style="width:84px;height:68px;object-fit:contain">'
                 : (megaSvgIcons[cat.id] || '');
             var translateAttr = cat.titleKey ? 'data-translate="' + escapeHTML(cat.titleKey) + '"' : '';
             var submenuHTML = hasChildren
@@ -966,9 +967,10 @@
         var html = cats.map(function(cat) {
             var catHref = cat.href ? bp + cat.href : '#';
             var hasCh = cat.children && cat.children.length > 0;
-            var iconHTML = cat.icon
-                ? '<img src="' + escapeHTML(cat.icon) + '" alt="' + escapeHTML(cat.title) + '" style="width:84px;height:68px;object-fit:contain">'
-                : '';
+            var iconSrc = cat.icon || cat.image || '';
+            var iconHTML = iconSrc
+                ? '<img src="' + escapeHTML(iconSrc) + '" alt="' + escapeHTML(cat.title) + '" style="width:84px;height:68px;object-fit:contain">'
+                : (megaSvgIcons[cat.id] || '');
             var trAttr = cat.titleKey ? 'data-translate="' + escapeHTML(cat.titleKey) + '"' : '';
             var subHTML = hasCh
                 ? '<ul class="mega-submenu mega-submenu-depth-1">' + _buildSub(cat.children, 1) + '</ul>'
