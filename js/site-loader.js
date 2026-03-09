@@ -531,19 +531,15 @@ function applySiteContent(content) {
                 aboutContent.appendChild(textWrap);
             }
 
-            // Add read more if text is long (more than 300 chars)
+            // Add read more link to about page
             const plainLen = textWrap.textContent.length;
             if (plainLen > 300) {
                 textWrap.classList.add('about-text-collapsed');
-                const readMoreBtn = document.createElement('button');
-                readMoreBtn.className = 'read-more-btn';
-                readMoreBtn.innerHTML = '<span data-translate="about.readMore">Daha Fazlasını Oku</span> <i class="fas fa-chevron-down"></i>';
-                readMoreBtn.onclick = function() {
-                    const isCollapsed = textWrap.classList.toggle('about-text-collapsed');
-                    this.querySelector('span').textContent = isCollapsed ? 'Daha Fazlasını Oku' : 'Daha Az Göster';
-                    this.querySelector('i').className = isCollapsed ? 'fas fa-chevron-down' : 'fas fa-chevron-up';
-                };
-                textWrap.after(readMoreBtn);
+                const readMoreLink = document.createElement('a');
+                readMoreLink.href = 'about.html';
+                readMoreLink.className = 'read-more-btn';
+                readMoreLink.innerHTML = '<span data-translate="about.readMore">Devamını Oku</span> <i class="fas fa-arrow-right"></i>';
+                textWrap.after(readMoreLink);
             }
         }
 
