@@ -217,7 +217,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         var animateElements = document.querySelectorAll(
             '.machine-card, .package-card, .sector-card, .testimonial-card, ' +
-            '.video-card, .contact-card, .why-item, .about-grid, .about-image'
+            '.video-card, .contact-card, .why-item, .about-content, .about-image'
         );
 
         animateElements.forEach(function(el) {

@@ -6,6 +6,7 @@ if (typeof supabase === 'undefined' && window._supabaseClient) {
 let siteContent = null;
 let currentUser = null;
 let DEMO_MODE = false;
+let loadedFromSupabase = false; // Guard: only allow save when data came from Supabase
 
 // Debug: Supabase connection test (click on dashboard card)
 async function testSupabaseConnection() {
@@ -432,16 +433,18 @@ async function loadContent() {
 
     if (loadedContent) {
         siteContent = loadedContent;
+        loadedFromSupabase = true;
         document.getElementById('supabaseStatus').textContent = 'Supabase Bağlı';
         document.getElementById('supabaseStatus').style.color = '#4caf50';
         populateAllForms();
         updateLastUpdateTime();
     } else {
-        document.getElementById('supabaseStatus').textContent = 'Bağlantı hatası';
+        document.getElementById('supabaseStatus').textContent = 'Bağlantı hatası - SALT OKUNUR';
         document.getElementById('supabaseStatus').style.color = '#f44336';
+        loadedFromSupabase = false;
         siteContent = { ...defaultSiteContent };
         populateAllForms();
-        showToast('Supabase bağlantısı kurulamadı. İnternet bağlantınızı kontrol edin veya sayfayı yenileyin.', 'error');
+        showToast('Supabase bağlantısı kurulamadı! Kaydetme devre dışı. Sayfayı yenileyin.', 'error');
     }
 }
 
@@ -1125,6 +1128,23 @@ function updateAboutFeature(index, field, value) {
     markAsChanged();
 }
 
+// Build dropdown options from machineCategories tree
+function getMachineCategoryOptions(selectedLink) {
+    const cats = siteContent.machineCategories || [];
+    let options = '';
+    cats.forEach(cat => {
+        const sel1 = cat.href === selectedLink ? ' selected' : '';
+        options += `<option value="${escHtml(cat.href || '')}"${sel1}>${escHtml(cat.title)}</option>`;
+        if (cat.children && cat.children.length) {
+            cat.children.forEach(child => {
+                const sel2 = child.href === selectedLink ? ' selected' : '';
+                options += `<option value="${escHtml(child.href || '')}"${sel2}>&nbsp;&nbsp;↳ ${escHtml(child.title)}</option>`;
+            });
+        }
+    });
+    return options;
+}
+
 // Machine Items
 function renderMachineItems() {
     const container = document.getElementById('machines-items-editor');
@@ -1156,7 +1176,10 @@ function renderMachineItems() {
             </div>
             <div class="form-group">
                 <label>Link (Tıklanınca gidilecek sayfa)</label>
-                <input type="text" value="${escHtml(item.link || '')}" onchange="updateMachineItem(${index}, 'link', this.value)" placeholder="örn: products/wafer.html">
+                <select onchange="updateMachineItem(${index}, 'link', this.value)">
+                    <option value="">-- Link Seçin --</option>
+                    ${getMachineCategoryOptions(item.link || '')}
+                </select>
             </div>
             <div class="form-group">
                 <label>Açıklama</label>
@@ -2025,6 +2048,14 @@ async function saveAllContent() {
     saveAllBtn.disabled = true;
     saveAllBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Kaydediliyor...';
 
+    // GUARD: Block save if content was not loaded from Supabase (prevents overwriting with defaults)
+    if (!loadedFromSupabase && !DEMO_MODE) {
+        showToast('Supabase bağlantısı yok! Kaydetme engellendi - verileriniz korunuyor.', 'error');
+        saveAllBtn.disabled = false;
+        saveAllBtn.innerHTML = '<i class="fas fa-save"></i> Tümünü Kaydet';
+        return;
+    }
+
     // Demo mode - save to localStorage
     if (DEMO_MODE) {
         localStorage.setItem('girisim_site_content', JSON.stringify(siteContent));
@@ -2073,6 +2104,8 @@ let hasUnsavedChanges = false;
 let _autoSaveTimer = null;
 
 function markAsChanged() {
+    // GUARD: Never allow changes/auto-save when data wasn't loaded from Supabase
+    if (!loadedFromSupabase && !DEMO_MODE) return;
     hasUnsavedChanges = true;
     saveAllBtn.classList.remove('btn-success');
     saveAllBtn.classList.add('btn-warning');
@@ -4534,8 +4567,11 @@ function editProduct(productId) {
     h += '<div class="pe-title"><i class="fas fa-edit" style="color:var(--primary)"></i> ' + escHtml(data.title || productId) + ' <small>' + escHtml(productId) + '</small></div>';
     h += '</div>';
     h += '<div class="pe-header-actions">';
+    // Determine product page URL - flowpack models are in products/flowpack/
+    var flowpackIds = ['flm-1000','flm-1000-bms','flm-1000-cw','flm-2000','flm-3000','flm-4000','flm-5000','flm-5000-bms','flm-hs-500','bpm-1000'];
+    var productPageUrl = flowpackIds.indexOf(productId) > -1 ? 'products/flowpack/' + productId + '.html' : 'products/' + productId + '.html';
     h += '<button class="btn btn-outline" onclick="resetProductOverrides(\'' + pid + '\')"><i class="fas fa-undo"></i> Varsayılana Dön</button>';
-    h += '<a href="products/' + escHtml(productId) + '.html" target="_blank" class="btn btn-outline"><i class="fas fa-external-link-alt"></i> Sayfayı Gör</a>';
+    h += '<a href="' + escHtml(productPageUrl) + '" target="_blank" class="btn btn-outline"><i class="fas fa-external-link-alt"></i> Sayfayı Gör</a>';
     h += '</div></div>';
 
     // === TABS ===

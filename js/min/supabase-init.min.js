@@ -538,9 +538,11 @@ async function getCachedSiteContent() {
         }
     } catch (e) { /* ignore */ }
 
-    // 5. Return defaults
-    window.__siteContent = defaultSiteContent;
-    return defaultSiteContent;
+    // 5. Return null - never fall back to hardcoded defaults on public site
+    // Supabase'deki son kaydedilen veri korunur, hardcoded veri asla kullanılmaz
+    console.warn('All content sources failed. Site content unavailable.');
+    window.__siteContent = null;
+    return null;
 }
 
 // Migrate old machineCategories format (machines[] → children[])
