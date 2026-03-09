@@ -505,15 +505,15 @@ function applySiteContent(content) {
         const aboutTag = document.querySelector('#about .section-tag');
         if (aboutTag) aboutTag.textContent = content.about.tag;
 
-        const aboutTitle = document.querySelector('#about .about-content h2');
+        const aboutTitle = document.querySelector('#about .about-content-heading') || document.querySelector('#about .about-content h2');
         if (aboutTitle) {
             aboutTitle.innerHTML = `${content.about.title}<br><span class="highlight">${content.about.titleHighlight}</span>`;
         }
 
         // Combine paragraphs and render with formatting + read more
-        const aboutContent = document.querySelector('#about .about-content');
-        if (aboutContent) {
-            const oldParagraphs = aboutContent.querySelectorAll(':scope > p, :scope > .about-text-wrap, :scope > .read-more-btn');
+        const aboutGrid = document.querySelector('#about .about-grid');
+        if (aboutGrid) {
+            const oldParagraphs = aboutGrid.querySelectorAll(':scope > .about-content-text, :scope > .about-text-wrap, :scope > .read-more-btn');
             oldParagraphs.forEach(p => p.remove());
 
             const fullText = formatRichText(content.about.paragraph1 || '') +
@@ -524,11 +524,11 @@ function applySiteContent(content) {
             textWrap.innerHTML = fullText;
 
             // Insert before about-features
-            const aboutFeatures = aboutContent.querySelector('.about-features');
+            const aboutFeatures = aboutGrid.querySelector('.about-features');
             if (aboutFeatures) {
-                aboutContent.insertBefore(textWrap, aboutFeatures);
+                aboutGrid.insertBefore(textWrap, aboutFeatures);
             } else {
-                aboutContent.appendChild(textWrap);
+                aboutGrid.appendChild(textWrap);
             }
 
             // Add read more if text is long (more than 300 chars)

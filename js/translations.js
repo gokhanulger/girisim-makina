@@ -2825,10 +2825,10 @@ function applyTranslations() {
         const aboutTag = document.querySelector('#about .section-tag');
         if (aboutTag) aboutTag.textContent = lang.about.tag;
 
-        const aboutTitle = document.querySelector('#about .about-content h2');
+        const aboutTitle = document.querySelector('#about .about-content-heading') || document.querySelector('#about .about-content h2');
         if (aboutTitle) aboutTitle.innerHTML = `${lang.about.title1}<br><span class="highlight">${lang.about.title2}</span>`;
 
-        const aboutParagraphs = document.querySelectorAll('#about .about-content > p');
+        const aboutParagraphs = document.querySelectorAll('#about .about-grid > .about-content-text');
         if (aboutParagraphs[0]) aboutParagraphs[0].textContent = lang.about.p1;
         if (aboutParagraphs[1]) aboutParagraphs[1].textContent = lang.about.p2;
 
