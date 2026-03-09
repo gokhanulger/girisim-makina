@@ -517,8 +517,8 @@ function populateAllForms() {
     renderContactEmails();
     renderContactInfo();
     renderBlogPosts();
-    initAboutPageEditor();
-    initHomepageLayout();
+    try { initAboutPageEditor(); } catch(e) { console.warn('initAboutPageEditor error:', e); }
+    try { initHomepageLayout(); } catch(e) { console.warn('initHomepageLayout error:', e); }
     loadGoogleAdsSettings();
     loadTikTokPixelSettings();
 
@@ -781,7 +781,7 @@ var homepageSectionsDefault = [
 ];
 
 function initHomepageLayout() {
-    if (!siteContent.homepageLayout) {
+    if (!siteContent.homepageLayout || !Array.isArray(siteContent.homepageLayout) || siteContent.homepageLayout.length === 0) {
         siteContent.homepageLayout = JSON.parse(JSON.stringify(homepageSectionsDefault));
     }
     // Ensure all default sections exist (in case new sections were added)
@@ -796,8 +796,9 @@ function initHomepageLayout() {
 
 function renderHomepageLayout() {
     var container = document.getElementById('homepageLayoutEditor');
-    if (!container) return;
-    var sections = siteContent.homepageLayout || homepageSectionsDefault;
+    if (!container) { console.warn('homepageLayoutEditor not found'); return; }
+    var sections = siteContent.homepageLayout;
+    if (!sections || !sections.length) { sections = homepageSectionsDefault; siteContent.homepageLayout = JSON.parse(JSON.stringify(homepageSectionsDefault)); }
 
     container.innerHTML = sections.map(function(s, i) {
         var isFixed = s.fixed;
@@ -2088,6 +2089,7 @@ function navigateToSection(section) {
         dashboard: 'Dashboard',
         header: 'Header Yönetimi',
         topbar: 'Üst Bar',
+        'homepage-layout': 'Ana Sayfa Düzeni',
         hero: 'Hero Bölümü',
         about: 'Hakkımızda',
         machines: 'Gıda İşleme Makinelerimiz',
@@ -2119,6 +2121,9 @@ function navigateToSection(section) {
     pageTitle.textContent = titles[section] || section;
 
     // Initialize section-specific content
+    if (section === 'homepage-layout') {
+        initHomepageLayout();
+    }
     if (section === 'machineCategories') {
         loadMachineCategories();
     }
