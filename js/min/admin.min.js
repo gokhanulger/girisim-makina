@@ -4440,176 +4440,236 @@ function setProductField(productId, field, value) {
 function editProduct(productId) {
     _currentProductId = productId;
     var data = getProductData(productId);
+    var pid = escJsStr(productId);
     var isFlowpack = !!(data.keyFeatures || data.featuresList || (data.specs && data.specs.length && data.specs[0] && data.specs[0].label));
 
-    var modal = document.createElement('div');
-    modal.className = 'modal-overlay';
-    modal.id = 'productEditModal';
+    var el = document.createElement('div');
+    el.className = 'pe-fullscreen';
+    el.id = 'productEditModal';
 
-    var html = '<div class="modal-content product-editor-modal" style="max-width:900px;max-height:90vh;overflow-y:auto;">';
-    html += '<div class="modal-header"><h3><i class="fas fa-edit"></i> ' + escHtml(productId) + ' — Ürün Sayfası Düzenleme</h3>';
-    html += '<button class="modal-close" onclick="closeProductEditor()"><i class="fas fa-times"></i></button></div>';
-    html += '<div class="modal-body">';
+    // Helper: build image row
+    function imgRow(img, i) {
+        var iid = 'pe-hero-img-' + i;
+        return '<div class="pe-img-row">' +
+            (img ? '<img class="pe-img-thumb" src="' + escHtml(img) + '" onerror="this.style.display=\'none\'">' : '') +
+            '<input type="text" id="' + iid + '" value="' + escHtml(img) + '" placeholder="Görsel URL" style="flex:1" onchange="updateProductHeroImage(\'' + pid + '\',' + i + ',this.value)">' +
+            '<label class="pe-upload-btn"><i class="fas fa-upload"></i> Yükle<input type="file" accept="image/*" onchange="handleImageUpload(this,\'' + iid + '\')" hidden></label>' +
+            '<button class="pe-del-btn" onclick="removeProductHeroImage(\'' + pid + '\',' + i + ')"><i class="fas fa-trash"></i></button></div>';
+    }
 
-    // === HERO ===
-    html += '<h4 style="margin-top:0;border-bottom:2px solid var(--primary-color);padding-bottom:8px;"><i class="fas fa-image"></i> Hero Bölümü</h4>';
-    html += '<div class="form-row"><div class="form-group" style="flex:1"><label>Etiket (Tag)</label>';
-    html += '<input type="text" value="' + escHtml(data.tag || '') + '" onchange="setProductField(\'' + escJsStr(productId) + '\',\'tag\',this.value)"></div>';
-    html += '<div class="form-group" style="flex:1"><label>Başlık</label>';
-    html += '<input type="text" value="' + escHtml(data.title || '') + '" onchange="setProductField(\'' + escJsStr(productId) + '\',\'title\',this.value)"></div>';
-    html += '<div class="form-group" style="flex:1"><label>Başlık Vurgu</label>';
-    html += '<input type="text" value="' + escHtml(data.titleHighlight || '') + '" onchange="setProductField(\'' + escJsStr(productId) + '\',\'titleHighlight\',this.value)"></div></div>';
-    html += '<div class="form-group"><label>Açıklama</label>';
-    html += '<textarea rows="2" onchange="setProductField(\'' + escJsStr(productId) + '\',\'description\',this.value)">' + escHtml(data.description || '') + '</textarea></div>';
+    // Helper: icon field with picker
+    function iconField(val, onchangeJs) {
+        return '<div style="display:flex;gap:6px;align-items:center">' +
+            '<input type="text" value="' + escHtml(val || '') + '" placeholder="fas fa-cog" style="flex:1" onchange="' + onchangeJs + '">' +
+            '<button type="button" class="pe-upload-btn" onclick="openIconPicker(function(ic){this.previousElementSibling.previousElementSibling.value=ic;' + onchangeJs.replace('this.value', 'ic') + '}.bind(this))"><i class="fas fa-icons"></i></button></div>';
+    }
+
+    var h = '';
+
+    // === HEADER ===
+    h += '<div class="pe-header">';
+    h += '<div class="pe-header-left">';
+    h += '<button class="pe-back-btn" onclick="closeProductEditor()"><i class="fas fa-arrow-left"></i></button>';
+    h += '<div class="pe-title"><i class="fas fa-edit" style="color:var(--primary)"></i> ' + escHtml(data.title || productId) + ' <small>' + escHtml(productId) + '</small></div>';
+    h += '</div>';
+    h += '<div class="pe-header-actions">';
+    h += '<button class="btn btn-outline" onclick="resetProductOverrides(\'' + pid + '\')"><i class="fas fa-undo"></i> Varsayılana Dön</button>';
+    h += '<a href="products/' + escHtml(productId) + '.html" target="_blank" class="btn btn-outline"><i class="fas fa-external-link-alt"></i> Sayfayı Gör</a>';
+    h += '</div></div>';
+
+    // === TABS ===
+    var tabs = [
+        { id: 'hero', icon: 'fa-image', label: 'Hero' },
+        { id: 'overview', icon: 'fa-align-left', label: 'Açıklama' },
+        { id: 'features', icon: 'fa-th-large', label: 'Özellikler' },
+        { id: 'specs', icon: 'fa-table', label: 'Teknik Bilgi' },
+        { id: 'media', icon: 'fa-photo-video', label: 'Medya & Video' },
+        { id: 'settings', icon: 'fa-cog', label: 'Ayarlar' }
+    ];
+    h += '<div class="pe-tabs">';
+    tabs.forEach(function(t, i) {
+        h += '<div class="pe-tab' + (i === 0 ? ' active' : '') + '" onclick="switchPeTab(\'' + t.id + '\',this)"><i class="fas ' + t.icon + '"></i> ' + t.label + '</div>';
+    });
+    h += '</div>';
+
+    // === BODY ===
+    h += '<div class="pe-body">';
+
+    // --- TAB: HERO ---
+    h += '<div class="pe-panel active" id="pe-tab-hero">';
+    h += '<div class="pe-card"><div class="pe-card-title"><i class="fas fa-heading"></i> Başlık & Açıklama</div>';
+    h += '<div class="pe-form-row">';
+    h += '<div class="pe-field"><label>Etiket (Tag)</label><input type="text" value="' + escHtml(data.tag || '') + '" onchange="setProductField(\'' + pid + '\',\'tag\',this.value)"></div>';
+    h += '<div class="pe-field"><label>Başlık</label><input type="text" value="' + escHtml(data.title || '') + '" onchange="setProductField(\'' + pid + '\',\'title\',this.value)"></div>';
+    h += '<div class="pe-field"><label>Başlık Vurgu</label><input type="text" value="' + escHtml(data.titleHighlight || '') + '" onchange="setProductField(\'' + pid + '\',\'titleHighlight\',this.value)"></div>';
+    h += '</div>';
+    h += '<div class="pe-field"><label>Açıklama</label><textarea rows="3" onchange="setProductField(\'' + pid + '\',\'description\',this.value)">' + escHtml(data.description || '') + '</textarea></div>';
+    h += '</div>';
 
     // Hero Images
     var heroImgs = data.heroImages || [];
-    html += '<div class="form-group"><label>Hero Görselleri (' + heroImgs.length + ' adet)</label>';
-    html += '<div id="pe-hero-images">';
-    heroImgs.forEach(function(img, i) {
-        var inputId = 'pe-hero-img-' + i;
-        html += '<div style="display:flex;gap:8px;align-items:center;margin-bottom:4px;">';
-        html += '<input type="text" id="' + inputId + '" value="' + escHtml(img) + '" style="flex:1" onchange="updateProductHeroImage(\'' + escJsStr(productId) + '\',' + i + ',this.value)" oninput="updateProductHeroImage(\'' + escJsStr(productId) + '\',' + i + ',this.value)">';
-        html += '<label class="upload-btn" style="cursor:pointer;white-space:nowrap"><i class="fas fa-upload"></i> <input type="file" accept="image/*" onchange="handleImageUpload(this,\'' + inputId + '\')" hidden></label>';
-        html += '<button class="btn-icon delete" onclick="removeProductHeroImage(\'' + escJsStr(productId) + '\',' + i + ')"><i class="fas fa-trash"></i></button></div>';
-    });
-    html += '</div>';
-    html += '<button class="btn btn-sm btn-outline" onclick="addProductHeroImage(\'' + escJsStr(productId) + '\')"><i class="fas fa-plus"></i> Görsel Ekle</button></div>';
+    h += '<div class="pe-card"><div class="pe-card-title"><i class="fas fa-images"></i> Hero Görselleri <span style="font-weight:400;color:var(--gray-400);font-size:12px;margin-left:6px">' + heroImgs.length + ' görsel</span></div>';
+    h += '<div id="pe-hero-images">';
+    heroImgs.forEach(function(img, i) { h += imgRow(img, i); });
+    h += '</div>';
+    h += '<button class="pe-add-btn" onclick="addProductHeroImage(\'' + pid + '\')"><i class="fas fa-plus"></i> Görsel Ekle</button>';
+    h += '</div>';
+    h += '</div>'; // end hero
 
-    // === OVERVIEW ===
-    html += '<h4 style="border-bottom:2px solid var(--primary-color);padding-bottom:8px;"><i class="fas fa-align-left"></i> Açıklama Bölümü</h4>';
-    html += '<div class="form-row"><div class="form-group" style="flex:1"><label>Genel Bakış Başlık</label>';
-    html += '<input type="text" value="' + escHtml(data.overviewTitle || '') + '" onchange="setProductField(\'' + escJsStr(productId) + '\',\'overviewTitle\',this.value)"></div>';
-    html += '<div class="form-group" style="flex:1"><label>Başlık Vurgu</label>';
-    html += '<input type="text" value="' + escHtml(data.overviewTitleHighlight || '') + '" onchange="setProductField(\'' + escJsStr(productId) + '\',\'overviewTitleHighlight\',this.value)"></div></div>';
-
+    // --- TAB: OVERVIEW ---
+    h += '<div class="pe-panel" id="pe-tab-overview">';
+    h += '<div class="pe-card"><div class="pe-card-title"><i class="fas fa-align-left"></i> Genel Bakış</div>';
+    h += '<div class="pe-form-row">';
+    h += '<div class="pe-field"><label>Başlık</label><input type="text" value="' + escHtml(data.overviewTitle || '') + '" onchange="setProductField(\'' + pid + '\',\'overviewTitle\',this.value)"></div>';
+    h += '<div class="pe-field"><label>Başlık Vurgu</label><input type="text" value="' + escHtml(data.overviewTitleHighlight || '') + '" onchange="setProductField(\'' + pid + '\',\'overviewTitleHighlight\',this.value)"></div>';
+    h += '</div>';
     var descParagraphs = data.overviewDesc || [];
-    html += '<div class="form-group"><label>Açıklama Paragrafları</label>';
+    h += '<div class="pe-field"><label>Açıklama Paragrafları</label>';
     descParagraphs.forEach(function(p, i) {
-        html += '<textarea rows="2" style="margin-bottom:4px;" onchange="updateProductOverviewDesc(\'' + escJsStr(productId) + '\',' + i + ',this.value)">' + escHtml(p) + '</textarea>';
+        h += '<div class="pe-list-item"><textarea rows="2" style="flex:1;padding:8px 10px;border:1px solid var(--gray-200);border-radius:6px;font-size:13px;font-family:inherit;resize:vertical" onchange="updateProductOverviewDesc(\'' + pid + '\',' + i + ',this.value)">' + escHtml(p) + '</textarea>';
+        h += '<button class="pe-del-btn" onclick="removeProductOverviewDesc(\'' + pid + '\',' + i + ')"><i class="fas fa-trash"></i></button></div>';
     });
-    html += '<button class="btn btn-sm btn-outline" onclick="addProductOverviewDesc(\'' + escJsStr(productId) + '\')"><i class="fas fa-plus"></i> Paragraf Ekle</button></div>';
+    h += '<button class="pe-add-btn" onclick="addProductOverviewDesc(\'' + pid + '\')"><i class="fas fa-plus"></i> Paragraf Ekle</button></div>';
+    h += '</div></div>'; // end overview
 
-    // === KEY FEATURES (flowpack) ===
+    // --- TAB: FEATURES ---
+    h += '<div class="pe-panel" id="pe-tab-features">';
+
     if (isFlowpack) {
+        // Key Features Strip
         var keyFeats = data.keyFeatures || [];
-        html += '<h4 style="border-bottom:2px solid var(--primary-color);padding-bottom:8px;"><i class="fas fa-star"></i> Öne Çıkan Özellikler (Strip)</h4>';
-        html += '<div id="pe-key-features">';
+        h += '<div class="pe-card"><div class="pe-card-title"><i class="fas fa-star"></i> Öne Çıkan Özellikler (Strip)</div>';
+        h += '<div id="pe-key-features">';
         keyFeats.forEach(function(kf, i) {
-            html += '<div style="display:flex;gap:8px;margin-bottom:4px;align-items:center;">';
-            html += '<input type="text" value="' + escHtml(kf.icon || '') + '" placeholder="icon" style="width:120px" onchange="updateProductKeyFeature(\'' + escJsStr(productId) + '\',' + i + ',\'icon\',this.value)">';
-            html += '<input type="text" value="' + escHtml(kf.value || '') + '" placeholder="değer" style="width:100px" onchange="updateProductKeyFeature(\'' + escJsStr(productId) + '\',' + i + ',\'value\',this.value)">';
-            html += '<input type="text" value="' + escHtml(kf.label || '') + '" placeholder="etiket" style="flex:1" onchange="updateProductKeyFeature(\'' + escJsStr(productId) + '\',' + i + ',\'label\',this.value)">';
-            html += '<button class="btn-icon delete" onclick="removeProductKeyFeature(\'' + escJsStr(productId) + '\',' + i + ')"><i class="fas fa-trash"></i></button></div>';
+            h += '<div class="pe-list-item">';
+            h += iconField(kf.icon, "updateProductKeyFeature('" + pid + "'," + i + ",'icon',this.value)");
+            h += '<input type="text" value="' + escHtml(kf.value || '') + '" placeholder="Değer (ör: 180)" style="width:100px" onchange="updateProductKeyFeature(\'' + pid + '\',' + i + ',\'value\',this.value)">';
+            h += '<input type="text" value="' + escHtml(kf.label || '') + '" placeholder="Etiket" style="flex:1" onchange="updateProductKeyFeature(\'' + pid + '\',' + i + ',\'label\',this.value)">';
+            h += '<button class="pe-del-btn" onclick="removeProductKeyFeature(\'' + pid + '\',' + i + ')"><i class="fas fa-trash"></i></button></div>';
         });
-        html += '</div><button class="btn btn-sm btn-outline" onclick="addProductKeyFeature(\'' + escJsStr(productId) + '\')"><i class="fas fa-plus"></i> Özellik Ekle</button>';
-    }
+        h += '</div><button class="pe-add-btn" onclick="addProductKeyFeature(\'' + pid + '\')"><i class="fas fa-plus"></i> Özellik Ekle</button></div>';
 
-    // === FEATURES (cards - main format) ===
-    if (!isFlowpack && data.features) {
-        var feats = data.features || [];
-        html += '<h4 style="border-bottom:2px solid var(--primary-color);padding-bottom:8px;"><i class="fas fa-th-large"></i> Özellik Kartları</h4>';
-        html += '<div id="pe-features">';
-        feats.forEach(function(f, i) {
-            html += '<div style="display:flex;gap:8px;margin-bottom:6px;align-items:center;background:#f9f9f9;padding:8px;border-radius:6px;">';
-            html += '<input type="text" value="' + escHtml(f.icon || '') + '" placeholder="icon" style="width:120px" onchange="updateProductFeature(\'' + escJsStr(productId) + '\',' + i + ',\'icon\',this.value)">';
-            html += '<input type="text" value="' + escHtml(f.title || '') + '" placeholder="başlık" style="width:150px" onchange="updateProductFeature(\'' + escJsStr(productId) + '\',' + i + ',\'title\',this.value)">';
-            html += '<input type="text" value="' + escHtml(f.desc || '') + '" placeholder="açıklama" style="flex:1" onchange="updateProductFeature(\'' + escJsStr(productId) + '\',' + i + ',\'desc\',this.value)">';
-            html += '<button class="btn-icon delete" onclick="removeProductFeature(\'' + escJsStr(productId) + '\',' + i + ')"><i class="fas fa-trash"></i></button></div>';
-        });
-        html += '</div><button class="btn btn-sm btn-outline" onclick="addProductFeature(\'' + escJsStr(productId) + '\')"><i class="fas fa-plus"></i> Kart Ekle</button>';
-    }
-
-    // === FEATURES LIST (flowpack) ===
-    if (isFlowpack) {
+        // Features List
         var featList = data.featuresList || [];
-        html += '<h4 style="border-bottom:2px solid var(--primary-color);padding-bottom:8px;"><i class="fas fa-check-circle"></i> Özellik Listesi</h4>';
-        html += '<div id="pe-features-list">';
+        h += '<div class="pe-card"><div class="pe-card-title"><i class="fas fa-check-circle"></i> Özellik Listesi</div>';
+        h += '<div id="pe-features-list">';
         featList.forEach(function(text, i) {
-            html += '<div style="display:flex;gap:8px;margin-bottom:4px;align-items:center;">';
-            html += '<input type="text" value="' + escHtml(text) + '" style="flex:1" onchange="updateProductFeatureList(\'' + escJsStr(productId) + '\',' + i + ',this.value)">';
-            html += '<button class="btn-icon delete" onclick="removeProductFeatureList(\'' + escJsStr(productId) + '\',' + i + ')"><i class="fas fa-trash"></i></button></div>';
+            h += '<div class="pe-list-item"><span style="color:var(--primary);font-size:12px"><i class="fas fa-check"></i></span>';
+            h += '<input type="text" value="' + escHtml(text) + '" style="flex:1" onchange="updateProductFeatureList(\'' + pid + '\',' + i + ',this.value)">';
+            h += '<button class="pe-del-btn" onclick="removeProductFeatureList(\'' + pid + '\',' + i + ')"><i class="fas fa-trash"></i></button></div>';
         });
-        html += '</div><button class="btn btn-sm btn-outline" onclick="addProductFeatureList(\'' + escJsStr(productId) + '\')"><i class="fas fa-plus"></i> Madde Ekle</button>';
+        h += '</div><button class="pe-add-btn" onclick="addProductFeatureList(\'' + pid + '\')"><i class="fas fa-plus"></i> Madde Ekle</button></div>';
+    } else {
+        // Feature Cards
+        var feats = data.features || [];
+        h += '<div class="pe-card"><div class="pe-card-title"><i class="fas fa-th-large"></i> Özellik Kartları</div>';
+        h += '<div id="pe-features">';
+        feats.forEach(function(f, i) {
+            h += '<div class="pe-list-item" style="flex-wrap:wrap">';
+            h += '<div style="width:140px">' + iconField(f.icon, "updateProductFeature('" + pid + "'," + i + ",'icon',this.value)") + '</div>';
+            h += '<input type="text" value="' + escHtml(f.title || '') + '" placeholder="Başlık" style="width:160px" onchange="updateProductFeature(\'' + pid + '\',' + i + ',\'title\',this.value)">';
+            h += '<input type="text" value="' + escHtml(f.desc || '') + '" placeholder="Açıklama" style="flex:1;min-width:200px" onchange="updateProductFeature(\'' + pid + '\',' + i + ',\'desc\',this.value)">';
+            h += '<button class="pe-del-btn" onclick="removeProductFeature(\'' + pid + '\',' + i + ')"><i class="fas fa-trash"></i></button></div>';
+        });
+        h += '</div><button class="pe-add-btn" onclick="addProductFeature(\'' + pid + '\')"><i class="fas fa-plus"></i> Kart Ekle</button></div>';
     }
 
-    // === SPECS ===
-    html += '<h4 style="border-bottom:2px solid var(--primary-color);padding-bottom:8px;"><i class="fas fa-table"></i> Teknik Özellikler</h4>';
-    var specs = data.specs || [];
-    if (isFlowpack) {
-        // 2-col format: label/value
-        html += '<div id="pe-specs">';
-        specs.forEach(function(s, i) {
-            html += '<div style="display:flex;gap:8px;margin-bottom:4px;align-items:center;">';
-            html += '<input type="text" value="' + escHtml(s.label || '') + '" placeholder="Özellik" style="width:200px" onchange="updateProductSpec2Col(\'' + escJsStr(productId) + '\',' + i + ',\'label\',this.value)">';
-            html += '<input type="text" value="' + escHtml(s.value || '') + '" placeholder="Değer" style="flex:1" onchange="updateProductSpec2Col(\'' + escJsStr(productId) + '\',' + i + ',\'value\',this.value)">';
-            html += '<button class="btn-icon delete" onclick="removeProductSpec(\'' + escJsStr(productId) + '\',' + i + ')"><i class="fas fa-trash"></i></button></div>';
-        });
-        html += '</div><button class="btn btn-sm btn-outline" onclick="addProductSpec2Col(\'' + escJsStr(productId) + '\')"><i class="fas fa-plus"></i> Satır Ekle</button>';
-    } else if (data.specsHeaders) {
-        // Multi-col format
-        var headers = data.specsHeaders || [];
-        html += '<div class="form-group"><label>Tablo Başlıkları (virgülle ayır)</label>';
-        html += '<input type="text" value="' + escHtml(headers.join(', ')) + '" onchange="updateProductSpecHeaders(\'' + escJsStr(productId) + '\',this.value)"></div>';
-        html += '<div id="pe-specs">';
-        specs.forEach(function(s, i) {
-            var cells = s.cells || [];
-            html += '<div style="display:flex;gap:8px;margin-bottom:4px;align-items:center;">';
-            html += '<input type="text" value="' + escHtml(cells.join(' | ')) + '" placeholder="Hücre1 | Hücre2 | ..." style="flex:1" onchange="updateProductSpecRow(\'' + escJsStr(productId) + '\',' + i + ',this.value)">';
-            html += '<button class="btn-icon delete" onclick="removeProductSpec(\'' + escJsStr(productId) + '\',' + i + ')"><i class="fas fa-trash"></i></button></div>';
-        });
-        html += '</div><button class="btn btn-sm btn-outline" onclick="addProductSpecRow(\'' + escJsStr(productId) + '\')"><i class="fas fa-plus"></i> Satır Ekle</button>';
-    }
-
-    // === APPLICATIONS ===
+    // Applications
     if (isFlowpack || (data.applications && data.applications.length)) {
         var apps = data.applications || [];
-        html += '<h4 style="border-bottom:2px solid var(--primary-color);padding-bottom:8px;"><i class="fas fa-bullseye"></i> Uygulama Alanları</h4>';
-        html += '<div id="pe-applications">';
+        h += '<div class="pe-card"><div class="pe-card-title"><i class="fas fa-bullseye"></i> Uygulama Alanları</div>';
+        h += '<div id="pe-applications">';
         apps.forEach(function(a, i) {
-            html += '<div style="display:flex;gap:8px;margin-bottom:4px;align-items:center;">';
-            html += '<input type="text" value="' + escHtml(a.icon || '') + '" placeholder="icon" style="width:120px" onchange="updateProductApplication(\'' + escJsStr(productId) + '\',' + i + ',\'icon\',this.value)">';
-            html += '<input type="text" value="' + escHtml(a.label || '') + '" placeholder="etiket" style="flex:1" onchange="updateProductApplication(\'' + escJsStr(productId) + '\',' + i + ',\'label\',this.value)">';
-            html += '<button class="btn-icon delete" onclick="removeProductApplication(\'' + escJsStr(productId) + '\',' + i + ')"><i class="fas fa-trash"></i></button></div>';
+            h += '<div class="pe-list-item">';
+            h += '<div style="width:140px">' + iconField(a.icon, "updateProductApplication('" + pid + "'," + i + ",'icon',this.value)") + '</div>';
+            h += '<input type="text" value="' + escHtml(a.label || '') + '" placeholder="Etiket" style="flex:1" onchange="updateProductApplication(\'' + pid + '\',' + i + ',\'label\',this.value)">';
+            h += '<button class="pe-del-btn" onclick="removeProductApplication(\'' + pid + '\',' + i + ')"><i class="fas fa-trash"></i></button></div>';
         });
-        html += '</div><button class="btn btn-sm btn-outline" onclick="addProductApplication(\'' + escJsStr(productId) + '\')"><i class="fas fa-plus"></i> Uygulama Ekle</button>';
+        h += '</div><button class="pe-add-btn" onclick="addProductApplication(\'' + pid + '\')"><i class="fas fa-plus"></i> Uygulama Ekle</button></div>';
     }
+    h += '</div>'; // end features
 
-    // === VIDEOS ===
-    if (data.videos && data.videos.length) {
-        var vids = data.videos || [];
-        html += '<h4 style="border-bottom:2px solid var(--primary-color);padding-bottom:8px;"><i class="fab fa-youtube"></i> Videolar</h4>';
-        html += '<div id="pe-videos">';
-        vids.forEach(function(v, i) {
-            html += '<div style="display:flex;gap:8px;margin-bottom:4px;align-items:center;">';
-            html += '<input type="text" value="' + escHtml(v.title || '') + '" placeholder="başlık" style="width:200px" onchange="updateProductVideo(\'' + escJsStr(productId) + '\',' + i + ',\'title\',this.value)">';
-            html += '<input type="text" value="' + escHtml(v.videoId || '') + '" placeholder="YouTube ID" style="flex:1" onchange="updateProductVideo(\'' + escJsStr(productId) + '\',' + i + ',\'videoId\',this.value)">';
-            html += '<button class="btn-icon delete" onclick="removeProductVideo(\'' + escJsStr(productId) + '\',' + i + ')"><i class="fas fa-trash"></i></button></div>';
+    // --- TAB: SPECS ---
+    h += '<div class="pe-panel" id="pe-tab-specs">';
+    h += '<div class="pe-card"><div class="pe-card-title"><i class="fas fa-table"></i> Teknik Özellikler</div>';
+    var specs = data.specs || [];
+    if (isFlowpack) {
+        h += '<div id="pe-specs">';
+        specs.forEach(function(s, i) {
+            h += '<div class="pe-list-item">';
+            h += '<input type="text" value="' + escHtml(s.label || '') + '" placeholder="Özellik adı" style="width:220px" onchange="updateProductSpec2Col(\'' + pid + '\',' + i + ',\'label\',this.value)">';
+            h += '<input type="text" value="' + escHtml(s.value || '') + '" placeholder="Değer" style="flex:1" onchange="updateProductSpec2Col(\'' + pid + '\',' + i + ',\'value\',this.value)">';
+            h += '<button class="pe-del-btn" onclick="removeProductSpec(\'' + pid + '\',' + i + ')"><i class="fas fa-trash"></i></button></div>';
         });
-        html += '</div><button class="btn btn-sm btn-outline" onclick="addProductVideo(\'' + escJsStr(productId) + '\')"><i class="fas fa-plus"></i> Video Ekle</button>';
+        h += '</div><button class="pe-add-btn" onclick="addProductSpec2Col(\'' + pid + '\')"><i class="fas fa-plus"></i> Satır Ekle</button>';
+    } else if (data.specsHeaders) {
+        var headers = data.specsHeaders || [];
+        h += '<div class="pe-field"><label>Tablo Başlıkları (virgülle ayır)</label>';
+        h += '<input type="text" value="' + escHtml(headers.join(', ')) + '" onchange="updateProductSpecHeaders(\'' + pid + '\',this.value)"></div>';
+        h += '<div id="pe-specs">';
+        specs.forEach(function(s, i) {
+            var cells = s.cells || [];
+            h += '<div class="pe-list-item">';
+            h += '<input type="text" value="' + escHtml(cells.join(' | ')) + '" placeholder="Hücre1 | Hücre2 | ..." style="flex:1" onchange="updateProductSpecRow(\'' + pid + '\',' + i + ',this.value)">';
+            h += '<button class="pe-del-btn" onclick="removeProductSpec(\'' + pid + '\',' + i + ')"><i class="fas fa-trash"></i></button></div>';
+        });
+        h += '</div><button class="pe-add-btn" onclick="addProductSpecRow(\'' + pid + '\')"><i class="fas fa-plus"></i> Satır Ekle</button>';
+    } else {
+        h += '<p style="color:var(--gray-400);font-size:13px">Bu ürün için teknik özellik formatı tanımlı değil.</p>';
     }
+    h += '</div></div>'; // end specs
 
-    // === WHATSAPP ===
-    html += '<h4 style="border-bottom:2px solid var(--primary-color);padding-bottom:8px;"><i class="fab fa-whatsapp"></i> İletişim</h4>';
-    html += '<div class="form-group"><label>WhatsApp Mesajı</label>';
-    html += '<input type="text" value="' + escHtml(data.whatsappText || '') + '" onchange="setProductField(\'' + escJsStr(productId) + '\',\'whatsappText\',this.value)"></div>';
+    // --- TAB: MEDIA ---
+    h += '<div class="pe-panel" id="pe-tab-media">';
+    var vids = data.videos || [];
+    h += '<div class="pe-card"><div class="pe-card-title"><i class="fab fa-youtube"></i> Videolar <span style="font-weight:400;color:var(--gray-400);font-size:12px;margin-left:6px">' + vids.length + ' video</span></div>';
+    h += '<div id="pe-videos">';
+    vids.forEach(function(v, i) {
+        h += '<div class="pe-list-item">';
+        if (v.videoId) h += '<img src="https://img.youtube.com/vi/' + escHtml(v.videoId) + '/mqdefault.jpg" style="width:80px;height:45px;object-fit:cover;border-radius:6px;flex-shrink:0">';
+        h += '<input type="text" value="' + escHtml(v.title || '') + '" placeholder="Video başlığı" style="width:180px" onchange="updateProductVideo(\'' + pid + '\',' + i + ',\'title\',this.value)">';
+        h += '<input type="text" value="' + escHtml(v.videoId || '') + '" placeholder="YouTube Video ID" style="flex:1" onchange="updateProductVideo(\'' + pid + '\',' + i + ',\'videoId\',this.value)">';
+        h += '<button class="pe-del-btn" onclick="removeProductVideo(\'' + pid + '\',' + i + ')"><i class="fas fa-trash"></i></button></div>';
+    });
+    h += '</div><button class="pe-add-btn" onclick="addProductVideo(\'' + pid + '\')"><i class="fas fa-plus"></i> Video Ekle</button></div>';
+    h += '</div>'; // end media
 
-    // === RELATED PRODUCTS ===
+    // --- TAB: SETTINGS ---
+    h += '<div class="pe-panel" id="pe-tab-settings">';
+    h += '<div class="pe-card"><div class="pe-card-title"><i class="fab fa-whatsapp"></i> WhatsApp</div>';
+    h += '<div class="pe-field"><label>WhatsApp Mesajı</label>';
+    h += '<input type="text" value="' + escHtml(data.whatsappText || '') + '" onchange="setProductField(\'' + pid + '\',\'whatsappText\',this.value)"></div></div>';
+
     var related = data.relatedProducts || [];
-    html += '<div class="form-group"><label>İlgili Ürünler (virgülle ayır, ID)</label>';
-    html += '<input type="text" value="' + escHtml(related.join(', ')) + '" onchange="updateProductRelated(\'' + escJsStr(productId) + '\',this.value)"></div>';
+    h += '<div class="pe-card"><div class="pe-card-title"><i class="fas fa-link"></i> İlgili Ürünler</div>';
+    h += '<div class="pe-field"><label>Ürün ID\'leri (virgülle ayır)</label>';
+    h += '<input type="text" value="' + escHtml(related.join(', ')) + '" onchange="updateProductRelated(\'' + pid + '\',this.value)"></div></div>';
 
-    html += '</div>'; // modal-body
-    html += '<div class="modal-footer">';
-    html += '<button class="btn btn-outline" onclick="resetProductOverrides(\'' + escJsStr(productId) + '\')"><i class="fas fa-undo"></i> Varsayılana Dön</button>';
-    html += '<button class="btn btn-outline" onclick="closeProductEditor()">Kapat</button></div>';
-    html += '</div>'; // modal-content
+    h += '<div class="pe-card"><div class="pe-card-title"><i class="fas fa-search"></i> SEO</div>';
+    h += '<div class="pe-field"><label>SEO İçerik (HTML)</label>';
+    h += '<textarea rows="4" onchange="setProductField(\'' + pid + '\',\'seoContent\',this.value)">' + escHtml(data.seoContent || '') + '</textarea></div></div>';
+    h += '</div>'; // end settings
 
-    modal.innerHTML = html;
-    document.body.appendChild(modal);
+    h += '</div>'; // pe-body
+
+    el.innerHTML = h;
+    document.body.appendChild(el);
+    document.body.style.overflow = 'hidden';
 }
 
-function closeProductEditor() { var m = document.getElementById('productEditModal'); if (m) m.remove(); }
+function switchPeTab(tabId, tabEl) {
+    document.querySelectorAll('.pe-tab').forEach(function(t) { t.classList.remove('active'); });
+    document.querySelectorAll('.pe-panel').forEach(function(p) { p.classList.remove('active'); });
+    if (tabEl) tabEl.classList.add('active');
+    var panel = document.getElementById('pe-tab-' + tabId);
+    if (panel) panel.classList.add('active');
+}
+
+function closeProductEditor() {
+    var m = document.getElementById('productEditModal');
+    if (m) m.remove();
+    document.body.style.overflow = '';
+}
 
 function refreshProductEditor() { if (_currentProductId) { closeProductEditor(); editProduct(_currentProductId); } }
 
@@ -4645,6 +4705,10 @@ function updateProductOverviewDesc(pid, i, val) {
 function addProductOverviewDesc(pid) {
     var data = getProductData(pid); var descs = (data.overviewDesc || []).slice();
     descs.push(''); setProductField(pid, 'overviewDesc', descs); refreshProductEditor();
+}
+function removeProductOverviewDesc(pid, i) {
+    var data = getProductData(pid); var descs = (data.overviewDesc || []).slice();
+    descs.splice(i, 1); setProductField(pid, 'overviewDesc', descs); refreshProductEditor();
 }
 
 // --- Key Features (flowpack strip) ---
