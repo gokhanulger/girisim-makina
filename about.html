@@ -56,16 +56,18 @@
             padding: 80px 0;
         }
         .about-page-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: start;
             margin-bottom: 60px;
+            overflow: hidden; /* clearfix */
         }
         .about-page-image {
+            float: left;
+            width: 40%;
+            max-width: 420px;
+            margin: 0 40px 20px 0;
             position: relative;
             border-radius: 16px;
             overflow: hidden;
+            shape-outside: margin-box;
         }
         .about-page-image img {
             width: 100%;
@@ -97,12 +99,12 @@
             opacity: 0.9;
         }
 
-        .about-page-text h2 {
+        .about-page-heading {
             font-size: 2rem;
             margin-bottom: 24px;
             color: #1a1a2e;
         }
-        .about-page-text h2 span { color: var(--primary, #e63946); }
+        .about-page-heading span { color: var(--primary, #e63946); }
 
         .about-page-body {
             color: #555;
@@ -123,6 +125,7 @@
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 24px;
             margin-top: 50px;
+            clear: both;
         }
         .about-page-feature {
             display: flex;
@@ -234,7 +237,7 @@
 
         @media (max-width: 768px) {
             .about-page-hero h1 { font-size: 2rem; }
-            .about-page-grid { grid-template-columns: 1fr; gap: 30px; }
+            .about-page-image { float: none; width: 100%; max-width: 100%; margin: 0 0 24px 0; }
             .about-stats { grid-template-columns: repeat(2, 1fr); gap: 20px; }
             .about-stat .number { font-size: 2rem; }
         }
@@ -265,12 +268,10 @@
                         <span class="label">Yıllık Tecrübe</span>
                     </div>
                 </div>
-                <div class="about-page-text">
-                    <h2 id="aboutPageHeading">Gıda Üreticilerinin <span>Global Büyüme Ortağı</span></h2>
-                    <div class="about-page-body" id="aboutPageBody">
-                        <p>Girişim Makina olarak, 1985 yılından bu yana gıda işleme ve paketleme sektöründe faaliyet göstermekteyiz.</p>
-                        <p>57'den fazla ülkeye ihracat yapan firmamız, dünya standartlarında kalite ve müşteri memnuniyeti odaklı hizmet sunmaktadır.</p>
-                    </div>
+                <h2 class="about-page-heading" id="aboutPageHeading">Gıda Üreticilerinin <span>Global Büyüme Ortağı</span></h2>
+                <div class="about-page-body" id="aboutPageBody">
+                    <p>Girişim Makina olarak, 1985 yılından bu yana gıda işleme ve paketleme sektöründe faaliyet göstermekteyiz.</p>
+                    <p>57'den fazla ülkeye ihracat yapan firmamız, dünya standartlarında kalite ve müşteri memnuniyeti odaklı hizmet sunmaktadır.</p>
                 </div>
             </div>
 
