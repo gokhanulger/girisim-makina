@@ -771,14 +771,14 @@ function updateHeroStat(index, field, value) {
 var homepageSectionsDefault = [
     { id: 'hero-banner', label: 'Hero Slider', icon: 'fas fa-desktop', visible: true, fixed: true },
     { id: 'about', label: 'Hakkımızda', icon: 'fas fa-info-circle', visible: true },
-    { id: 'production', label: 'Üretim Hatları', icon: 'fas fa-cogs', visible: true },
-    { id: 'packaging', label: 'Paketleme Makineleri', icon: 'fas fa-box', visible: true },
-    { id: 'sectors', label: 'Sektörler', icon: 'fas fa-industry', visible: true },
-    { id: 'why-us', label: 'Neden Biz', icon: 'fas fa-star', visible: true },
-    { id: 'testimonials', label: 'Referanslar', icon: 'fas fa-comments', visible: true },
-    { id: 'fuarlar', label: 'Fuarlar', icon: 'fas fa-calendar-alt', visible: true },
-    { id: 'videos', label: 'Videolar', icon: 'fas fa-video', visible: true },
-    { id: 'cta', label: 'Teklif Çağrısı (CTA)', icon: 'fas fa-bullhorn', visible: true },
+    { id: 'production', label: 'Gıda İşleme Makinelerimiz', icon: 'fas fa-cogs', visible: true },
+    { id: 'packaging', label: 'Paketleme Makinelerimiz', icon: 'fas fa-box', visible: true },
+    { id: 'sectors', label: 'Paketlediğimiz Ürünler', icon: 'fas fa-industry', visible: true },
+    { id: 'why-us', label: 'Neden Girişim Makina?', icon: 'fas fa-star', visible: true },
+    { id: 'testimonials', label: 'Müşterilerimiz Ne Diyor?', icon: 'fas fa-comments', visible: true },
+    { id: 'fuarlar', label: 'Fuar Katılımlarımız', icon: 'fas fa-calendar-alt', visible: true },
+    { id: 'videos', label: 'Video Galeri', icon: 'fas fa-video', visible: true },
+    { id: 'cta', label: 'Ücretsiz Teklif Alın', icon: 'fas fa-bullhorn', visible: true },
     { id: 'contact', label: 'İletişim Formu', icon: 'fas fa-envelope', visible: true }
 ];
 
@@ -786,6 +786,15 @@ function initHomepageLayout() {
     if (!siteContent.homepageLayout || !Array.isArray(siteContent.homepageLayout) || siteContent.homepageLayout.length === 0) {
         siteContent.homepageLayout = JSON.parse(JSON.stringify(homepageSectionsDefault));
     }
+    // Sync labels and icons from defaults
+    var defaultMap = {};
+    homepageSectionsDefault.forEach(function(def) { defaultMap[def.id] = def; });
+    siteContent.homepageLayout.forEach(function(s) {
+        if (defaultMap[s.id]) {
+            s.label = defaultMap[s.id].label;
+            s.icon = defaultMap[s.id].icon;
+        }
+    });
     // Ensure all default sections exist (in case new sections were added)
     var existing = siteContent.homepageLayout.map(function(s) { return s.id; });
     homepageSectionsDefault.forEach(function(def) {
