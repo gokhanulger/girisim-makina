@@ -304,6 +304,18 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (typeof window.rebuildMegaMenu === 'function' && content.machineCategories) {
                 window.rebuildMegaMenu(content);
             }
+
+            // Apply homepage layout independently (in case applySiteContent had partial errors)
+            try {
+                if (content.homepageLayout && content.homepageLayout.length) {
+                    console.log('Homepage layout data:', JSON.stringify(content.homepageLayout.map(function(s) { return s.id + ':' + (s.visible !== false); })));
+                    applyHomepageLayout(content.homepageLayout);
+                } else {
+                    console.log('No homepageLayout in content');
+                }
+            } catch (e) {
+                console.error('Independent homepage layout error:', e);
+            }
         } else {
             console.log('Using static content');
         }
@@ -965,17 +977,26 @@ function applySiteContent(content) {
     }
 
     // Homepage Section Reordering
-    if (content.homepageLayout && content.homepageLayout.length) {
-        applyHomepageLayout(content.homepageLayout);
+    try {
+        if (content.homepageLayout && content.homepageLayout.length) {
+            applyHomepageLayout(content.homepageLayout);
+        }
+    } catch (e) {
+        console.error('Homepage layout error:', e);
     }
 }
 
 function applyHomepageLayout(layout) {
     // Only apply on homepage
     var path = window.location.pathname;
-    if (path !== '/' && !path.endsWith('/index.html') && !path.endsWith('/girisim-makina/') && !path.endsWith('/girisim%20makina/')) return;
+    var isHomepage = (path === '/' || path === '/index.html' || path.endsWith('/girisim-makina/') || path.endsWith('/girisim%20makina/'));
+    if (!isHomepage) {
+        console.log('applyHomepageLayout: not homepage, path=' + path);
+        return;
+    }
 
     var allSections = document.querySelectorAll('[data-section-id]');
+    console.log('applyHomepageLayout: found ' + allSections.length + ' sections, layout has ' + layout.length + ' items');
     if (!allSections.length) return;
 
     var parent = allSections[0].parentNode;
@@ -984,11 +1005,22 @@ function applyHomepageLayout(layout) {
         sectionMap[el.getAttribute('data-section-id')] = el;
     });
 
-    // Find anchor: the first non-section element after all sections (e.g. footer, teklif modal, scripts)
-    var lastSection = allSections[allSections.length - 1];
-    var anchor = lastSection.nextElementSibling;
+    // Find a stable anchor: footer-placeholder, footer element, or first non-section sibling after sections
+    var anchor = document.getElementById('footer-placeholder')
+        || document.querySelector('footer')
+        || document.querySelector('.footer');
 
-    // Apply visibility first
+    // If anchor is not a direct child of parent, find the first non-section element after the last section
+    if (!anchor || anchor.parentNode !== parent) {
+        var lastSec = allSections[allSections.length - 1];
+        var next = lastSec.nextElementSibling;
+        while (next && next.hasAttribute('data-section-id')) {
+            next = next.nextElementSibling;
+        }
+        anchor = next; // could be null, which means appendChild
+    }
+
+    // Apply visibility
     layout.forEach(function(item) {
         var el = sectionMap[item.id];
         if (!el) return;
@@ -998,8 +1030,15 @@ function applyHomepageLayout(layout) {
     // Reorder: insert sections in layout order before the anchor
     layout.forEach(function(item) {
         var el = sectionMap[item.id];
-        if (!el) return;
-        parent.insertBefore(el, anchor);
+        if (!el) {
+            console.log('applyHomepageLayout: section not found: ' + item.id);
+            return;
+        }
+        if (anchor && anchor.parentNode === parent) {
+            parent.insertBefore(el, anchor);
+        } else {
+            parent.appendChild(el);
+        }
     });
 
     // Any sections not in layout (new ones) - insert them too
@@ -1007,7 +1046,13 @@ function applyHomepageLayout(layout) {
         var id = el.getAttribute('data-section-id');
         var inLayout = layout.some(function(item) { return item.id === id; });
         if (!inLayout) {
-            parent.insertBefore(el, anchor);
+            if (anchor && anchor.parentNode === parent) {
+                parent.insertBefore(el, anchor);
+            } else {
+                parent.appendChild(el);
+            }
         }
     });
+
+    console.log('applyHomepageLayout: reorder complete');
 }
