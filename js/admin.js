@@ -777,7 +777,9 @@ var homepageSectionsDefault = [
     { id: 'why-us', label: 'Neden Biz', icon: 'fas fa-star', visible: true },
     { id: 'testimonials', label: 'Referanslar', icon: 'fas fa-comments', visible: true },
     { id: 'fuarlar', label: 'Fuarlar', icon: 'fas fa-calendar-alt', visible: true },
-    { id: 'videos', label: 'Videolar', icon: 'fas fa-video', visible: true }
+    { id: 'videos', label: 'Videolar', icon: 'fas fa-video', visible: true },
+    { id: 'cta', label: 'Teklif Çağrısı (CTA)', icon: 'fas fa-bullhorn', visible: true },
+    { id: 'contact', label: 'İletişim Formu', icon: 'fas fa-envelope', visible: true }
 ];
 
 function initHomepageLayout() {

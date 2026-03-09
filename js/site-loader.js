@@ -972,39 +972,42 @@ function applySiteContent(content) {
 
 function applyHomepageLayout(layout) {
     // Only apply on homepage
-    var isHomepage = window.location.pathname === '/' || window.location.pathname.endsWith('/index.html') || window.location.pathname.endsWith('/girisim-makina/') || window.location.pathname.endsWith('/girisim makina/');
-    if (!isHomepage) return;
+    var path = window.location.pathname;
+    if (path !== '/' && !path.endsWith('/index.html') && !path.endsWith('/girisim-makina/') && !path.endsWith('/girisim%20makina/')) return;
 
-    var parent = null;
-    var sections = {};
+    var allSections = document.querySelectorAll('[data-section-id]');
+    if (!allSections.length) return;
 
-    // Collect all sections with data-section-id
-    document.querySelectorAll('[data-section-id]').forEach(function(el) {
-        sections[el.getAttribute('data-section-id')] = el;
-        if (!parent) parent = el.parentNode;
+    var parent = allSections[0].parentNode;
+    var sectionMap = {};
+    allSections.forEach(function(el) {
+        sectionMap[el.getAttribute('data-section-id')] = el;
     });
 
-    if (!parent || Object.keys(sections).length === 0) return;
+    // Find anchor: the first non-section element after all sections (e.g. footer, teklif modal, scripts)
+    var lastSection = allSections[allSections.length - 1];
+    var anchor = lastSection.nextElementSibling;
 
-    // Find the footer placeholder as anchor point
-    var footer = document.getElementById('footer-placeholder');
-
-    // Reorder and handle visibility
+    // Apply visibility first
     layout.forEach(function(item) {
-        var el = sections[item.id];
+        var el = sectionMap[item.id];
         if (!el) return;
+        el.style.display = (item.visible === false) ? 'none' : '';
+    });
 
-        if (item.visible === false) {
-            el.style.display = 'none';
-        } else {
-            el.style.display = '';
-        }
+    // Reorder: insert sections in layout order before the anchor
+    layout.forEach(function(item) {
+        var el = sectionMap[item.id];
+        if (!el) return;
+        parent.insertBefore(el, anchor);
+    });
 
-        // Move element before footer (maintains order)
-        if (footer) {
-            parent.insertBefore(el, footer);
-        } else {
-            parent.appendChild(el);
+    // Any sections not in layout (new ones) - insert them too
+    allSections.forEach(function(el) {
+        var id = el.getAttribute('data-section-id');
+        var inLayout = layout.some(function(item) { return item.id === id; });
+        if (!inLayout) {
+            parent.insertBefore(el, anchor);
         }
     });
 }
