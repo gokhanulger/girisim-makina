@@ -445,47 +445,86 @@
                 <!-- About Page Section -->
                 <section id="section-about-page" class="admin-section">
                     <div class="section-card">
-                        <h2><i class="fas fa-file-alt"></i> Hakkımızda Sayfası</h2>
-                        <p style="color:#666;margin-bottom:20px">Bu bölüm <a href="about.html" target="_blank">about.html</a> sayfasını kontrol eder. Uzun açıklamalar, HTML içerik, SEO ve meta bilgileri buradan düzenlenebilir.</p>
+                        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+                            <h2 style="margin:0"><i class="fas fa-file-alt"></i> Hakkımızda Sayfası</h2>
+                            <a href="about.html" target="_blank" class="btn btn-sm btn-outline"><i class="fas fa-external-link-alt"></i> Sayfayı Gör</a>
+                        </div>
 
-                        <h3>Hero Bölümü</h3>
-                        <div class="form-group">
-                            <label>Hero Başlık (HTML destekli)</label>
-                            <input type="text" id="aboutPage-heroTitle" data-path="aboutPage.heroTitle" placeholder="Hakkımızda - <span>Girişim Makina</span>">
-                        </div>
-                        <div class="form-group">
-                            <label>Hero Açıklama</label>
-                            <input type="text" id="aboutPage-heroDesc" data-path="aboutPage.heroDesc" placeholder="1985'ten beri gıda işleme ve paketleme...">
-                        </div>
-                        <div class="form-group">
-                            <label>Hero Arka Plan Görseli</label>
-                            <div class="image-upload-group">
-                                <input type="url" id="aboutPage-heroImage" data-path="aboutPage.heroImage" placeholder="URL girin veya dosya yükleyin">
-                                <label class="upload-btn" for="upload-aboutpage-hero"><i class="fas fa-upload"></i> Yükle</label>
-                                <input type="file" id="upload-aboutpage-hero" accept="image/*" onchange="handleImageUpload(this, 'aboutPage-heroImage')" hidden>
+                        <!-- Hero -->
+                        <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:20px;margin-bottom:20px">
+                            <h3 style="margin-top:0;font-size:15px;color:#1e293b"><i class="fas fa-image" style="color:#e53935"></i> Hero Bölümü (Üst Banner)</h3>
+                            <div class="form-group">
+                                <label>Başlık <small style="color:#94a3b8">(HTML: &lt;span&gt;Kırmızı metin&lt;/span&gt;)</small></label>
+                                <input type="text" id="aboutPage-heroTitle" data-path="aboutPage.heroTitle" placeholder="Hakkımızda - <span>Girişim Makina</span>">
+                            </div>
+                            <div class="form-group">
+                                <label>Alt Açıklama</label>
+                                <input type="text" id="aboutPage-heroDesc" data-path="aboutPage.heroDesc" placeholder="1985'ten beri gıda işleme ve paketleme...">
+                            </div>
+                            <div class="form-group">
+                                <label>Arka Plan Görseli</label>
+                                <div class="image-upload-group">
+                                    <input type="url" id="aboutPage-heroImage" data-path="aboutPage.heroImage" placeholder="URL girin veya dosya yükleyin">
+                                    <label class="upload-btn" for="upload-aboutpage-hero"><i class="fas fa-upload"></i> Yükle</label>
+                                    <input type="file" id="upload-aboutpage-hero" accept="image/*" onchange="handleImageUpload(this, 'aboutPage-heroImage')" hidden>
+                                </div>
                             </div>
                         </div>
 
-                        <hr style="margin:30px 0">
-                        <h3>Ek İçerik (HTML Editör)</h3>
-                        <p style="color:#888;font-size:13px;margin-bottom:10px">Bu alan sayfanın alt kısmında görünür. HTML kullanabilirsiniz: &lt;h2&gt;, &lt;h3&gt;, &lt;p&gt;, &lt;strong&gt;, &lt;ul&gt;, &lt;li&gt;, &lt;img&gt; vb.</p>
-                        <div class="form-group">
-                            <div id="aboutPage-extraContent-editor" style="min-height:250px"></div>
+                        <!-- Ana İçerik -->
+                        <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:20px;margin-bottom:20px">
+                            <h3 style="margin-top:0;font-size:15px;color:#1e293b"><i class="fas fa-align-left" style="color:#e53935"></i> Ana İçerik</h3>
+                            <div class="form-group">
+                                <label>Görsel URL</label>
+                                <div class="image-upload-group">
+                                    <input type="url" id="aboutPage-contentImage" data-path="aboutPage.contentImage" placeholder="Fabrika/tesis görseli">
+                                    <label class="upload-btn" for="upload-aboutpage-img"><i class="fas fa-upload"></i> Yükle</label>
+                                    <input type="file" id="upload-aboutpage-img" accept="image/*" onchange="handleImageUpload(this, 'aboutPage-contentImage')" hidden>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Tecrübe Rozeti (ör: 38+)</label>
+                                <input type="text" id="aboutPage-years" data-path="aboutPage.years" placeholder="38+">
+                            </div>
+                            <div class="form-group">
+                                <label>Alt Başlık <small style="color:#94a3b8">(HTML: &lt;span&gt; ile vurgu)</small></label>
+                                <input type="text" id="aboutPage-heading" data-path="aboutPage.heading" placeholder="Gıda Üreticilerinin <span>Global Büyüme Ortağı</span>">
+                            </div>
+                            <div class="form-group">
+                                <label>İçerik Metni <small style="color:#94a3b8">(Her satır ayrı paragraf olur)</small></label>
+                                <textarea id="aboutPage-body" data-path="aboutPage.body" rows="5" placeholder="Girişim Makina olarak, 1985 yılından bu yana...&#10;&#10;57'den fazla ülkeye ihracat yapan firmamız..."></textarea>
+                            </div>
                         </div>
 
-                        <hr style="margin:30px 0">
-                        <h3>SEO Ayarları</h3>
-                        <div class="form-group">
-                            <label>Sayfa Başlığı (Title)</label>
-                            <input type="text" id="seo-about-title" placeholder="Hakkımızda | Girişim Makina">
+                        <!-- İstatistikler -->
+                        <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:20px;margin-bottom:20px">
+                            <h3 style="margin-top:0;font-size:15px;color:#1e293b"><i class="fas fa-chart-bar" style="color:#e53935"></i> İstatistikler</h3>
+                            <div id="aboutPage-stats-editor"></div>
+                            <button class="btn btn-sm btn-outline" onclick="addAboutPageStat()" style="margin-top:8px"><i class="fas fa-plus"></i> İstatistik Ekle</button>
                         </div>
-                        <div class="form-group">
-                            <label>Meta Açıklama (Description)</label>
-                            <textarea id="seo-about-description" rows="3" placeholder="Girişim Makina hakkında bilgi edinin..."></textarea>
+
+                        <!-- Özellikler -->
+                        <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:20px;margin-bottom:20px">
+                            <h3 style="margin-top:0;font-size:15px;color:#1e293b"><i class="fas fa-check-circle" style="color:#e53935"></i> Öne Çıkan Özellikler</h3>
+                            <div id="aboutPage-features-editor"></div>
+                            <button class="btn btn-sm btn-outline" onclick="addAboutPageFeature()" style="margin-top:8px"><i class="fas fa-plus"></i> Özellik Ekle</button>
                         </div>
-                        <div class="form-group">
-                            <label>Anahtar Kelimeler</label>
-                            <input type="text" id="seo-about-keywords" placeholder="hakkımızda, girişim makina, paketleme makinesi üreticisi">
+
+                        <!-- SEO -->
+                        <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:20px;margin-bottom:0">
+                            <h3 style="margin-top:0;font-size:15px;color:#1e293b"><i class="fas fa-search" style="color:#e53935"></i> SEO Ayarları</h3>
+                            <div class="form-group">
+                                <label>Sayfa Başlığı (Title)</label>
+                                <input type="text" id="seo-about-title" placeholder="Hakkımızda | Girişim Makina">
+                            </div>
+                            <div class="form-group">
+                                <label>Meta Açıklama</label>
+                                <textarea id="seo-about-description" rows="2" placeholder="Girişim Makina hakkında bilgi edinin..."></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Anahtar Kelimeler</label>
+                                <input type="text" id="seo-about-keywords" placeholder="hakkımızda, girişim makina, paketleme makinesi">
+                            </div>
                         </div>
                     </div>
                 </section>

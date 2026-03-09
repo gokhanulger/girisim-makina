@@ -4128,37 +4128,27 @@ var aboutPageQuill = null;
 function initAboutPageEditor() {
     // Initialize aboutPage in siteContent if not exists
     if (!siteContent.aboutPage) {
-        siteContent.aboutPage = { heroTitle: '', heroDesc: '', heroImage: '', extraContent: '' };
+        siteContent.aboutPage = {
+            heroTitle: '', heroDesc: '', heroImage: '',
+            contentImage: '', years: '38+', heading: '',
+            body: '',
+            stats: [
+                { number: '57+', text: 'Ülke' },
+                { number: '12.000', text: 'm² Tesis' },
+                { number: '38+', text: 'Yıl Tecrübe' },
+                { number: '4', text: 'Üretim Tesisi' }
+            ],
+            features: [
+                { icon: 'fas fa-industry', text: '12.000 m² Tesis' },
+                { icon: 'fas fa-globe-europe', text: '57+ Ülke İhracat' },
+                { icon: 'fas fa-headset', text: '7/24 Destek' }
+            ]
+        };
     }
 
-    // Init Quill editor for extra content
-    var editorEl = document.getElementById('aboutPage-extraContent-editor');
-    if (editorEl && typeof Quill !== 'undefined' && !aboutPageQuill) {
-        aboutPageQuill = new Quill('#aboutPage-extraContent-editor', {
-            theme: 'snow',
-            modules: {
-                toolbar: [
-                    [{ 'header': [2, 3, false] }],
-                    ['bold', 'italic', 'underline'],
-                    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-                    ['link', 'image'],
-                    ['clean']
-                ]
-            },
-            placeholder: 'Ek içerik yazın... (Şirket tarihi, vizyon, misyon vb.)'
-        });
-
-        // Load existing content
-        if (siteContent.aboutPage.extraContent) {
-            aboutPageQuill.root.innerHTML = siteContent.aboutPage.extraContent;
-        }
-
-        // Save on change
-        aboutPageQuill.on('text-change', function() {
-            siteContent.aboutPage.extraContent = aboutPageQuill.root.innerHTML;
-            markAsChanged();
-        });
-    }
+    // Render stats editor
+    renderAboutPageStats();
+    renderAboutPageFeatures();
 
     // Load SEO fields for about page
     if (!siteContent.seo) siteContent.seo = {};
@@ -4189,6 +4179,72 @@ function initAboutPageEditor() {
             markAsChanged();
         });
     }
+}
+
+function renderAboutPageStats() {
+    var container = document.getElementById('aboutPage-stats-editor');
+    if (!container) return;
+    var stats = (siteContent.aboutPage && siteContent.aboutPage.stats) || [];
+    container.innerHTML = stats.map(function(s, i) {
+        return '<div style="display:flex;gap:8px;align-items:center;margin-bottom:8px;padding:10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px">' +
+            '<input type="text" value="' + escHtml(s.number || '') + '" placeholder="Sayı (ör: 57+)" style="width:120px" onchange="updateAboutPageStat(' + i + ',\'number\',this.value)">' +
+            '<input type="text" value="' + escHtml(s.text || '') + '" placeholder="Açıklama (ör: Ülke)" style="flex:1" onchange="updateAboutPageStat(' + i + ',\'text\',this.value)">' +
+            '<button class="btn-icon delete" onclick="removeAboutPageStat(' + i + ')"><i class="fas fa-trash"></i></button></div>';
+    }).join('');
+}
+
+function updateAboutPageStat(i, field, value) {
+    if (!siteContent.aboutPage.stats) return;
+    siteContent.aboutPage.stats[i][field] = value;
+    markAsChanged();
+}
+
+function addAboutPageStat() {
+    if (!siteContent.aboutPage.stats) siteContent.aboutPage.stats = [];
+    siteContent.aboutPage.stats.push({ number: '', text: '' });
+    renderAboutPageStats();
+    markAsChanged();
+}
+
+function removeAboutPageStat(i) {
+    siteContent.aboutPage.stats.splice(i, 1);
+    renderAboutPageStats();
+    markAsChanged();
+}
+
+function renderAboutPageFeatures() {
+    var container = document.getElementById('aboutPage-features-editor');
+    if (!container) return;
+    var feats = (siteContent.aboutPage && siteContent.aboutPage.features) || [];
+    container.innerHTML = feats.map(function(f, i) {
+        return '<div style="display:flex;gap:8px;align-items:center;margin-bottom:8px;padding:10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px">' +
+            '<div style="display:flex;gap:4px;align-items:center;width:160px">' +
+                '<input type="text" value="' + escHtml(f.icon || '') + '" placeholder="fas fa-icon" style="flex:1;font-size:12px" onchange="updateAboutPageFeature(' + i + ',\'icon\',this.value)">' +
+                '<button type="button" style="padding:4px 8px;background:#f1f5f9;border:1px solid #e2e8f0;border-radius:4px;cursor:pointer;font-size:11px" onclick="openIconPicker(function(ic){updateAboutPageFeature(' + i + ',\'icon\',ic);renderAboutPageFeatures()})"><i class="fas fa-icons"></i></button>' +
+            '</div>' +
+            '<input type="text" value="' + escHtml(f.text || '') + '" placeholder="Özellik metni" style="flex:1" onchange="updateAboutPageFeature(' + i + ',\'text\',this.value)">' +
+            (f.icon ? '<span style="width:32px;text-align:center;color:#e53935"><i class="' + escHtml(f.icon) + '"></i></span>' : '') +
+            '<button class="btn-icon delete" onclick="removeAboutPageFeature(' + i + ')"><i class="fas fa-trash"></i></button></div>';
+    }).join('');
+}
+
+function updateAboutPageFeature(i, field, value) {
+    if (!siteContent.aboutPage.features) return;
+    siteContent.aboutPage.features[i][field] = value;
+    markAsChanged();
+}
+
+function addAboutPageFeature() {
+    if (!siteContent.aboutPage.features) siteContent.aboutPage.features = [];
+    siteContent.aboutPage.features.push({ icon: 'fas fa-check', text: '' });
+    renderAboutPageFeatures();
+    markAsChanged();
+}
+
+function removeAboutPageFeature(i) {
+    siteContent.aboutPage.features.splice(i, 1);
+    renderAboutPageFeatures();
+    markAsChanged();
 }
 
 // Load Google Ads settings

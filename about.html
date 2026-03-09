@@ -374,12 +374,8 @@
             body.innerHTML = html;
         }
 
-        // About page extra content (admin HTML field)
-        var extra = document.getElementById('aboutPageExtra');
+        // About Page admin data
         var ap = content.aboutPage || {};
-        if (extra && ap.extraContent) {
-            extra.innerHTML = ap.extraContent;
-        }
 
         // Hero
         var heroTitle = document.getElementById('aboutPageTitle');
@@ -390,33 +386,57 @@
         // Hero background image
         var heroSection = document.querySelector('.about-page-hero');
         if (heroSection && ap.heroImage) {
-            heroSection.style.setProperty('--bg', "url('" + ap.heroImage + "')");
-            heroSection.querySelector(':before') || null;
             var style = document.createElement('style');
             style.textContent = '.about-page-hero::before { background-image: url(' + ap.heroImage + ') !important; }';
             document.head.appendChild(style);
         }
 
-        // Features
-        if (about.features) {
+        // Content image
+        var contentImg = document.getElementById('aboutPageImage');
+        if (contentImg && ap.contentImage) contentImg.src = ap.contentImage;
+
+        // Years badge
+        var yearsEl = document.getElementById('aboutPageYears');
+        if (yearsEl && ap.years) yearsEl.textContent = ap.years;
+
+        // Heading
+        var headingEl = document.getElementById('aboutPageHeading');
+        if (headingEl && ap.heading) headingEl.innerHTML = ap.heading;
+
+        // Body text (multi-line to paragraphs)
+        var bodyEl = document.getElementById('aboutPageBody');
+        if (bodyEl && ap.body) {
+            var paragraphs = ap.body.split(/\n\s*\n/).filter(function(p) { return p.trim(); });
+            bodyEl.innerHTML = paragraphs.map(function(p) { return '<p>' + p.trim().replace(/\n/g, '<br>') + '</p>'; }).join('');
+        } else if (bodyEl && (about.paragraph1 || about.paragraph2)) {
+            bodyEl.innerHTML = formatAboutText(about.paragraph1 || '') + formatAboutText(about.paragraph2 || '');
+        }
+
+        // Features (from aboutPage admin)
+        var apFeatures = ap.features || (about.features ? about.features : null);
+        if (apFeatures) {
             var featEl = document.getElementById('aboutPageFeatures');
             if (featEl) {
-                featEl.innerHTML = about.features.map(function(f) {
-                    return '<div class="about-page-feature"><i class="' + f.icon + '"></i><span>' + f.text + '</span></div>';
+                featEl.innerHTML = apFeatures.map(function(f) {
+                    return '<div class="about-page-feature"><i class="' + (f.icon || 'fas fa-check') + '"></i><span>' + (f.text || '') + '</span></div>';
                 }).join('');
             }
         }
 
-        // Stats from hero
-        var stats = (content.heroSlides && content.heroSlides[0] && content.heroSlides[0].stats) || (content.hero && content.hero.stats);
-        if (stats && stats.length) {
+        // Stats (from aboutPage admin, fallback to heroSlides)
+        var apStats = ap.stats || (content.heroSlides && content.heroSlides[0] && content.heroSlides[0].stats) || (content.hero && content.hero.stats);
+        if (apStats && apStats.length) {
             var statsEl = document.getElementById('aboutPageStats');
             if (statsEl) {
-                statsEl.innerHTML = stats.map(function(s) {
-                    return '<div class="about-stat"><div class="number">' + s.number + '</div><div class="text">' + s.text + '</div></div>';
+                statsEl.innerHTML = apStats.map(function(s) {
+                    return '<div class="about-stat"><div class="number">' + (s.number || '') + '</div><div class="text">' + (s.text || '') + '</div></div>';
                 }).join('');
             }
         }
+
+        // Extra content (deprecated, kept for backwards compat)
+        var extra = document.getElementById('aboutPageExtra');
+        if (extra && ap.extraContent) extra.innerHTML = ap.extraContent;
 
         // Why Us
         if (content.whyUs && content.whyUs.items) {
