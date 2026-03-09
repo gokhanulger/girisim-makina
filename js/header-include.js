@@ -939,6 +939,56 @@
         initHeader();
     }
 
+    // Rebuild mega menu when Supabase data is loaded after initial render
+    window.rebuildMegaMenu = function(content) {
+        if (!content || !content.machineCategories || !content.machineCategories.length) return;
+        var megaGrid = document.querySelector('.mega-cat-grid');
+        if (!megaGrid) return;
+
+        var cats = content.machineCategories;
+
+        function _buildSub(children, depth) {
+            if (!children || !children.length) return '';
+            return children.map(function(child) {
+                var href = child.href ? bp + child.href : '#';
+                var hasSub = child.children && child.children.length > 0;
+                var trAttr = child.titleKey ? ' data-translate="' + escapeHTML(child.titleKey) + '"' : '';
+                var sub = hasSub ? _buildSub(child.children, depth + 1) : '';
+                return '<li class="' + (hasSub ? 'has-sub' : '') + '">' +
+                    '<a href="' + href + '"' + trAttr + '>' + escapeHTML(child.title) +
+                    (hasSub ? ' <i class="fas fa-chevron-right mega-sub-arrow"></i>' : '') +
+                    '</a>' +
+                    (hasSub ? '<ul class="mega-submenu mega-submenu-depth-' + (depth + 1) + '">' + sub + '</ul>' : '') +
+                    '</li>';
+            }).join('');
+        }
+
+        var html = cats.map(function(cat) {
+            var catHref = cat.href ? bp + cat.href : '#';
+            var hasCh = cat.children && cat.children.length > 0;
+            var iconHTML = cat.icon
+                ? '<img src="' + escapeHTML(cat.icon) + '" alt="' + escapeHTML(cat.title) + '" style="width:84px;height:68px;object-fit:contain">'
+                : '';
+            var trAttr = cat.titleKey ? 'data-translate="' + escapeHTML(cat.titleKey) + '"' : '';
+            var subHTML = hasCh
+                ? '<ul class="mega-submenu mega-submenu-depth-1">' + _buildSub(cat.children, 1) + '</ul>'
+                : '';
+            return '<div class="mega-cat-item-wrap">' +
+                '<a href="' + catHref + '" class="mega-cat-item">' +
+                    '<div class="mega-cat-icon">' + iconHTML + '</div>' +
+                    '<div class="mega-cat-label" ' + trAttr + '>' + escapeHTML(cat.title) + '</div>' +
+                '</a>' +
+                subHTML +
+            '</div>';
+        }).join('');
+
+        megaGrid.innerHTML = html;
+
+        // Re-apply translations if available
+        if (typeof applyTranslations === 'function') {
+            applyTranslations();
+        }
+    };
 
     // Dil seçicilerini başlat
     function initLanguageSelectors() {

@@ -299,6 +299,11 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (siteLang === 'tr') {
                 applySiteContent(content);
             }
+
+            // Rebuild mega menu with updated machineCategories from Supabase
+            if (typeof window.rebuildMegaMenu === 'function' && content.machineCategories) {
+                window.rebuildMegaMenu(content);
+            }
         } else {
             console.log('Using static content');
         }
@@ -321,6 +326,23 @@ document.addEventListener('DOMContentLoaded', async () => {
         window._hidePageLoader();
     }
 });
+
+// Convert plain text with newlines and *bold* markers to HTML paragraphs
+function formatRichText(text) {
+    if (!text) return '';
+    // Escape HTML entities for safety
+    let safe = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    // Convert *bold* or **bold** to <strong>
+    safe = safe.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    safe = safe.replace(/\*(.+?)\*/g, '<strong>$1</strong>');
+    // Split by double newlines into paragraphs
+    const paragraphs = safe.split(/\n\s*\n/).filter(p => p.trim());
+    if (paragraphs.length <= 1) {
+        // Single paragraph - convert single newlines to <br>
+        return '<p>' + safe.replace(/\n/g, '<br>') + '</p>';
+    }
+    return paragraphs.map(p => '<p>' + p.trim().replace(/\n/g, '<br>') + '</p>').join('\n');
+}
 
 function applySiteContent(content) {
     // Contact Info (Office Phone, WhatsApp, Email) - Header & Footer
@@ -489,9 +511,42 @@ function applySiteContent(content) {
             aboutTitle.innerHTML = `${content.about.title}<br><span class="highlight">${content.about.titleHighlight}</span>`;
         }
 
-        const aboutParagraphs = document.querySelectorAll('#about .about-content > p');
-        if (aboutParagraphs[0]) aboutParagraphs[0].textContent = content.about.paragraph1;
-        if (aboutParagraphs[1]) aboutParagraphs[1].textContent = content.about.paragraph2;
+        // Combine paragraphs and render with formatting + read more
+        const aboutContent = document.querySelector('#about .about-content');
+        if (aboutContent) {
+            const oldParagraphs = aboutContent.querySelectorAll(':scope > p, :scope > .about-text-wrap, :scope > .read-more-btn');
+            oldParagraphs.forEach(p => p.remove());
+
+            const fullText = formatRichText(content.about.paragraph1 || '') +
+                (content.about.paragraph2 ? formatRichText(content.about.paragraph2) : '');
+
+            const textWrap = document.createElement('div');
+            textWrap.className = 'about-text-wrap';
+            textWrap.innerHTML = fullText;
+
+            // Insert before about-features
+            const aboutFeatures = aboutContent.querySelector('.about-features');
+            if (aboutFeatures) {
+                aboutContent.insertBefore(textWrap, aboutFeatures);
+            } else {
+                aboutContent.appendChild(textWrap);
+            }
+
+            // Add read more if text is long (more than 300 chars)
+            const plainLen = textWrap.textContent.length;
+            if (plainLen > 300) {
+                textWrap.classList.add('about-text-collapsed');
+                const readMoreBtn = document.createElement('button');
+                readMoreBtn.className = 'read-more-btn';
+                readMoreBtn.innerHTML = '<span data-translate="about.readMore">Daha Fazlasını Oku</span> <i class="fas fa-chevron-down"></i>';
+                readMoreBtn.onclick = function() {
+                    const isCollapsed = textWrap.classList.toggle('about-text-collapsed');
+                    this.querySelector('span').textContent = isCollapsed ? 'Daha Fazlasını Oku' : 'Daha Az Göster';
+                    this.querySelector('i').className = isCollapsed ? 'fas fa-chevron-down' : 'fas fa-chevron-up';
+                };
+                textWrap.after(readMoreBtn);
+            }
+        }
 
         const aboutImage = document.querySelector('#about .about-image img');
         if (aboutImage && content.about.image) {

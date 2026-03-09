@@ -462,6 +462,21 @@ const defaultSiteContent = {
 const CACHE_KEY = 'girisim_site_cache';
 const CACHE_TTL = 2 * 60 * 1000; // 2 minutes
 
+// Direct REST API fallback - bypasses Supabase SDK entirely
+async function fetchContentDirect() {
+    var url = SUPABASE_URL + '/rest/v1/site_content?select=content&id=eq.main';
+    var resp = await fetch(url, {
+        headers: {
+            'apikey': SUPABASE_ANON_KEY,
+            'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+            'Accept': 'application/vnd.pgrst.object+json'
+        }
+    });
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    var data = await resp.json();
+    return data && data.content ? data.content : null;
+}
+
 async function getCachedSiteContent() {
     // 1. Check if already loaded globally
     if (window.__siteContent) return window.__siteContent;
@@ -478,30 +493,44 @@ async function getCachedSiteContent() {
         }
     } catch (e) { /* ignore parse errors */ }
 
-    // 3. Fetch from Supabase
+    // 3. Fetch from Supabase (SDK first, then direct REST fallback)
+    var content = null;
     try {
-        if (typeof supabase !== 'undefined' && supabase !== null) {
-            let content = await loadSiteContent();
-            if (content) {
-                content = migrateMachineCategories(content);
-                window.__siteContent = content;
-                sessionStorage.setItem(CACHE_KEY, JSON.stringify({
-                    data: content, timestamp: Date.now()
-                }));
-                return content;
-            }
+        if (typeof supabase !== 'undefined' && supabase !== null && supabase.from) {
+            content = await loadSiteContent();
         }
     } catch (e) {
-        console.warn('Supabase fetch failed, trying localStorage fallback');
+        console.warn('Supabase SDK fetch failed:', e.message);
+    }
+
+    // 3b. Direct REST API fallback if SDK failed
+    if (!content || content === defaultSiteContent) {
+        try {
+            var directContent = await fetchContentDirect();
+            if (directContent) content = directContent;
+        } catch (e) {
+            console.warn('Direct REST fetch also failed:', e.message);
+        }
+    }
+
+    if (content) {
+        content = migrateMachineCategories(content);
+        window.__siteContent = content;
+        try {
+            sessionStorage.setItem(CACHE_KEY, JSON.stringify({
+                data: content, timestamp: Date.now()
+            }));
+        } catch (e) { /* storage full */ }
+        return content;
     }
 
     // 4. Fallback to localStorage
     try {
         const localContent = localStorage.getItem('girisim_site_content');
         if (localContent) {
-            const content = migrateMachineCategories(JSON.parse(localContent));
-            window.__siteContent = content;
-            return content;
+            const parsed = migrateMachineCategories(JSON.parse(localContent));
+            window.__siteContent = parsed;
+            return parsed;
         }
     } catch (e) { /* ignore */ }
 
@@ -595,14 +624,14 @@ async function loadSiteContent() {
             .single();
 
         if (error) {
-            console.error('Error loading content:', error);
-            return defaultSiteContent;
+            console.error('Error loading content via SDK:', error);
+            return null;
         }
 
-        return data?.content || defaultSiteContent;
+        return data?.content || null;
     } catch (error) {
-        console.error('Error loading content:', error);
-        return defaultSiteContent;
+        console.error('Error loading content via SDK:', error);
+        return null;
     }
 }
 

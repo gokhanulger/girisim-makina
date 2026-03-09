@@ -1435,6 +1435,67 @@ h4 { font-size: 1.25rem; }
     font-size: 17px;
 }
 
+.about-text-wrap {
+    color: var(--text-light);
+    font-size: 17px;
+    line-height: 1.7;
+}
+
+.about-text-wrap p {
+    color: var(--text-light);
+    margin-bottom: 15px;
+    font-size: 17px;
+}
+
+.about-text-wrap p:last-child {
+    margin-bottom: 0;
+}
+
+.about-text-wrap strong {
+    color: var(--text-color);
+    font-weight: 600;
+}
+
+.about-text-collapsed {
+    max-height: 160px;
+    overflow: hidden;
+    position: relative;
+}
+
+.about-text-collapsed::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: linear-gradient(transparent, var(--white, #fff));
+    pointer-events: none;
+}
+
+.read-more-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: none;
+    border: none;
+    color: var(--primary);
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 10px 0;
+    transition: color 0.3s;
+}
+
+.read-more-btn:hover {
+    color: var(--primary-dark);
+}
+
+.read-more-btn i {
+    font-size: 12px;
+    transition: transform 0.3s;
+}
+
 .about-features {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
