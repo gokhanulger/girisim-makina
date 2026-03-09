@@ -39,7 +39,9 @@
     .banner-slide.active::before{animation:kenBurns 8s ease forwards}
     @keyframes kenBurns{0%{transform:scale(1)}100%{transform:scale(1.06)}}
     .banner-overlay{position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg,rgba(26,26,46,.85) 0%,rgba(26,26,46,.4) 50%,transparent 100%),linear-gradient(to top,rgba(0,0,0,.4) 0%,transparent 40%);z-index:1}
-    .banner-slide .container{position:relative;z-index:3;height:100%;display:flex;align-items:center;padding-top:80px}
+    .banner-slide .container{position:relative;z-index:3;height:100%;display:flex;align-items:center;padding-top:80px;padding-bottom:80px}
+    .banner-content.shrink-1 h1{font-size:clamp(1.8rem,3.5vw,3rem)}
+    .banner-content.shrink-2 h1{font-size:clamp(1.4rem,2.8vw,2.2rem)}
     .banner-content{max-width:680px;color:#fff}
     .banner-content h1{font-size:clamp(2.2rem,4.5vw,3.8rem);font-weight:800;line-height:1.12;margin-bottom:22px}
     .banner-content p{font-size:1.1rem;color:rgba(255,255,255,.85);margin-bottom:32px;font-weight:300}
@@ -1308,6 +1310,9 @@
             if (bannerTotal > 1) {
                 bannerAutoInterval = setInterval(() => changeBannerSlide(1), 6000);
             }
+
+            // Fit content to hero on init + resize
+            setTimeout(fitBannerContent, 100);
         }
 
         function changeBannerSlide(direction) {
@@ -1332,6 +1337,28 @@
             }
         }
 
+        function fitBannerContent() {
+            // Check each slide's content fits within the hero area
+            bannerSlides = document.querySelectorAll('.banner-slide');
+            bannerSlides.forEach(slide => {
+                const content = slide.querySelector('.banner-content');
+                const container = slide.querySelector('.container');
+                if (!content || !container) return;
+                // Reset
+                content.classList.remove('shrink-1', 'shrink-2');
+                // Check overflow: if content height > container height
+                const containerH = container.clientHeight;
+                const contentH = content.scrollHeight;
+                if (contentH > containerH - 20) {
+                    content.classList.add('shrink-1');
+                    // Re-check after shrink-1
+                    if (content.scrollHeight > container.clientHeight - 20) {
+                        content.classList.add('shrink-2');
+                    }
+                }
+            });
+        }
+
         function updateBannerSlider() {
             bannerSlides = document.querySelectorAll('.banner-slide');
             bannerSlides.forEach((slide, i) => {
@@ -1342,7 +1369,14 @@
                 dot.classList.toggle('active', i === bannerCurrent);
             });
             updateBannerCounter();
+            fitBannerContent();
         }
+
+        // Refit on resize
+        window.addEventListener('resize', function() {
+            clearTimeout(window._fitTimer);
+            window._fitTimer = setTimeout(fitBannerContent, 200);
+        });
 
         // Expose for site-loader.js to reinit after dynamic content load
         window.initBannerSlider = initBannerSlider;
