@@ -191,11 +191,12 @@
                                 <p class="status-online">Aktif</p>
                             </div>
                         </div>
-                        <div class="dashboard-card">
+                        <div class="dashboard-card" onclick="testSupabaseConnection()" style="cursor:pointer" title="Tıklayarak bağlantıyı test et">
                             <div class="card-icon"><i class="fas fa-database"></i></div>
                             <div class="card-content">
                                 <h3>Supabase</h3>
                                 <p id="supabaseStatus">Bağlanıyor...</p>
+                                <small id="supabaseDebug" style="font-size:11px;color:#999;display:none"></small>
                             </div>
                         </div>
                         <div class="dashboard-card">

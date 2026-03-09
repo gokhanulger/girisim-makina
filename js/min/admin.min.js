@@ -7,6 +7,59 @@ let siteContent = null;
 let currentUser = null;
 let DEMO_MODE = false;
 
+// Debug: Supabase connection test (click on dashboard card)
+async function testSupabaseConnection() {
+    var dbg = document.getElementById('supabaseDebug');
+    var st = document.getElementById('supabaseStatus');
+    if (dbg) dbg.style.display = 'block';
+
+    var results = [];
+
+    // Test 1: SDK status
+    results.push('SDK: ' + (supabase ? (supabase.from ? 'OK' : 'no .from()') : 'NULL'));
+    results.push('URL: ' + (typeof SUPABASE_URL !== 'undefined' ? 'set' : 'missing'));
+
+    // Test 2: Direct fetch
+    try {
+        var t0 = Date.now();
+        var resp = await fetch(SUPABASE_URL + '/rest/v1/site_content?select=id&id=eq.main', {
+            headers: {
+                'apikey': SUPABASE_ANON_KEY,
+                'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+                'Accept': 'application/vnd.pgrst.object+json'
+            }
+        });
+        var ms = Date.now() - t0;
+        var body = await resp.text();
+        results.push('Fetch: HTTP ' + resp.status + ' (' + ms + 'ms)');
+        results.push('Body: ' + body.substring(0, 50));
+
+        if (resp.ok) {
+            st.textContent = 'Bağlantı OK';
+            st.style.color = '#4caf50';
+            // Reload content
+            loadContent();
+        }
+    } catch (e) {
+        results.push('Fetch ERR: ' + e.message);
+    }
+
+    // Test 3: SDK query
+    if (supabase && supabase.from) {
+        try {
+            var t1 = Date.now();
+            var { data, error } = await supabase.from('site_content').select('id').eq('id', 'main').single();
+            var ms2 = Date.now() - t1;
+            results.push('SDK query: ' + (error ? 'ERR ' + error.message : 'OK') + ' (' + ms2 + 'ms)');
+        } catch (e) {
+            results.push('SDK query ERR: ' + e.message);
+        }
+    }
+
+    if (dbg) dbg.textContent = results.join(' | ');
+    console.log('Supabase debug:', results);
+}
+
 // HTML escape utility to prevent XSS in template literals
 function escHtml(str) {
     if (str == null) return '';
