@@ -583,25 +583,24 @@ function applySiteContent(content) {
 
         // Machine Cards
         if (content.machines.items) {
-            const machineCards = document.querySelectorAll('#production .machine-card');
-            content.machines.items.forEach((item, index) => {
-                if (machineCards[index]) {
-                    const card = machineCards[index];
-                    const imgEl = card.querySelector('.machine-image img');
-                    if (imgEl) imgEl.src = item.image;
-                    const titleEl = card.querySelector('.machine-info h3');
-                    if (titleEl) titleEl.textContent = item.title;
-                    const descEl = card.querySelector('.machine-info > p');
-                    if (descEl) descEl.textContent = item.description;
-
-                    const featureEls = card.querySelectorAll('.machine-features li');
-                    if (item.features) item.features.forEach((feature, fIndex) => {
-                        if (featureEls[fIndex]) {
-                            featureEls[fIndex].innerHTML = `<i class="fas fa-check"></i> ${feature}`;
-                        }
-                    });
-                }
-            });
+            const machinesGrid = document.querySelector('#production .machines-grid');
+            if (machinesGrid) {
+                machinesGrid.innerHTML = content.machines.items.map(item => `
+                    <div class="machine-card">
+                        <div class="machine-image">
+                            <img loading="lazy" src="${item.image}" alt="${item.title}">
+                            <div class="machine-overlay"></div>
+                        </div>
+                        <div class="machine-info">
+                            <h3>${item.title}</h3>
+                            <p>${item.description}</p>
+                            <ul class="machine-features">
+                                ${(item.features || []).map(f => `<li><i class="fas fa-check"></i> ${f}</li>`).join('')}
+                            </ul>
+                        </div>
+                    </div>
+                `).join('');
+            }
         }
     }
 
@@ -619,18 +618,16 @@ function applySiteContent(content) {
         if (packagingSubtitle) packagingSubtitle.textContent = content.packaging.subtitle;
 
         if (content.packaging.items) {
-            const packageCards = document.querySelectorAll('#packaging .package-card');
-            content.packaging.items.forEach((item, index) => {
-                if (packageCards[index]) {
-                    const card = packageCards[index];
-                    const iconEl = card.querySelector('.package-icon i');
-                    const titleEl = card.querySelector('h3');
-                    const descEl = card.querySelector('p');
-                    if (iconEl) iconEl.className = item.icon;
-                    if (titleEl) titleEl.textContent = item.title;
-                    if (descEl) descEl.textContent = item.description;
-                }
-            });
+            const packagingGrid = document.querySelector('#packaging .packaging-grid');
+            if (packagingGrid) {
+                packagingGrid.innerHTML = content.packaging.items.map(item => `
+                    <div class="package-card">
+                        <div class="package-icon"><i class="${item.icon}"></i></div>
+                        <h3>${item.title}</h3>
+                        <p>${item.description}</p>
+                    </div>
+                `).join('');
+            }
         }
     }
 
@@ -648,14 +645,15 @@ function applySiteContent(content) {
         if (sectorsSubtitle) sectorsSubtitle.textContent = content.sectors.subtitle;
 
         if (content.sectors.items) {
-            const sectorCards = document.querySelectorAll('#sectors .sector-card');
-            content.sectors.items.forEach((item, index) => {
-                if (sectorCards[index]) {
-                    const card = sectorCards[index];
-                    card.querySelector('.sector-icon i').className = item.icon;
-                    card.querySelector('h4').textContent = item.title;
-                }
-            });
+            const sectorsGrid = document.querySelector('#sectors .sectors-grid');
+            if (sectorsGrid) {
+                sectorsGrid.innerHTML = content.sectors.items.map(item => `
+                    <div class="sector-card">
+                        <div class="sector-icon"><i class="${item.icon}"></i></div>
+                        <h4>${item.title}</h4>
+                    </div>
+                `).join('');
+            }
         }
     }
 
@@ -675,15 +673,18 @@ function applySiteContent(content) {
         }
 
         if (content.whyUs.items) {
-            const whyItems = document.querySelectorAll('.why-us-items .why-item');
-            content.whyUs.items.forEach((item, index) => {
-                if (whyItems[index]) {
-                    const el = whyItems[index];
-                    el.querySelector('.why-icon i').className = item.icon;
-                    el.querySelector('.why-text h4').textContent = item.title;
-                    el.querySelector('.why-text p').textContent = item.description;
-                }
-            });
+            const whyContainer = document.querySelector('.why-us-items');
+            if (whyContainer) {
+                whyContainer.innerHTML = content.whyUs.items.map(item => `
+                    <div class="why-item">
+                        <div class="why-icon"><i class="${item.icon}"></i></div>
+                        <div class="why-text">
+                            <h4>${item.title}</h4>
+                            <p>${item.description}</p>
+                        </div>
+                    </div>
+                `).join('');
+            }
         }
     }
 
@@ -698,18 +699,26 @@ function applySiteContent(content) {
         }
 
         if (content.testimonials.items) {
-            const testimonialCards = document.querySelectorAll('.testimonial-card');
-            content.testimonials.items.forEach((item, index) => {
-                if (testimonialCards[index]) {
-                    const card = testimonialCards[index];
-                    card.querySelector('.testimonial-content p').textContent = item.text;
-                    card.querySelector('.author-info h5').textContent = item.author;
-                    card.querySelector('.author-info span').textContent = item.role;
-                    if (item.flag) {
-                        card.querySelector('.country-flag img').src = item.flag;
-                    }
-                }
-            });
+            const testimonialsSlider = document.querySelector('.testimonials-slider');
+            if (testimonialsSlider) {
+                testimonialsSlider.innerHTML = content.testimonials.items.map(item => `
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            <i class="fas fa-quote-left"></i>
+                            <p>${item.text}</p>
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="country-flag">
+                                <img src="${item.flag || 'images/flags/tr.svg'}" alt="">
+                            </div>
+                            <div class="author-info">
+                                <h5>${item.author}</h5>
+                                <span>${item.role}</span>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
         }
     }
 
@@ -757,17 +766,18 @@ function applySiteContent(content) {
         }
 
         if (content.videos.items) {
-            const videoCards = document.querySelectorAll('.video-card');
-            content.videos.items.forEach((item, index) => {
-                if (videoCards[index]) {
-                    const card = videoCards[index];
-                    card.setAttribute('onclick', `openVideo('${item.videoId}')`);
-                    const thumbImg = card.querySelector('.video-thumbnail img');
-                    const titleEl = card.querySelector('h4');
-                    if (thumbImg) thumbImg.src = item.thumbnail;
-                    if (titleEl) titleEl.textContent = item.title;
-                }
-            });
+            const videosGrid = document.querySelector('#videos .videos-grid');
+            if (videosGrid) {
+                videosGrid.innerHTML = content.videos.items.map(item => `
+                    <div class="video-card" onclick="openVideo('${item.videoId}')">
+                        <div class="video-thumbnail">
+                            <img loading="lazy" src="${item.thumbnail}" alt="${item.title}">
+                            <div class="play-button"><i class="fas fa-play"></i></div>
+                        </div>
+                        <h4>${item.title}</h4>
+                    </div>
+                `).join('');
+            }
         }
     }
 
