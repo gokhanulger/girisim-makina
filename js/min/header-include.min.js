@@ -472,7 +472,7 @@
                 <div class="footer-links">
                     <h4 data-translate="footer.corporate">Kurumsal</h4>
                     <ul>
-                        <li><a href="${basePath}index.html#about" data-translate="dropdown.about">Hakkımızda</a></li>
+                        <li><a href="${basePath}about.html" data-translate="dropdown.about">Hakkımızda</a></li>
                         <li><a href="${basePath}hr.html" data-translate="dropdown.hr">İnsan Kaynakları</a></li>
                         <li><a href="${basePath}blog.html" data-translate="nav.blog">Blog</a></li>
                         <li><a href="${basePath}index.html#videos" data-translate="nav.videos">Videolar</a></li>

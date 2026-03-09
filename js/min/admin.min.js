@@ -514,6 +514,7 @@ function populateAllForms() {
     renderContactEmails();
     renderContactInfo();
     renderBlogPosts();
+    initAboutPageEditor();
     loadGoogleAdsSettings();
     loadTikTokPixelSettings();
 
@@ -4114,6 +4115,77 @@ function saveTikTokPixelSettings() {
 
     updateActiveIntegrations();
     showToast('TikTok Pixel ayarları kaydedildi!', 'success');
+}
+
+// ============================================
+// About Page Editor
+// ============================================
+var aboutPageQuill = null;
+
+function initAboutPageEditor() {
+    // Initialize aboutPage in siteContent if not exists
+    if (!siteContent.aboutPage) {
+        siteContent.aboutPage = { heroTitle: '', heroDesc: '', heroImage: '', extraContent: '' };
+    }
+
+    // Init Quill editor for extra content
+    var editorEl = document.getElementById('aboutPage-extraContent-editor');
+    if (editorEl && typeof Quill !== 'undefined' && !aboutPageQuill) {
+        aboutPageQuill = new Quill('#aboutPage-extraContent-editor', {
+            theme: 'snow',
+            modules: {
+                toolbar: [
+                    [{ 'header': [2, 3, false] }],
+                    ['bold', 'italic', 'underline'],
+                    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                    ['link', 'image'],
+                    ['clean']
+                ]
+            },
+            placeholder: 'Ek içerik yazın... (Şirket tarihi, vizyon, misyon vb.)'
+        });
+
+        // Load existing content
+        if (siteContent.aboutPage.extraContent) {
+            aboutPageQuill.root.innerHTML = siteContent.aboutPage.extraContent;
+        }
+
+        // Save on change
+        aboutPageQuill.on('text-change', function() {
+            siteContent.aboutPage.extraContent = aboutPageQuill.root.innerHTML;
+            markAsChanged();
+        });
+    }
+
+    // Load SEO fields for about page
+    if (!siteContent.seo) siteContent.seo = {};
+    if (!siteContent.seo.about) siteContent.seo.about = { title: '', description: '', keywords: '' };
+
+    var seoTitle = document.getElementById('seo-about-title');
+    var seoDesc = document.getElementById('seo-about-description');
+    var seoKeywords = document.getElementById('seo-about-keywords');
+
+    if (seoTitle) {
+        seoTitle.value = siteContent.seo.about.title || '';
+        seoTitle.addEventListener('input', function() {
+            siteContent.seo.about.title = this.value;
+            markAsChanged();
+        });
+    }
+    if (seoDesc) {
+        seoDesc.value = siteContent.seo.about.description || '';
+        seoDesc.addEventListener('input', function() {
+            siteContent.seo.about.description = this.value;
+            markAsChanged();
+        });
+    }
+    if (seoKeywords) {
+        seoKeywords.value = siteContent.seo.about.keywords || '';
+        seoKeywords.addEventListener('input', function() {
+            siteContent.seo.about.keywords = this.value;
+            markAsChanged();
+        });
+    }
 }
 
 // Load Google Ads settings

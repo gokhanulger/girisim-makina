@@ -72,6 +72,9 @@
                     <li data-section="about">
                         <a href="#"><i class="fas fa-info-circle"></i> Hakkımızda</a>
                     </li>
+                    <li data-section="about-page">
+                        <a href="#"><i class="fas fa-file-alt"></i> Hakkımızda Sayfası</a>
+                    </li>
                     <li data-section="machines">
                         <a href="#"><i class="fas fa-cogs"></i> Üretim Hatları</a>
                     </li>
@@ -435,6 +438,54 @@
                         <h3>Özellikler</h3>
                         <div class="features-editor" id="about-features-editor">
                             <!-- Features will be rendered here -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- About Page Section -->
+                <section id="section-about-page" class="admin-section">
+                    <div class="section-card">
+                        <h2><i class="fas fa-file-alt"></i> Hakkımızda Sayfası</h2>
+                        <p style="color:#666;margin-bottom:20px">Bu bölüm <a href="about.html" target="_blank">about.html</a> sayfasını kontrol eder. Uzun açıklamalar, HTML içerik, SEO ve meta bilgileri buradan düzenlenebilir.</p>
+
+                        <h3>Hero Bölümü</h3>
+                        <div class="form-group">
+                            <label>Hero Başlık (HTML destekli)</label>
+                            <input type="text" id="aboutPage-heroTitle" data-path="aboutPage.heroTitle" placeholder="Hakkımızda - <span>Girişim Makina</span>">
+                        </div>
+                        <div class="form-group">
+                            <label>Hero Açıklama</label>
+                            <input type="text" id="aboutPage-heroDesc" data-path="aboutPage.heroDesc" placeholder="1985'ten beri gıda işleme ve paketleme...">
+                        </div>
+                        <div class="form-group">
+                            <label>Hero Arka Plan Görseli</label>
+                            <div class="image-upload-group">
+                                <input type="url" id="aboutPage-heroImage" data-path="aboutPage.heroImage" placeholder="URL girin veya dosya yükleyin">
+                                <label class="upload-btn" for="upload-aboutpage-hero"><i class="fas fa-upload"></i> Yükle</label>
+                                <input type="file" id="upload-aboutpage-hero" accept="image/*" onchange="handleImageUpload(this, 'aboutPage-heroImage')" hidden>
+                            </div>
+                        </div>
+
+                        <hr style="margin:30px 0">
+                        <h3>Ek İçerik (HTML Editör)</h3>
+                        <p style="color:#888;font-size:13px;margin-bottom:10px">Bu alan sayfanın alt kısmında görünür. HTML kullanabilirsiniz: &lt;h2&gt;, &lt;h3&gt;, &lt;p&gt;, &lt;strong&gt;, &lt;ul&gt;, &lt;li&gt;, &lt;img&gt; vb.</p>
+                        <div class="form-group">
+                            <div id="aboutPage-extraContent-editor" style="min-height:250px"></div>
+                        </div>
+
+                        <hr style="margin:30px 0">
+                        <h3>SEO Ayarları</h3>
+                        <div class="form-group">
+                            <label>Sayfa Başlığı (Title)</label>
+                            <input type="text" id="seo-about-title" placeholder="Hakkımızda | Girişim Makina">
+                        </div>
+                        <div class="form-group">
+                            <label>Meta Açıklama (Description)</label>
+                            <textarea id="seo-about-description" rows="3" placeholder="Girişim Makina hakkında bilgi edinin..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Anahtar Kelimeler</label>
+                            <input type="text" id="seo-about-keywords" placeholder="hakkımızda, girişim makina, paketleme makinesi üreticisi">
                         </div>
                     </div>
                 </section>

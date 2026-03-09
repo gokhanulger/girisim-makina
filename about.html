@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-14P41FEGDQ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-14P41FEGDQ');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Girişim Makina Hakkında - 1985'ten beri gıda işleme ve paketleme makineleri üretiminde lider">
+    <title>Hakkımızda | Girişim Makina</title>
+    <link rel="stylesheet" href="css/min/style.min.css?v=20260309b">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <script defer src="js/min/lang-detect.min.js?v=20260224c"></script>
+    <style>
+        .about-page-hero {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: white;
+            padding: 120px 0 80px;
+            position: relative;
+            overflow: hidden;
+        }
+        .about-page-hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: url('images/fabrika-ici-1.jpeg') center/cover no-repeat;
+            opacity: 0.15;
+        }
+        .about-page-hero .container { position: relative; z-index: 1; }
+        .about-page-hero h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+        .about-page-hero h1 span { color: #e63946; }
+        .about-page-hero .hero-desc {
+            font-size: 1.15rem;
+            opacity: 0.85;
+            max-width: 640px;
+            line-height: 1.7;
+        }
+
+        /* About Page Body */
+        .about-page-content {
+            padding: 80px 0;
+        }
+        .about-page-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: start;
+            margin-bottom: 60px;
+        }
+        .about-page-image {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+        .about-page-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 16px;
+            object-fit: cover;
+        }
+        .about-page-image .exp-badge {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: var(--primary, #e63946);
+            color: white;
+            padding: 16px 24px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 8px 24px rgba(230,57,70,0.4);
+        }
+        .about-page-image .exp-badge .years {
+            display: block;
+            font-size: 2rem;
+            font-weight: 800;
+            line-height: 1;
+        }
+        .about-page-image .exp-badge .label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.9;
+        }
+
+        .about-page-text h2 {
+            font-size: 2rem;
+            margin-bottom: 24px;
+            color: #1a1a2e;
+        }
+        .about-page-text h2 span { color: var(--primary, #e63946); }
+
+        .about-page-body {
+            color: #555;
+            font-size: 16px;
+            line-height: 1.85;
+        }
+        .about-page-body p {
+            margin-bottom: 18px;
+        }
+        .about-page-body strong {
+            color: #333;
+            font-weight: 600;
+        }
+
+        /* Features Grid */
+        .about-page-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+            margin-top: 50px;
+        }
+        .about-page-feature {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 24px;
+            background: #f8f9fa;
+            border-radius: 14px;
+            transition: all 0.3s;
+        }
+        .about-page-feature:hover {
+            background: white;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+            transform: translateY(-2px);
+        }
+        .about-page-feature i {
+            font-size: 28px;
+            color: var(--primary, #e63946);
+            width: 56px;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(230,57,70,0.08);
+            border-radius: 12px;
+            flex-shrink: 0;
+        }
+        .about-page-feature span {
+            font-weight: 600;
+            font-size: 15px;
+            color: #333;
+        }
+
+        /* Stats Section */
+        .about-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            margin: 60px 0;
+            padding: 50px 0;
+            border-top: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+        }
+        .about-stat {
+            text-align: center;
+        }
+        .about-stat .number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary, #e63946);
+            line-height: 1;
+        }
+        .about-stat .text {
+            font-size: 14px;
+            color: #888;
+            margin-top: 8px;
+        }
+
+        /* Why Us on about page */
+        .about-why-section {
+            padding: 60px 0;
+            background: #f8f9fa;
+        }
+        .about-why-section h2 {
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .about-why-section h2 span { color: var(--primary, #e63946); }
+        .about-why-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+        .about-why-card {
+            background: white;
+            padding: 32px;
+            border-radius: 14px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+            transition: all 0.3s;
+        }
+        .about-why-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+        }
+        .about-why-card i {
+            font-size: 28px;
+            color: var(--primary, #e63946);
+            margin-bottom: 16px;
+            display: block;
+        }
+        .about-why-card h4 {
+            margin-bottom: 10px;
+            font-size: 17px;
+        }
+        .about-why-card p {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* CTA */
+        .about-cta {
+            text-align: center;
+            padding: 60px 0;
+        }
+        .about-cta h2 { margin-bottom: 16px; font-size: 1.8rem; }
+        .about-cta p { color: #666; margin-bottom: 30px; max-width: 500px; margin-left: auto; margin-right: auto; }
+
+        @media (max-width: 768px) {
+            .about-page-hero h1 { font-size: 2rem; }
+            .about-page-grid { grid-template-columns: 1fr; gap: 30px; }
+            .about-stats { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+            .about-stat .number { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="page-loader" id="pageLoader"><style>.page-loader{position:fixed;top:0;left:0;width:100%;height:100%;background:#fff;z-index:999999;display:flex;align-items:center;justify-content:center;flex-direction:column;opacity:1;transition:opacity .4s ease}.page-loader.fade-out{opacity:0;pointer-events:none}.page-loader-text{font-size:28px;font-weight:800;color:#e63946;letter-spacing:3px;animation:lp 1.2s ease-in-out infinite}.page-loader-sub{font-size:11px;font-weight:600;color:#555;letter-spacing:4px;margin-top:6px;transition:opacity .3s ease}@keyframes lp{0%,100%{opacity:.3}50%{opacity:1}}</style><div class="page-loader-text">GİRİŞİM MAKİNA</div><div class="page-loader-sub" id="loaderSub">PAKETLEME MAKİNALARI</div></div><script>!function(){var m={tr:"PAKETLEME MAKİNALARI",en:"PACKAGING MACHINERY",ru:"УПАКОВОЧНОЕ ОБОРУДОВАНИЕ",ar:"آلات التعبئة والتغليف",fr:"MACHINES D'EMBALLAGE",pt:"MÁQUINAS DE EMBALAGEM",es:"MÁQUINAS DE ENVASADO"},l;try{l=localStorage.getItem("girisim_lang")}catch(e){}l=l||"tr";var e=document.getElementById("loaderSub");if(e&&m[l])e.textContent=m[l]}();</script><script>window._hidePageLoader=function(){var e=document.getElementById('pageLoader');if(e&&!e._h){e._h=1;e.classList.add('fade-out');setTimeout(function(){e.remove()},500)}};setTimeout(window._hidePageLoader,4000);</script>
+
+    <!-- Header -->
+    <div id="header-placeholder"></div>
+
+    <!-- Hero -->
+    <section class="about-page-hero">
+        <div class="container">
+            <h1 id="aboutPageTitle">Hakkımızda - <span>Girişim Makina</span></h1>
+            <p class="hero-desc" id="aboutPageHeroDesc">1985'ten beri gıda işleme ve paketleme makineleri üretiminde güvenilir çözüm ortağınız.</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="about-page-content">
+        <div class="container">
+            <div class="about-page-grid">
+                <div class="about-page-image">
+                    <img id="aboutPageImage" src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800" alt="Girişim Makina Fabrika">
+                    <div class="exp-badge">
+                        <span class="years" id="aboutPageYears">38+</span>
+                        <span class="label">Yıllık Tecrübe</span>
+                    </div>
+                </div>
+                <div class="about-page-text">
+                    <h2 id="aboutPageHeading">Gıda Üreticilerinin <span>Global Büyüme Ortağı</span></h2>
+                    <div class="about-page-body" id="aboutPageBody">
+                        <p>Girişim Makina olarak, 1985 yılından bu yana gıda işleme ve paketleme sektöründe faaliyet göstermekteyiz.</p>
+                        <p>57'den fazla ülkeye ihracat yapan firmamız, dünya standartlarında kalite ve müşteri memnuniyeti odaklı hizmet sunmaktadır.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Features -->
+            <div class="about-page-features" id="aboutPageFeatures">
+                <div class="about-page-feature"><i class="fas fa-industry"></i><span>12.000 m² Tesis</span></div>
+                <div class="about-page-feature"><i class="fas fa-globe-europe"></i><span>57+ Ülke İhracat</span></div>
+                <div class="about-page-feature"><i class="fas fa-headset"></i><span>7/24 Destek</span></div>
+            </div>
+
+            <!-- Stats -->
+            <div class="about-stats" id="aboutPageStats">
+                <div class="about-stat"><div class="number">57+</div><div class="text">Ülke</div></div>
+                <div class="about-stat"><div class="number">12.000</div><div class="text">m² Tesis</div></div>
+                <div class="about-stat"><div class="number">38+</div><div class="text">Yıl Tecrübe</div></div>
+                <div class="about-stat"><div class="number">4</div><div class="text">Üretim Tesisi</div></div>
+            </div>
+
+            <!-- About Page Extra Content (admin-editable HTML) -->
+            <div class="about-page-body" id="aboutPageExtra"></div>
+        </div>
+    </section>
+
+    <!-- Why Us Section -->
+    <section class="about-why-section">
+        <div class="container">
+            <h2 id="aboutWhyTitle">Neden <span>Girişim Makina?</span></h2>
+            <div class="about-why-grid" id="aboutWhyGrid">
+                <!-- Filled dynamically from siteContent.whyUs.items -->
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="about-cta">
+        <div class="container">
+            <h2>Projeniz İçin Teklif Alın</h2>
+            <p>Uzman ekibimiz size en uygun üretim ve paketleme çözümünü sunmak için hazır.</p>
+            <a href="https://wa.me/905468792927?text=Bilgi%20almak%20istiyorum" target="_blank" class="btn btn-primary btn-lg">
+                <i class="fab fa-whatsapp"></i> WhatsApp ile İletişim
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Scripts -->
+    <script defer src="js/min/main.min.js?v=20260225f"></script>
+    <script defer src="js/min/translations.min.js?v=20260309a"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script defer src="js/min/supabase-init.min.js?v=20260309c"></script>
+    <script defer src="js/min/site-loader.min.js?v=20260309b"></script>
+    <script defer src="js/min/seo-loader.min.js?v=20260224b"></script>
+    <script defer src="js/min/header-include.min.js?v=20260309b"></script>
+
+    <script>
+    // Load about page content from Supabase
+    document.addEventListener('DOMContentLoaded', async function() {
+        var content = null;
+        try {
+            if (typeof getCachedSiteContent === 'function') {
+                content = await getCachedSiteContent();
+            }
+        } catch(e) {}
+
+        if (!content) {
+            try {
+                var resp = await fetch(
+                    'https://yvptjiowxqllxfzlkosy.supabase.co/rest/v1/site_content?select=content&id=eq.main',
+                    { headers: {
+                        'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl2cHRqaW93eHFsbHhmemxrb3N5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njk0NTQxMTksImV4cCI6MjA4NTAzMDExOX0.9soLQNOJZEpQx__vhJEQzB9SBImPi-ccceB-23WNWAQ',
+                        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl2cHRqaW93eHFsbHhmemxrb3N5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njk0NTQxMTksImV4cCI6MjA4NTAzMDExOX0.9soLQNOJZEpQx__vhJEQzB9SBImPi-ccceB-23WNWAQ',
+                        'Accept': 'application/vnd.pgrst.object+json'
+                    }}
+                );
+                if (resp.ok) {
+                    var json = await resp.json();
+                    if (json && json.content) content = json.content;
+                }
+            } catch(e) {}
+        }
+
+        if (!content) return;
+
+        // Apply about section data
+        var about = content.about || {};
+        var heading = document.getElementById('aboutPageHeading');
+        if (heading) heading.innerHTML = (about.title || 'Gıda Üreticilerinin') + ' <span>' + (about.titleHighlight || '') + '</span>';
+
+        var img = document.getElementById('aboutPageImage');
+        if (img && about.image) img.src = about.image;
+
+        var years = document.getElementById('aboutPageYears');
+        if (years && about.experienceYears) years.textContent = about.experienceYears;
+
+        // Rich text body
+        var body = document.getElementById('aboutPageBody');
+        if (body && (about.paragraph1 || about.paragraph2)) {
+            var html = formatAboutText(about.paragraph1 || '') + formatAboutText(about.paragraph2 || '');
+            body.innerHTML = html;
+        }
+
+        // About page extra content (admin HTML field)
+        var extra = document.getElementById('aboutPageExtra');
+        var ap = content.aboutPage || {};
+        if (extra && ap.extraContent) {
+            extra.innerHTML = ap.extraContent;
+        }
+
+        // Hero
+        var heroTitle = document.getElementById('aboutPageTitle');
+        if (heroTitle && ap.heroTitle) heroTitle.innerHTML = ap.heroTitle;
+        var heroDesc = document.getElementById('aboutPageHeroDesc');
+        if (heroDesc && ap.heroDesc) heroDesc.textContent = ap.heroDesc;
+
+        // Hero background image
+        var heroSection = document.querySelector('.about-page-hero');
+        if (heroSection && ap.heroImage) {
+            heroSection.style.setProperty('--bg', "url('" + ap.heroImage + "')");
+            heroSection.querySelector(':before') || null;
+            var style = document.createElement('style');
+            style.textContent = '.about-page-hero::before { background-image: url(' + ap.heroImage + ') !important; }';
+            document.head.appendChild(style);
+        }
+
+        // Features
+        if (about.features) {
+            var featEl = document.getElementById('aboutPageFeatures');
+            if (featEl) {
+                featEl.innerHTML = about.features.map(function(f) {
+                    return '<div class="about-page-feature"><i class="' + f.icon + '"></i><span>' + f.text + '</span></div>';
+                }).join('');
+            }
+        }
+
+        // Stats from hero
+        var stats = (content.heroSlides && content.heroSlides[0] && content.heroSlides[0].stats) || (content.hero && content.hero.stats);
+        if (stats && stats.length) {
+            var statsEl = document.getElementById('aboutPageStats');
+            if (statsEl) {
+                statsEl.innerHTML = stats.map(function(s) {
+                    return '<div class="about-stat"><div class="number">' + s.number + '</div><div class="text">' + s.text + '</div></div>';
+                }).join('');
+            }
+        }
+
+        // Why Us
+        if (content.whyUs && content.whyUs.items) {
+            var whyTitle = document.getElementById('aboutWhyTitle');
+            if (whyTitle) whyTitle.innerHTML = (content.whyUs.title || 'Neden') + ' <span>' + (content.whyUs.titleHighlight || 'Girişim Makina?') + '</span>';
+
+            var whyGrid = document.getElementById('aboutWhyGrid');
+            if (whyGrid) {
+                whyGrid.innerHTML = content.whyUs.items.map(function(item) {
+                    return '<div class="about-why-card"><i class="' + item.icon + '"></i><h4>' + item.title + '</h4><p>' + item.description + '</p></div>';
+                }).join('');
+            }
+        }
+
+        // CTA WhatsApp
+        if (content.cta && content.cta.whatsapp) {
+            var ctaBtn = document.querySelector('.about-cta .btn-primary');
+            if (ctaBtn) ctaBtn.href = 'https://wa.me/' + content.cta.whatsapp + '?text=Bilgi%20almak%20istiyorum';
+        }
+
+        // SEO from admin
+        if (content.seo && content.seo.about) {
+            var seo = content.seo.about;
+            if (seo.title) document.title = seo.title;
+            var metaDesc = document.querySelector('meta[name="description"]');
+            if (metaDesc && seo.description) metaDesc.content = seo.description;
+        }
+
+        // Hide loader
+        if (typeof window._hidePageLoader === 'function') window._hidePageLoader();
+    });
+
+    function formatAboutText(text) {
+        if (!text) return '';
+        var safe = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        safe = safe.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+        safe = safe.replace(/\*(.+?)\*/g, '<strong>$1</strong>');
+        var paragraphs = safe.split(/\n\s*\n/).filter(function(p) { return p.trim(); });
+        if (paragraphs.length <= 1) return '<p>' + safe.replace(/\n/g, '<br>') + '</p>';
+        return paragraphs.map(function(p) { return '<p>' + p.trim().replace(/\n/g, '<br>') + '</p>'; }).join('\n');
+    }
+    </script>
+</body>
+</html>
