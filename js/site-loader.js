@@ -305,17 +305,23 @@ document.addEventListener('DOMContentLoaded', async () => {
                 window.rebuildMegaMenu(content);
             }
 
-            // Apply homepage layout independently (in case applySiteContent had partial errors)
-            try {
-                if (content.homepageLayout && content.homepageLayout.length) {
-                    console.log('Homepage layout data:', JSON.stringify(content.homepageLayout.map(function(s) { return s.id + ':' + (s.visible !== false); })));
-                    applyHomepageLayout(content.homepageLayout);
-                } else {
-                    console.log('No homepageLayout in content');
+            // Apply homepage layout with delay to ensure all DOM manipulations are done
+            setTimeout(function() {
+                try {
+                    if (content.homepageLayout && content.homepageLayout.length) {
+                        console.log('[LAYOUT] Applying layout order:', content.homepageLayout.map(function(s) { return s.id; }).join(' → '));
+                        applyHomepageLayout(content.homepageLayout);
+                        // Verify result
+                        var result = [];
+                        document.querySelectorAll('[data-section-id]').forEach(function(el) { result.push(el.getAttribute('data-section-id')); });
+                        console.log('[LAYOUT] Final DOM order:', result.join(' → '));
+                    } else {
+                        console.log('[LAYOUT] No homepageLayout in content');
+                    }
+                } catch (e) {
+                    console.error('[LAYOUT] Error:', e);
                 }
-            } catch (e) {
-                console.error('Independent homepage layout error:', e);
-            }
+            }, 100);
         } else {
             console.log('Using static content');
         }
@@ -996,28 +1002,35 @@ function applyHomepageLayout(layout) {
     }
 
     var allSections = document.querySelectorAll('[data-section-id]');
-    console.log('applyHomepageLayout: found ' + allSections.length + ' sections, layout has ' + layout.length + ' items');
+    console.log('[LAYOUT] Found ' + allSections.length + ' sections in DOM, layout has ' + layout.length + ' items');
     if (!allSections.length) return;
 
+    // Log current DOM order before reorder
+    var beforeOrder = [];
+    allSections.forEach(function(el) { beforeOrder.push(el.getAttribute('data-section-id')); });
+    console.log('[LAYOUT] DOM order BEFORE:', beforeOrder.join(' → '));
+
     var parent = allSections[0].parentNode;
+    console.log('[LAYOUT] Parent element:', parent.tagName, parent.id || '');
+
     var sectionMap = {};
     allSections.forEach(function(el) {
         sectionMap[el.getAttribute('data-section-id')] = el;
     });
 
-    // Find a stable anchor: footer-placeholder, footer element, or first non-section sibling after sections
-    var anchor = document.getElementById('footer-placeholder')
-        || document.querySelector('footer')
-        || document.querySelector('.footer');
+    // Find anchor: footer-placeholder
+    var anchor = document.getElementById('footer-placeholder');
+    console.log('[LAYOUT] Anchor (footer-placeholder):', anchor ? 'FOUND' : 'NOT FOUND');
 
-    // If anchor is not a direct child of parent, find the first non-section element after the last section
-    if (!anchor || anchor.parentNode !== parent) {
-        var lastSec = allSections[allSections.length - 1];
-        var next = lastSec.nextElementSibling;
-        while (next && next.hasAttribute('data-section-id')) {
-            next = next.nextElementSibling;
-        }
-        anchor = next; // could be null, which means appendChild
+    if (!anchor) {
+        anchor = document.querySelector('footer') || document.querySelector('.footer');
+        console.log('[LAYOUT] Fallback anchor:', anchor ? anchor.tagName : 'NONE');
+    }
+
+    // Verify anchor is in same parent
+    if (anchor && anchor.parentNode !== parent) {
+        console.log('[LAYOUT] WARNING: anchor parent mismatch! anchor.parent=' + anchor.parentNode.tagName + ', sections.parent=' + parent.tagName);
+        anchor = null;
     }
 
     // Apply visibility
@@ -1031,10 +1044,10 @@ function applyHomepageLayout(layout) {
     layout.forEach(function(item) {
         var el = sectionMap[item.id];
         if (!el) {
-            console.log('applyHomepageLayout: section not found: ' + item.id);
+            console.log('[LAYOUT] Section not found in DOM: ' + item.id);
             return;
         }
-        if (anchor && anchor.parentNode === parent) {
+        if (anchor) {
             parent.insertBefore(el, anchor);
         } else {
             parent.appendChild(el);
@@ -1046,7 +1059,8 @@ function applyHomepageLayout(layout) {
         var id = el.getAttribute('data-section-id');
         var inLayout = layout.some(function(item) { return item.id === id; });
         if (!inLayout) {
-            if (anchor && anchor.parentNode === parent) {
+            console.log('[LAYOUT] Extra section not in layout: ' + id);
+            if (anchor) {
                 parent.insertBefore(el, anchor);
             } else {
                 parent.appendChild(el);
@@ -1054,5 +1068,8 @@ function applyHomepageLayout(layout) {
         }
     });
 
-    console.log('applyHomepageLayout: reorder complete');
+    // Log final order
+    var afterOrder = [];
+    document.querySelectorAll('[data-section-id]').forEach(function(el) { afterOrder.push(el.getAttribute('data-section-id')); });
+    console.log('[LAYOUT] DOM order AFTER:', afterOrder.join(' → '));
 }
