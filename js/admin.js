@@ -768,6 +768,7 @@ function updateHeroStat(index, field, value) {
 // Homepage Layout - Drag & Drop Section Ordering
 // =============================================
 
+// Optimal default layout: Tanıtım → Ürünler → Güven → Aksiyon
 var homepageSectionsDefault = [
     { id: 'hero-banner', label: 'Hero Slider', icon: 'fas fa-desktop', visible: true, fixed: true },
     { id: 'about', label: 'Hakkımızda', icon: 'fas fa-info-circle', visible: true },
@@ -776,12 +777,20 @@ var homepageSectionsDefault = [
     { id: 'sectors', label: 'Paketlediğimiz Ürünler', icon: 'fas fa-industry', visible: true },
     { id: 'why-us', label: 'Neden Girişim Makina?', icon: 'fas fa-star', visible: true },
     { id: 'testimonials', label: 'Müşterilerimiz Ne Diyor?', icon: 'fas fa-comments', visible: true },
-    { id: 'fuarlar', label: 'Fuar Katılımlarımız', icon: 'fas fa-calendar-alt', visible: true },
     { id: 'videos', label: 'Video Galeri', icon: 'fas fa-video', visible: true },
+    { id: 'fuarlar', label: 'Fuar Katılımlarımız', icon: 'fas fa-calendar-alt', visible: true },
     { id: 'cta', label: 'Ücretsiz Teklif Alın', icon: 'fas fa-bullhorn', visible: true },
     { id: 'contact', label: 'İletişim Formu', icon: 'fas fa-envelope', visible: true },
     { id: 'map', label: 'Harita', icon: 'fas fa-map-marker-alt', visible: true }
 ];
+
+function resetHomepageLayoutToDefault() {
+    if (!confirm('Sıralama varsayılana dönecek. Emin misiniz?')) return;
+    siteContent.homepageLayout = JSON.parse(JSON.stringify(homepageSectionsDefault));
+    markAsChanged();
+    renderHomepageLayout();
+    showToast('Varsayılan sıralama yüklendi. "Tümünü Kaydet" ile yayınlayın.', 'success');
+}
 
 function initHomepageLayout() {
     if (!siteContent.homepageLayout || !Array.isArray(siteContent.homepageLayout) || siteContent.homepageLayout.length === 0) {
