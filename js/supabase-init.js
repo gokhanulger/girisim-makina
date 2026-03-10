@@ -464,7 +464,7 @@ const defaultSiteContent = {
 // ============================================
 
 const CACHE_KEY = 'girisim_site_cache';
-const CACHE_TTL = 2 * 60 * 1000; // 2 minutes
+const CACHE_TTL = 10 * 1000; // 10 seconds - short cache for quick admin updates
 
 // Direct REST API fallback - bypasses Supabase SDK entirely
 async function fetchContentDirect() {
