@@ -4710,8 +4710,14 @@ function createNewProduct() {
         .replace(/ı/g,'i').replace(/ö/g,'o').replace(/ç/g,'c')
         .replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
 
-    // Check duplicate
-    if (_builtinProductIds.indexOf(slug) > -1 || (siteContent.productPages && siteContent.productPages[slug] && siteContent.productPages[slug]._isCustom)) {
+    // Validate slug
+    if (!slug) {
+        showToast('Geçersiz ürün adı! Lütfen harf veya rakam içeren bir isim girin.', 'error');
+        return;
+    }
+
+    // Check duplicate (both builtin and custom)
+    if (_builtinProductIds.indexOf(slug) > -1 || (siteContent.productPages && siteContent.productPages[slug])) {
         showToast('Bu ID zaten mevcut: ' + slug, 'error');
         return;
     }
