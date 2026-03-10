@@ -1028,28 +1028,43 @@
     <!-- Shared Header/Footer -->
     <script src="js/min/header-include.min.js?v=20260310c" defer></script>
     <script>
-        // Form submission - WhatsApp redirect
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
+        // Form submission - Web3Forms email
+        document.getElementById('contactForm').addEventListener('submit', async function(e) {
             e.preventDefault();
-            const formData = new FormData(this);
-            const name = formData.get('name');
-            const company = formData.get('company');
-            const email = formData.get('email');
-            const phone = formData.get('phone');
-            const subject = formData.get('subject');
-            const message = formData.get('message');
+            const form = this;
+            const btn = form.querySelector('button[type="submit"]');
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Gönderiliyor...';
+            btn.disabled = true;
 
-            var _t = (typeof girisimTranslations !== 'undefined') ? girisimTranslations.t : function(k){return null;};
-            var _hi = _t('inline.hello') || 'Merhaba';
-            var _prod = _t('inline.interestedProduct') || 'İlgilendiğim ürün';
-            var _msg = _t('inline.message') || 'Mesaj';
-            var _cont = _t('inline.contactInfo') || 'İletişim';
-            const whatsappMessage = `${_hi}, ben ${name}${company ? ' (' + company + ')' : ''}.%0A%0A` +
-                `${_prod}: ${subject}%0A%0A` +
-                `${_msg}: ${message}%0A%0A` +
-                `${_cont}: ${email} / ${phone}`;
+            const formData = new FormData(form);
+            const payload = new FormData();
+            payload.append('access_key', 'a590c8e5-6cb3-452f-9bf6-f17d591d86f8');
+            payload.append('subject', 'Teklif Talebi: ' + (formData.get('subject') || '') + ' - ' + (formData.get('company') || ''));
+            payload.append('from_name', 'Girişim Makina Web Sitesi');
+            payload.append('replyto', formData.get('email') || '');
+            payload.append('Ad Soyad', formData.get('name') || '');
+            payload.append('E-posta', formData.get('email') || '');
+            payload.append('Telefon', formData.get('phone') || '-');
+            payload.append('Firma', formData.get('company') || '-');
+            payload.append('Konu', formData.get('subject') || '-');
+            payload.append('Mesaj', formData.get('message') || '-');
 
-            window.open(`https://wa.me/905468792927?text=${whatsappMessage}`, '_blank');
+            try {
+                const resp = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: payload });
+                const result = await resp.json();
+                if (result.success) {
+                    form.innerHTML = '<div style="text-align:center;padding:40px 0"><i class="fas fa-check-circle" style="font-size:48px;color:#4caf50;margin-bottom:16px;display:block"></i><h4>Talebiniz Alındı!</h4><p style="color:#666;margin-top:8px">En kısa sürede size dönüş yapacağız.</p></div>';
+                } else {
+                    alert('Hata: ' + (result.message || 'Bilinmeyen hata'));
+                    btn.innerHTML = originalHTML;
+                    btn.disabled = false;
+                }
+            } catch (err) {
+                alert('Bağlantı hatası. Lütfen tekrar deneyin.');
+                btn.innerHTML = originalHTML;
+                btn.disabled = false;
+            }
         });
 
         // Catalog Modal Functions
