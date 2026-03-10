@@ -301,38 +301,44 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
 
             // Rebuild mega menu with updated machineCategories from Supabase
-            if (typeof window.rebuildMegaMenu === 'function' && content.machineCategories) {
-                window.rebuildMegaMenu(content);
-            }
-
-            // Apply homepage layout with delay to ensure all DOM manipulations are done
-            setTimeout(function() {
-                try {
-                    if (content.homepageLayout && content.homepageLayout.length) {
-                        console.log('[LAYOUT] Applying layout order:', content.homepageLayout.map(function(s) { return s.id; }).join(' → '));
-                        applyHomepageLayout(content.homepageLayout);
-                        // Verify result
-                        var result = [];
-                        document.querySelectorAll('[data-section-id]').forEach(function(el) { result.push(el.getAttribute('data-section-id')); });
-                        console.log('[LAYOUT] Final DOM order:', result.join(' → '));
-                    } else {
-                        console.log('[LAYOUT] No homepageLayout in content');
-                    }
-                } catch (e) {
-                    console.error('[LAYOUT] Error:', e);
+            try {
+                if (typeof window.rebuildMegaMenu === 'function' && content.machineCategories) {
+                    window.rebuildMegaMenu(content);
                 }
-            }, 100);
+            } catch (megaErr) {
+                console.warn('rebuildMegaMenu error (ignored):', megaErr.message);
+            }
         } else {
             console.log('Using static content');
         }
     } catch (error) {
-        console.log('Using static content (error):', error);
-        const localContent = localStorage.getItem('girisim_site_content');
-        if (localContent) {
-            const content = JSON.parse(localContent);
-            window.__siteContent = content;
-            applySiteContent(content);
+        console.warn('Content load error:', error.message);
+        // Only fallback to localStorage if Supabase content was never loaded
+        if (!window.__siteContent) {
+            const localContent = localStorage.getItem('girisim_site_content');
+            if (localContent) {
+                const content = JSON.parse(localContent);
+                window.__siteContent = content;
+                applySiteContent(content);
+            }
         }
+    }
+
+    // Homepage layout - apply AFTER everything, using saved content
+    // This runs outside try-catch so it always executes
+    try {
+        var layoutContent = window.__siteContent;
+        if (layoutContent && layoutContent.homepageLayout && layoutContent.homepageLayout.length) {
+            console.log('[LAYOUT] Applying order:', layoutContent.homepageLayout.map(function(s) { return s.id; }).join(' → '));
+            applyHomepageLayout(layoutContent.homepageLayout);
+            var result = [];
+            document.querySelectorAll('[data-section-id]').forEach(function(el) { result.push(el.getAttribute('data-section-id')); });
+            console.log('[LAYOUT] Final DOM order:', result.join(' → '));
+        } else {
+            console.log('[LAYOUT] No homepageLayout data available');
+        }
+    } catch (layoutErr) {
+        console.error('[LAYOUT] Error:', layoutErr);
     }
 
     // Reveal page after all dynamic content is loaded
