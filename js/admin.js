@@ -521,6 +521,7 @@ function populateAllForms() {
     try { initHomepageLayout(); } catch(e) { console.warn('initHomepageLayout error:', e); }
     loadGoogleAdsSettings();
     loadTikTokPixelSettings();
+    renderCustomProducts();
 
     // Update dashboard counters
     const blogCount = document.getElementById('dashBlogCount');
@@ -4688,6 +4689,105 @@ function saveProductPackageImages(config) {
 
 var _currentProductId = null;
 
+// Hardcoded (default) product IDs — these have their own HTML files
+var _builtinProductIds = [
+    'wafer','cereal-bar','protein-bar','coconut-bar','biscuit-sandwiching','cookie-capping',
+    'chocolate-coating','chocolate-cooling','chocolate-preparation','sugar-mill',
+    'flow-pack','vffs','overwrapping','thermoform','filling-machines','halvah',
+    'flm-1000','flm-1000-bms','flm-1000-cw','flm-2000','flm-3000','flm-4000',
+    'flm-5000','flm-5000-bms','flm-hs-500','bpm-1000'
+];
+
+// Create new product from admin UI
+function createNewProduct() {
+    var name = prompt('Ürün adı girin (Türkçe):');
+    if (!name || !name.trim()) return;
+    name = name.trim();
+
+    // Generate slug from name
+    var slug = name.toLowerCase()
+        .replace(/ğ/g,'g').replace(/ü/g,'u').replace(/ş/g,'s')
+        .replace(/ı/g,'i').replace(/ö/g,'o').replace(/ç/g,'c')
+        .replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+
+    // Check duplicate
+    if (_builtinProductIds.indexOf(slug) > -1 || (siteContent.productPages && siteContent.productPages[slug] && siteContent.productPages[slug]._isCustom)) {
+        showToast('Bu ID zaten mevcut: ' + slug, 'error');
+        return;
+    }
+
+    // Create product data in Supabase
+    if (!siteContent.productPages) siteContent.productPages = {};
+    siteContent.productPages[slug] = {
+        _isCustom: true,
+        tag: 'Yeni Ürün',
+        title: name,
+        titleHighlight: '',
+        description: '',
+        heroImages: [],
+        overviewTitle: name,
+        overviewTitleHighlight: '',
+        overviewDesc: [],
+        features: [{ icon: 'fas fa-cog', title: 'Özellik 1', desc: 'Açıklama' }],
+        specsHeaders: ['Özellik', 'Değer'],
+        specs: [{ cells: ['', ''] }],
+        applications: [],
+        videos: [],
+        relatedProducts: [],
+        whatsappText: name + ' hakkında bilgi almak istiyorum.'
+    };
+    markAsChanged();
+    renderCustomProducts();
+    editProduct(slug);
+    showToast('Yeni ürün oluşturuldu: ' + name, 'success');
+}
+
+// Delete custom product
+function deleteCustomProduct(productId) {
+    if (!confirm('Bu ürünü silmek istediğinize emin misiniz?\n\nÜrün ID: ' + productId)) return;
+    if (siteContent.productPages && siteContent.productPages[productId]) {
+        delete siteContent.productPages[productId];
+        markAsChanged();
+        renderCustomProducts();
+        showToast('Ürün silindi', 'success');
+    }
+}
+
+// Render custom (admin-created) products in the products section
+function renderCustomProducts() {
+    var container = document.getElementById('custom-products-grid');
+    var wrapper = document.getElementById('custom-products-list');
+    if (!container || !wrapper) return;
+
+    var customProducts = [];
+    if (siteContent.productPages) {
+        for (var key in siteContent.productPages) {
+            if (siteContent.productPages.hasOwnProperty(key) && siteContent.productPages[key]._isCustom) {
+                customProducts.push({ id: key, data: siteContent.productPages[key] });
+            }
+        }
+    }
+
+    if (customProducts.length === 0) {
+        wrapper.style.display = 'none';
+        return;
+    }
+
+    wrapper.style.display = '';
+    var html = '';
+    customProducts.forEach(function(p) {
+        var title = p.data.title || p.id;
+        var pageUrl = 'products/new-product.html?id=' + encodeURIComponent(p.id);
+        html += '<div class="product-item" onclick="editProduct(\'' + escJsStr(p.id) + '\')">' +
+            '<i class="fas fa-cube"></i>' +
+            '<span>' + escHtml(title) + '</span>' +
+            '<a href="' + escHtml(pageUrl) + '" target="_blank" class="btn btn-sm btn-outline" onclick="event.stopPropagation()"><i class="fas fa-external-link-alt"></i></a>' +
+            '<button class="btn btn-sm btn-outline" style="color:#e63946;border-color:#e63946;margin-left:4px" onclick="event.stopPropagation();deleteCustomProduct(\'' + escJsStr(p.id) + '\')"><i class="fas fa-trash"></i></button>' +
+            '</div>';
+    });
+    container.innerHTML = html;
+}
+
 function getProductData(productId) {
     var defaults = (window.__defaultProductPages && window.__defaultProductPages[productId]) || {};
     var overrides = (siteContent.productPages && siteContent.productPages[productId]) || {};
@@ -4741,10 +4841,16 @@ function editProduct(productId) {
     h += '<div class="pe-title"><i class="fas fa-edit" style="color:var(--primary)"></i> ' + escHtml(data.title || productId) + ' <small>' + escHtml(productId) + '</small></div>';
     h += '</div>';
     h += '<div class="pe-header-actions">';
-    // Determine product page URL - flowpack models are in products/flowpack/
+    // Determine product page URL
     var flowpackIds = ['flm-1000','flm-1000-bms','flm-1000-cw','flm-2000','flm-3000','flm-4000','flm-5000','flm-5000-bms','flm-hs-500','bpm-1000'];
-    var productPageUrl = flowpackIds.indexOf(productId) > -1 ? 'products/flowpack/' + productId + '.html' : 'products/' + productId + '.html';
-    h += '<button class="btn btn-outline" onclick="resetProductOverrides(\'' + pid + '\')"><i class="fas fa-undo"></i> Varsayılana Dön</button>';
+    var isCustomProduct = !!(data._isCustom);
+    var productPageUrl = isCustomProduct ? 'products/new-product.html?id=' + encodeURIComponent(productId) :
+        flowpackIds.indexOf(productId) > -1 ? 'products/flowpack/' + productId + '.html' : 'products/' + productId + '.html';
+    if (isCustomProduct) {
+        h += '<button class="btn btn-outline" style="color:#e63946;border-color:#e63946" onclick="if(confirm(\'Bu ürünü silmek istediğinize emin misiniz?\')){deleteCustomProduct(\'' + pid + '\');closeProductEditor()}"><i class="fas fa-trash"></i> Ürünü Sil</button>';
+    } else {
+        h += '<button class="btn btn-outline" onclick="resetProductOverrides(\'' + pid + '\')"><i class="fas fa-undo"></i> Varsayılana Dön</button>';
+    }
     h += '<a href="' + escHtml(productPageUrl) + '" target="_blank" class="btn btn-outline"><i class="fas fa-external-link-alt"></i> Sayfayı Gör</a>';
     h += '</div></div>';
 

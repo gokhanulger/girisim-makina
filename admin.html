@@ -15,7 +15,7 @@
     <link rel="icon" type="image/png" href="/favicon.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/admin.css?v=20260310a">
+    <link rel="stylesheet" href="css/admin.css?v=20260310b">
     <!-- Quill Rich Text Editor -->
     <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet">
 </head>
@@ -927,6 +927,16 @@
                         <h2><i class="fas fa-boxes"></i> Ürün Sayfaları Yönetimi</h2>
                         <p class="section-desc">Ürün sayfalarını yönetin. Her ürün için ayrı sayfa içeriği düzenlenebilir.</p>
 
+                        <button class="btn btn-primary" onclick="createNewProduct()" style="margin-bottom:20px">
+                            <i class="fas fa-plus"></i> Yeni Ürün Ekle
+                        </button>
+
+                        <!-- Dinamik (admin'den eklenen) ürünler -->
+                        <div id="custom-products-list" style="display:none">
+                            <h3 style="margin-top:0; margin-bottom:15px; color:#333;"><i class="fas fa-plus-circle"></i> Özel Ürünler</h3>
+                            <div class="products-list" id="custom-products-grid"></div>
+                        </div>
+
                         <h3 style="margin-top:0; margin-bottom:15px; color:#333;"><i class="fas fa-industry"></i> Üretim Makinaları</h3>
                         <div class="products-list">
                             <div class="product-item" onclick="editProduct('wafer')">
@@ -1650,6 +1660,6 @@
     <script src="js/supabase-init.js?v=20260309d"></script>
     <script src="js/product-data.js?v=20260227c"></script>
     <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
-    <script src="js/admin.js?v=20260310b"></script>
+    <script src="js/admin.js?v=20260310c"></script>
 </body>
 </html>
