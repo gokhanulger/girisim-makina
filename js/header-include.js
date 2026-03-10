@@ -125,7 +125,7 @@
                     ${buildNavMenu(data, basePath)}
                 </ul>
                 <button class="search-toggle" onclick="toggleSearchOverlay()" aria-label="Ara"><i class="fas fa-search"></i></button>
-                <a href="https://wa.me/${whatsappNum}?text=Bilgi%20almak%20istiyorum" target="_blank" class="btn btn-primary" data-translate="nav.getQuote"><i class="fab fa-whatsapp"></i> TEKLİF AL</a>
+                <a href="${basePath}#contact" class="btn btn-primary header-quote-btn" data-translate="nav.getQuote"><i class="fas fa-file-alt"></i> TEKLİF AL</a>
                 <div class="hamburger" id="hamburgerBtn"><span></span><span></span><span></span></div>
             </nav>
         </div>
