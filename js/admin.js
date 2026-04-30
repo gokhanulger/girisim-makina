@@ -1077,12 +1077,12 @@ function renderHeroSlides() {
             </div>
 
             <div class="form-section">
-                <h4><i class="fas fa-image"></i> Görsel</h4>
+                <h4><i class="fas fa-desktop"></i> Desktop Görseli</h4>
                 <div class="form-hint" style="background:#fff3cd;border:1px solid #ffc107;border-radius:6px;padding:10px 14px;margin-bottom:12px;font-size:13px;color:#856404">
                     <i class="fas fa-info-circle"></i> <strong>Önerilen boyut:</strong> 1920×800 px (en az 1600×700 px). Yatay (landscape) formatta, dosya boyutu max 500 KB. WebP veya JPG formatı önerilir.
                 </div>
                 <div class="form-group">
-                    <label>Görsel URL</label>
+                    <label>Desktop Görsel URL</label>
                     <div style="display:flex;gap:8px;align-items:center">
                         <input type="text" id="hero-slide-img-${currentHeroSlideIndex}" value="${escHtml(slide.image || '')}"
                                onchange="updateHeroSlide(${currentHeroSlideIndex}, 'image', this.value)"
@@ -1094,7 +1094,28 @@ function renderHeroSlides() {
                         </label>
                     </div>
                 </div>
-                ${slide.image ? `<div class="image-preview"><img src="${slide.image}" alt="Preview"></div>` : ''}
+                ${slide.image ? `<div class="image-preview"><img src="${slide.image}" alt="Desktop Preview"></div>` : ''}
+            </div>
+
+            <div class="form-section">
+                <h4><i class="fas fa-mobile-alt"></i> Mobil Görsel <small style="color:#94a3b8;font-weight:400">(Opsiyonel)</small></h4>
+                <div class="form-hint" style="background:#e0f2fe;border:1px solid #0ea5e9;border-radius:6px;padding:10px 14px;margin-bottom:12px;font-size:13px;color:#075985">
+                    <i class="fas fa-info-circle"></i> <strong>Önerilen boyut:</strong> 750×900 px (dikey/portre, 4:5 veya 3:4 oran). Mobilde (≤768px) gösterilir. Boş bırakılırsa desktop görseli kullanılır.
+                </div>
+                <div class="form-group">
+                    <label>Mobil Görsel URL</label>
+                    <div style="display:flex;gap:8px;align-items:center">
+                        <input type="text" id="hero-slide-img-mobile-${currentHeroSlideIndex}" value="${escHtml(slide.imageMobile || '')}"
+                               onchange="updateHeroSlide(${currentHeroSlideIndex}, 'imageMobile', this.value)"
+                               oninput="updateHeroSlide(${currentHeroSlideIndex}, 'imageMobile', this.value)"
+                               placeholder="images/hero/slide-mobile.png" style="flex:1">
+                        <label class="upload-btn" style="cursor:pointer;white-space:nowrap">
+                            <i class="fas fa-upload"></i> Yükle
+                            <input type="file" accept="image/*" onchange="handleImageUpload(this, 'hero-slide-img-mobile-${currentHeroSlideIndex}')" hidden>
+                        </label>
+                    </div>
+                </div>
+                ${slide.imageMobile ? `<div class="image-preview"><img src="${slide.imageMobile}" alt="Mobile Preview" style="max-width:280px"></div>` : ''}
             </div>
         </div>
     `;
@@ -1135,7 +1156,8 @@ function addHeroSlide() {
         button1Link: '#',
         button2Text: 'BUTON 2',
         button2Link: '#',
-        image: ''
+        image: '',
+        imageMobile: ''
     };
 
     siteContent.heroSlides.push(newSlide);

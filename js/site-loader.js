@@ -461,8 +461,18 @@ function applySiteContent(content) {
         const sliderContainer = document.querySelector('.banner-slider');
         if (sliderContainer) {
             // Build slides HTML
+            const isMobileVP = () => window.matchMedia && window.matchMedia('(max-width: 768px)').matches;
+            const pickBg = (s) => {
+                const desktop = s.image || s.backgroundImage || 'images/fabrika-ici-1.jpeg';
+                return (isMobileVP() && s.imageMobile) ? s.imageMobile : desktop;
+            };
             const slidesHtml = content.heroSlides.map((slide, i) => {
-                const bgImage = slide.image || slide.backgroundImage || 'images/fabrika-ici-1.jpeg';
+                const bgDesktop = slide.image || slide.backgroundImage || 'images/fabrika-ici-1.jpeg';
+                const bgMobile = slide.imageMobile || '';
+                const chosen = pickBg(slide);
+                const bgStyle = bgMobile
+                    ? `--bg-d:url('${bgDesktop}');--bg-m:url('${bgMobile}');background-image:url('${chosen}');`
+                    : `background-image:url('${bgDesktop}');`;
 
                 // Support both formats: buttons[] array AND flat button1Text/button1Link fields
                 let buttons = '';
@@ -484,7 +494,7 @@ function applySiteContent(content) {
                 }
 
                 return `
-                    <div class="banner-slide${i === 0 ? ' active' : ''}" style="background-image: url('${bgImage}');">
+                    <div class="banner-slide${i === 0 ? ' active' : ''}" style="${bgStyle}">
                         <div class="banner-overlay"></div>
                         <div class="container">
                             <div class="banner-content">
@@ -498,6 +508,25 @@ function applySiteContent(content) {
             }).join('');
 
             sliderContainer.innerHTML = slidesHtml;
+
+            // Re-apply correct image on viewport change (orientation/resize across breakpoint)
+            const slidesData = content.heroSlides;
+            const applyResponsiveBg = () => {
+                const slideEls = sliderContainer.querySelectorAll('.banner-slide');
+                slideEls.forEach((el, idx) => {
+                    const s = slidesData[idx];
+                    if (!s) return;
+                    el.style.backgroundImage = `url('${pickBg(s)}')`;
+                });
+            };
+            if (!window.__heroBgListener) {
+                window.__heroBgListener = true;
+                window.addEventListener('resize', () => {
+                    clearTimeout(window.__heroBgT);
+                    window.__heroBgT = setTimeout(applyResponsiveBg, 150);
+                });
+                window.addEventListener('orientationchange', applyResponsiveBg);
+            }
 
             // Reinit slider (rebuilds dots + auto-play) with new slides
             if (typeof window.initBannerSlider === 'function') {

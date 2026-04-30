@@ -332,7 +332,7 @@
     <script defer src="js/min/translations.min.js?v=20260309a"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script defer src="js/min/supabase-init.min.js?v=20260310a"></script>
-    <script defer src="js/min/site-loader.min.js?v=20260310a"></script>
+    <script defer src="js/min/site-loader.min.js?v=20260430b"></script>
     <script defer src="js/min/seo-loader.min.js?v=20260224b"></script>
     <script defer src="js/min/header-include.min.js?v=20260310a"></script>
 
@@ -392,11 +392,15 @@
         var heroDesc = document.getElementById('aboutPageHeroDesc');
         if (heroDesc && ap.heroDesc) heroDesc.textContent = ap.heroDesc;
 
-        // Hero background image
+        // Hero background image (desktop + optional mobile)
         var heroSection = document.querySelector('.about-page-hero');
         if (heroSection && ap.heroImage) {
             var style = document.createElement('style');
-            style.textContent = '.about-page-hero::before { background-image: url(' + ap.heroImage + ') !important; }';
+            var css = '.about-page-hero::before { background-image: url(' + ap.heroImage + ') !important; }';
+            if (ap.heroImageMobile) {
+                css += '@media (max-width:768px){.about-page-hero::before{background-image:url(' + ap.heroImageMobile + ')!important;}}';
+            }
+            style.textContent = css;
             document.head.appendChild(style);
         }
 

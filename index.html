@@ -33,7 +33,8 @@
     .hero-banner{position:relative;width:100%;height:85vh;min-height:550px;max-height:850px;overflow:hidden;opacity:0;transition:opacity .5s ease}
     .hero-banner.loaded{opacity:1}
     .banner-slider{position:relative;width:100%;height:100%}
-    .banner-slide{position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;transition:opacity 1.2s ease;z-index:1;overflow:hidden}
+    .banner-slide{position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;transition:opacity 1.2s ease;z-index:1;overflow:hidden;background-image:var(--bg-d)}
+    @media (max-width:768px){.banner-slide{background-image:var(--bg-m,var(--bg-d))}}
     .banner-slide::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background-size:cover;background-position:center;background-image:inherit;z-index:0}
     .banner-slide.active{opacity:1;z-index:2}
     .banner-slide.active::before{animation:kenBurns 8s ease forwards}
@@ -98,7 +99,7 @@
     <section class="hero-banner" data-section-id="hero-banner">
         <div class="banner-slider">
             <!-- Banner 1: Wafer Üretim Hatları -->
-            <div class="banner-slide active" style="background-image: url('images/fabrika-ici-1.webp');">
+            <div class="banner-slide active" style="--bg-d:url('images/fabrika-ici-1.webp');">
                 <div class="banner-overlay"></div>
                 <div class="container">
                     <div class="banner-content">
@@ -113,7 +114,7 @@
                 </div>
             </div>
             <!-- Banner 2: Flowpack Makineleri -->
-            <div class="banner-slide" style="background-image: url('images/fabrika-ici-2.webp');">
+            <div class="banner-slide" style="--bg-d:url('images/fabrika-ici-2.webp');">
                 <div class="banner-overlay"></div>
                 <div class="container">
                     <div class="banner-content">
@@ -128,7 +129,7 @@
                 </div>
             </div>
             <!-- Banner 3: Çikolata Kaplama -->
-            <div class="banner-slide" style="background-image: url('images/pexels-stainless-machinery.jpg');">
+            <div class="banner-slide" style="--bg-d:url('images/pexels-stainless-machinery.jpg');">
                 <div class="banner-overlay"></div>
                 <div class="container">
                     <div class="banner-content">
@@ -143,7 +144,7 @@
                 </div>
             </div>
             <!-- Banner 4: Bisküvi Sandviç -->
-            <div class="banner-slide" style="background-image: url('images/pexels-production-line.jpg');">
+            <div class="banner-slide" style="--bg-d:url('images/pexels-production-line.jpg');">
                 <div class="banner-overlay"></div>
                 <div class="container">
                     <div class="banner-content">
@@ -158,7 +159,7 @@
                 </div>
             </div>
             <!-- Banner 5: VFFS & Overwrapping -->
-            <div class="banner-slide" style="background-image: url('images/pexels-automated-packaging.jpg');">
+            <div class="banner-slide" style="--bg-d:url('images/pexels-automated-packaging.jpg');">
                 <div class="banner-overlay"></div>
                 <div class="container">
                     <div class="banner-content">
@@ -173,7 +174,7 @@
                 </div>
             </div>
             <!-- Banner 6: Cereal & Protein Bar -->
-            <div class="banner-slide" style="background-image: url('images/pexels-conveyor-sorting.jpg');">
+            <div class="banner-slide" style="--bg-d:url('images/pexels-conveyor-sorting.jpg');">
                 <div class="banner-overlay"></div>
                 <div class="container">
                     <div class="banner-content">
@@ -188,7 +189,7 @@
                 </div>
             </div>
             <!-- Banner 7: Global Güven -->
-            <div class="banner-slide" style="background-image: url('images/fabrika-ici-1.webp');">
+            <div class="banner-slide" style="--bg-d:url('images/fabrika-ici-1.webp');">
                 <div class="banner-overlay"></div>
                 <div class="container">
                     <div class="banner-content">
@@ -1003,7 +1004,7 @@
     <!-- Supabase SDK -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
     <script src="js/min/supabase-init.min.js?v=20260310c" defer></script>
-    <script src="js/min/site-loader.min.js?v=20260310c" defer></script>
+    <script src="js/min/site-loader.min.js?v=20260430b" defer></script>
     <script src="js/min/seo-loader.min.js?v=20260224b" defer></script>
     <script src="js/min/translations.min.js?v=20260309a" defer></script>
     <script src="js/min/main.min.js?v=20260225f" defer></script>

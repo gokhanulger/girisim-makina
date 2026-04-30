@@ -479,11 +479,19 @@
                                 <input type="text" id="aboutPage-heroDesc" data-path="aboutPage.heroDesc" placeholder="1985'ten beri gıda işleme ve paketleme...">
                             </div>
                             <div class="form-group">
-                                <label>Arka Plan Görseli</label>
+                                <label><i class="fas fa-desktop"></i> Desktop Arka Plan Görseli <small style="color:#94a3b8">(Önerilen: 1920×800 px)</small></label>
                                 <div class="image-upload-group">
                                     <input type="url" id="aboutPage-heroImage" data-path="aboutPage.heroImage" placeholder="URL girin veya dosya yükleyin">
                                     <label class="upload-btn" for="upload-aboutpage-hero"><i class="fas fa-upload"></i> Yükle</label>
                                     <input type="file" id="upload-aboutpage-hero" accept="image/*" onchange="handleImageUpload(this, 'aboutPage-heroImage')" hidden>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label><i class="fas fa-mobile-alt"></i> Mobil Arka Plan Görseli <small style="color:#94a3b8">(Opsiyonel · Önerilen: 750×900 px · Boşsa desktop kullanılır)</small></label>
+                                <div class="image-upload-group">
+                                    <input type="url" id="aboutPage-heroImageMobile" data-path="aboutPage.heroImageMobile" placeholder="Mobil için ayrı görsel URL'si">
+                                    <label class="upload-btn" for="upload-aboutpage-hero-mobile"><i class="fas fa-upload"></i> Yükle</label>
+                                    <input type="file" id="upload-aboutpage-hero-mobile" accept="image/*" onchange="handleImageUpload(this, 'aboutPage-heroImageMobile')" hidden>
                                 </div>
                             </div>
                         </div>
@@ -1660,6 +1668,6 @@
     <script src="js/supabase-init.js?v=20260309d"></script>
     <script src="js/product-data.js?v=20260227c"></script>
     <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
-    <script src="js/admin.js?v=20260310c"></script>
+    <script src="js/admin.js?v=20260430b"></script>
 </body>
 </html>
