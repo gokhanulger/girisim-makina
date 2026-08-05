@@ -1,0 +1,8 @@
+{
+  "name": "girisim-makina",
+  "private": true,
+  "description": "Girişim Makina web sitesi - statik site + Vercel serverless functions",
+  "dependencies": {
+    "nodemailer": "^6.10.1"
+  }
+}

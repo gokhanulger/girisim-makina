@@ -2152,6 +2152,7 @@ function navigateToSection(section) {
         catalog: 'Katalog',
         seo: 'SEO Ayarları',
         analytics: 'Analitik & İzleme',
+        marketing: 'Email Pazarlama',
         machineCategories: 'Makine Kategorileri',
         translations: 'Çeviriler (Toplu)',
         'lang-en': '🇬🇧 English Çevirileri',

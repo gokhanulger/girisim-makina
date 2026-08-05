@@ -16,3 +16,4 @@ fix-videos.js
 update-blog*.js
 supabase-rls.sql
 .vercelignore
+supabase/marketing-setup.final.sql

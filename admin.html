@@ -128,9 +128,10 @@
                         <a href="#"><i class="fas fa-search"></i> SEO Ayarları</a>
                     </li>
                     <li data-section="analytics">
-                        <a href="#"><i class="fas fa-chart-line"></i> Analitik & İzleme</a>
+                        <a href="#"><i class="fas fa-chart-line"></i> Analitik & İzleme
+                    <li data-section="marketing">
+                        <a href="#"><i class="fas fa-paper-plane"></i> Email Pazarlama</a>
                     </li>
-                    <li class="nav-divider"></li>
                     <li data-section="translations">
                         <a href="#"><i class="fas fa-language"></i> Çeviriler (Toplu)</a>
                     </li>
@@ -1416,6 +1417,145 @@
                     </div>
                 </section>
 
+                <!-- Email Marketing Section -->
+                <section id="section-marketing" class="admin-section">
+                    <div class="section-card">
+                        <h2><i class="fas fa-paper-plane"></i> Email Pazarlama</h2>
+                        <p class="section-desc">Lead listesini yönetin, email şablonlarını düzenleyin ve otomatik kampanya gönderimini kontrol edin. Her mail, tanımlı 3 hesaptan rastgele biriyle, gün içine yayılarak gönderilir (spam koruması).</p>
+
+                        <div class="dashboard-cards" style="margin-bottom: 25px;">
+                            <div class="dashboard-card"><div class="card-icon"><i class="fas fa-users"></i></div><div class="card-content"><h3>Toplam Lead</h3><p id="mkStatTotal">-</p></div></div>
+                            <div class="dashboard-card"><div class="card-icon"><i class="fas fa-clock"></i></div><div class="card-content"><h3>Bekleyen</h3><p id="mkStatPending">-</p></div></div>
+                            <div class="dashboard-card"><div class="card-icon"><i class="fas fa-check-circle"></i></div><div class="card-content"><h3>Gönderilen</h3><p id="mkStatSent">-</p></div></div>
+                            <div class="dashboard-card"><div class="card-icon"><i class="fas fa-calendar-day"></i></div><div class="card-content"><h3>Bugün</h3><p id="mkStatToday">-</p></div></div>
+                        </div>
+
+                        <h3 style="margin-bottom: 15px;"><i class="fas fa-play-circle"></i> Kampanya Durumu</h3>
+                        <div class="form-group">
+                            <label style="display:flex; align-items:center; gap:10px; cursor:pointer;">
+                                <input type="checkbox" id="mkEnabled" style="width:auto;">
+                                <span><strong>Kampanya aktif</strong> — işaretliyken zamanlayıcı (15 dk'da bir) bekleyen lead'lere otomatik mail gönderir</span>
+                            </label>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Günlük Limit</label>
+                                <input type="number" id="mkDailyLimit" min="1" max="200" placeholder="30">
+                                <small>Günde en fazla kaç mail (öneri: 30-40)</small>
+                            </div>
+                            <div class="form-group">
+                                <label>Gönderim Saatleri (İstanbul)</label>
+                                <div style="display:flex; gap:10px; align-items:center;">
+                                    <input type="number" id="mkStartHour" min="0" max="23" placeholder="9" style="width:80px;">
+                                    <span>—</span>
+                                    <input type="number" id="mkEndHour" min="1" max="24" placeholder="18" style="width:80px;">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label style="display:flex; align-items:center; gap:10px; cursor:pointer; margin-top:28px;">
+                                    <input type="checkbox" id="mkWeekendsOff" style="width:auto;" checked>
+                                    <span>Hafta sonu gönderme</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <h3 style="margin-top: 25px; margin-bottom: 5px;"><i class="fas fa-server"></i> Gönderen Hesaplar (SMTP)</h3>
+                        <p class="section-desc" style="margin-bottom:15px;">Her mail, aşağıdaki hesaplardan <strong>rastgele seçilen biriyle</strong> gönderilir. Doldurulmayan hesaplar kullanılmaz (1 hesap da yeterli).</p>
+                        <div id="mkAccounts">
+                            <div class="mk-account-card" data-acc="0">
+                                <h4><i class="fas fa-user-circle"></i> Hesap 1</h4>
+                                <div class="form-row">
+                                    <div class="form-group"><label>Email Adresi</label><input type="email" id="mkAcc0User" placeholder="satis@girisimmak.com"></div>
+                                    <div class="form-group"><label>Şifre / Uygulama Şifresi</label><input type="password" id="mkAcc0Pass" placeholder="••••••••"></div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group"><label>SMTP Sunucu</label><input type="text" id="mkAcc0Host" placeholder="smtp.zoho.com"></div>
+                                    <div class="form-group"><label>Port</label><input type="number" id="mkAcc0Port" placeholder="465"></div>
+                                    <div class="form-group"><label>Gönderen Adı</label><input type="text" id="mkAcc0FromName" placeholder="Girişim Makina"></div>
+                                    <div class="form-group"><label>Yanıt Adresi (ops.)</label><input type="email" id="mkAcc0ReplyTo" placeholder="info@girisimmak.com"></div>
+                                </div>
+                            </div>
+                            <div class="mk-account-card" data-acc="1">
+                                <h4><i class="fas fa-user-circle"></i> Hesap 2</h4>
+                                <div class="form-row">
+                                    <div class="form-group"><label>Email Adresi</label><input type="email" id="mkAcc1User" placeholder="export@girisimmak.com"></div>
+                                    <div class="form-group"><label>Şifre / Uygulama Şifresi</label><input type="password" id="mkAcc1Pass" placeholder="••••••••"></div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group"><label>SMTP Sunucu</label><input type="text" id="mkAcc1Host" placeholder="smtp.zoho.com"></div>
+                                    <div class="form-group"><label>Port</label><input type="number" id="mkAcc1Port" placeholder="465"></div>
+                                    <div class="form-group"><label>Gönderen Adı</label><input type="text" id="mkAcc1FromName" placeholder="Girişim Makina"></div>
+                                    <div class="form-group"><label>Yanıt Adresi (ops.)</label><input type="email" id="mkAcc1ReplyTo" placeholder=""></div>
+                                </div>
+                            </div>
+                            <div class="mk-account-card" data-acc="2">
+                                <h4><i class="fas fa-user-circle"></i> Hesap 3</h4>
+                                <div class="form-row">
+                                    <div class="form-group"><label>Email Adresi</label><input type="email" id="mkAcc2User" placeholder="info@girisimmak.com"></div>
+                                    <div class="form-group"><label>Şifre / Uygulama Şifresi</label><input type="password" id="mkAcc2Pass" placeholder="••••••••"></div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group"><label>SMTP Sunucu</label><input type="text" id="mkAcc2Host" placeholder="smtp.zoho.com"></div>
+                                    <div class="form-group"><label>Port</label><input type="number" id="mkAcc2Port" placeholder="465"></div>
+                                    <div class="form-group"><label>Gönderen Adı</label><input type="text" id="mkAcc2FromName" placeholder="Girişim Makina"></div>
+                                    <div class="form-group"><label>Yanıt Adresi (ops.)</label><input type="email" id="mkAcc2ReplyTo" placeholder=""></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group"><label>CC — her gönderimin kopyası (opsiyonel)</label><input type="email" id="mkCc" placeholder="gokhan@ulger.net"></div>
+                        </div>
+
+                        <h3 style="margin-top: 25px; margin-bottom: 5px;"><i class="fas fa-envelope-open-text"></i> Email Şablonları</h3>
+                        <p class="section-desc" style="margin-bottom:15px;">
+                            Değişkenler: <code>{{firma}}</code>, <code>{{isim}}</code>, <code>{{website}}</code>.
+                            Spam koruması için spintax: <code>{Merhaba|Selam|İyi günler}</code> yazarsanız her mailde rastgele biri seçilir.
+                        </p>
+                        <h4 style="margin-bottom:10px;"><i class="fas fa-building"></i> Kurumsal Şablon (firma emaili olan lead'lere)</h4>
+                        <div class="form-group"><label>Konu</label><input type="text" id="mkSubject" placeholder="{{firma}} için üretim ve paketleme hattı çözümleri"></div>
+                        <div class="form-group"><label>İçerik (HTML)</label><textarea id="mkBody" rows="12" style="font-family:monospace; font-size:13px;"></textarea></div>
+                        <h4 style="margin-top:20px; margin-bottom:10px;"><i class="fas fa-at"></i> Generic Şablon (gmail/hotmail gibi kişisel adreslere)</h4>
+                        <p class="section-desc" style="margin-bottom:10px;">Firma adı bilinmeyen veya kişisel email kullanan lead'lere gider. Boş bırakılırsa kurumsal şablon kullanılır.</p>
+                        <div class="form-group"><label>Konu</label><input type="text" id="mkSubjectGeneric" placeholder="Gıda üretim ve paketleme makinaları hakkında"></div>
+                        <div class="form-group"><label>İçerik (HTML)</label><textarea id="mkBodyGeneric" rows="12" style="font-family:monospace; font-size:13px;"></textarea></div>
+
+                        <div style="display:flex; gap:10px; margin: 15px 0 25px;">
+                            <button class="btn btn-success" onclick="saveMarketingSettings()"><i class="fas fa-save"></i> Ayarları ve Şablonları Kaydet</button>
+                        </div>
+
+                        <h3 style="margin-top: 10px; margin-bottom: 15px;"><i class="fas fa-vial"></i> Test Gönderimi</h3>
+                        <div class="form-row">
+                            <div class="form-group"><label>Test Adresi</label><input type="email" id="mkTestEmail" placeholder="mooogco@gmail.com"></div>
+                            <div class="form-group"><label>Şablon</label><select id="mkTestVariant"><option value="personal">Kurumsal (örnek firma)</option><option value="generic">Generic</option></select></div>
+                            <div class="form-group"><label>Gönderen Hesap</label><select id="mkTestAccount"><option value="">Rastgele</option><option value="0">Hesap 1</option><option value="1">Hesap 2</option><option value="2">Hesap 3</option></select></div>
+                            <div class="form-group"><label>&nbsp;</label><button class="btn btn-primary" onclick="sendMarketingTest()" id="mkTestBtn" style="display:block;"><i class="fas fa-paper-plane"></i> Test Gönder</button></div>
+                        </div>
+                        <div id="mkTestResult" style="display:none; padding:10px 14px; border-radius:6px; margin-bottom:20px;"></div>
+
+                        <h3 style="margin-top: 25px; margin-bottom: 15px;"><i class="fas fa-user-plus"></i> Lead Ekle</h3>
+                        <div class="form-group">
+                            <label>Toplu Ekleme — her satıra bir lead: <code>email, firma, isim, website</code> (sadece email de yeterli)</label>
+                            <textarea id="mkBulkLeads" rows="6" style="font-family:monospace; font-size:13px;" placeholder="info@ornekfirma.com, Örnek Firma A.Ş., Ahmet Yılmaz, https://ornekfirma.com&#10;satinalma@digerfirma.com.tr, Diğer Gıda Ltd.&#10;birisi@gmail.com"></textarea>
+                        </div>
+                        <button class="btn btn-primary" onclick="importMarketingLeads()"><i class="fas fa-file-import"></i> Listeye Ekle</button>
+
+                        <h3 style="margin-top: 30px; margin-bottom: 15px;"><i class="fas fa-list"></i> Lead Listesi</h3>
+                        <div style="display:flex; gap:10px; margin-bottom:12px; flex-wrap:wrap;">
+                            <select id="mkLeadFilter" onchange="renderMarketingLeads()">
+                                <option value="">Tümü</option><option value="pending">Bekleyen</option><option value="sent">Gönderilen</option><option value="failed">Hatalı</option><option value="excluded">Hariç Tutulan</option>
+                            </select>
+                            <input type="text" id="mkLeadSearch" placeholder="Ara (email/firma)..." oninput="renderMarketingLeads()" style="max-width:250px;">
+                            <button class="btn btn-outline btn-sm" onclick="loadMarketingData()"><i class="fas fa-sync"></i> Yenile</button>
+                        </div>
+                        <div style="overflow-x:auto;">
+                            <table class="mk-lead-table" id="mkLeadTable">
+                                <thead><tr><th>Email</th><th>Firma</th><th>Şablon</th><th>Durum</th><th>Gönderim</th><th>İşlem</th></tr></thead>
+                                <tbody id="mkLeadTableBody"><tr><td colspan="6" style="text-align:center; color:#888;">Yükleniyor...</td></tr></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
                 <!-- Translations Section -->
                 <section id="section-translations" class="admin-section">
                     <div class="section-card">
@@ -1669,5 +1809,6 @@
     <script src="js/product-data.js?v=20260227c"></script>
     <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
     <script src="js/admin.js?v=20260430b"></script>
+    <script src="js/admin-marketing.js?v=20260805"></script>
 </body>
 </html>
